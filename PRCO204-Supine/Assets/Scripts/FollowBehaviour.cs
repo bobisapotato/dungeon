@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class FollowBehaviour : StateMachineBehaviour
 {
-    private Transform playerPos;
-    private float speed = 3f;
+    //private Transform playerPos;
+    private float speed = 5f;
 
     //OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        playerPos = GameObject.FindGameObjectWithTag("Player").transform;
+        //playerPos = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     //OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.transform.position = Vector3.MoveTowards(animator.transform.position, playerPos.position, speed * Time.deltaTime);
+        animator.transform.position = Vector3.MoveTowards(animator.transform.position, PlayerMovement.playerPos, speed * Time.deltaTime);
     }
 
     //OnStateExit is called when a transition ends and the state machine finishes evaluating this state

@@ -6,6 +6,7 @@ using System.Collections;
 public class NPC : MonoBehaviour
 {
 	public Transform target;
+	public Transform eyes;
 
 	private Animator anim;
 
@@ -13,9 +14,9 @@ public class NPC : MonoBehaviour
 	private bool isRotatingRight = false;
 	private bool isWalking = false;
 
-	private float moveSpeed = 3f;
+	private float moveSpeed = 5f;
 	private float rotSpeed = 100f;
-	private float lookRadius = 15f;
+	private float lookRadius = 10f;
 	private float stoppingDistance = 2f;
 
 	private int rotTime;
@@ -52,7 +53,7 @@ public class NPC : MonoBehaviour
 	void FixedUpdate()
 	{
 		// Get the distance to the player
-		float distance = Vector3.Distance(target.position, transform.position);
+		float distance = Vector3.Distance(target.position, eyes.position);
 
 		// If inside the radius
 		if (distance <= lookRadius)
@@ -86,7 +87,7 @@ public class NPC : MonoBehaviour
 	void OnDrawGizmosSelected()
 	{
 		Gizmos.color = Color.red;
-		Gizmos.DrawWireSphere(transform.position, lookRadius);
+		Gizmos.DrawWireSphere(eyes.position, lookRadius);
 	}
 
 	IEnumerator Wander() 

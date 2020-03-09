@@ -5,8 +5,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static Vector3 playerPos;
+
     [SerializeField]
-    private float playerSpeed = 7.5f;
+    private float playerSpeed = 10f;
     [SerializeField]
     private float x;
     [SerializeField]
@@ -56,6 +58,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        playerPos = transform.position;
+
         pivot.transform.position = mainCamera.transform.position;
 
         var euler = mainCamera.transform.rotation.eulerAngles;
