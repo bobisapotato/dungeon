@@ -79,7 +79,6 @@ public class WSConnection : MonoBehaviour
 
 
     void SendHeartbeat() {
-        Debug.Log("Ping");
         socket.Send("2");
     }
 
@@ -88,21 +87,16 @@ public class WSConnection : MonoBehaviour
 
         switch (enginePacketType) {
             case 0:
-                Debug.Log("[0] Open");
                 break;
             case 3:
-                Debug.Log("[3] Pong");
                 break;
             case 4:
                 int socketPacketType = int.Parse(input.Substring(1, 1));
-                Debug.Log("Message type: " + socketPacketType.ToString());
 
                 switch (socketPacketType) {
                     case 0:
-                        Debug.Log("[40] Open message");
                         break;
                     case 2:
-                        Debug.Log("[42] Event message");
 
                         string data = input.Substring(2);
                         Debug.Log("Event data: " + data);
