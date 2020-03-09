@@ -5,18 +5,51 @@ using System.Collections;
 /* Makes enemies follow and attack the player */
 public class NPC : MonoBehaviour
 {
-
-	public float lookRadius = 10f;
-
 	public Transform target;
-	NavMeshAgent agent;
+
+	private Animator anim;
+
+	private bool isRotatingLeft = false;
+	private bool isRotatingRight = false;
+	private bool isWalking = false;
+
+	private float moveSpeed = 3f;
+	private float rotSpeed = 100f;
+	private float lookRadius = 15f;
+	private float stoppingDistance = 2f;
+
+	private int rotTime;
+	private int rotateWait;
+	private int rotateLorR;
+	private int walkTime;
+	private int walkWait;
 
 	void Start()
 	{
-		agent = GetComponent<NavMeshAgent>();
+		anim = GetComponent<Animator>();
 	}
 
-	void Update()
+	void Update() 
+	{
+		if (!anim.GetBool("isWandering") && !anim.GetBool("isFollowing")) 
+		{
+			StartCoroutine(Wander());
+		}
+		if (isRotatingRight) 
+		{
+			transform.Rotate(transform.up * Time.deltaTime * rotSpeed);
+		}
+		if (isRotatingLeft)
+		{
+			transform.Rotate(transform.up * Time.deltaTime * -rotSpeed);
+		}
+		if (isWalking) 
+		{
+			transform.position += transform.forward * moveSpeed * Time.deltaTime;
+		}
+	}
+
+	void FixedUpdate()
 	{
 		// Get the distance to the player
 		float distance = Vector3.Distance(target.position, transform.position);
@@ -24,13 +57,21 @@ public class NPC : MonoBehaviour
 		// If inside the radius
 		if (distance <= lookRadius)
 		{
+			FaceTarget();
+
 			// Move towards the player
-			agent.SetDestination(target.position);
-			if (distance <= agent.stoppingDistance)
+			anim.SetBool("isFollowing", true);
+			anim.SetBool("isWandering", false);
+
+			if (distance <= stoppingDistance)
 			{
 				// Attack
 				FaceTarget();
 			}
+		}
+		else 
+		{
+			anim.SetBool("isFollowing", false);
 		}
 	}
 
@@ -48,4 +89,37 @@ public class NPC : MonoBehaviour
 		Gizmos.DrawWireSphere(transform.position, lookRadius);
 	}
 
+	IEnumerator Wander() 
+	{
+		rotTime = Random.Range(1, 3);
+		rotateWait = Random.Range(1, 4);
+		rotateLorR = Random.Range(0, 3);
+		walkWait = Random.Range(1, 4);
+		walkTime = Random.Range(1, 5);
+
+		anim.SetBool("isWandering", true);
+		anim.SetBool("isFollowing", false);
+
+		yield return new WaitForSeconds(walkWait);
+		isWalking = true;
+
+		yield return new WaitForSeconds(walkTime);
+		isWalking = false;
+
+		yield return new WaitForSeconds(rotateWait);
+		if (rotateLorR == 1) 
+		{
+			isRotatingRight = true;
+			yield return new WaitForSeconds(rotTime);
+			isRotatingRight = false;
+		}
+		if (rotateLorR == 2) 
+		{
+			isRotatingLeft = true;
+			yield return new WaitForSeconds(rotTime);
+			isRotatingLeft = false;
+		}
+
+		anim.SetBool("isWandering", false);
+	}
 }
