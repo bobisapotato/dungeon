@@ -27,6 +27,8 @@ public class WSConnection : MonoBehaviour
 
                 socket.Send(EncodeMessage("rooms:create"));
                 // "42[\"rooms:create\"]"
+
+                StartCoroutine("NetworkTick");
             };
             socket.OnClose += (sender, e) => {
                 Debug.Log("Closed");
@@ -39,6 +41,16 @@ public class WSConnection : MonoBehaviour
         socket.Connect();
 
 
+    }
+
+
+    IEnumerator NetworkTick() {
+        for (;;) {
+            // network tick
+            float[] pos = { gameObject.transform.position.x, gameObject.transform.position.z };
+            socket.Send(EncodeMessage("player:position", pos));
+            yield return new WaitForSeconds((1 / 30f));
+        }
     }
 
     string EncodeMessage(params object[] args) {
