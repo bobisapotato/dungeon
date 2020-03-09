@@ -1,0 +1,137 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System;
+using WebSocketSharp;
+using Newtonsoft.Json;
+
+public class WSConnection : MonoBehaviour
+{
+    private WebSocket socket;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        Debug.Log("Starting");
+        socket = new WebSocket("wss://research.supine.dev:3018/socket.io/?EIO=3&transport=websocket");
+        socket.OnMessage += (sender, e) => {
+            //Debug.Log("New message from controller: " + e.Data);
+            DecodeMessage(e.Data);
+        };
+        
+            //socket.Send("hi");
+
+            socket.OnOpen += (sender, e) => {
+                Debug.Log("Opened");
+                InvokeRepeating("SendHeartbeat", 25, 25);
+
+                socket.Send(EncodeMessage("rooms:create"));
+                // "42[\"rooms:create\"]"
+            };
+            socket.OnClose += (sender, e) => {
+                Debug.Log("Closed");
+                Debug.LogError(e.ToString());
+            };
+            socket.OnError += (sender, e) => {
+                Debug.LogError(e.ToString());
+            };
+
+        socket.Connect();
+
+
+    }
+
+    string EncodeMessage(params object[] args) {
+        return "42" + JsonConvert.SerializeObject(args);
+    }
+
+    void DispatchEvent(string eventName, ArrayList args) {
+        Debug.Log("EVENT:: " + eventName);
+        
+        foreach (object arg in args) {
+            Debug.Log(arg.ToString());
+        }
+
+
+        if (eventName == "game:action") {
+            Debug.Log(args[0].ToString());
+            if (args[0].ToString() == "beep") {
+                gameObject.transform.position = new Vector3(0, 0, 0);
+            }
+            if (args[0].ToString() == "boop") {
+                gameObject.transform.position = new Vector3(1, 1, 0);
+            }
+        }
+
+    }
+
+
+    void SendHeartbeat() {
+        Debug.Log("Ping");
+        socket.Send("2");
+    }
+
+    void DecodeMessage(String input) {
+        int enginePacketType = int.Parse(input.Substring(0, 1));
+
+        switch (enginePacketType) {
+            case 0:
+                Debug.Log("[0] Open");
+                break;
+            case 3:
+                Debug.Log("[3] Pong");
+                break;
+            case 4:
+                int socketPacketType = int.Parse(input.Substring(1, 1));
+                Debug.Log("Message type: " + socketPacketType.ToString());
+
+                switch (socketPacketType) {
+                    case 0:
+                        Debug.Log("[40] Open message");
+                        break;
+                    case 2:
+                        Debug.Log("[42] Event message");
+
+                        string data = input.Substring(2);
+                        Debug.Log("Event data: " + data);
+
+                        ArrayList j = JsonConvert.DeserializeObject<ArrayList>(data);
+                        
+
+                        Debug.Log(j.ToString());
+
+
+                        string eventName = j[0].ToString();
+                        j.RemoveAt(0);
+                        try {
+                            DispatchEvent(eventName, j);
+                        }
+                        catch (Exception e ) {
+                            Debug.LogError(e.Message);
+                        }
+                        
+                        // do stuff here
+                        break;
+
+                    default:
+                        Debug.LogWarning("Unknown socket packet type:" + socketPacketType.ToString());
+                        break;
+                }
+
+                break;
+            default:
+                Debug.LogWarning("Unknown engine packet type: " + enginePacketType.ToString());
+                break;
+        }
+        
+    }
+
+
+
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}
