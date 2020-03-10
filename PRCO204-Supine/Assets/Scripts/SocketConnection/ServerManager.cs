@@ -40,7 +40,7 @@ public class ServerManager : MonoBehaviour
 
     void Start()
     {
-        DecodeMessage(0.5f, 0.5f, "bomb");
+        //DecodeMessage(0.5f, 0.5f, "bomb");
     }
 
 }

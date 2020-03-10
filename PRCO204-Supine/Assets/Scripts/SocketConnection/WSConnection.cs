@@ -9,6 +9,8 @@ public class WSConnection : MonoBehaviour
 {
     private WebSocket socket;
 
+    public GameObject serverManagerObj;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -58,12 +60,11 @@ public class WSConnection : MonoBehaviour
     }
 
     void DispatchEvent(string eventName, ArrayList args) {
-        Debug.Log("EVENT:: " + eventName);
+        //Debug.Log("EVENT:: " + eventName);
         
         foreach (object arg in args) {
-            Debug.Log(arg.ToString());
+            //Debug.Log(arg.ToString());
         }
-
 
         if (eventName == "game:action") {
             Debug.Log(args[0].ToString());
@@ -73,6 +74,13 @@ public class WSConnection : MonoBehaviour
             if (args[0].ToString() == "boop") {
                 gameObject.transform.position = new Vector3(1, 1, 0);
             }
+            if (args[0].ToString() == "bomb") {
+                ServerManager srv = serverManagerObj.GetComponent<ServerManager>();
+                srv.DecodeMessage((float)args[1], (float)args[2], (string)args[0]);
+            }
+        }
+        if (eventName == "rooms:joined") {
+            Debug.Log(eventName + " - " + args[0]);
         }
 
     }
@@ -99,13 +107,10 @@ public class WSConnection : MonoBehaviour
                     case 2:
 
                         string data = input.Substring(2);
-                        Debug.Log("Event data: " + data);
+                        //Debug.Log("Event data: " + data);
 
                         ArrayList j = JsonConvert.DeserializeObject<ArrayList>(data);
                         
-
-                        Debug.Log(j.ToString());
-
 
                         string eventName = j[0].ToString();
                         j.RemoveAt(0);
