@@ -16,3 +16,19 @@ Josie Wood|`10509521`|josie@supine.dev|**Scrum master**, lead designer, QA teste
 - **Commit naming**: Please start your commit with the Jira issue you're working on in square brackets. Realistically, a commit should only address one issue. Good example: `[SUP-11] Fixed position of enemy mesh in prefab`.
 - **Commit often**: When you've hit a milestone or big objective in your task, commit with a good, succinct message about what you've done.
 - **Update [Jira](https://jira.slmn.io/projects/SUP)**: Longer form discussion & updates, especially when you've committed or have finished a sub-task should be written up on Jira. The more documentation, the easier it is for someone to take over. I would honestly prefer more detail on Jira than on commit descriptions, especially if you use the `[SUP-X]` code in your commit message.
+
+# Code base structure
+We will be following Microsoft's .NET framework [coding conventions](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/inside-a-program/coding-conventions).
+
+- **Comments**: 
+Comments will be present throughout scripts, especially before a method detailing what that method does (and if so, what value it returns). Place the comment on a separate line, not at the end of a line of code. Comments must follow standardised English with appropriate punctuation.Insert one space between the comment delimiter (//) and the comment text. 
+
+
+  // This is a proper comment. It does
+  
+  // not violate any rules.
+  
+  
+- **Code**: Lines must be <75 characters in length. Write only one statement per line. Write only one declaration per line. If continuation lines are not indented automatically, indent them one tab stop (four spaces). Add at least one blank line between method definitions and property definitions.
+- **IF Statements**: Do not use the operators != or == where appropriate, instead use (boolean) and (!boolean). Instead of using nested IF statements for checking for null values, use the ??, ?= operators.
+- **Peer review**: Individual scripts should be checked for these standards before being merged into the master branch.
