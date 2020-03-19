@@ -24,7 +24,7 @@ public class CameraFollow : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 targetPosition = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z); //playergame.GetComponent<Raycast>().raycam.transform.position.y
+        Vector3 targetPosition = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
         Vector3 origin = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         transform.position = Vector3.SmoothDamp(origin, targetPosition, ref velocity, smoothTime);
     }
