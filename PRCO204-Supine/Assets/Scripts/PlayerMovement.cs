@@ -46,8 +46,10 @@ public class PlayerMovement : MonoBehaviour
         controls = new PlayerControls();
         rb = gameObject.GetComponent<Rigidbody>();
 
+        // Controller input.
         controls.Gameplay.PlayerMoveX.performed += ctx => x = ctx.ReadValue<float>();
         controls.Gameplay.PlayerMoveX.canceled += ctx => x = 0f;
+
         controls.Gameplay.PlayerMoveZ.performed += ctx => z = ctx.ReadValue<float>();
         controls.Gameplay.PlayerMoveZ.canceled += ctx => z = 0f;
 
@@ -67,6 +69,11 @@ public class PlayerMovement : MonoBehaviour
         pivot.transform.rotation = rot;
 
         move = mainCamera.transform.right * x + pivot.transform.forward * z;
+
+        if (move == new Vector3(0f, 0f, 0f)) 
+        {
+            move = KeyboardMovement(move);
+        }
 
         if (Physics.Raycast(transform.position, Vector3.down, distanceToGround, groundLayer))
         {
@@ -146,5 +153,15 @@ public class PlayerMovement : MonoBehaviour
 
             playerSpeed = 15f;
         }
+    }
+
+    Vector3 KeyboardMovement(Vector3 move) 
+    {
+        float keyboardX = Input.GetAxis("Horizontal");
+        float keyboardZ = Input.GetAxis("Vertical");
+
+        move = mainCamera.transform.right * keyboardX + pivot.transform.forward * keyboardZ;
+
+        return move;
     }
 }
