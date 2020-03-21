@@ -32,3 +32,10 @@ Comments will be present throughout scripts, especially before a method detailin
 - **Code**: Lines must be <75 characters in length. Write only one statement per line. Write only one declaration per line. If continuation lines are not indented automatically, indent them one tab stop (four spaces). Add at least one blank line between method definitions and property definitions.
 - **IF Statements**: Do not use the operators != or == where appropriate, instead use (boolean) and (!boolean). Instead of using nested IF statements for checking for null values, use the ??, ?= operators.
 - **Peer review**: Individual scripts should be checked for these standards before being merged into the master branch.
+
+# .gitignore fixing
+Sometimes the .gitignore isn't followed properly, especially across different clients. If you end up committing your Library directory or anything else that violates the .gitignore, you can run these commands in the root of the git folder to clean it up.
+
+- First, commit anything that you've done.
+- `git rm -r --cached .` (removes everything cached from the git)
+- `git add .` (re-adds everything, passing it through the .gitignore)
