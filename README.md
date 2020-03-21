@@ -8,6 +8,14 @@ Alex Pritchard|`10577259`|alex@supine.dev|**Codebase manager**, technical lead, 
 Zack Hawkins|`10587295`|zack@supine.dev|**Client liason**, product owner, secondary designer
 Josie Wood|`10509521`|josie@supine.dev|**Scrum master**, lead designer, QA tester, project management lead
 
+# Version control schedule
+Due|Action|By
+---|---|---
+Friday at meeting|**Branch pull request**: Make sure you've made your pull request by or during Friday's meeting so it can be reviewed.|Branch developer
+Friday/Saturday evening|**Initial branch reviews**: A technical lead will do the initial round of reviews by delving into your branch files and looking for things to change.|Technical leads
+Monday|**Pull requests close**: Your review should be completed and you'll be able to see if there's anything that needs to be changed. These changes are usually small (like code style / obvious errors or improvements / quick fixes) and shouldn't take too long|Branch developer
+Monday|**Pull requests merge**: A technical lead will close and merge your branch into master if it's ready.|Technical leads
+
 # Version control structure
 - All changes (other than documentation) will take place on their own branches.
 - **Branch naming**: Branches will be named using lowercase **kebab-case** with a useful name for the contents of the branch. eg: `player-controls` `websocket-prototype` `level-generator` are good, `solomon-working-branch` `testing` `game` are not.
@@ -23,11 +31,11 @@ We will be following Microsoft's .NET framework [coding conventions](https://doc
 - **Comments**: 
 Comments will be present throughout scripts, especially before a method detailing what that method does (and if so, what value it returns). Place the comment on a separate line, not at the end of a line of code. Comments must follow standardised English with appropriate punctuation.Insert one space between the comment delimiter (//) and the comment text. 
 
-
+```
   // This is a proper comment. It does
   
   // not violate any rules.
-  
+  ```
   
 - **Code**: Lines must be <75 characters in length. Write only one statement per line. Write only one declaration per line. If continuation lines are not indented automatically, indent them one tab stop (four spaces). Add at least one blank line between method definitions and property definitions.
 - **IF Statements**: Do not use the operators != or == where appropriate, instead use (boolean) and (!boolean). Instead of using nested IF statements for checking for null values, use the ??, ?= operators.
