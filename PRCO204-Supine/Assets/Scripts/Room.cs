@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class Room : MonoBehaviour
 {
     // Rooms have at least one door
@@ -22,6 +21,11 @@ public class Room : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if(!this.GetComponentInChildren<Door>())
+        {
+            Debug.LogError("No doors are attached to this room. Each room requires at least one door child");
+        }
+
         doors = this.GetComponentsInChildren<Door>();
     }
 

@@ -17,6 +17,10 @@ public class Door : MonoBehaviour
     private void Start()
     {
         animator = this.gameObject.GetComponent<Animator>();
+        if (!this.GetComponentInParent<Room>())
+        {
+            Debug.LogError("No parent room found. A door should always be a child of a room");
+        }
     }
 
     private void Update()
@@ -57,8 +61,6 @@ public class Door : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log("triggercolldie");
-
         if (other.gameObject.tag == "Player" && !open && !locked)
         {
             animator.SetBool("Open", true);
