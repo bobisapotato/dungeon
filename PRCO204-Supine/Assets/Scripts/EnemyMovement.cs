@@ -2,7 +2,8 @@
 using UnityEngine.AI;
 using System.Collections;
 
-/* Makes enemies follow and attack the player */
+// Makes enemies follow and attack the player.
+// Uses the animator window in Unity to simulate a FSM.
 public class EnemyMovement : MonoBehaviour
 {
 	public Transform target;
@@ -52,21 +53,21 @@ public class EnemyMovement : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		// Get the distance to the player
+		// Get the distance to the player.
 		float distance = Vector3.Distance(target.position, eyes.position);
 
-		// If inside the radius
+		// If inside the radius.
 		if (distance <= lookRadius)
 		{
 			FaceTarget();
 
-			// Move towards the player
+			// Move towards the player.
 			anim.SetBool("isFollowing", true);
 			anim.SetBool("isWandering", false);
 
 			if (distance <= stoppingDistance)
 			{
-				// Attack
+				// Attack here.
 				FaceTarget();
 			}
 		}
@@ -76,12 +77,14 @@ public class EnemyMovement : MonoBehaviour
 		}
 	}
 
-	// Point towards the player
+	// Point towards the player.
 	void FaceTarget()
 	{
 		Vector3 direction = (target.position - transform.position).normalized;
-		Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-		transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+		Quaternion lookRotation = Quaternion.LookRotation
+			(new Vector3(direction.x, 0, direction.z));
+		transform.rotation = Quaternion.Slerp(transform.rotation, 
+			lookRotation, Time.deltaTime * 5f);
 	}
 
 	void OnDrawGizmosSelected()
@@ -90,6 +93,7 @@ public class EnemyMovement : MonoBehaviour
 		Gizmos.DrawWireSphere(eyes.position, lookRadius);
 	}
 
+	// Selects random values to simulate wandering around.
 	IEnumerator Wander() 
 	{
 		rotTime = Random.Range(1, 3);
