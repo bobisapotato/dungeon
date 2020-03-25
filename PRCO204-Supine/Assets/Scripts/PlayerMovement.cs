@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// Player moves in relation to the camera's rotation.
+// Uses Unity's preview input system.
 public class PlayerMovement : MonoBehaviour
 {
     public static Vector3 playerPos;
@@ -29,7 +31,11 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     private GameObject mainCamera;
+
     [SerializeField]
+    // Pivot is an empty gameobject that shares the position of the
+    // camera, but always faces forward. It's rotation is not
+    // changed.
     private GameObject pivot;
 
     [SerializeField]
@@ -47,10 +53,12 @@ public class PlayerMovement : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
 
         // Controller input.
-        controls.Gameplay.PlayerMoveX.performed += ctx => x = ctx.ReadValue<float>();
+        controls.Gameplay.PlayerMoveX.performed += ctx => x 
+        = ctx.ReadValue<float>();
         controls.Gameplay.PlayerMoveX.canceled += ctx => x = 0f;
 
-        controls.Gameplay.PlayerMoveZ.performed += ctx => z = ctx.ReadValue<float>();
+        controls.Gameplay.PlayerMoveZ.performed += ctx => z 
+        = ctx.ReadValue<float>();
         controls.Gameplay.PlayerMoveZ.canceled += ctx => z = 0f;
 
         controls.Gameplay.PlayerJump.performed += ctx => Jump();
@@ -68,14 +76,19 @@ public class PlayerMovement : MonoBehaviour
         var rot = Quaternion.Euler(0, euler.y, 0);
         pivot.transform.rotation = rot;
 
+        // Player moves on the Z axis based on the camera's rotation.
         move = mainCamera.transform.right * x + pivot.transform.forward * z;
 
+        // If there's not input from the input system, 
+        // check for alternative input.
+        // This is temporary, for Zack.
         if (move == new Vector3(0f, 0f, 0f)) 
         {
             move = KeyboardMovement(move);
         }
 
-        if (Physics.Raycast(transform.position, Vector3.down, distanceToGround, groundLayer))
+        if (Physics.Raycast(transform.position, Vector3.down, 
+            distanceToGround, groundLayer))
         {
             isGrounded = true;
         }
@@ -88,14 +101,17 @@ public class PlayerMovement : MonoBehaviour
     // Physics.
     void FixedUpdate()
     {
+        // Move the player.
         rb.position += (move * playerSpeed * Time.deltaTime);
 
+        // Execute jump.
         if (isJumping && isGrounded)
         {
             rb.AddForce(0f, jumpHeight, 0f, ForceMode.Impulse);
             isJumping = false;
         }
 
+        // Execute crouch.
         if (isCrouching)
         {
             transform.localScale = new Vector3(1f, 0.5f, 1f);
@@ -155,12 +171,14 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // Temporary alternative movement.
     Vector3 KeyboardMovement(Vector3 move) 
     {
         float keyboardX = Input.GetAxis("Horizontal");
         float keyboardZ = Input.GetAxis("Vertical");
 
-        move = mainCamera.transform.right * keyboardX + pivot.transform.forward * keyboardZ;
+        move = mainCamera.transform.right * keyboardX + pivot.transform.forward 
+            * keyboardZ;
 
         return move;
     }
