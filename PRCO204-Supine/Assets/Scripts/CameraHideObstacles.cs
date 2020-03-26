@@ -26,7 +26,7 @@ public class CameraHideObstacles : MonoBehaviour
    
     private void FixedUpdate()
     {
-        Debug.Log("player is hidden = " + checkPlayerObscured());
+        //Debug.Log("player is hidden = " + checkPlayerObscured());
         
         if(obstacle)
         {
