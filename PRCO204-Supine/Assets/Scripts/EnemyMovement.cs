@@ -4,6 +4,9 @@ using System.Collections;
 
 // Makes enemies follow and attack the player.
 // Uses the animator window in Unity to simulate a FSM.
+
+// Enemies do damage to the player when they are close
+// enough.
 public class EnemyMovement : MonoBehaviour
 {
 	public Transform target;
@@ -26,6 +29,11 @@ public class EnemyMovement : MonoBehaviour
 	private int walkTime;
 	private int walkWait;
 
+	private int damage = 10;
+	private float attackCoolDown = 0f;
+	private float attackCoolDownTime = 1f;
+	private float attackRadius = 5f;
+
 	void Start()
 	{
 		anim = GetComponent<Animator>();
@@ -33,6 +41,14 @@ public class EnemyMovement : MonoBehaviour
 
 	void Update() 
 	{
+		// Get the distance to the player.
+		float attackDistance = Vector3.Distance(target.position, transform.position);
+
+		if (attackCoolDown <= attackCoolDownTime)
+		{
+			attackCoolDown += Time.deltaTime;
+		}
+
 		if (!anim.GetBool("isWandering") && !anim.GetBool("isFollowing")) 
 		{
 			StartCoroutine(Wander());
@@ -49,15 +65,22 @@ public class EnemyMovement : MonoBehaviour
 		{
 			transform.position += transform.forward * moveSpeed * Time.deltaTime;
 		}
+
+		// If inside the radius, attack.
+		if (attackDistance <= attackRadius && attackCoolDown > attackCoolDownTime)
+		{
+			attackCoolDown = 0f;
+			HealthManager.playerHealth.TakeDamage(damage);
+		}
 	}
 
 	void FixedUpdate()
 	{
 		// Get the distance to the player.
-		float distance = Vector3.Distance(target.position, eyes.position);
+		float movementDistance = Vector3.Distance(target.position, eyes.position);
 
 		// If inside the radius.
-		if (distance <= lookRadius)
+		if (movementDistance <= lookRadius)
 		{
 			FaceTarget();
 
@@ -65,13 +88,13 @@ public class EnemyMovement : MonoBehaviour
 			anim.SetBool("isFollowing", true);
 			anim.SetBool("isWandering", false);
 
-			if (distance <= stoppingDistance)
+			if (movementDistance <= stoppingDistance)
 			{
 				// Attack here.
 				FaceTarget();
 			}
 		}
-		else 
+		else
 		{
 			anim.SetBool("isFollowing", false);
 		}
@@ -91,6 +114,7 @@ public class EnemyMovement : MonoBehaviour
 	{
 		Gizmos.color = Color.red;
 		Gizmos.DrawWireSphere(eyes.position, lookRadius);
+		Gizmos.DrawWireSphere(transform.position, attackRadius);
 	}
 
 	// Selects random values to simulate wandering around.
