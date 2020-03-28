@@ -13,7 +13,7 @@ public class Room : MonoBehaviour
     #region
     public Door[] doors;
     public bool roomCleared = false;
-    private bool doorsLocked = false;
+    public bool doorsLocked = false;
     public bool playerInRoom;
 
     #endregion
@@ -64,6 +64,7 @@ public class Room : MonoBehaviour
             d.unlockDoor();
         }
 
+        roomCleared = true;
         doorsLocked = false;
     }
 }

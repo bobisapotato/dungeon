@@ -14,6 +14,8 @@ public class CameraHideObstacles : MonoBehaviour
     private GameObject player;
     private Camera mainCamera;
     [SerializeField] GameObject obstacle;
+
+    //[SerializeField] GameObject[] obstacles;
     #endregion
 
     void Start()
@@ -26,9 +28,10 @@ public class CameraHideObstacles : MonoBehaviour
    
     private void FixedUpdate()
     {
-        Debug.Log("player is hidden = " + checkPlayerObscured());
-        
-        if(obstacle)
+        //Debug.Log("player is hidden = " + checkPlayerObscured());
+        checkPlayerObscured();
+
+        if (obstacle)
         {
             hideObstacle();
         }
