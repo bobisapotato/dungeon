@@ -11,6 +11,26 @@ public class WSConnection : MonoBehaviour
 
     public GameObject serverManagerObj;
 
+    abstract class NetworkEvent {
+        public abstract void Dispatch();
+    }
+    class SpawnNetworkEvent : NetworkEvent {
+        double x; double z; string type; GameObject serverManager;
+        public SpawnNetworkEvent(GameObject serverManager, double x, double z, string type) {
+            this.serverManager = serverManager;
+            this.x = x;
+            this.z = z;
+            this.type = type;
+        }
+        public override void Dispatch() {
+            ServerManager srv = serverManager.GetComponent<ServerManager>();
+            srv.DecodeMessage((float)x, (float)z, type);
+            Debug.Log(this.type);
+        }
+    }
+
+    private List<NetworkEvent> queuedEvents = new List<NetworkEvent>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,7 +65,6 @@ public class WSConnection : MonoBehaviour
 
     }
 
-
     IEnumerator NetworkTick() {
         for (;;) {
             // network tick
@@ -60,14 +79,24 @@ public class WSConnection : MonoBehaviour
     }
 
     void DispatchEvent(string eventName, ArrayList args) {
-        //Debug.Log("EVENT:: " + eventName);
+        if (eventName == "player:position") return;
+
+        /*
+         We need to build a queue system that's picked up by the main thread        
+         */
+        Debug.Log("EVENT:: " + eventName);
+
         
         foreach (object arg in args) {
-            //Debug.Log(arg.ToString());
+            Debug.Log(arg.ToString());
+            Debug.Log(arg.GetType());
         }
 
         if (eventName == "game:action") {
             Debug.Log(args[0].ToString());
+
+
+
             if (args[0].ToString() == "beep") {
                 gameObject.transform.position = new Vector3(0, 0, 0);
             }
@@ -75,8 +104,8 @@ public class WSConnection : MonoBehaviour
                 gameObject.transform.position = new Vector3(1, 1, 0);
             }
             if (args[0].ToString() == "bomb") {
-                ServerManager srv = serverManagerObj.GetComponent<ServerManager>();
-                srv.DecodeMessage((float)args[1], (float)args[2], (string)args[0]);
+                SpawnNetworkEvent evt = new SpawnNetworkEvent(serverManagerObj, (double)args[1], (double)args[2], (string)args[0]);
+                queuedEvents.Add(evt);
             }
         }
         if (eventName == "rooms:joined") {
@@ -107,17 +136,19 @@ public class WSConnection : MonoBehaviour
                     case 2:
 
                         string data = input.Substring(2);
-                        //Debug.Log("Event data: " + data);
+                        
 
                         ArrayList j = JsonConvert.DeserializeObject<ArrayList>(data);
                         
 
                         string eventName = j[0].ToString();
+                        if (eventName != "player:position") Debug.Log(j.ToString());
                         j.RemoveAt(0);
                         try {
                             DispatchEvent(eventName, j);
                         }
                         catch (Exception e ) {
+                            throw e;
                             Debug.LogError(e.Message);
                         }
                         
@@ -143,6 +174,19 @@ public class WSConnection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        /* 
+         * Dispatch events each frame
+         */
+        if (queuedEvents.Count > 0) {
+            foreach (NetworkEvent item in queuedEvents) {
+                // handle each item
+                Debug.Log("Event" + item.ToString());
+                item.Dispatch();
+
+            }
+            // remove queue
+            queuedEvents = new List<NetworkEvent>();
+
+        }
     }
 }
