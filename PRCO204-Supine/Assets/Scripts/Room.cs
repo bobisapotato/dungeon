@@ -16,6 +16,12 @@ public class Room : MonoBehaviour
     public bool doorsLocked = false;
     public bool playerInRoom;
 
+    // door directions
+    public bool nDoor = false;
+    public bool eDoor = false;
+    public bool sDoor = false;
+    public bool wDoor = false;
+
     #endregion
 
     // Start is called before the first frame update
@@ -27,6 +33,7 @@ public class Room : MonoBehaviour
         }
 
         doors = this.GetComponentsInChildren<Door>();
+        setUpDoorDirections();
     }
 
     // Update is called once per frame
@@ -40,6 +47,31 @@ public class Room : MonoBehaviour
         {
             unlockAllDoors();
         }
+    }
+
+    private void setUpDoorDirections()
+    {
+        // sets bools for each door dir based on the spawn pts in the children
+        foreach(Door d in doors)
+        {
+            if(d.direction == "N")
+            {
+                nDoor = true;
+            }
+            if (d.direction == "E")
+            {
+                eDoor = true;
+            }
+            if (d.direction == "S")
+            {
+                sDoor = true;
+            }
+            if (d.direction == "W")
+            {
+                wDoor = true;
+            }
+        }
+        
     }
 
     public void setPlayerInRoom(bool playerInRoomInput)
