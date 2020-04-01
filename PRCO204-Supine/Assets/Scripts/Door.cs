@@ -12,6 +12,8 @@ public class Door : MonoBehaviour
     // Door always starts closed, opens when player collides for the first time.
     public bool open = false;  
     public bool locked = false;
+    public Material unlockedMaterial;
+    public Material lockedMaterial;
     
     private void Start()
     {
@@ -70,6 +72,7 @@ public class Door : MonoBehaviour
         // Door can be locked from other scripts - doors close and player can't pass through doorway.
         animator.SetBool("Locked", true);
         locked = true;
+        this.gameObject.GetComponentInChildren<MeshRenderer>().material = lockedMaterial;
     }
 
     public void unlockDoor()
@@ -77,5 +80,6 @@ public class Door : MonoBehaviour
         // Door unlocks, opens, can be passed through.
         animator.SetBool("Locked", false);
         locked = false;
+        this.gameObject.GetComponentInChildren<MeshRenderer>().material = unlockedMaterial;
     }
 }

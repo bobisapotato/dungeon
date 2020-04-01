@@ -18,9 +18,13 @@ public class EnemyMovement : MonoBehaviour
 	private bool isRotatingRight = false;
 	private bool isWalking = false;
 
+	[SerializeField]
 	private float moveSpeed = 5f;
+	[SerializeField]
 	private float rotSpeed = 100f;
-	private float lookRadius = 10f;
+	[SerializeField]
+	private float lookRadius = 2.5f;
+	[SerializeField]
 	private float stoppingDistance = 3f;
 
 	private int rotTime;
@@ -123,8 +127,8 @@ public class EnemyMovement : MonoBehaviour
 		rotTime = Random.Range(1, 3);
 		rotateWait = Random.Range(1, 4);
 		rotateLorR = Random.Range(0, 3);
-		walkWait = Random.Range(1, 4);
-		walkTime = Random.Range(1, 5);
+		walkWait = Random.Range(1, 2);
+		walkTime = Random.Range(1, 3);
 
 		anim.SetBool("isWandering", true);
 		anim.SetBool("isFollowing", false);
