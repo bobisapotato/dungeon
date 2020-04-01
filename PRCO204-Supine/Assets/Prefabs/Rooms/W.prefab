@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -3247787417522245783}
   m_Layer: 0
   m_Name: W
-  m_TagString: Untagged
+  m_TagString: Room
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +30,7 @@ Transform:
   m_Children:
   - {fileID: 353230090153135551}
   - {fileID: 7721637968133937044}
-  - {fileID: 6615042359709876257}
+  - {fileID: 5800776110634765520}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -53,7 +53,7 @@ MonoBehaviour:
   nDoor: 0
   eDoor: 0
   sDoor: 0
-  wDoor: 0
+  wDoor: 1
 --- !u!1 &3656277749583609772
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,7 +133,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!1001 &3922859729320406747
+--- !u!1001 &4412941570740691498
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -153,7 +153,7 @@ PrefabInstance:
     - target: {fileID: 7907641283554356986, guid: 979d249f539e38341a64d5400cb85c32,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.92
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 7907641283554356986, guid: 979d249f539e38341a64d5400cb85c32,
         type: 3}
@@ -202,11 +202,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 979d249f539e38341a64d5400cb85c32, type: 3}
---- !u!4 &6615042359709876257 stripped
+--- !u!4 &5800776110634765520 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7907641283554356986, guid: 979d249f539e38341a64d5400cb85c32,
     type: 3}
-  m_PrefabInstance: {fileID: 3922859729320406747}
+  m_PrefabInstance: {fileID: 4412941570740691498}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7579697770839897519
 PrefabInstance:

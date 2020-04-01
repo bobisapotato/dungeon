@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5683249559197073674}
   m_Layer: 0
   m_Name: N_E
-  m_TagString: Untagged
+  m_TagString: Room
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52,8 +52,8 @@ MonoBehaviour:
   roomCleared: 0
   doorsLocked: 0
   playerInRoom: 0
-  nDoor: 0
-  eDoor: 0
+  nDoor: 1
+  eDoor: 1
   sDoor: 0
   wDoor: 0
 --- !u!1 &3031077669381678849
@@ -67,6 +67,7 @@ GameObject:
   - component: {fileID: 2038957230388925714}
   - component: {fileID: 6994321613798043428}
   - component: {fileID: 3615364759770043357}
+  - component: {fileID: 6795512273289548086}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -135,6 +136,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &6795512273289548086
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3031077669381678849}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5495902117074765545, guid: ab22eda98d7f5a74f980a57069e066ba, type: 3}
 --- !u!1001 &3971645020176753940
 PrefabInstance:
   m_ObjectHideFlags: 0

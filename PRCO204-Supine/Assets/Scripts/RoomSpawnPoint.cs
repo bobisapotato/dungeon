@@ -12,7 +12,7 @@ public class RoomSpawnPoint : MonoBehaviour
     public string spawnDirection;
     public LevelGeneration levelGenManager;
 
-    public bool active = true;
+    public bool open = true;
 
     public void checkSpwnActive()
     {
@@ -22,7 +22,7 @@ public class RoomSpawnPoint : MonoBehaviour
         {
             if(g.transform.position == this.transform.position)
             {
-                active = false;
+                open = false;
             }
         }
 
