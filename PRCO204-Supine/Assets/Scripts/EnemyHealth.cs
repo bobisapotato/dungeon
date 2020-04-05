@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    //Variables / unity events
+    // Variables 
     [SerializeField] int health = 100;
+    [SerializeField] int knockback;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -13,6 +15,7 @@ public class EnemyHealth : MonoBehaviour
     }
 
     // Update is called once per frame
+    // Checks to 
     void Update()
     {
         if (health <= 0)
@@ -24,12 +27,13 @@ public class EnemyHealth : MonoBehaviour
     }
 
 
-    //Takes the amount sent to the method away from the enemies health
-
-    //needs hit.transform.SendMessage("TakeDamage", amount); in player attack
+    // Takes the amount sent to the method away from the enemies health
+    // then applies a knockback affect to the enemy.
     public void TakeDamage(int amount)
     {
         health -= amount;
+
+        gameObject.GetComponent<Rigidbody>().AddForce(-transform.forward * knockback);
     }
     
 
