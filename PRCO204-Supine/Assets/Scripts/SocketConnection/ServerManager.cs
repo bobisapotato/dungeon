@@ -6,8 +6,10 @@ public class ServerManager : MonoBehaviour
 {
 
     public GameObject _room;
+    public GameObject BombPrefab
 
-    public GameObject BombPrefab;
+    private WSConnection connection;
+    public string server = "research.supine.dev:3018";
 
     public class Item { }
     public class Bomb : Item { }
@@ -60,6 +62,9 @@ public class ServerManager : MonoBehaviour
     void Start()
     {
         //DecodeMessage(0.5f, 0.5f, "bomb");
+
+        // Initiate websocket connection here
+        connection = new WSConnection(server);
     }
 
     void Update() {
