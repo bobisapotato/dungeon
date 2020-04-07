@@ -17,6 +17,8 @@ public class CameraHideObstacles : MonoBehaviour
 
     //[SerializeField] GameObject[] obstacles;
     #endregion
+    private GameObject lastWall;
+    float alpha = 1f;
 
     void Start()
     {
@@ -82,7 +84,25 @@ public class CameraHideObstacles : MonoBehaviour
         // sets mesh renderer to inactive for given GO
         if (obstacle.GetComponent<MeshRenderer>())
         {
-            obstacle.GetComponent<MeshRenderer>().enabled = false;
+            if (lastWall != obstacle) 
+            {
+                alpha = 1f;
+
+                lastWall = obstacle;
+            }
+            else
+            {
+                //obstacle.GetComponent<MeshRenderer>().enabled = false;
+                if (alpha > 0.5f) 
+                {
+                    alpha -= 0.1f;
+                }
+
+                obstacle.GetComponent<MeshRenderer>().material.color = new Color
+                    (obstacle.GetComponent<MeshRenderer>().material.color.r,
+                    obstacle.GetComponent<MeshRenderer>().material.color.g,
+                    obstacle.GetComponent<MeshRenderer>().material.color.b, alpha);
+            }
         }
     }
 
@@ -94,7 +114,10 @@ public class CameraHideObstacles : MonoBehaviour
         {
             if (obstacle.GetComponent<MeshRenderer>())
             {
-                obstacle.GetComponent<MeshRenderer>().enabled = true;
+                obstacle.GetComponent<MeshRenderer>().material.color = new Color
+                   (obstacle.GetComponent<MeshRenderer>().material.color.r,
+                   obstacle.GetComponent<MeshRenderer>().material.color.g,
+                   obstacle.GetComponent<MeshRenderer>().material.color.b, 1f);
             }
             obstacle = null;
         }
