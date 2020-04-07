@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 151075253470208571}
   - component: {fileID: 8477919844808481581}
+  - component: {fileID: -1216589630873673153}
   m_Layer: 0
   m_Name: SpawnPt W
   m_TagString: RoomSpawn
@@ -46,3 +47,16 @@ MonoBehaviour:
   spawnDirection: W
   levelGenManager: {fileID: 0}
   open: 1
+--- !u!65 &-1216589630873673153
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6995579479686283816}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: -4, z: 0}

@@ -34,12 +34,13 @@ public class LevelGeneration : MonoBehaviour
 		populateSpawnPtList();
 		populateRoomDirectionLists();
 
+		roomsInScene.Add(startRoomPrefab);
+
 		// test room gen
 		// spawn room for each point in first room
 		spawnRoom(activeSpawnPts[0].GetComponent<RoomSpawnPoint>());
 		spawnRoom(activeSpawnPts[1].GetComponent<RoomSpawnPoint>());
-		spawnRoom(activeSpawnPts[2].GetComponent<RoomSpawnPoint>());
-		spawnRoom(activeSpawnPts[3].GetComponent<RoomSpawnPoint>());
+		
 	}
 
 	private void Update()
@@ -59,6 +60,22 @@ public class LevelGeneration : MonoBehaviour
 			spawnRoom(activeSpawnPts[3].GetComponent<RoomSpawnPoint>());
 
 		}
+
+		if (Input.GetKeyDown(KeyCode.Q))
+		{
+			if(activeSpawnPts[0].GetComponent<RoomSpawnPoint>().open)
+			{
+				spawnRoom(activeSpawnPts[0].GetComponent<RoomSpawnPoint>());
+			}
+			else
+			{
+				activeSpawnPts.Remove(activeSpawnPts[activeSpawnPts.Count-1].GetComponent<RoomSpawnPoint>().gameObject);
+			}
+			
+		}
+
+
+		//Debug.Log(openPaths);
 	}
 
 	public List<GameObject> getRoomsInScene()
@@ -93,18 +110,27 @@ public class LevelGeneration : MonoBehaviour
 
 	public void removeFromSpawnList(GameObject g)
 	{
-		// when a room is spawned, the relevant point becomes inactive, and this is called to remove it
-		activeSpawnPts.Remove(g);
-		openPaths--;
+		Debug.Log("has run remove");
+		if (activeSpawnPts.Contains(g))
+		{
+			Debug.Log("Is found in list");
+			// when a room is spawned, the relevant point becomes inactive, and this is called to remove it
+			activeSpawnPts.Remove(g);
+			openPaths--;
+			Debug.Log("has removed " + g.name);
+		}
 	}
+
 	#endregion
 
 	// Manage roomsInScene
-	public void addNewRoomToScene(GameObject g)
+	public void addNewRoomToScene(GameObject g, RoomSpawnPoint spawn)
 	{
 		// adds Gamoebject to roomsInScene list
 		roomsInScene.Add(g);
 		totalRoomsSoFar++;
+		spawn.setSpawnInactive();
+		removeFromSpawnList(spawn.gameObject);
 	}
 
 	// Populate lists of room prefabs based on door directions
@@ -136,17 +162,12 @@ public class LevelGeneration : MonoBehaviour
 	}
 
 	// Spawning of rooms
-
-	
-
 	public void spawnRoom(RoomSpawnPoint spawnPoint)
 	{
 		// spawns in a random room at the given point
 		// room must be selected from correct list so doors align
 
 		GameObject roomToSpawn = null;
-
-
 
 		if (spawnPoint.spawnDirection == "N")
 		{
@@ -175,12 +196,12 @@ public class LevelGeneration : MonoBehaviour
 		Debug.Log("Room " + roomToSpawn.name + " has been selected to spawn from spawn point " + spawnPoint.gameObject.name);
 
 		Vector3 tempTransform = spawnPoint.transform.position;
-		
 
 		// spawn said room at that pos
 		Instantiate(roomToSpawn, tempTransform, Quaternion.identity);
 
-		addNewRoomToScene(roomToSpawn.gameObject);
+		addNewRoomToScene(roomToSpawn.gameObject, spawnPoint);
+
 	}
 
 }

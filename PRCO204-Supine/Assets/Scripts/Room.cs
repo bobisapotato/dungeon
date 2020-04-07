@@ -34,6 +34,9 @@ public class Room : MonoBehaviour
 
         doors = this.GetComponentsInChildren<Door>();
         setUpDoorDirections();
+
+        // if theres a spawn point at the same loc, set it to inactive
+
     }
 
     // Update is called once per frame
