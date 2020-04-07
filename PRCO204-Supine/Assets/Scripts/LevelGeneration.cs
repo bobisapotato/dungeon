@@ -40,7 +40,9 @@ public class LevelGeneration : MonoBehaviour
 		// spawn room for each point in first room
 		spawnRoom(activeSpawnPts[0].GetComponent<RoomSpawnPoint>());
 		spawnRoom(activeSpawnPts[1].GetComponent<RoomSpawnPoint>());
-		
+		spawnRoom(activeSpawnPts[2].GetComponent<RoomSpawnPoint>());
+		spawnRoom(activeSpawnPts[3].GetComponent<RoomSpawnPoint>());
+
 	}
 
 	private void Update()
@@ -61,15 +63,20 @@ public class LevelGeneration : MonoBehaviour
 
 		}
 
+
+		int index = Random.Range(0, activeSpawnPts.Count - 1);
+
 		if (Input.GetKeyDown(KeyCode.Q))
+
 		{
+
 			if(activeSpawnPts[0].GetComponent<RoomSpawnPoint>().open)
 			{
-				spawnRoom(activeSpawnPts[0].GetComponent<RoomSpawnPoint>());
+				spawnRoom(activeSpawnPts[index].GetComponent<RoomSpawnPoint>());
 			}
 			else
 			{
-				activeSpawnPts.Remove(activeSpawnPts[activeSpawnPts.Count-1].GetComponent<RoomSpawnPoint>().gameObject);
+				activeSpawnPts.Remove(activeSpawnPts[index].GetComponent<RoomSpawnPoint>().gameObject);
 			}
 			
 		}
@@ -110,16 +117,16 @@ public class LevelGeneration : MonoBehaviour
 
 	public void removeFromSpawnList(GameObject g)
 	{
-		Debug.Log("has run remove");
 		if (activeSpawnPts.Contains(g))
 		{
-			Debug.Log("Is found in list");
 			// when a room is spawned, the relevant point becomes inactive, and this is called to remove it
 			activeSpawnPts.Remove(g);
 			openPaths--;
 			Debug.Log("has removed " + g.name);
 		}
 	}
+
+	
 
 	#endregion
 
@@ -130,7 +137,7 @@ public class LevelGeneration : MonoBehaviour
 		roomsInScene.Add(g);
 		totalRoomsSoFar++;
 		spawn.setSpawnInactive();
-		removeFromSpawnList(spawn.gameObject);
+		activeSpawnPts.Remove(spawn.gameObject);
 	}
 
 	// Populate lists of room prefabs based on door directions
