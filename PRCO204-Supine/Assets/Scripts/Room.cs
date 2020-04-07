@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Room : MonoBehaviour
 {
-    // Rooms have at least one door
-    // Multiple rooms make up a level
-    // Rooms have objectives to be met to clear the room
-    // When player enters room for the first time, all doors lock behind them
-    // When room is cleared doors unlock
+    // Rooms have at least one door.
+    // Multiple rooms make up a level.
+    // Rooms have objectives to be met to clear the room.
+    // When player enters room for the first time, all doors lock behind them.
+    // When room is cleared doors unlock.
 
     // VARIABLES
     #region
@@ -16,9 +16,15 @@ public class Room : MonoBehaviour
     public bool doorsLocked = false;
     public bool playerInRoom;
 
+    // door directions
+    public bool nDoor = false;
+    public bool eDoor = false;
+    public bool sDoor = false;
+    public bool wDoor = false;
+
     #endregion
 
-    // Start is called before the first frame update
+    // Start is called before the first frame update.
     void Start()
     {
         if(!this.GetComponentInChildren<Door>())
@@ -27,9 +33,13 @@ public class Room : MonoBehaviour
         }
 
         doors = this.GetComponentsInChildren<Door>();
+        setUpDoorDirections();
+
+        // if theres a spawn point at the same loc, set it to inactive
+
     }
 
-    // Update is called once per frame
+    // Update is called once per frame.
     void Update()
     {
         if(playerInRoom & !roomCleared & !doorsLocked)
@@ -40,6 +50,31 @@ public class Room : MonoBehaviour
         {
             unlockAllDoors();
         }
+    }
+
+    private void setUpDoorDirections()
+    {
+        // sets bools for each door dir based on the spawn pts in the children
+        foreach(Door d in doors)
+        {
+            if(d.direction == "N")
+            {
+                nDoor = true;
+            }
+            if (d.direction == "E")
+            {
+                eDoor = true;
+            }
+            if (d.direction == "S")
+            {
+                sDoor = true;
+            }
+            if (d.direction == "W")
+            {
+                wDoor = true;
+            }
+        }
+        
     }
 
     public void setPlayerInRoom(bool playerInRoomInput)

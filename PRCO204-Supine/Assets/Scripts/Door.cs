@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    // Each room has at least one door which can be locked and unlocked
-    // Starts closed, opens when player walks in 
-    // public methods can be accessed from other scripts to lock and unlock it again based on objectives
+    // Each room has at least one door which can be locked and unlocked.
+    // Starts closed, opens when player walks in.
+    // public methods can be accessed from other scripts to lock and unlock it again based on objectives.
 
     public Animator animator;
-    public bool open = false;  //  door always starts closed, opens when player collides for the first time
+    // Door always starts closed, opens when player collides for the first time.
+    public bool open = false;  
     public bool locked = false;
     public Material unlockedMaterial;
     public Material lockedMaterial;
+
+    public string direction; // Allocated in the prefab instance, either N E S or W
     
-
-
     private void Start()
     {
         animator = this.gameObject.GetComponent<Animator>();
@@ -27,7 +28,7 @@ public class Door : MonoBehaviour
 
     private void Update()
     {
-        // For testing purposes - set locked value in anim in the inspector
+        // For testing purposes - set locked value in anim in the inspector.
         if (locked)
         {
             lockDoor();
@@ -37,7 +38,7 @@ public class Door : MonoBehaviour
             unlockDoor();
         }
 
-        // For testing purposes - set open value in inspector
+        // For testing purposes - set open value in inspector.
         if(open)
         {
             animator.SetBool("Open", true);
@@ -57,8 +58,6 @@ public class Door : MonoBehaviour
             animator.SetBool("Open", true);
             open = true;
         }
-
-
     }
 
     private void OnTriggerStay(Collider other)
@@ -68,25 +67,21 @@ public class Door : MonoBehaviour
             animator.SetBool("Open", true);
             open = true;
         }
-
     }
 
     public void lockDoor()
     {
-        // Door can be locked from other scripts - doors close and player can't pass through doorway
+        // Door can be locked from other scripts - doors close and player can't pass through doorway.
         animator.SetBool("Locked", true);
         locked = true;
         this.gameObject.GetComponentInChildren<MeshRenderer>().material = lockedMaterial;
-        
-        
     }
 
     public void unlockDoor()
     {
-        // Door unlocks, opens, can be passed through
+        // Door unlocks, opens, can be passed through.
         animator.SetBool("Locked", false);
         locked = false;
         this.gameObject.GetComponentInChildren<MeshRenderer>().material = unlockedMaterial;
-
     }
 }
