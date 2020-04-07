@@ -2,7 +2,11 @@
 using UnityEngine.AI;
 using System.Collections;
 
-/* Makes enemies follow and attack the player */
+// Makes enemies follow and attack the player.
+// Uses the animator window in Unity to simulate a FSM.
+
+// Enemies do damage to the player when they are close
+// enough.
 public class EnemyMovement : MonoBehaviour
 {
 	public Transform target;
@@ -29,6 +33,11 @@ public class EnemyMovement : MonoBehaviour
 	private int walkTime;
 	private int walkWait;
 
+	private int damage = 10;
+	private float attackCoolDown = 0f;
+	private float attackCoolDownTime = 1f;
+	private float attackRadius = 5f;
+
 	void Start()
 	{
 		anim = GetComponent<Animator>();
@@ -36,6 +45,14 @@ public class EnemyMovement : MonoBehaviour
 
 	void Update() 
 	{
+		// Get the distance to the player.
+		float attackDistance = Vector3.Distance(target.position, transform.position);
+
+		if (attackCoolDown <= attackCoolDownTime)
+		{
+			attackCoolDown += Time.deltaTime;
+		}
+
 		if (!anim.GetBool("isWandering") && !anim.GetBool("isFollowing")) 
 		{
 			StartCoroutine(Wander());
@@ -52,48 +69,59 @@ public class EnemyMovement : MonoBehaviour
 		{
 			transform.position += transform.forward * moveSpeed * Time.deltaTime;
 		}
+
+		// If inside the radius, attack.
+		if (attackDistance <= attackRadius && attackCoolDown > attackCoolDownTime)
+		{
+			attackCoolDown = 0f;
+			HealthManager.playerHealth.TakeDamage(damage);
+		}
 	}
 
 	void FixedUpdate()
 	{
-		// Get the distance to the player
-		float distance = Vector3.Distance(target.position, eyes.position);
+		// Get the distance to the player.
+		float movementDistance = Vector3.Distance(target.position, eyes.position);
 
-		// If inside the radius
-		if (distance <= lookRadius)
+		// If inside the radius.
+		if (movementDistance <= lookRadius)
 		{
 			FaceTarget();
 
-			// Move towards the player
+			// Move towards the player.
 			anim.SetBool("isFollowing", true);
 			anim.SetBool("isWandering", false);
 
-			if (distance <= stoppingDistance)
+			if (movementDistance <= stoppingDistance)
 			{
-				// Attack
+				// Attack here.
 				FaceTarget();
 			}
 		}
-		else 
+		else
 		{
 			anim.SetBool("isFollowing", false);
 		}
 	}
 
-	// Point towards the player
+	// Point towards the player.
 	void FaceTarget()
 	{
 		Vector3 direction = (target.position - transform.position).normalized;
-		Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-		transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+		Quaternion lookRotation = Quaternion.LookRotation
+			(new Vector3(direction.x, 0, direction.z));
+		transform.rotation = Quaternion.Slerp(transform.rotation, 
+			lookRotation, Time.deltaTime * 5f);
 	}
 
 	void OnDrawGizmosSelected()
 	{
 		Gizmos.color = Color.red;
 		Gizmos.DrawWireSphere(eyes.position, lookRadius);
+		Gizmos.DrawWireSphere(transform.position, attackRadius);
 	}
 
+	// Selects random values to simulate wandering around.
 	IEnumerator Wander() 
 	{
 		rotTime = Random.Range(1, 3);

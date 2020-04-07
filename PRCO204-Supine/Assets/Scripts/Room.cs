@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Room : MonoBehaviour
 {
-    // Rooms have at least one door
-    // Multiple rooms make up a level
-    // Rooms have objectives to be met to clear the room
-    // When player enters room for the first time, all doors lock behind them
-    // When room is cleared doors unlock
+    // Rooms have at least one door.
+    // Multiple rooms make up a level.
+    // Rooms have objectives to be met to clear the room.
+    // When player enters room for the first time, all doors lock behind them.
+    // When room is cleared doors unlock.
 
     // VARIABLES
     #region
@@ -24,7 +24,7 @@ public class Room : MonoBehaviour
 
     #endregion
 
-    // Start is called before the first frame update
+    // Start is called before the first frame update.
     void Start()
     {
         if(!this.GetComponentInChildren<Door>())
@@ -39,7 +39,7 @@ public class Room : MonoBehaviour
 
     }
 
-    // Update is called once per frame
+    // Update is called once per frame.
     void Update()
     {
         if(playerInRoom & !roomCleared & !doorsLocked)
