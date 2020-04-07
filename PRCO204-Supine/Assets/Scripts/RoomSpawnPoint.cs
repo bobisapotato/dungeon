@@ -11,44 +11,67 @@ public class RoomSpawnPoint : MonoBehaviour
 
     public string spawnDirection;
     public LevelGeneration levelGenManager;
-
+    public BoxCollider checkSpawnCollider;
     public bool open = true;
 
     private void Start()
     {
         // get the level gen manager
         levelGenManager = GameObject.FindGameObjectWithTag("LevelGenManager").GetComponent<LevelGeneration>();
+        // get the collider
+        checkSpawnCollider = this.gameObject.GetComponent<BoxCollider>();
 
-        if(open)
-        {
-            levelGenManager.addToSpawnPtList(this.gameObject);
-        }
-    }
+        // turn off the collider - only used to see if spawnpt is active
+        checkSpawnCollider.enabled = false;
 
-    private void Update()
-    {
+        levelGenManager.addNewSpawnPt(this.gameObject);
         
     }
 
-    private void OnCollisionStay(Collision collision)
-    {
-        Debug.Log("COLLISION");
-        open = false;
-    }
 
-    private void OnTriggerEnter(Collider other)
+    public void checkSpawnIsOpen()
     {
-        Debug.Log("TRIGGER");
-        setSpawnInactive();
-        levelGenManager.
-            removeFromSpawnList
-            (this.gameObject);
+        // turns on collider, if it triggers it will change value of open
+        StartCoroutine("toggleSpawnCollider");
     }
 
     public void setSpawnInactive()
     {
         open = false;
         
+    }
+
+    public IEnumerator toggleSpawnCollider()
+    {
+        checkSpawnCollider.enabled = true;
+        Debug.Log("Turned collider on" + gameObject.name);
+        yield return new WaitForSeconds(0.5f);
+        checkSpawnCollider.enabled = false;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        Debug.Log("Something trriggers this");
+        // this is only triggered when turned on on checkSpawnIsOpen and if something is already in that spot
+        // if this runs, the associated spawnPt should be closed
+        if (open)
+        {
+            open = false;
+            levelGenManager.removeFromSpawnList(this.gameObject);
+        }
+        checkSpawnCollider.enabled = false;
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Something trriggers this");
+        // this is only triggered when turned on on checkSpawnIsOpen and if something is already in that spot
+        // if this runs, the associated spawnPt should be closed
+        if (open)
+        {
+            open = false;
+            levelGenManager.removeFromSpawnList(this.gameObject);
+        }
+        checkSpawnCollider.enabled = false;
     }
 
 }

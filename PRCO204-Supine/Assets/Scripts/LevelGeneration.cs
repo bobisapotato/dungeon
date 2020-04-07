@@ -14,7 +14,7 @@ public class LevelGeneration : MonoBehaviour
 	[SerializeField] private int totalRoomsSoFar = 1;
 	[SerializeField] private int openPaths;
 	public GameObject startRoomPrefab;
-	public List<GameObject> activeSpawnPts = new List<GameObject>();
+	public List<GameObject> openSpawnPts = new List<GameObject>();
 	Quaternion startRot;
 	Vector3 startSpawn;
 
@@ -22,6 +22,8 @@ public class LevelGeneration : MonoBehaviour
 	public List<GameObject> rooms_eastDoor = new List<GameObject>();
 	public List<GameObject> rooms_southDoor = new List<GameObject>();
 	public List<GameObject> rooms_westDoor = new List<GameObject>();
+
+	
 
 
 
@@ -31,55 +33,48 @@ public class LevelGeneration : MonoBehaviour
 		startSpawn = new Vector3(0, 0, 0);
 		startRot = new Quaternion(0, 0, 0, 0);
 		Instantiate(startRoomPrefab, startSpawn, startRot);
-		populateSpawnPtList();
+		//populateSpawnPtList();
 		populateRoomDirectionLists();
+		openPaths = openSpawnPts.Count;
 
 		roomsInScene.Add(startRoomPrefab);
 
-		// test room gen
-		// spawn room for each point in first room
-		spawnRoom(activeSpawnPts[0].GetComponent<RoomSpawnPoint>());
-		spawnRoom(activeSpawnPts[1].GetComponent<RoomSpawnPoint>());
-		spawnRoom(activeSpawnPts[2].GetComponent<RoomSpawnPoint>());
-		spawnRoom(activeSpawnPts[3].GetComponent<RoomSpawnPoint>());
+		for(int x = 0; x < openPaths; x++)
+		{
+			spawnRoom(openSpawnPts[0].GetComponent<RoomSpawnPoint>());
+		}
+		
+
 
 	}
 
 	private void Update()
 	{
-		// TESTING - PRESS R TO RESPAWN ROOMS
-		if (Input.GetKeyDown(KeyCode.R))
-		{
-			foreach (GameObject g in GameObject.FindGameObjectsWithTag("Room"))
-			{
-				g.SetActive(false);
-			}
-			Instantiate(startRoomPrefab, startSpawn, startRot);
+		// spawn rooms one by one in update to bug check
 
-			spawnRoom(activeSpawnPts[0].GetComponent<RoomSpawnPoint>());
-			spawnRoom(activeSpawnPts[1].GetComponent<RoomSpawnPoint>());
-			spawnRoom(activeSpawnPts[2].GetComponent<RoomSpawnPoint>());
-			spawnRoom(activeSpawnPts[3].GetComponent<RoomSpawnPoint>());
-
-		}
-
-
-		int index = Random.Range(0, activeSpawnPts.Count - 1);
+		int index = Random.Range(0, openSpawnPts.Count - 1);
 
 		if (Input.GetKeyDown(KeyCode.Q))
-
 		{
-
-			if(activeSpawnPts[0].GetComponent<RoomSpawnPoint>().open)
+			if(openSpawnPts[index].GetComponent<RoomSpawnPoint>().open)
 			{
-				spawnRoom(activeSpawnPts[index].GetComponent<RoomSpawnPoint>());
+				spawnRoom(openSpawnPts[index].GetComponent<RoomSpawnPoint>());
 			}
 			else
 			{
-				activeSpawnPts.Remove(activeSpawnPts[index].GetComponent<RoomSpawnPoint>().gameObject);
+				openSpawnPts.Remove(openSpawnPts[index].GetComponent<RoomSpawnPoint>().gameObject);
 			}
 			
 		}
+		if (Input.GetKeyDown(KeyCode.T))
+		{
+			Debug.Log(openSpawnPts.Count + "spawns in list on click T");
+		}
+		if (Input.GetKeyDown(KeyCode.R))
+		{
+			refreshOpenSpawnList();
+		}
+
 
 
 		//Debug.Log(openPaths);
@@ -92,38 +87,57 @@ public class LevelGeneration : MonoBehaviour
 
 	// Managing list of active spawn points
 	#region
-	public void populateSpawnPtList()
-	{
-		GameObject[] tempSpawnPts = GameObject.FindGameObjectsWithTag("RoomSpawn");
-		foreach(GameObject g in tempSpawnPts)
-		{
-			if(g.GetComponent<RoomSpawnPoint>().open == true)
-			{
-				activeSpawnPts.Add(g);
-			}
-		}
-		openPaths = activeSpawnPts.Count;
-	}
+	
 
-	public void addToSpawnPtList(GameObject g)
+	public void refreshOpenSpawnList()
 	{
+		foreach(GameObject g in openSpawnPts)
+		{
+			g.GetComponent<RoomSpawnPoint>().checkSpawnIsOpen();
+		}
+	}
+	public void addNewSpawnPt(GameObject g)
+	{
+		//Debug.Log("Adding new spawn to list in top method - now list is " + openPaths);
 		// when a new room spawn pt is instatiated, it should call this to add itself to the active list
 		if (g.GetComponent<RoomSpawnPoint>().open == true)
 		{
-			activeSpawnPts.Add(g);
+			openSpawnPts.Add(g);
+			openPaths++;
 		}
-		openPaths++;
+
+		// double check that point is open, it will remove itself if it isn't
+		g.GetComponent<RoomSpawnPoint>().checkSpawnIsOpen();
+		
+	}
+
+
+	public void updateSpawnList()
+	{
+
+		GameObject[] tempSpawnArray = new GameObject[openPaths];
+		// iterate through list removing any inactive
+		foreach (GameObject g in openSpawnPts)
+		{
+			if (!g.GetComponent<RoomSpawnPoint>().open)
+			{
+				openSpawnPts.Remove(g);
+			}
+		}
 	}
 
 	public void removeFromSpawnList(GameObject g)
 	{
-		if (activeSpawnPts.Contains(g))
-		{
+		Debug.Log("spawn point " + g.name + " is in list? = " + openSpawnPts.Contains(g));
+
+		//if (openSpawnPts.Contains(g))
+		//{
 			// when a room is spawned, the relevant point becomes inactive, and this is called to remove it
-			activeSpawnPts.Remove(g);
+			openSpawnPts.Remove(g);
 			openPaths--;
+			g.GetComponent<RoomSpawnPoint>().open = false;
 			Debug.Log("has removed " + g.name);
-		}
+		//}
 	}
 
 	
@@ -137,7 +151,7 @@ public class LevelGeneration : MonoBehaviour
 		roomsInScene.Add(g);
 		totalRoomsSoFar++;
 		spawn.setSpawnInactive();
-		activeSpawnPts.Remove(spawn.gameObject);
+		removeFromSpawnList(spawn.gameObject);
 	}
 
 	// Populate lists of room prefabs based on door directions
@@ -176,29 +190,36 @@ public class LevelGeneration : MonoBehaviour
 
 		GameObject roomToSpawn = null;
 
-		if (spawnPoint.spawnDirection == "N")
+		string direction = spawnPoint.spawnDirection;
+
+		if (direction == "N")
 		{
 			// spawn direction N needs a room with a south facing door to link to
 			// get random index in range
 			int index = Random.Range(0, rooms_southDoor.Count);
 			roomToSpawn = rooms_southDoor[index];
+			turnOffOppositeSpawn("S", roomToSpawn.GetComponent<Room>());
 		}
-		if (spawnPoint.spawnDirection == "E")
+		if (direction == "E")
 		{
 			int index = Random.Range(0, rooms_westDoor.Count);
 			roomToSpawn = rooms_westDoor[index];
+			turnOffOppositeSpawn("W", roomToSpawn.GetComponent<Room>());
 		}
-		if (spawnPoint.spawnDirection == "S")
+		if (direction == "S")
 		{
 			int index = Random.Range(0, rooms_northDoor.Count);
 			roomToSpawn = rooms_northDoor[index];
+			turnOffOppositeSpawn("N", roomToSpawn.GetComponent<Room>());
 		}
-		if (spawnPoint.spawnDirection == "W")
+		if (direction == "W")
 		{
 			int index = Random.Range(0, rooms_eastDoor.Count);
 			roomToSpawn = rooms_eastDoor[index];
+			turnOffOppositeSpawn("E", roomToSpawn.GetComponent<Room>());
 		}
 
+		
 		// console output to return a room
 		Debug.Log("Room " + roomToSpawn.name + " has been selected to spawn from spawn point " + spawnPoint.gameObject.name);
 
@@ -209,6 +230,24 @@ public class LevelGeneration : MonoBehaviour
 
 		addNewRoomToScene(roomToSpawn.gameObject, spawnPoint);
 
+	}
+
+	public void turnOffOppositeSpawn(string direction, Room newRoom)
+	{
+
+		// When a room spawns, it has it's own spawn point that points back into the original room
+		// based on what room this is, we automatically remove the appropriate spawn point from open list
+
+		// get the spawnPts associated with new room
+		RoomSpawnPoint[] tempSpawnPtArray = newRoom.GetComponentsInChildren<RoomSpawnPoint>();
+
+		RoomSpawnPoint toRemove;
+
+		toRemove = newRoom.GetSpawnPoint(direction);
+
+		Debug.Log("!!!!!!Trying to remove from " + newRoom.gameObject.name + " Pt " + toRemove.gameObject.name);
+
+		removeFromSpawnList(toRemove.gameObject);
 	}
 
 }

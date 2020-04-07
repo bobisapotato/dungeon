@@ -102,4 +102,23 @@ public class Room : MonoBehaviour
         roomCleared = true;
         doorsLocked = false;
     }
+
+    // Get spoawn points for room based on direction
+	#region
+    public RoomSpawnPoint GetSpawnPoint(string direction)
+    {
+        RoomSpawnPoint tempSpawn = null;
+
+        RoomSpawnPoint[] allSpawnPoints = this.GetComponentsInChildren<RoomSpawnPoint>();
+
+        foreach (RoomSpawnPoint spawn in allSpawnPoints)
+        {
+            if (direction == spawn.spawnDirection)
+            {
+                tempSpawn = spawn;
+            }
+        }
+        return tempSpawn;
+    }
+	#endregion
 }
