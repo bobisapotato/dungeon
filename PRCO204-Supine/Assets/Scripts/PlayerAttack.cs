@@ -7,8 +7,9 @@ public class PlayerAttack : MonoBehaviour
 
     // Variables
     Collider hitbox;
+    [SerializeField] GameObject meleeObject;
 
-    [SerializeField] int melee;
+    
     [SerializeField] GameObject projectile;
 
 
@@ -17,7 +18,7 @@ public class PlayerAttack : MonoBehaviour
     // as hitbox for later reference.
     void Start()
     {
-        hitbox = gameObject.GetComponent<CapsuleCollider>();
+        hitbox = meleeObject.GetComponent<CapsuleCollider>();
     }
 
     // Update is called once per frame and checks for key presses.
@@ -47,7 +48,7 @@ public class PlayerAttack : MonoBehaviour
     private void Attack2()
     {
 
-        Instantiate(projectile, transform.position, projectile.transform.rotation);
+        Instantiate(projectile, meleeObject.transform.position, projectile.transform.rotation);
 
         //   RaycastHit hit;
         //   Ray ray = new Ray(transform.position, transform.TransformDirection(Vector3.forward));
@@ -61,19 +62,6 @@ public class PlayerAttack : MonoBehaviour
         //           hit.transform.gameObject.SendMessage("TakeDamage", ranged);
         //       }
         //   }
-    }
-
-
-    // If anything with an enemy tag is inside the trigger hitbox when
-    // its active, it sends a message to enemy health and runs the method
-    // take damage. Then disables the hitbox.
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.tag == "Enemy")
-        {
-            other.gameObject.SendMessage("TakeDamage", melee);
-            hitbox.enabled = false;
-        }
     }
 
     // After 1 second, if nothing with the enemy tag
