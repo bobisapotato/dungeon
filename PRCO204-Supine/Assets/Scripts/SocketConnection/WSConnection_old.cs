@@ -5,7 +5,7 @@ using System;
 using WebSocketSharp;
 using Newtonsoft.Json;
 
-public class WSConnection : MonoBehaviour
+public class WSConnection_Old : MonoBehaviour
 {
     private WebSocket socket;
 

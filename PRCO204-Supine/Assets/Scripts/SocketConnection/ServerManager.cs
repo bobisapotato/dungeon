@@ -6,13 +6,18 @@ public class ServerManager : MonoBehaviour
 {
 
     public GameObject _room;
-    public GameObject BombPrefab
+    public GameObject player;
 
     private WSConnection connection;
     public string server = "research.supine.dev:3018";
 
-    public class Item { }
-    public class Bomb : Item { }
+    public abstract class Item { public readonly GameObject Prefab; }
+
+    [System.Serializable]
+    public class Bomb : Item {
+        public new GameObject Prefab;
+    }
+    public Bomb bomb;
 
     public class SpawnQueueItem {
         float x;
@@ -56,7 +61,7 @@ public class ServerManager : MonoBehaviour
 
         //Debug.Log("Pos: " + x + ", 10, " + z + " Item: " + item);
 
-        Instantiate(BombPrefab, newPos, Quaternion.identity /*, room.transform*/);
+        Instantiate(item.Prefab, newPos, Quaternion.identity /*, room.transform*/);
     }
 
     void Start()
