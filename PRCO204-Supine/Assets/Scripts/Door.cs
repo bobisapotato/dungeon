@@ -13,6 +13,8 @@ public class Door : MonoBehaviour
     public bool locked = false;
     public Material unlockedMaterial;
     public Material lockedMaterial;
+
+    public string direction; // Allocated in the prefab instance, either N E S or W
     
 
 
