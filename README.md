@@ -8,6 +8,13 @@ Alex Pritchard|`10577259`|alex@supine.dev|**Codebase manager**, technical lead, 
 Zack Hawkins|`10587295`|zack@supine.dev|**Client liason**, product owner, secondary designer
 Josie Wood|`10509521`|josie@supine.dev|**Scrum master**, lead designer, QA tester, project management lead
 
+# Team meeting schedules
+Due|Action|By
+---|---|---
+Friday Evening | **Sprint review**: Discuss how the week's sprint went, and decide on tasks for the following weeks' sprint.|Everyone
+Tuesday Morning |**Live coding**: Working together in a discord call to develop the project, sharing screens if necessary.|Everyone
+Thursday Evening |**Live coding**: Working together in a discord call to develop the project, sharing screens if necessary|Everyone
+
 # Version control schedule
 Due|Action|By
 ---|---|---
