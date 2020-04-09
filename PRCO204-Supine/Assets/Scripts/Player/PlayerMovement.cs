@@ -96,6 +96,11 @@ public class PlayerMovement : MonoBehaviour
         {
             isGrounded = false;
         }
+
+        Vector3 relativePos = move - transform.position;
+        Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
+
+        transform.rotation = rotation;
     }
 
     // Physics.
