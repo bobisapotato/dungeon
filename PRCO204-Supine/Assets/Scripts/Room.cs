@@ -22,6 +22,9 @@ public class Room : MonoBehaviour
     public bool sDoor = false;
     public bool wDoor = false;
 
+    public bool justCreated = true;
+
+    LevelGeneration levelGenMan;
     #endregion
 
     // Start is called before the first frame update
@@ -37,6 +40,8 @@ public class Room : MonoBehaviour
 
         // if theres a spawn point at the same loc, set it to inactive
 
+        StartCoroutine("stayinAlive");
+
     }
 
     // Update is called once per frame
@@ -50,6 +55,15 @@ public class Room : MonoBehaviour
         {
             unlockAllDoors();
         }
+    }
+
+    public IEnumerator stayinAlive()
+    {
+        // sets bool justCreated to true after 2 seconds
+        // used to compare two rooms when they spawn on top of one another and one must be deleted
+
+        yield return new WaitForSeconds(.2f);
+        justCreated = false;
     }
 
     private void setUpDoorDirections()
@@ -124,11 +138,37 @@ public class Room : MonoBehaviour
 
     // destroy room if it's colliding with another
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if(collision.gameObject.GetComponent<Room>())
+        if (other.gameObject.GetComponent<Room>())
         {
-            Destroy(this.gameObject);
+            Room otherRoom = other.gameObject.GetComponent<Room>();
+
+            if(otherRoom.justCreated && !justCreated)
+            {
+                Destroy(otherRoom.gameObject);
+                Debug.Log("ROOM " + this.gameObject.name + " WON A FIGHT");
+            }
+            else if (!otherRoom.justCreated && justCreated)
+            {
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                Debug.Log("STALEMATE");
+            }
+        }
+    }
+
+    public void destroyRoom(Room roomToDestroy)
+    {
+        // remove from all lists in manager
+        
+       
+        foreach (RoomSpawnPoint spawn in GetComponentsInChildren<RoomSpawnPoint>())
+        {
+            levelGenMan.removeFromSpawnList(spawn.gameObject);
+            levelGenMan.removeRoomFromScene(this.gameObject);
         }
     }
 }

@@ -10,7 +10,7 @@ public class LevelGeneration : MonoBehaviour
 
 	// VARS
 	public GameObject[] roomPrefabs;
-	[SerializeField] private List<GameObject> roomsInScene = new List<GameObject>();
+	[SerializeField] public List<GameObject> roomsInScene = new List<GameObject>();
 	public int maximumRooms;
 	[SerializeField] private int totalRoomsSoFar = 1;
 	[SerializeField] private int openPaths;
@@ -110,6 +110,8 @@ public class LevelGeneration : MonoBehaviour
 		{
 			g.GetComponent<RoomSpawnPoint>().checkSpawnIsOpen();
 		}
+
+		openPaths = openSpawnPts.Count;
 	}
 	public void addNewSpawnPt(GameObject g)
 	{
@@ -168,6 +170,16 @@ public class LevelGeneration : MonoBehaviour
 		removeFromSpawnList(spawn.gameObject);
 	}
 
+	public void removeRoomFromScene(GameObject g)
+	{
+		// adds Gamoebject to roomsInScene list
+		roomsInScene.Remove(g);
+		totalRoomsSoFar--;
+
+		refreshOpenSpawnList();
+		
+	}
+
 	// Populate lists of room prefabs based on door directions
 	private void populateRoomDirectionLists()
 	{
@@ -224,9 +236,9 @@ public class LevelGeneration : MonoBehaviour
 
 		string direction = spawnPoint.spawnDirection;
 
-		Debug.Log("DIRECTION OF SPAWN PT = " + direction +  "FROM ROOM " +	spawnPoint.GetComponentInParent<Room>().gameObject.name);
+		//Debug.Log("DIRECTION OF SPAWN PT = " + direction +  "FROM ROOM " +	spawnPoint.GetComponentInParent<Room>().gameObject.name);
 
-		Debug.Log("sensor array found = " + spawnPoint.GetComponentsInChildren<RoomSpawnSensor>().Length);
+		//Debug.Log("sensor array found = " + spawnPoint.GetComponentsInChildren<RoomSpawnSensor>().Length);
 		// check sensors to see if any doors are needed 
 		foreach (RoomSpawnSensor sensor in spawnPoint.GetComponentsInChildren<RoomSpawnSensor>())
 		{
@@ -238,12 +250,12 @@ public class LevelGeneration : MonoBehaviour
 			if(sensor.checkRoomWasFound() && sensor.checkMustHave())
 			{
 				doorsRequired.Add(sensor.getRequiredDoorDir());
-				Debug.Log("needs door in dir " + sensor.getRequiredDoorDir());
+				//Debug.Log("needs door in dir " + sensor.getRequiredDoorDir());
 			}
 			if(sensor.checkRoomWasFound() && sensor.checkMustNot())
 			{
 				doorsAvoided.Add(sensor.getRequiredDoorDir());
-				Debug.Log("avoid door in dir " + sensor.getRequiredDoorDir());
+				//Debug.Log("avoid door in dir " + sensor.getRequiredDoorDir());
 			}
 
 
@@ -253,7 +265,7 @@ public class LevelGeneration : MonoBehaviour
 		List<GameObject> roomsToChooseFrom = populateTempRoomList(doorsRequired, doorsAvoided);
 
 		int index = Random.Range(0, roomsToChooseFrom.Count - 1);
-		Debug.Log("Index is " + index + " and roomsList is " + roomsToChooseFrom.Count);
+		//Debug.Log("Index is " + index + " and roomsList is " + roomsToChooseFrom.Count);
 
 		roomToSpawn = roomsToChooseFrom[index];
 
@@ -335,7 +347,7 @@ public class LevelGeneration : MonoBehaviour
 
 		// remove any rooms with doors in the mustAvoid list
 
-		Debug.Log("Added rooms to temp list successfully");
+		//Debug.Log("Added rooms to temp list successfully");
 
 		if(avoidedDirs.Contains("N"))
 		{
@@ -385,7 +397,7 @@ public class LevelGeneration : MonoBehaviour
 			tempRoomList.Remove(g);
 		}
 
-		Debug.Log("removed rooms right");
+		//Debug.Log("removed rooms right");
 
 		return tempRoomList;
 	}
