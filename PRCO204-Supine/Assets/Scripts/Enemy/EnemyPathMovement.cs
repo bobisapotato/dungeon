@@ -29,7 +29,13 @@ public class EnemyPathMovement : MonoBehaviour
         {
             step = followingSpeed * Time.deltaTime;
 
+            Vector3 relativePos = target.position - transform.position;
+            Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
+
+            transform.rotation = rotation;
+
             transform.position = Vector3.MoveTowards(transform.position, target.position, step);
+
             isFollowing = true;
         }
         else
@@ -44,7 +50,6 @@ public class EnemyPathMovement : MonoBehaviour
             {
                 MoveTowardsNextPoint();
             }
-
         }
     }
 
@@ -70,6 +75,10 @@ public class EnemyPathMovement : MonoBehaviour
 
     void MoveTowardsNextPoint()
     {
+        Vector3 relativePos = pathPositions[currentPos].transform.position - transform.position;
+        Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
+
+        transform.rotation = rotation;
         transform.position = Vector3.MoveTowards(transform.position, pathPositions[currentPos].transform.position, step);
         isFollowing = false;
     }
