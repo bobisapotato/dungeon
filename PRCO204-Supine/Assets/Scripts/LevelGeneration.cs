@@ -402,22 +402,22 @@ public class LevelGeneration : MonoBehaviour
 		return tempRoomList;
 	}
 
-	public void turnOffOppositeSpawn(string direction, Room newRoom)
-	{
+	//public void turnOffOppositeSpawn(string direction, Room newRoom)
+	//{
 
-		// When a room spawns, it has it's own spawn point that points back into the original room
-		// based on what room this is, we automatically remove the appropriate spawn point from open list
+	//	// When a room spawns, it has it's own spawn point that points back into the original room
+	//	// based on what room this is, we automatically remove the appropriate spawn point from open list
 
-		// get the spawnPts associated with new room
-		RoomSpawnPoint[] tempSpawnPtArray = newRoom.GetComponentsInChildren<RoomSpawnPoint>();
+	//	// get the spawnPts associated with new room
+	//	RoomSpawnPoint[] tempSpawnPtArray = newRoom.GetComponentsInChildren<RoomSpawnPoint>();
 
-		RoomSpawnPoint toRemove;
+	//	RoomSpawnPoint toRemove;
 
-		toRemove = newRoom.GetSpawnPoint(direction);
+	//	toRemove = newRoom.GetSpawnPoint(direction);
 
-		Debug.Log("!!!!!!Trying to remove from " + newRoom.gameObject.name + " Pt " + toRemove.gameObject.name);
+	//	Debug.Log("!!!!!!Trying to remove from " + newRoom.gameObject.name + " Pt " + toRemove.gameObject.name);
 
-		removeFromSpawnList(toRemove.gameObject);
-	}
+	//	removeFromSpawnList(toRemove.gameObject);
+	//}
 
 }
