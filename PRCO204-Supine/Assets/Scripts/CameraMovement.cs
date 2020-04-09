@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class CameraMovement : MonoBehaviour
 {
-
     public Transform lookAt;
     public Transform cameraTransform;
 
