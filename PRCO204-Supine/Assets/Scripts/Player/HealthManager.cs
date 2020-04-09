@@ -6,7 +6,7 @@ using UnityEngine.UI;
 // Instantiates healths, and displays it.
 public class HealthManager : MonoBehaviour
 {
-    public Slider healthbar;
+    //public Slider healthbar;
 
     public static HealthSystem playerHealth;
 
@@ -26,7 +26,7 @@ public class HealthManager : MonoBehaviour
     {
         if (playerHealth.GetHealth() != oldHealth) 
         {
-            healthbar.value = playerHealth.GetHealth();
+            //healthbar.value = playerHealth.GetHealth();
         }
 
         oldHealth = playerHealth.GetHealth();

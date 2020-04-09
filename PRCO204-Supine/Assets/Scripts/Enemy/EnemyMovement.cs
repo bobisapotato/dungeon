@@ -124,11 +124,11 @@ public class EnemyMovement : MonoBehaviour
 	// Selects random values to simulate wandering around.
 	IEnumerator Wander() 
 	{
-		rotTime = Random.Range(1, 3);
-		rotateWait = Random.Range(1, 4);
-		rotateLorR = Random.Range(0, 3);
+		rotTime = Random.Range(1, 2);
+		rotateWait = Random.Range(1, 2);
+		rotateLorR = Random.Range(0, 2);
 		walkWait = Random.Range(1, 2);
-		walkTime = Random.Range(1, 3);
+		walkTime = Random.Range(1, 2);
 
 		anim.SetBool("isWandering", true);
 		anim.SetBool("isFollowing", false);
