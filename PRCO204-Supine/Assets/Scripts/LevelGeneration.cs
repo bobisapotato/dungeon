@@ -24,7 +24,10 @@ public class LevelGeneration : MonoBehaviour
 	public List<GameObject> rooms_southDoor = new List<GameObject>();
 	public List<GameObject> rooms_westDoor = new List<GameObject>();
 
-	
+	public GameObject deadEndN;
+	public GameObject deadEndE;
+	public GameObject deadEndS;
+	public GameObject deadEndW;
 
 
 
@@ -43,7 +46,7 @@ public class LevelGeneration : MonoBehaviour
 		for(int x = 0; x < openPaths; x++)
 		{
 
-			spawnRoom(openSpawnPts[0].GetComponent<RoomSpawnPoint>());
+			spawnRoomFromList(openSpawnPts[0].GetComponent<RoomSpawnPoint>());
 		}
 		
 
@@ -62,7 +65,8 @@ public class LevelGeneration : MonoBehaviour
 			{
 				if (openSpawnPts[index].GetComponent<RoomSpawnPoint>().open)
 				{
-					spawnRoom(openSpawnPts[index].GetComponent<RoomSpawnPoint>());
+					//spawnRoomFromList(openSpawnPts[index].GetComponent<RoomSpawnPoint>());
+					pickHowToSpawnRoom(openSpawnPts[index].GetComponent<RoomSpawnPoint>());
 				}
 				else
 				{
@@ -109,8 +113,6 @@ public class LevelGeneration : MonoBehaviour
 	}
 	public void addNewSpawnPt(GameObject g)
 	{
-		//Debug.Log("Adding new spawn to list in top method - now list is " + openPaths);
-		//Debug.Log("when spawn " + g.name + " is added, its open value is " + g.GetComponent<RoomSpawnPoint>().open);
 		// when a new room spawn pt is instatiated, it should call this to add itself to the active list
 		if (g.GetComponent<RoomSpawnPoint>().open == true)
 		{
@@ -195,7 +197,22 @@ public class LevelGeneration : MonoBehaviour
 	}
 
 	// Spawning of rooms
-	public void spawnRoom(RoomSpawnPoint spawnPoint)
+
+	public void pickHowToSpawnRoom(RoomSpawnPoint spawnPoint)
+	{
+		// selects whether room should be selected from list or be a dead end
+		
+		if(totalRoomsSoFar + openPaths >= maximumRooms)
+		{
+			spawnDeadEnd(spawnPoint);
+		}
+		else if(totalRoomsSoFar + openPaths < maximumRooms)
+		{
+			spawnRoomFromList(spawnPoint);
+		}
+	}
+	
+	public void spawnRoomFromList(RoomSpawnPoint spawnPoint)
 	{
 		// spawns in a random room at the given point
 		// room must be selected from correct list so doors align
@@ -233,40 +250,6 @@ public class LevelGeneration : MonoBehaviour
 		}
 
 
-		//if (direction == "N")
-		//{
-		//	// spawn direction N needs a room with a south facing door to link to
-		//	// get random index in range
-
-		//	//int index = Random.Range(0, rooms_southDoor.Count);
-		//	//roomToSpawn = rooms_southDoor[index];
-		//	//turnOffOppositeSpawn("S", roomToSpawn.GetComponent<Room>());
-
-		//	doorsRequired.Add("S");
-		//}
-		//if (direction == "E")
-		//{
-		//	//int index = Random.Range(0, rooms_westDoor.Count);
-		//	//roomToSpawn = rooms_westDoor[index];
-		//	//turnOffOppositeSpawn("W", roomToSpawn.GetComponent<Room>());
-		//	doorsRequired.Add("W");
-		//}
-		//if (direction == "S")
-		//{
-		//	//int index = Random.Range(0, rooms_northDoor.Count);
-		//	//roomToSpawn = rooms_northDoor[index];
-		//	//turnOffOppositeSpawn("N", roomToSpawn.GetComponent<Room>());
-		//	doorsRequired.Add("N");
-		//}
-		//if (direction == "W")
-		//{
-		//	//int index = Random.Range(0, rooms_eastDoor.Count);
-		//	//roomToSpawn = rooms_eastDoor[index];
-		//	//turnOffOppositeSpawn("E", roomToSpawn.GetComponent<Room>());
-
-		//	doorsRequired.Add("E");
-		//}
-
 		List<GameObject> roomsToChooseFrom = populateTempRoomList(doorsRequired, doorsAvoided);
 
 		int index = Random.Range(0, roomsToChooseFrom.Count - 1);
@@ -278,13 +261,41 @@ public class LevelGeneration : MonoBehaviour
 		// console output to return a room
 		Debug.Log("Room " + roomToSpawn.name + " has been selected to spawn from spawn point " + spawnPoint.gameObject.name);
 
-		Vector3 tempTransform = spawnPoint.transform.position;
+		instantiateRoom(roomToSpawn, spawnPoint);
+	}
+
+	public void spawnDeadEnd(RoomSpawnPoint spawnPoint)
+	{
+		GameObject roomToSpawn = null;
+		
+		if(spawnPoint.spawnDirection == "N")
+		{
+			roomToSpawn = deadEndN;
+		}
+		if (spawnPoint.spawnDirection == "E")
+		{
+			roomToSpawn = deadEndE;
+		}
+		if (spawnPoint.spawnDirection == "S")
+		{
+			roomToSpawn = deadEndS;
+		}
+		if (spawnPoint.spawnDirection == "W")
+		{
+			roomToSpawn = deadEndW;
+		}
+
+		instantiateRoom(roomToSpawn, spawnPoint);
+	}
+
+	public void instantiateRoom(GameObject room, RoomSpawnPoint spawn)
+	{
+		Vector3 tempTransform = spawn.transform.position;
 
 		// spawn said room at that pos
-		Instantiate(roomToSpawn, tempTransform, Quaternion.identity);
+		Instantiate(room, tempTransform, Quaternion.identity);
 
-		addNewRoomToScene(roomToSpawn.gameObject, spawnPoint);
-
+		addNewRoomToScene(room.gameObject, spawn);
 	}
 
 	public List<GameObject> populateTempRoomList(List<string> requiredDirs, List<string> avoidedDirs)

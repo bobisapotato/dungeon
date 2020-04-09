@@ -38,6 +38,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4086895722617763156}
   - component: {fileID: -7754037654430664204}
+  - component: {fileID: 3727908676088674469}
   m_Layer: 0
   m_Name: N_E_S
   m_TagString: Room
@@ -56,10 +57,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.8, z: 1}
   m_Children:
-  - {fileID: 3941755426493063790}
   - {fileID: 1721034441375995219}
   - {fileID: 6223346970425955125}
   - {fileID: 4667982850668061081}
+  - {fileID: 3941755426493063790}
   - {fileID: 1877388474801645466}
   - {fileID: 1684010930286827910}
   - {fileID: 3883798573167351299}
@@ -86,6 +87,19 @@ MonoBehaviour:
   eDoor: 1
   sDoor: 1
   wDoor: 0
+--- !u!135 &3727908676088674469
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920556961725779367}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!64 &1053640059896543699
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -180,7 +194,7 @@ PrefabInstance:
     - target: {fileID: 1663524621846558394, guid: 1f605d358b7640d41937daf97e621973,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6661537212951677940, guid: 1f605d358b7640d41937daf97e621973,
         type: 3}
@@ -300,7 +314,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 12bf59a530cfb284f8782c3d04c7d0e2,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 12bf59a530cfb284f8782c3d04c7d0e2,
         type: 3}
@@ -586,7 +600,7 @@ PrefabInstance:
     - target: {fileID: 9113167731948053044, guid: 23a9d4414523d4f4986440aab76a248b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23a9d4414523d4f4986440aab76a248b, type: 3}
@@ -646,7 +660,7 @@ PrefabInstance:
     - target: {fileID: 221680620042556822, guid: 2f1da928e72769647a33ab3668de7ccb,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 221680620042556822, guid: 2f1da928e72769647a33ab3668de7ccb,
         type: 3}

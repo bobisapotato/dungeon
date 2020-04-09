@@ -120,5 +120,15 @@ public class Room : MonoBehaviour
         }
         return tempSpawn;
     }
-	#endregion
+    #endregion
+
+    // destroy room if it's colliding with another
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.GetComponent<Room>())
+        {
+            Destroy(this.gameObject);
+        }
+    }
 }

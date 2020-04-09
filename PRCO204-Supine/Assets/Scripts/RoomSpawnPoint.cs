@@ -36,9 +36,16 @@ public class RoomSpawnPoint : MonoBehaviour
         levelGenManager.addNewSpawnPt(this.gameObject);
 
         //Debug.Log(levelGenManager.openSpawnPts.Count + " spawns in list when spawn point " + gameObject.name + " is made");
-        
+
+        InvokeRepeating("constantSpawnCheck", 0.1f, 3f);
+
     }
 
+    public IEnumerator constantSpawnCheck()
+    {
+        yield return new WaitForSeconds(1f);
+        checkSpawnIsOpen();
+    }
 
     public bool checkSpawnIsOpen()
     {

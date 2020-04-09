@@ -24,6 +24,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8909121612281307425}
   - component: {fileID: -4383895818267127015}
+  - component: {fileID: 1707484148645351927}
   m_Layer: 0
   m_Name: E
   m_TagString: Room
@@ -68,6 +69,19 @@ MonoBehaviour:
   eDoor: 1
   sDoor: 0
   wDoor: 0
+--- !u!135 &1707484148645351927
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4403759761449590882}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!64 &69709629100405459
 MeshCollider:
   m_ObjectHideFlags: 0

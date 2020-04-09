@@ -490,16 +490,23 @@ MonoBehaviour:
   - {fileID: 3098115921006748444, guid: 97075fc1772ebdb4c9dde0843036dfa4, type: 3}
   - {fileID: 359611039040998228, guid: 92dc14f8ce339a541be9bc3c83e23945, type: 3}
   roomsInScene: []
-  maximumRooms: 0
+  maximumRooms: 15
   totalRoomsSoFar: 0
   openPaths: 0
   startRoomPrefab: {fileID: 8432967875943187184, guid: 9b954e0936c4dba40972d27c7538368f,
     type: 3}
-  activeSpawnPts: []
+  openSpawnPts: []
   rooms_northDoor: []
   rooms_eastDoor: []
   rooms_southDoor: []
   rooms_westDoor: []
+  deadEndN: {fileID: 1287210509205726853, guid: f085b006b4f457e40b8dafcbcecf43fb,
+    type: 3}
+  deadEndE: {fileID: 359611039040998228, guid: 92dc14f8ce339a541be9bc3c83e23945, type: 3}
+  deadEndS: {fileID: 3589584042049497439, guid: 4eddaeeb787316e4482aa00cd01ae481,
+    type: 3}
+  deadEndW: {fileID: 4403759761449590882, guid: 9b38ab0f0e58b944386e37512dedf594,
+    type: 3}
 --- !u!4 &626660182
 Transform:
   m_ObjectHideFlags: 0
