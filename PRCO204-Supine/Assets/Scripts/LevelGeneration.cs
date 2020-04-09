@@ -98,7 +98,8 @@ public class LevelGeneration : MonoBehaviour
 	}
 	public void addNewSpawnPt(GameObject g)
 	{
-		//Debug.Log("Adding new spawn to list in top method - now list is " + openPaths);
+		Debug.Log("Adding new spawn to list in top method - now list is " + openPaths);
+		Debug.Log("when spawn " + g.name + " is added, its open value is " + g.GetComponent<RoomSpawnPoint>().open);
 		// when a new room spawn pt is instatiated, it should call this to add itself to the active list
 		if (g.GetComponent<RoomSpawnPoint>().open == true)
 		{
@@ -135,7 +136,7 @@ public class LevelGeneration : MonoBehaviour
 			// when a room is spawned, the relevant point becomes inactive, and this is called to remove it
 			openSpawnPts.Remove(g);
 			openPaths--;
-			g.GetComponent<RoomSpawnPoint>().open = false;
+			g.GetComponent<RoomSpawnPoint>().setSpawnInactive();
 			Debug.Log("has removed " + g.name);
 		//}
 	}
