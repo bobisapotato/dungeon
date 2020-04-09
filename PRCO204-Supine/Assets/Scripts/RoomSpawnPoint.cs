@@ -5,14 +5,19 @@ using UnityEngine;
 public class RoomSpawnPoint : MonoBehaviour
 {
 
-    // Each door has a spawn point
-    // Has a value of string N E S or W depending on which direction the spawn pt is 
-    // This is where new room will be spawned when level is generated
+    // Each door has a spawn point.
+    // Has a value of string N E S or W depending on which direction the spawn pt is.
+    // This is where new room will be spawned when level is generated.
+    // Each spawn point has 4 'feelers', gameobjects with colliders that check which objects are
+    // directly above, below, or next to the spawn point. 
+    // This is to help identify what room to spawn.
 
     public string spawnDirection;
     public LevelGeneration levelGenManager;
     public BoxCollider checkSpawnCollider;
     public bool open = true;
+
+    
 
     private void Start()
     {
@@ -30,21 +35,23 @@ public class RoomSpawnPoint : MonoBehaviour
 
         levelGenManager.addNewSpawnPt(this.gameObject);
 
-        Debug.Log(levelGenManager.openSpawnPts.Count + " spawns in list when spawn point " + gameObject.name + " is made");
+        //Debug.Log(levelGenManager.openSpawnPts.Count + " spawns in list when spawn point " + gameObject.name + " is made");
         
     }
 
 
-    public void checkSpawnIsOpen()
+    public bool checkSpawnIsOpen()
     {
         // turns on collider, if it triggers it will change value of open
-        Debug.Log("checking spawn " + this.gameObject.name);
+        //Debug.Log("checking spawn " + this.gameObject.name);
         StartCoroutine("toggleSpawnCollider");
+
+        return open;
     }
 
     public void setSpawnInactive()
     {
-        Debug.Log("set spawn inactive being called for " + gameObject.name);
+        //Debug.Log("set spawn inactive being called for " + gameObject.name);
         open = false;
 
     }
@@ -52,26 +59,15 @@ public class RoomSpawnPoint : MonoBehaviour
     public IEnumerator toggleSpawnCollider()
     {
         checkSpawnCollider.enabled = true;
-        Debug.Log("Turned collider on" + gameObject.name);
+        //Debug.Log("Turned collider on" + gameObject.name);
         yield return new WaitForSeconds(0.5f);
         checkSpawnCollider.enabled = false;
     }
 
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    Debug.Log("Something trriggers this");
-    //    // this is only triggered when turned on on checkSpawnIsOpen and if something is already in that spot
-    //    // if this runs, the associated spawnPt should be closed
-    //    if (open)
-    //    {
-    //        open = false;
-    //        levelGenManager.removeFromSpawnList(this.gameObject);
-    //    }
-    //    checkSpawnCollider.enabled = false;
-    //}
+  
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Something triggers this collider on " + this.gameObject.name);
+        //Debug.Log("Something triggers this collider on " + this.gameObject.name);
         // this is only triggered when turned on on checkSpawnIsOpen and if something is already in that spot
         // if this runs, the associated spawnPt should be closed
 
