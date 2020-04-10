@@ -156,7 +156,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -206,13 +206,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 115002288}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.073386915, y: 0.89253896, z: -0.41619772, w: 0.15737876}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 50, y: 160, z: 0}
 --- !u!1 &247531501
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,6 +350,84 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 247531501}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &378989207
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 378989209}
+  - component: {fileID: 378989208}
+  m_Layer: 0
+  m_Name: LevelGenerationManager (1 enemy
+  m_TagString: LevelGenManager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &378989208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378989207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b340537b3ec018f4c85c2d20e93bdf8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomPrefabs:
+  - {fileID: 1955935384671824788, guid: 56d8b68b75584e745972ccbb777447d3, type: 3}
+  - {fileID: 8712188854434144953, guid: f23cd3d582843a2489734835256e2d65, type: 3}
+  - {fileID: 3095736114279883477, guid: 7570cd1c4a6d3ac4f88cc058d0f67ddf, type: 3}
+  - {fileID: 8421145230095058015, guid: 62978097615354640ac6d4b18c471101, type: 3}
+  - {fileID: 6118406536695504604, guid: f1bdbad0953a41c44ad87d7940ab3984, type: 3}
+  - {fileID: 3723835181157669766, guid: c45d9b6e8d956084984cbd102f0b73a9, type: 3}
+  - {fileID: 6603296649409033566, guid: 0e0fe60d1f7967548ab7d851cba56a80, type: 3}
+  - {fileID: 8531678944976247615, guid: 50a66bf75060aab4b85dfb40768c2fdf, type: 3}
+  - {fileID: 4262455715604526784, guid: 0dca6b829da82ee49823825c5693fb3c, type: 3}
+  - {fileID: 9197626417217089907, guid: 65f1cbb5317e9af40a4cdcaff7573ca3, type: 3}
+  - {fileID: 2383568938516457576, guid: bcbfe15174c5d27489472197b00f6086, type: 3}
+  - {fileID: 1777984495318919027, guid: a850ce2fbb482e544af81ea1b79c40b5, type: 3}
+  - {fileID: 4536395540284735614, guid: f06b71ad159fbe547ad313c1cf5ed732, type: 3}
+  - {fileID: 854621663077859800, guid: 677ff28e492de644aa4ca5795674260b, type: 3}
+  - {fileID: 7302497771053763621, guid: 898daa24fdae4f04cb9c1a8f063e4cf1, type: 3}
+  roomsInScene: []
+  maximumRooms: 10
+  totalRoomsSoFar: 0
+  openPaths: 0
+  startRoomPrefab: {fileID: 8432967875943187184, guid: 9b954e0936c4dba40972d27c7538368f,
+    type: 3}
+  openSpawnPts: []
+  rooms_northDoor: []
+  rooms_eastDoor: []
+  rooms_southDoor: []
+  rooms_westDoor: []
+  deadEndN: {fileID: 4536395540284735614, guid: f06b71ad159fbe547ad313c1cf5ed732,
+    type: 3}
+  deadEndE: {fileID: 7302497771053763621, guid: 898daa24fdae4f04cb9c1a8f063e4cf1,
+    type: 3}
+  deadEndS: {fileID: 6118406536695504604, guid: f1bdbad0953a41c44ad87d7940ab3984,
+    type: 3}
+  deadEndW: {fileID: 1955935384671824788, guid: 56d8b68b75584e745972ccbb777447d3,
+    type: 3}
+--- !u!4 &378989209
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378989207}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.7599068, y: 20.832777, z: 6.880598}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &469893417
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -460,7 +538,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &626660181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -557,3 +635,51 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 469893417}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1476710541
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1476710543}
+  - component: {fileID: 1476710542}
+  m_Layer: 0
+  m_Name: EnemyCOuntManager
+  m_TagString: EnemyCountMan
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1476710542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476710541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb50aa9695d50aa49928d4bb15e22c0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelManager: {fileID: 378989208}
+  rooms: []
+  enemiesInLevel: []
+  enemyCount: 0
+  gameManager: {fileID: 0}
+--- !u!4 &1476710543
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476710541}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.5422535, y: -60.937912, z: 8.094429}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

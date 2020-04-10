@@ -41,6 +41,9 @@ public class EnemyMovement : MonoBehaviour
 	void Start()
 	{
 		anim = GetComponent<Animator>();
+
+		// Josie's code, check through
+		target = GameObject.FindGameObjectWithTag("Player").transform;
 	}
 
 	void Update() 

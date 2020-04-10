@@ -27,6 +27,10 @@ public class Room : MonoBehaviour
 
     [SerializeField] private List<EnemyHealth> enemiesInRoom = new List<EnemyHealth>();
     public EnemyCountManager enemyCountManager;
+
+    private LevelGeneration levelGenMan;
+
+    public bool justCreated = true;
     #endregion
 
     // Start is called before the first frame update.
@@ -44,7 +48,12 @@ public class Room : MonoBehaviour
         inRoomTrigger = GetComponentInChildren<EnterRoomTrigger>().gameObject.GetComponent<BoxCollider>();
         //populateEnemiesInRoom();
 
+        StartCoroutine("updatebabyBool");
         // get enemyCountManager
+        enemyCountManager = GameObject.FindGameObjectWithTag("EnemyCountMan").GetComponent<EnemyCountManager>();
+
+        // get LevelGen from parent.
+        levelGenMan = GameObject.FindGameObjectWithTag("LevelGenManager").GetComponent<LevelGeneration>();
     }
 
     // Update is called once per frame.
@@ -58,6 +67,12 @@ public class Room : MonoBehaviour
         {
             unlockAllDoors();
         }
+    }
+
+    public IEnumerator updatebabyBool()
+    {
+        yield return new WaitForSeconds(0.1f);
+        justCreated = false;
     }
 
     public void populateEnemiesInRoom()
@@ -137,4 +152,30 @@ public class Room : MonoBehaviour
         roomCleared = true;
         doorsLocked = false;
     }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.GetComponent<Room>())
+        {
+            Room otherRoom = other.gameObject.GetComponent<Room>();
+            if(otherRoom.justCreated && !justCreated)
+            {
+                otherRoom.destroyThisRoom();
+                Debug.Log("delete other Room");
+            }
+            else if (!otherRoom.justCreated && justCreated)
+            {
+                destroyThisRoom();
+                Debug.Log("delete this Room");
+            }
+        }
+    }
+
+    public void destroyThisRoom()
+    {
+        levelGenMan.removeRoomFromScene(this.gameObject);
+        Destroy(this.gameObject);
+    }
+
 }

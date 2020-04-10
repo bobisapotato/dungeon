@@ -139,11 +139,13 @@ MonoBehaviour:
   roomCleared: 0
   doorsLocked: 0
   playerInRoom: 0
-  inRoomTrigger: {fileID: 0}
+  inRoomTrigger: {fileID: 7567377139050848421}
   nDoor: 0
   eDoor: 1
   sDoor: 0
   wDoor: 1
+  enemiesInRoom: []
+  enemyCountManager: {fileID: 0}
 --- !u!135 &-8956821223589411204
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -661,6 +663,12 @@ PrefabInstance:
 --- !u!4 &8972447624201194100 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 926671254631613136, guid: bd2158650150adb45b21107e50a58b3f,
+    type: 3}
+  m_PrefabInstance: {fileID: 8095425989702404260}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &7567377139050848421 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 1827338168117291009, guid: bd2158650150adb45b21107e50a58b3f,
     type: 3}
   m_PrefabInstance: {fileID: 8095425989702404260}
   m_PrefabAsset: {fileID: 0}
