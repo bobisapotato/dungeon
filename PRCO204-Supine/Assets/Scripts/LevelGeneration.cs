@@ -78,49 +78,12 @@ public class LevelGeneration : MonoBehaviour
 			{
 				Debug.Log("Was wrongly marked as open, fixed now");
 			}
-
-			
-			
 		}
 		
-		//if(Input.GetKeyDown(KeyCode.R))
-		//{
-			//if (openPaths > 0 && openSpawnPts.Count > 0)
-			//{
-			//StartCoroutine("generateLevel");
-			//}
-
-		//}
-
-
-
-		//Debug.Log(openPaths);
 	}
 
 
-	public IEnumerator generateLevel()
-	{
-		yield return new WaitForSeconds(0.5f);
-
-		int index = Random.Range(0, openSpawnPts.Count - 1);
-
-		if (openSpawnPts[index].GetComponent<RoomSpawnPoint>().checkSpawnIsOpen())
-		{
-			if (openSpawnPts[index].GetComponent<RoomSpawnPoint>().open)
-			{
-				//spawnRoomFromList(openSpawnPts[index].GetComponent<RoomSpawnPoint>());
-				pickHowToSpawnRoom(openSpawnPts[index].GetComponent<RoomSpawnPoint>());
-			}
-			else
-			{
-				openSpawnPts.Remove(openSpawnPts[index].GetComponent<RoomSpawnPoint>().gameObject);
-			}
-		}
-		else
-		{
-			Debug.Log("Was wrongly marked as open, fixed now");
-		}
-	}
+	
 
 	public List<GameObject> getRoomsInScene()
 	{
@@ -263,14 +226,12 @@ public class LevelGeneration : MonoBehaviour
 
 		string direction = spawnPoint.spawnDirection;
 
-		//Debug.Log("DIRECTION OF SPAWN PT = " + direction +  "FROM ROOM " +	spawnPoint.GetComponentInParent<Room>().gameObject.name);
-
-		//Debug.Log("sensor array found = " + spawnPoint.GetComponentsInChildren<RoomSpawnSensor>().Length);
+		
 		// check sensors to see if any doors are needed 
 		foreach (RoomSpawnSensor sensor in spawnPoint.GetComponentsInChildren<RoomSpawnSensor>())
 		{
 
-			//Debug.Log("Running iterate through sensors");
+			Debug.Log("Running iterate through sensors");
 
 
 			//Debug.Log("Finds the original room at direction " + sensor.direction + " : " + sensor.checkMustHave());
@@ -305,6 +266,13 @@ public class LevelGeneration : MonoBehaviour
 
 	public void spawnDeadEnd(RoomSpawnPoint spawnPoint)
 	{
+		// For now, if max limit is near, we spawn a dead end room. 
+		// This can cause a few issues, as sometimes the new room links to two doors
+		// (or more), resulting in doors that lead to no where. 
+		// This needs to be considered and added to this section. 
+		// If we can't think of anything better, as a quick fix we can just add all the corner room prefabs 
+		// to the levelGen, as we have with dead ends, and add more if statements, but this is clunky af.
+
 		GameObject roomToSpawn = null;
 		
 		if(spawnPoint.spawnDirection == "N")
@@ -332,7 +300,7 @@ public class LevelGeneration : MonoBehaviour
 		Vector3 tempTransform = spawn.transform.position;
 
 		// spawn said room at that pos
-		Instantiate(room, tempTransform, Quaternion.identity);
+		Instantiate(room, tempTransform, startRot);
 
 		addNewRoomToScene(room.gameObject, spawn);
 	}
@@ -429,22 +397,6 @@ public class LevelGeneration : MonoBehaviour
 		return tempRoomList;
 	}
 
-	//public void turnOffOppositeSpawn(string direction, Room newRoom)
-	//{
-
-	//	// When a room spawns, it has it's own spawn point that points back into the original room
-	//	// based on what room this is, we automatically remove the appropriate spawn point from open list
-
-	//	// get the spawnPts associated with new room
-	//	RoomSpawnPoint[] tempSpawnPtArray = newRoom.GetComponentsInChildren<RoomSpawnPoint>();
-
-	//	RoomSpawnPoint toRemove;
-
-	//	toRemove = newRoom.GetSpawnPoint(direction);
-
-	//	Debug.Log("!!!!!!Trying to remove from " + newRoom.gameObject.name + " Pt " + toRemove.gameObject.name);
-
-	//	removeFromSpawnList(toRemove.gameObject);
-	//}
+	
 
 }

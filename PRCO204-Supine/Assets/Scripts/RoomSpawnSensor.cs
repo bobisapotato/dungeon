@@ -77,11 +77,8 @@ public class RoomSpawnSensor : MonoBehaviour
         // when something alerts the sensor, it checks the associated room and 
         // updates the 'need related room' bool
 
-        //if (other.CompareTag("Room"))
-        //{
 
             foundRoom = other.gameObject.GetComponentInParent<Room>();
-            //Debug.Log("Found room " + foundRoom.name + " in the direction " + direction);
 
             if (direction == "N")
             {
@@ -118,7 +115,7 @@ public class RoomSpawnSensor : MonoBehaviour
                 }
                 else mustNotHaveDoor = true;
             }
-        //}
+        
 
     }
 

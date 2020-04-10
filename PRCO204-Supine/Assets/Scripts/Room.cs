@@ -156,6 +156,9 @@ public class Room : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        // Sometimes doors overlap. This shouldn't happen if the spawnSensor script is
+        // properly working, but for now the quick fix is just deleting the second room.
+
         if(other.gameObject.GetComponent<Room>())
         {
             Room otherRoom = other.gameObject.GetComponent<Room>();

@@ -35,8 +35,7 @@ public class RoomSpawnPoint : MonoBehaviour
 
         levelGenManager.addNewSpawnPt(this.gameObject);
 
-        //Debug.Log(levelGenManager.openSpawnPts.Count + " spawns in list when spawn point " + gameObject.name + " is made");
-
+        
         InvokeRepeating("constantSpawnCheck", 0.1f, 3f);
 
     }
@@ -50,7 +49,6 @@ public class RoomSpawnPoint : MonoBehaviour
     public bool checkSpawnIsOpen()
     {
         // turns on collider, if it triggers it will change value of open
-        //Debug.Log("checking spawn " + this.gameObject.name);
         StartCoroutine("toggleSpawnCollider");
 
         return open;
@@ -58,7 +56,6 @@ public class RoomSpawnPoint : MonoBehaviour
 
     public void setSpawnInactive()
     {
-        //Debug.Log("set spawn inactive being called for " + gameObject.name);
         open = false;
 
     }
@@ -74,7 +71,6 @@ public class RoomSpawnPoint : MonoBehaviour
   
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("Something triggers this collider on " + this.gameObject.name);
         // this is only triggered when turned on on checkSpawnIsOpen and if something is already in that spot
         // if this runs, the associated spawnPt should be closed
 
