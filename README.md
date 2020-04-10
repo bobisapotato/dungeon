@@ -12,8 +12,9 @@ Josie Wood|`10509521`|josie@supine.dev|**Scrum master**, lead designer, QA teste
 Due|Action|By
 ---|---|---
 Friday Evening | **Sprint review**: Discuss how the week's sprint went, and decide on tasks for the following weeks' sprint.|Everyone
-Tuesday Morning |**Live coding**: Working together in a discord call to develop the project, sharing screens if necessary.|Everyone
-Thursday Evening |**Live coding**: Working together in a discord call to develop the project, sharing screens if necessary|Everyone
+Tuesday Morning (12pm start)|**Live coding**: Working together in a discord call to develop the project, sharing screens if necessary.|Everyone
+Wednesday Morning (12pm start)|**Live coding**: Working together in a discord call to develop the project, sharing screens if necessary.|Everyone
+Thursday Evening (7pm start)|**Live coding**: Working together in a discord call to develop the project, sharing screens if necessary|Everyone
 
 # Version control schedule
 Due|Action|By
