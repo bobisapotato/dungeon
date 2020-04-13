@@ -250,7 +250,14 @@ public class LevelGeneration : MonoBehaviour
 		}
 
 
+		Debug.Log(spawnPoint);
 		List<GameObject> roomsToChooseFrom = populateTempRoomList(doorsRequired, doorsAvoided);
+		
+
+		foreach(GameObject g in roomsToChooseFrom)
+		{
+			Debug.Log("Potential room: " + g.name);
+		}
 
 		int index = Random.Range(0, roomsToChooseFrom.Count - 1);
 		//Debug.Log("Index is " + index + " and roomsList is " + roomsToChooseFrom.Count);
@@ -310,6 +317,16 @@ public class LevelGeneration : MonoBehaviour
 		List<GameObject> tempRoomList = new List<GameObject>();
 		List<GameObject> secondTempRoomList = new List<GameObject>();
 
+		foreach (string s in requiredDirs)
+		{
+			Debug.Log("Required: " + s);
+		}
+
+		foreach (string s in avoidedDirs)
+		{
+			Debug.Log("Avoid: " + s);
+		}
+
 		// add all the doors with required directions to temp List
 		if (requiredDirs.Contains("N"))
 		{
@@ -340,22 +357,74 @@ public class LevelGeneration : MonoBehaviour
 			}
 		}
 
-		// remove any rooms with doors in the mustAvoid list
+		
+		// remove any rooms with mustAvoid directions
+		//foreach(GameObject g in secondTempRoomList)
+		//{
+		//	tempRoomList.Remove(g);
+		//}
 
-		//Debug.Log("Added rooms to temp list successfully");
+		// clear secondtemp list for reuse
+		//secondTempRoomList.Clear();
 
-		if(avoidedDirs.Contains("N"))
+		//remove any rooms that only have one/some of the needed directions
+		if (requiredDirs.Contains("N"))
 		{
-			foreach(GameObject g in tempRoomList)
+			foreach (GameObject g in tempRoomList)
 			{
-				if(g.GetComponent<Room>().nDoor)
+				if(!rooms_northDoor.Contains(g))
+				{
+					secondTempRoomList.Add(g);
+				}
+			}
+		}
+		if (requiredDirs.Contains("E"))
+		{
+			foreach (GameObject g in tempRoomList)
+			{
+				if (!rooms_eastDoor.Contains(g))
+				{
+					secondTempRoomList.Add(g);
+				}
+			}
+		}
+		if (requiredDirs.Contains("S"))
+		{
+			foreach (GameObject g in tempRoomList)
+			{
+				if (!rooms_southDoor.Contains(g))
+				{
+					secondTempRoomList.Add(g);
+				}
+			}
+		}
+		if (requiredDirs.Contains("W"))
+		{
+			foreach (GameObject g in tempRoomList)
+			{
+				if (!rooms_westDoor.Contains(g))
 				{
 					secondTempRoomList.Add(g);
 				}
 			}
 		}
 
-		
+		// remove any rooms with doors in the mustAvoid list
+
+		//Debug.Log("Added rooms to temp list successfully");
+
+		if (avoidedDirs.Contains("N"))
+		{
+			foreach (GameObject g in tempRoomList)
+			{
+				if (g.GetComponent<Room>().nDoor)
+				{
+					secondTempRoomList.Add(g);
+				}
+			}
+		}
+
+
 		if (avoidedDirs.Contains("E"))
 		{
 			foreach (GameObject g in tempRoomList)
@@ -387,13 +456,13 @@ public class LevelGeneration : MonoBehaviour
 			}
 		}
 
-		foreach(GameObject g in secondTempRoomList)
+		foreach (GameObject g in secondTempRoomList)
 		{
 			tempRoomList.Remove(g);
 		}
-
 		//Debug.Log("removed rooms right");
 
+		Debug.Log("Suitable rooms " + tempRoomList.Count());
 		return tempRoomList;
 	}
 

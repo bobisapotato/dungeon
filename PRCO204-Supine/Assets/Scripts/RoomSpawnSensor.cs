@@ -13,17 +13,17 @@ public class RoomSpawnSensor : MonoBehaviour
     public string direction;
     private BoxCollider sensorCollider;
     private Room foundRoom;
-    private bool mustHaveDoor;
-    private bool mustNotHaveDoor;
+    [SerializeField] private bool mustHaveDoor = false;
+    [SerializeField] private bool mustNotHaveDoor = false;
 
     // Start is called before the first frame update
     void Start()
     {
         // collider is off, toggled on to check relevant surroundings
         sensorCollider = gameObject.GetComponent<BoxCollider>();
-        sensorCollider.enabled = false;
+        //sensorCollider.enabled = false;
 
-        checkSensor();
+        //checkSensor();
     }
 
     // Update is called once per frame
@@ -34,11 +34,13 @@ public class RoomSpawnSensor : MonoBehaviour
 
     public bool checkMustHave()
     {
+        //toggleSensorCollider();
         return mustHaveDoor;
     }
 
     public bool checkMustNot()
     {
+        //toggleSensorCollider();
         return mustNotHaveDoor;
     }
 
@@ -49,7 +51,7 @@ public class RoomSpawnSensor : MonoBehaviour
 
     public bool checkRoomWasFound()
     {
-        if(foundRoom)
+        if (foundRoom)
         {
             return true;
         }
@@ -59,64 +61,88 @@ public class RoomSpawnSensor : MonoBehaviour
         }
     }
 
-    public void checkSensor()
-    {
-        StartCoroutine("toggleSensorCollider");
-    }
+    //public void checkSensor()
+    //{
+    //    StartCoroutine("toggleSensorCollider");
+    //}
 
-    public IEnumerator toggleSensorCollider()
-    {
-        yield return new WaitForSeconds(0.3f);
-        sensorCollider.enabled = true;
-        yield return new WaitForSeconds(0.5f);
-        sensorCollider.enabled = false;
-    }
+    //public IEnumerator toggleSensorCollider()
+    //{
+    //    yield return new WaitForSeconds(0.3f);
+    //    sensorCollider.enabled = true;
+    //    yield return new WaitForSeconds(0.5f);
+        
+    //}
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         // when something alerts the sensor, it checks the associated room and 
         // updates the 'need related room' bool
 
-
+        if (foundRoom == null)
+        {
             foundRoom = other.gameObject.GetComponentInParent<Room>();
 
-            if (direction == "N")
+            if (other.gameObject.GetComponentInParent<Room>())
             {
-                if (foundRoom.sDoor)
-                {
-                    mustHaveDoor = true;
-                }
-                else mustNotHaveDoor = true;
-            }
-            if (direction == "E")
-            {
-                if (foundRoom.wDoor)
-                {
-                    mustHaveDoor = true;
-                    
-                }
-                else mustNotHaveDoor = true;
-            }
-            if (direction == "S")
-            {
-                if (foundRoom.nDoor)
-                {
-                    mustHaveDoor = true;
-                    
-                }
-                else mustNotHaveDoor = true;
-            }
-            if (direction == "W")
-            {
-                if (foundRoom.eDoor)
-                {
-                    mustHaveDoor = true;
 
+                if (direction == "N")
+                {
+                    if (foundRoom.sDoor)
+                    {
+                        mustHaveDoor = true;
+                        mustNotHaveDoor = false;
+                    }
+                    else
+                    {
+                        mustNotHaveDoor = true;
+                        mustHaveDoor = false;
+                    }
                 }
-                else mustNotHaveDoor = true;
-            }
-        
+                if (direction == "E")
+                {
+                    if (foundRoom.wDoor)
+                    {
+                        mustHaveDoor = true;
+                        mustNotHaveDoor = false;
+                    }
+                    else
+                    {
+                        mustNotHaveDoor = true;
+                        mustHaveDoor = false;
+                    }
+                }
+                if (direction == "S")
+                {
+                    if (foundRoom.nDoor)
+                    {
+                        mustHaveDoor = true;
+                        mustNotHaveDoor = false;
+                    }
 
+                    else
+                    {
+                        mustNotHaveDoor = true;
+                        mustHaveDoor = false;
+                    }
+                }
+                if (direction == "W")
+                {
+                    if (foundRoom.eDoor)
+                    {
+                        mustHaveDoor = true;
+                        mustNotHaveDoor = false;
+                    }
+
+                    else
+                    {
+                        mustNotHaveDoor = true;
+                        mustHaveDoor = false;
+                    }
+                }
+                //sensorCollider.enabled = false;
+            }
+        }
     }
 
         
