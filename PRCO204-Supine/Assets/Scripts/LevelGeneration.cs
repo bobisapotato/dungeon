@@ -43,46 +43,46 @@ public class LevelGeneration : MonoBehaviour
 
 		roomsInScene.Add(startRoomPrefab);
 
-		//for(int x = 0; x < openPaths; x++)
-		//{
-
-		//	spawnRoomFromList(openSpawnPts[0].GetComponent<RoomSpawnPoint>());
-		//}
 		
 
+		//BUILD LEVEL
+		InvokeRepeating("createLevel", 0.5f, 0.4f);
 
 	}
 
 	private void Update()
 	{
-		// spawn rooms one by one in update to bug check
-
 		
 
-		if (Input.GetKeyDown(KeyCode.Q))
+		if (openSpawnPts.Count() == 0)
 		{
-			int index = Random.Range(0, openSpawnPts.Count - 1);
-			if (openSpawnPts[index].GetComponent<RoomSpawnPoint>().checkSpawnIsOpen())
+			CancelInvoke("createLevel");
+		}
+
+	}
+
+	public void createLevel()
+	{
+		int index = Random.Range(0, openSpawnPts.Count - 1);
+		if (openSpawnPts[index].GetComponent<RoomSpawnPoint>().checkSpawnIsOpen())
+		{
+			if (openSpawnPts[index].GetComponent<RoomSpawnPoint>().open)
 			{
-				if (openSpawnPts[index].GetComponent<RoomSpawnPoint>().open)
-				{
-					//spawnRoomFromList(openSpawnPts[index].GetComponent<RoomSpawnPoint>());
-					pickHowToSpawnRoom(openSpawnPts[index].GetComponent<RoomSpawnPoint>());
-				}
-				else
-				{
-					openSpawnPts.Remove(openSpawnPts[index].GetComponent<RoomSpawnPoint>().gameObject);
-				}
+				//spawnRoomFromList(openSpawnPts[index].GetComponent<RoomSpawnPoint>());
+				pickHowToSpawnRoom(openSpawnPts[index].GetComponent<RoomSpawnPoint>());
 			}
 			else
 			{
-				Debug.Log("Was wrongly marked as open, fixed now");
+				openSpawnPts.Remove(openSpawnPts[index].GetComponent<RoomSpawnPoint>().gameObject);
 			}
 		}
+		else
+		{
+			Debug.Log("Was wrongly marked as open, fixed now");
+		}
+
 		
 	}
-
-
 	
 
 	public List<GameObject> getRoomsInScene()
@@ -146,11 +146,13 @@ public class LevelGeneration : MonoBehaviour
 		//}
 	}
 
-	
+
 
 	#endregion
 
 	// Manage roomsInScene
+
+	#region
 	public void addNewRoomToScene(GameObject g, RoomSpawnPoint spawn)
 	{
 		// adds Gamoebject to roomsInScene list
@@ -169,7 +171,7 @@ public class LevelGeneration : MonoBehaviour
 		refreshOpenSpawnList();
 		
 	}
-
+	#endregion
 	// Populate lists of room prefabs based on door directions
 	private void populateRoomDirectionLists()
 	{
