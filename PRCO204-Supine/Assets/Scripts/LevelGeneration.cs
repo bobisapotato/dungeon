@@ -43,11 +43,11 @@ public class LevelGeneration : MonoBehaviour
 
 		roomsInScene.Add(startRoomPrefab);
 
-		for(int x = 0; x < openPaths; x++)
-		{
+		//for(int x = 0; x < openPaths; x++)
+		//{
 
-			spawnRoomFromList(openSpawnPts[0].GetComponent<RoomSpawnPoint>());
-		}
+		//	spawnRoomFromList(openSpawnPts[0].GetComponent<RoomSpawnPoint>());
+		//}
 		
 
 
@@ -203,30 +203,13 @@ public class LevelGeneration : MonoBehaviour
 	public void pickHowToSpawnRoom(RoomSpawnPoint spawnPoint)
 	{
 		// selects whether room should be selected from list or be a dead end
-		
-		if(totalRoomsSoFar + openPaths >= maximumRooms)
-		{
-			spawnDeadEnd(spawnPoint);
-		}
-		else if(totalRoomsSoFar + openPaths < maximumRooms)
-		{
-			spawnRoomFromList(spawnPoint);
-		}
-	}
-	
-	public void spawnRoomFromList(RoomSpawnPoint spawnPoint)
-	{
-		// spawns in a random room at the given point
-		// room must be selected from correct list so doors align
-
-		GameObject roomToSpawn = null;
 
 		List<string> doorsRequired = new List<string>();
 		List<string> doorsAvoided = new List<string>();
 
 		string direction = spawnPoint.spawnDirection;
 
-		
+
 		// check sensors to see if any doors are needed 
 		foreach (RoomSpawnSensor sensor in spawnPoint.GetComponentsInChildren<RoomSpawnSensor>())
 		{
@@ -235,23 +218,38 @@ public class LevelGeneration : MonoBehaviour
 
 
 			//Debug.Log("Finds the original room at direction " + sensor.direction + " : " + sensor.checkMustHave());
-			if(sensor.checkRoomWasFound() && sensor.checkMustHave())
+			if (sensor.checkRoomWasFound() && sensor.checkMustHave())
 			{
 				doorsRequired.Add(sensor.getRequiredDoorDir());
 				//Debug.Log("needs door in dir " + sensor.getRequiredDoorDir());
 			}
-			if(sensor.checkRoomWasFound() && sensor.checkMustNot())
+			if (sensor.checkRoomWasFound() && sensor.checkMustNot())
 			{
 				doorsAvoided.Add(sensor.getRequiredDoorDir());
 				//Debug.Log("avoid door in dir " + sensor.getRequiredDoorDir());
 			}
-
-
 		}
 
 
-		Debug.Log(spawnPoint);
-		List<GameObject> roomsToChooseFrom = populateTempRoomList(doorsRequired, doorsAvoided);
+		if (totalRoomsSoFar + openPaths >= maximumRooms)
+		{
+			spawnDeadEnd(spawnPoint, doorsRequired, doorsAvoided);
+		}
+		else if(totalRoomsSoFar + openPaths < maximumRooms)
+		{
+			spawnRoomFromList(spawnPoint, doorsRequired, doorsAvoided);
+		}
+	}
+	
+	public void spawnRoomFromList(RoomSpawnPoint spawnPoint, List<string> requiredDirs, List<string> avoidedDirs)
+	{
+		// spawns in a random room at the given point
+		// room must be selected from correct list so doors align
+
+		GameObject roomToSpawn = null;
+
+		
+		List<GameObject> roomsToChooseFrom = populateTempRoomList(requiredDirs, avoidedDirs);
 		
 
 		foreach(GameObject g in roomsToChooseFrom)
@@ -271,7 +269,7 @@ public class LevelGeneration : MonoBehaviour
 		instantiateRoom(roomToSpawn, spawnPoint);
 	}
 
-	public void spawnDeadEnd(RoomSpawnPoint spawnPoint)
+	public void spawnDeadEnd(RoomSpawnPoint spawnPoint, List<string> requiredDirs, List<string> avoidedDirs)
 	{
 		// For now, if max limit is near, we spawn a dead end room. 
 		// This can cause a few issues, as sometimes the new room links to two doors
@@ -280,24 +278,7 @@ public class LevelGeneration : MonoBehaviour
 		// If we can't think of anything better, as a quick fix we can just add all the corner room prefabs 
 		// to the levelGen, as we have with dead ends, and add more if statements, but this is clunky af.
 
-		GameObject roomToSpawn = null;
-		
-		if(spawnPoint.spawnDirection == "N")
-		{
-			roomToSpawn = deadEndN;
-		}
-		if (spawnPoint.spawnDirection == "E")
-		{
-			roomToSpawn = deadEndE;
-		}
-		if (spawnPoint.spawnDirection == "S")
-		{
-			roomToSpawn = deadEndS;
-		}
-		if (spawnPoint.spawnDirection == "W")
-		{
-			roomToSpawn = deadEndW;
-		}
+		GameObject roomToSpawn = findDeadEnd(requiredDirs, avoidedDirs);
 
 		instantiateRoom(roomToSpawn, spawnPoint);
 	}
@@ -466,6 +447,69 @@ public class LevelGeneration : MonoBehaviour
 		return tempRoomList;
 	}
 
-	
+	public GameObject findDeadEnd(List<string> requiredDirs, List<string> avoidedDirs)
+	{
+		GameObject perfectRoom = null;
+
+		// only one door needed
+
+		if(requiredDirs.Count() == 1)
+		{
+			if(requiredDirs[0] == "N")
+			{
+				perfectRoom = deadEndN;
+			}
+			if (requiredDirs[0] == "E")
+			{
+				perfectRoom = deadEndE;
+			}
+			if (requiredDirs[0] == "S")
+			{
+				perfectRoom = deadEndS;
+			}
+			if (requiredDirs[0] == "W")
+			{
+				perfectRoom = deadEndW;
+			}
+		}
+
+		// if two doors needed
+
+		if (requiredDirs.Count() == 2)
+		{
+			foreach (GameObject g in roomPrefabs)
+			{
+				Door[] doors = g.GetComponentsInChildren<Door>();
+
+				if (doors.Count() == 2)
+				{
+					if (requiredDirs.Contains(doors[0].direction) && requiredDirs.Contains(doors[1].direction))
+					{
+						perfectRoom = g;
+					}
+				}
+			}
+		}
+
+		// if 3 doors needed
+		if (requiredDirs.Count() == 3)
+		{
+			foreach (GameObject g in roomPrefabs)
+			{
+				Door[] doors = g.GetComponentsInChildren<Door>();
+
+				if (doors.Count() == 3)
+				{
+					if (requiredDirs.Contains(doors[0].direction) && requiredDirs.Contains(doors[1].direction) && requiredDirs.Contains(doors[2].direction))
+					{
+						perfectRoom = g;
+					}
+				}
+			}
+		}
+
+
+		return perfectRoom;
+	}
 
 }
