@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: N
+  mustHaveDoor: 0
+  mustNotHaveDoor: 0
 --- !u!65 &1392628536489700348
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -126,7 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnDirection: N
   levelGenManager: {fileID: 0}
-  checkSpawnCollider: {fileID: 0}
+  checkSpawnCollider: {fileID: 5803857292797028035}
   open: 1
 --- !u!65 &5803857292797028035
 BoxCollider:
@@ -137,7 +139,7 @@ BoxCollider:
   m_GameObject: {fileID: 500500812459638140}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: -4, z: 0}
@@ -203,6 +205,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: N
+  mustHaveDoor: 0
+  mustNotHaveDoor: 0
 --- !u!65 &1336270500940168167
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -550,6 +554,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: E
+  mustHaveDoor: 0
+  mustNotHaveDoor: 0
 --- !u!65 &4210306316724925440
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -625,6 +631,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: N
+  mustHaveDoor: 0
+  mustNotHaveDoor: 0
 --- !u!65 &351002064139173580
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -700,6 +708,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: S
+  mustHaveDoor: 0
+  mustNotHaveDoor: 0
 --- !u!65 &5003263389771297807
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -884,6 +894,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: W
+  mustHaveDoor: 0
+  mustNotHaveDoor: 0
 --- !u!65 &6279446423860220927
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1068,6 +1080,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: W
+  mustHaveDoor: 0
+  mustNotHaveDoor: 0
 --- !u!65 &6316900022296144620
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1430,7 +1444,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnDirection: W
   levelGenManager: {fileID: 0}
-  checkSpawnCollider: {fileID: 0}
+  checkSpawnCollider: {fileID: 3994400879923159501}
   open: 1
 --- !u!65 &3994400879923159501
 BoxCollider:
@@ -1441,7 +1455,7 @@ BoxCollider:
   m_GameObject: {fileID: 4136118902037709274}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: -4, z: 0}
@@ -1602,6 +1616,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: S
+  mustHaveDoor: 0
+  mustNotHaveDoor: 0
 --- !u!65 &7761684572725001415
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1677,6 +1693,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: E
+  mustHaveDoor: 0
+  mustNotHaveDoor: 0
 --- !u!65 &1529249425694060701
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1752,6 +1770,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: E
+  mustHaveDoor: 0
+  mustNotHaveDoor: 0
 --- !u!65 &7968426412124929378
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2192,6 +2212,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: W
+  mustHaveDoor: 0
+  mustNotHaveDoor: 0
 --- !u!65 &165885266901933645
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2267,6 +2289,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: S
+  mustHaveDoor: 0
+  mustNotHaveDoor: 0
 --- !u!65 &3450181961138899253
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2713,7 +2737,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnDirection: E
   levelGenManager: {fileID: 0}
-  checkSpawnCollider: {fileID: 0}
+  checkSpawnCollider: {fileID: 7401401329260855076}
   open: 1
 --- !u!65 &7401401329260855076
 BoxCollider:
@@ -2724,7 +2748,7 @@ BoxCollider:
   m_GameObject: {fileID: 9211332911419379537}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: -4, z: 0}

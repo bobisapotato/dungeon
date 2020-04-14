@@ -29,7 +29,7 @@ public class LevelGeneration : MonoBehaviour
 	public GameObject deadEndS;
 	public GameObject deadEndW;
 
-
+	bool creatingLevel = false;
 
 	private void Start()
 	{
@@ -52,23 +52,56 @@ public class LevelGeneration : MonoBehaviour
 
 	private void Update()
 	{
-		
+		if(Input.GetKeyDown(KeyCode.L))
+		{
+			Debug.Log(1);
+			foreach (GameObject room in roomsInScene)
+			{
+				Debug.Log(2);
+				foreach (RoomSpawnPoint spawn in room.GetComponentsInChildren<RoomSpawnPoint>())
+				{
+					
+					Debug.Log(4);
+					spawn.finalCheck();
+					
+
+				}
+			}
+		}
 
 		if (openSpawnPts.Count() == 0)
 		{
+			// double check no doors to nowhere
+			
+
 			CancelInvoke("createLevel");
+			creatingLevel = false;
 		}
+		if(!creatingLevel && openSpawnPts.Count() != 0)
+		{
+			InvokeRepeating("createLevel", 0.5f, 0.4f);
+		}
+		
+
+		//if(Input.GetKeyDown(KeyCode.R))
+		//{
+		//	refreshOpenSpawnList();
+		//}
 
 	}
 
 	public void createLevel()
 	{
+		creatingLevel = true;
 		int index = Random.Range(0, openSpawnPts.Count - 1);
-		if (openSpawnPts[index].GetComponent<RoomSpawnPoint>().checkSpawnIsOpen())
+
+		if (openSpawnPts[index].GetComponent<RoomSpawnPoint>())
 		{
+			openSpawnPts[index].GetComponent<RoomSpawnPoint>().checkSpawnIsOpen();
+
 			if (openSpawnPts[index].GetComponent<RoomSpawnPoint>().open)
 			{
-				//spawnRoomFromList(openSpawnPts[index].GetComponent<RoomSpawnPoint>());
+				
 				pickHowToSpawnRoom(openSpawnPts[index].GetComponent<RoomSpawnPoint>());
 			}
 			else
@@ -80,8 +113,6 @@ public class LevelGeneration : MonoBehaviour
 		{
 			Debug.Log("Was wrongly marked as open, fixed now");
 		}
-
-		
 	}
 	
 
@@ -98,7 +129,11 @@ public class LevelGeneration : MonoBehaviour
 	{
 		foreach(GameObject g in openSpawnPts)
 		{
-			g.GetComponent<RoomSpawnPoint>().checkSpawnIsOpen();
+			if(g == null)
+			{
+				openSpawnPts.Remove(g);
+			}
+			else g.GetComponent<RoomSpawnPoint>().checkSpawnIsOpen();
 		}
 
 		openPaths = openSpawnPts.Count;
@@ -165,6 +200,11 @@ public class LevelGeneration : MonoBehaviour
 	public void removeRoomFromScene(GameObject g)
 	{
 		// adds Gamoebject to roomsInScene list
+
+		foreach(RoomSpawnPoint spawn in g.GetComponentsInChildren<RoomSpawnPoint>())
+		{
+			removeFromSpawnList(spawn.gameObject);
+		}
 		roomsInScene.Remove(g);
 		totalRoomsSoFar--;
 
@@ -216,7 +256,7 @@ public class LevelGeneration : MonoBehaviour
 		foreach (RoomSpawnSensor sensor in spawnPoint.GetComponentsInChildren<RoomSpawnSensor>())
 		{
 
-			Debug.Log("Running iterate through sensors");
+			//Debug.Log("Running iterate through sensors");
 
 
 			//Debug.Log("Finds the original room at direction " + sensor.direction + " : " + sensor.checkMustHave());
@@ -250,23 +290,16 @@ public class LevelGeneration : MonoBehaviour
 
 		GameObject roomToSpawn = null;
 
-		
 		List<GameObject> roomsToChooseFrom = populateTempRoomList(requiredDirs, avoidedDirs);
 		
-
-		foreach(GameObject g in roomsToChooseFrom)
-		{
-			Debug.Log("Potential room: " + g.name);
-		}
-
 		int index = Random.Range(0, roomsToChooseFrom.Count - 1);
-		//Debug.Log("Index is " + index + " and roomsList is " + roomsToChooseFrom.Count);
 
 		roomToSpawn = roomsToChooseFrom[index];
 
-		
-		// console output to return a room
-		Debug.Log("Room " + roomToSpawn.name + " has been selected to spawn from spawn point " + spawnPoint.gameObject.name);
+		if (roomToSpawn == null)
+		{
+			Debug.Log("No perfect room found spawnfromlist");
+		}
 
 		instantiateRoom(roomToSpawn, spawnPoint);
 	}
@@ -289,26 +322,23 @@ public class LevelGeneration : MonoBehaviour
 	{
 		Vector3 tempTransform = spawn.transform.position;
 
-		// spawn said room at that pos
-		Instantiate(room, tempTransform, startRot);
+		if (room)
+		{
+			// spawn said room at that pos
+			Instantiate(room, tempTransform, startRot);
 
-		addNewRoomToScene(room.gameObject, spawn);
+			addNewRoomToScene(room.gameObject, spawn);
+		}
+		else
+		{
+			Debug.Log("Tried to create a null room");
+		}
 	}
 
 	public List<GameObject> populateTempRoomList(List<string> requiredDirs, List<string> avoidedDirs)
 	{
 		List<GameObject> tempRoomList = new List<GameObject>();
 		List<GameObject> secondTempRoomList = new List<GameObject>();
-
-		foreach (string s in requiredDirs)
-		{
-			Debug.Log("Required: " + s);
-		}
-
-		foreach (string s in avoidedDirs)
-		{
-			Debug.Log("Avoid: " + s);
-		}
 
 		// add all the doors with required directions to temp List
 		if (requiredDirs.Contains("N"))
@@ -443,9 +473,7 @@ public class LevelGeneration : MonoBehaviour
 		{
 			tempRoomList.Remove(g);
 		}
-		//Debug.Log("removed rooms right");
-
-		Debug.Log("Suitable rooms " + tempRoomList.Count());
+		
 		return tempRoomList;
 	}
 
@@ -510,7 +538,15 @@ public class LevelGeneration : MonoBehaviour
 			}
 		}
 
+		if(requiredDirs.Count() == 4)
+		{
+			perfectRoom = startRoomPrefab;
+		}
 
+		if(perfectRoom == null)
+		{
+			Debug.Log("No perfect room found in getDeadEnd");
+		}
 		return perfectRoom;
 	}
 

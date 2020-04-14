@@ -26,7 +26,7 @@ public class EnemyCountManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        populateEnemyList();
     }
 
     private void populateEnemyList()
@@ -35,7 +35,10 @@ public class EnemyCountManager : MonoBehaviour
         {
             foreach(EnemyHealth enemy in g.GetComponent<Room>().getEnemiesInRoom())
             {
-                enemiesInLevel.Add(enemy);
+                if (!enemiesInLevel.Contains(enemy))
+                {
+                    enemiesInLevel.Add(enemy);
+                }
             }
         }
 

@@ -396,23 +396,23 @@ MonoBehaviour:
   - {fileID: 854621663077859800, guid: 677ff28e492de644aa4ca5795674260b, type: 3}
   - {fileID: 7302497771053763621, guid: 898daa24fdae4f04cb9c1a8f063e4cf1, type: 3}
   roomsInScene: []
-  maximumRooms: 30
+  maximumRooms: 20
   totalRoomsSoFar: 0
   openPaths: 0
-  startRoomPrefab: {fileID: 8432967875943187184, guid: 9b954e0936c4dba40972d27c7538368f,
+  startRoomPrefab: {fileID: 6944866789189815949, guid: bc25de8a9d592a048a69ade0542c7b62,
     type: 3}
   openSpawnPts: []
   rooms_northDoor: []
   rooms_eastDoor: []
   rooms_southDoor: []
   rooms_westDoor: []
-  deadEndN: {fileID: 4536395540284735614, guid: f06b71ad159fbe547ad313c1cf5ed732,
+  deadEndN: {fileID: 6118406536695504604, guid: f1bdbad0953a41c44ad87d7940ab3984,
     type: 3}
-  deadEndE: {fileID: 7302497771053763621, guid: 898daa24fdae4f04cb9c1a8f063e4cf1,
+  deadEndE: {fileID: 1955935384671824788, guid: 56d8b68b75584e745972ccbb777447d3,
     type: 3}
-  deadEndS: {fileID: 6118406536695504604, guid: f1bdbad0953a41c44ad87d7940ab3984,
+  deadEndS: {fileID: 4536395540284735614, guid: f06b71ad159fbe547ad313c1cf5ed732,
     type: 3}
-  deadEndW: {fileID: 1955935384671824788, guid: 56d8b68b75584e745972ccbb777447d3,
+  deadEndW: {fileID: 7302497771053763621, guid: 898daa24fdae4f04cb9c1a8f063e4cf1,
     type: 3}
 --- !u!4 &378989209
 Transform:
@@ -426,7 +426,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &469893417
 PrefabInstance:
@@ -522,83 +522,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 42c7e7b9a75cbef48afb8c61124e87c8, type: 3}
---- !u!1 &626660180
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 626660182}
-  - component: {fileID: 626660181}
-  m_Layer: 0
-  m_Name: LevelGenerationManager
-  m_TagString: LevelGenManager
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &626660181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 626660180}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b340537b3ec018f4c85c2d20e93bdf8a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roomPrefabs:
-  - {fileID: 4403759761449590882, guid: 9b38ab0f0e58b944386e37512dedf594, type: 3}
-  - {fileID: 521390998109352409, guid: d9eaf0df8979b9d429d8c36b073048d5, type: 3}
-  - {fileID: 6947751877523681667, guid: 740c84e5702042e468b6f54d12ecb87f, type: 3}
-  - {fileID: 8477051699266868207, guid: efcacaf80891de4418165b6217f97ac0, type: 3}
-  - {fileID: 3589584042049497439, guid: 4eddaeeb787316e4482aa00cd01ae481, type: 3}
-  - {fileID: 105668513986354326, guid: 04238a496007da345a461582f57a686a, type: 3}
-  - {fileID: 920556961725779367, guid: ccd70502d5890fe4582663721eecc061, type: 3}
-  - {fileID: 8432967875943187184, guid: 9b954e0936c4dba40972d27c7538368f, type: 3}
-  - {fileID: 5137345561569722372, guid: 45eedbde8b6742147bfb3358e617ff43, type: 3}
-  - {fileID: 8338052617334095590, guid: aa196bf0b510d9c439ac4ae47538335d, type: 3}
-  - {fileID: 6245682412961605686, guid: 12e03501e62a1a843af4ebc92e399299, type: 3}
-  - {fileID: 1000673663301893426, guid: e2d367c7dd7f40743830a98f6cc4ef2b, type: 3}
-  - {fileID: 1287210509205726853, guid: f085b006b4f457e40b8dafcbcecf43fb, type: 3}
-  - {fileID: 3098115921006748444, guid: 97075fc1772ebdb4c9dde0843036dfa4, type: 3}
-  - {fileID: 359611039040998228, guid: 92dc14f8ce339a541be9bc3c83e23945, type: 3}
-  roomsInScene: []
-  maximumRooms: 20
-  totalRoomsSoFar: 0
-  openPaths: 0
-  startRoomPrefab: {fileID: 8432967875943187184, guid: 9b954e0936c4dba40972d27c7538368f,
-    type: 3}
-  openSpawnPts: []
-  rooms_northDoor: []
-  rooms_eastDoor: []
-  rooms_southDoor: []
-  rooms_westDoor: []
-  deadEndN: {fileID: 1287210509205726853, guid: f085b006b4f457e40b8dafcbcecf43fb,
-    type: 3}
-  deadEndE: {fileID: 359611039040998228, guid: 92dc14f8ce339a541be9bc3c83e23945, type: 3}
-  deadEndS: {fileID: 3589584042049497439, guid: 4eddaeeb787316e4482aa00cd01ae481,
-    type: 3}
-  deadEndW: {fileID: 4403759761449590882, guid: 9b38ab0f0e58b944386e37512dedf594,
-    type: 3}
---- !u!4 &626660182
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 626660180}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.7599068, y: 20.832777, z: 6.880598}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &951651380
 GameObject:
   m_ObjectHideFlags: 0
@@ -681,5 +604,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

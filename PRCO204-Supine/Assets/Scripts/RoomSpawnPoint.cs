@@ -17,6 +17,7 @@ public class RoomSpawnPoint : MonoBehaviour
     public BoxCollider checkSpawnCollider;
     public bool open = true;
 
+    private bool wasTriggered = false;
     
 
     private void Start()
@@ -40,6 +41,14 @@ public class RoomSpawnPoint : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            StartCoroutine("toggleSpawnCollider");
+        }
+    }
+
     public IEnumerator constantSpawnCheck()
     {
         yield return new WaitForSeconds(1f);
@@ -60,12 +69,57 @@ public class RoomSpawnPoint : MonoBehaviour
 
     }
 
-    public IEnumerator toggleSpawnCollider()
+    public void finalCheck()
+    {
+        if(checkSpawnCollider == null)
+        {
+            Debug.Log("Was null");
+            checkSpawnCollider = this.gameObject.GetComponent<BoxCollider>();
+        }
+
+        wasTriggered = false;
+        manualTurnOn();
+        Invoke("ManualTurnOff", 1f);
+        if (!wasTriggered)
+        {
+            if (!open)
+            {
+                open = true;
+                levelGenManager.addNewSpawnPt(this.gameObject);
+
+                Debug.Log("Using new code to add spawn back");
+            }
+        }
+    }
+
+    private void manualTurnOn()
     {
         checkSpawnCollider.enabled = true;
-        //Debug.Log("Turned collider on" + gameObject.name);
-        yield return new WaitForSeconds(0.5f);
+    }
+
+    private void manualTurnOff()
+    {
         checkSpawnCollider.enabled = false;
+    }
+
+    public IEnumerator toggleSpawnCollider()
+    {
+
+        wasTriggered = false;
+        checkSpawnCollider.enabled = true;
+        //Debug.Log("Turned collider on" + gameObject.name);
+        yield return new WaitForSeconds(1f);
+        checkSpawnCollider.enabled = false;
+        if(!wasTriggered)
+        {
+            if (!open)
+            {
+                open = true;
+                levelGenManager.addNewSpawnPt(this.gameObject);
+
+                Debug.Log("Using new code to add spawn back");
+            }
+        }
     }
 
   
@@ -73,13 +127,23 @@ public class RoomSpawnPoint : MonoBehaviour
     {
         // this is only triggered when turned on on checkSpawnIsOpen and if something is already in that spot
         // if this runs, the associated spawnPt should be closed
+        wasTriggered = true;
 
         if (open)
         {
             open = false;
             levelGenManager.removeFromSpawnList(this.gameObject);
         }
-        checkSpawnCollider.enabled = false;
+        //checkSpawnCollider.enabled = false;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(!open)
+        {
+            open = true;
+            levelGenManager.addNewSpawnPt(this.gameObject);
+        }
     }
 
 }
