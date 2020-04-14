@@ -178,6 +178,11 @@ public class Room : MonoBehaviour
     public void destroyThisRoom()
     {
         levelGenMan.removeRoomFromScene(this.gameObject);
+
+        foreach(RoomSpawnPoint spawn in GetComponentsInChildren<RoomSpawnPoint>())
+        {
+            levelGenMan.removeFromSpawnList(spawn.gameObject);
+        }
         Destroy(this.gameObject);
     }
 

@@ -216,7 +216,7 @@ public class LevelGeneration : MonoBehaviour
 		foreach (RoomSpawnSensor sensor in spawnPoint.GetComponentsInChildren<RoomSpawnSensor>())
 		{
 
-			Debug.Log("Running iterate through sensors");
+			//Debug.Log("Running iterate through sensors");
 
 
 			//Debug.Log("Finds the original room at direction " + sensor.direction + " : " + sensor.checkMustHave());
@@ -256,7 +256,7 @@ public class LevelGeneration : MonoBehaviour
 
 		foreach(GameObject g in roomsToChooseFrom)
 		{
-			Debug.Log("Potential room: " + g.name);
+			//Debug.Log("Potential room: " + g.name);
 		}
 
 		int index = Random.Range(0, roomsToChooseFrom.Count - 1);
@@ -266,7 +266,7 @@ public class LevelGeneration : MonoBehaviour
 
 		
 		// console output to return a room
-		Debug.Log("Room " + roomToSpawn.name + " has been selected to spawn from spawn point " + spawnPoint.gameObject.name);
+		//Debug.Log("Room " + roomToSpawn.name + " has been selected to spawn from spawn point " + spawnPoint.gameObject.name);
 
 		instantiateRoom(roomToSpawn, spawnPoint);
 	}
@@ -300,15 +300,7 @@ public class LevelGeneration : MonoBehaviour
 		List<GameObject> tempRoomList = new List<GameObject>();
 		List<GameObject> secondTempRoomList = new List<GameObject>();
 
-		foreach (string s in requiredDirs)
-		{
-			Debug.Log("Required: " + s);
-		}
-
-		foreach (string s in avoidedDirs)
-		{
-			Debug.Log("Avoid: " + s);
-		}
+		
 
 		// add all the doors with required directions to temp List
 		if (requiredDirs.Contains("N"))
@@ -445,7 +437,7 @@ public class LevelGeneration : MonoBehaviour
 		}
 		//Debug.Log("removed rooms right");
 
-		Debug.Log("Suitable rooms " + tempRoomList.Count());
+		//Debug.Log("Suitable rooms " + tempRoomList.Count());
 		return tempRoomList;
 	}
 
