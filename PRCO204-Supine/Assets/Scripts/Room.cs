@@ -167,11 +167,7 @@ public class Room : MonoBehaviour
                 otherRoom.destroyThisRoom();
                 Debug.Log("delete other Room");
             }
-            else if (!otherRoom.justCreated && justCreated)
-            {
-                destroyThisRoom();
-                Debug.Log("delete this Room");
-            }
+
         }
     }
 

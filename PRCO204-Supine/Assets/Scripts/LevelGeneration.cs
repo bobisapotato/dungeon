@@ -136,14 +136,14 @@ public class LevelGeneration : MonoBehaviour
 	{
 		//Debug.Log("spawn point " + g.name + " is in list? = " + openSpawnPts.Contains(g));
 
-		//if (openSpawnPts.Contains(g))
-		//{
+		if (openSpawnPts.Contains(g))
+		{
 			// when a room is spawned, the relevant point becomes inactive, and this is called to remove it
 			openSpawnPts.Remove(g);
 			openPaths--;
 			g.GetComponent<RoomSpawnPoint>().setSpawnInactive();
 			//Debug.Log("has removed " + g.name);
-		//}
+		}
 	}
 
 
