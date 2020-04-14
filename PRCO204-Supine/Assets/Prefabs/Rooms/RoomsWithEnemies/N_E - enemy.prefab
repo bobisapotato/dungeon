@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnDirection: E
   levelGenManager: {fileID: 0}
-  checkSpawnCollider: {fileID: 0}
+  checkSpawnCollider: {fileID: 2273445856002542866}
   open: 1
 --- !u!65 &2273445856002542866
 BoxCollider:
@@ -164,6 +164,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: W
+  mustHaveDoor: 0
+  mustNotHaveDoor: 0
 --- !u!65 &8896507553409068155
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -239,6 +241,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: E
+  mustHaveDoor: 0
+  mustNotHaveDoor: 0
 --- !u!65 &4200879068956396383
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -595,6 +599,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: E
+  mustHaveDoor: 0
+  mustNotHaveDoor: 0
 --- !u!65 &7783088764088812203
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1041,7 +1047,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnDirection: N
   levelGenManager: {fileID: 0}
-  checkSpawnCollider: {fileID: 0}
+  checkSpawnCollider: {fileID: 311449514012889342}
   open: 1
 --- !u!65 &311449514012889342
 BoxCollider:
@@ -1118,6 +1124,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: N
+  mustHaveDoor: 0
+  mustNotHaveDoor: 0
 --- !u!65 &5067233662451437018
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1381,6 +1389,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: N
+  mustHaveDoor: 0
+  mustNotHaveDoor: 0
 --- !u!65 &9071634184272760058
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1513,6 +1523,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: S
+  mustHaveDoor: 0
+  mustNotHaveDoor: 0
 --- !u!65 &4570597428346604282
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1588,6 +1600,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: S
+  mustHaveDoor: 0
+  mustNotHaveDoor: 0
 --- !u!65 &4347310878222648889
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1935,6 +1949,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: W
+  mustHaveDoor: 0
+  mustNotHaveDoor: 0
 --- !u!65 &287139228172150210
 BoxCollider:
   m_ObjectHideFlags: 0

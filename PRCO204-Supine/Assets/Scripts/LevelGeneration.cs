@@ -46,7 +46,7 @@ public class LevelGeneration : MonoBehaviour
 		
 
 		//BUILD LEVEL
-		InvokeRepeating("createLevel", 0.5f, 0.4f);
+		//InvokeRepeating("createLevel", 0.5f, 0.4f);
 
 	}
 
@@ -57,6 +57,27 @@ public class LevelGeneration : MonoBehaviour
 		if (openSpawnPts.Count() == 0)
 		{
 			CancelInvoke("createLevel");
+		}
+
+		if(Input.GetKeyDown(KeyCode.Q))
+		{
+			int index = Random.Range(0, openSpawnPts.Count - 1);
+			if (openSpawnPts[index].GetComponent<RoomSpawnPoint>().checkSpawnIsOpen())
+			{
+				if (openSpawnPts[index].GetComponent<RoomSpawnPoint>().open)
+				{
+					//spawnRoomFromList(openSpawnPts[index].GetComponent<RoomSpawnPoint>());
+					pickHowToSpawnRoom(openSpawnPts[index].GetComponent<RoomSpawnPoint>());
+				}
+				else
+				{
+					openSpawnPts.Remove(openSpawnPts[index].GetComponent<RoomSpawnPoint>().gameObject);
+				}
+			}
+			else
+			{
+				Debug.Log("Was wrongly marked as open, fixed now");
+			}
 		}
 
 	}
