@@ -11,6 +11,8 @@ public class WSConnection : MonoBehaviour
 
     public GameObject serverManagerObj;
 
+    public static string roomCode;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -81,6 +83,7 @@ public class WSConnection : MonoBehaviour
         }
         if (eventName == "rooms:joined") {
             Debug.Log(eventName + " - " + args[0]);
+            roomCode = args[0].ToString();
         }
 
     }
