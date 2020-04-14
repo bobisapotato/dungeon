@@ -29,10 +29,7 @@ public class EnemyPathMovement : MonoBehaviour
         {
             step = followingSpeed * Time.deltaTime;
 
-            Vector3 relativePos = target.position - transform.position;
-            Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
-
-            transform.rotation = rotation;
+            FaceTarget(target.gameObject);
 
             transform.position = Vector3.MoveTowards(transform.position, target.position, step);
 
@@ -75,11 +72,19 @@ public class EnemyPathMovement : MonoBehaviour
 
     void MoveTowardsNextPoint()
     {
-        Vector3 relativePos = pathPositions[currentPos].transform.position - transform.position;
-        Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
+        FaceTarget(pathPositions[currentPos]);
 
-        transform.rotation = rotation;
         transform.position = Vector3.MoveTowards(transform.position, pathPositions[currentPos].transform.position, step);
         isFollowing = false;
+    }
+
+    // Point towards the target GameObject.
+    void FaceTarget(GameObject target)
+    {
+        Vector3 direction = (target.transform.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation
+            (new Vector3(direction.x, 0, direction.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation,
+            lookRotation, Time.deltaTime * 5f);
     }
 }

@@ -97,10 +97,10 @@ public class PlayerMovement : MonoBehaviour
             isGrounded = false;
         }
 
-        Vector3 relativePos = move - transform.position;
-        Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
-
-        transform.rotation = rotation;
+        if (move != new Vector3(0f, 0f, 0f)) 
+        {
+            FaceTarget(transform.position + move);
+        }
     }
 
     // Physics.
@@ -186,5 +186,15 @@ public class PlayerMovement : MonoBehaviour
             * keyboardZ;
 
         return move;
+    }
+
+    // Point towards the direction of movement.
+    void FaceTarget(Vector3 move)
+    {
+        Vector3 direction = (move - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation
+            (new Vector3(direction.x, 0, direction.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation,
+            lookRotation, Time.deltaTime * 5f);
     }
 }
