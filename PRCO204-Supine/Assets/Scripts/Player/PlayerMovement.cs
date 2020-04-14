@@ -12,6 +12,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float playerSpeed = 10f;
     [SerializeField]
+    private float rotationSpeed = 100f;
+    [SerializeField]
     private float x;
     [SerializeField]
     private float z;
@@ -195,6 +197,6 @@ public class PlayerMovement : MonoBehaviour
         Quaternion lookRotation = Quaternion.LookRotation
             (new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation,
-            lookRotation, Time.deltaTime * 5f);
+            lookRotation, Time.deltaTime * rotationSpeed);
     }
 }
