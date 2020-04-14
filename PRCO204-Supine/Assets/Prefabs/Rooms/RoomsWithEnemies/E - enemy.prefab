@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: E
+  mustHaveDoor: 0
+  mustNotHaveDoor: 0
 --- !u!65 &4246802106445274967
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -342,6 +344,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: S
+  mustHaveDoor: 0
+  mustNotHaveDoor: 0
 --- !u!65 &7690030266126113733
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -417,6 +421,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: N
+  mustHaveDoor: 0
+  mustNotHaveDoor: 0
 --- !u!65 &3100819360127275270
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -499,6 +505,7 @@ MonoBehaviour:
   levelGenManager: {fileID: 0}
   checkSpawnCollider: {fileID: 0}
   open: 1
+  wasTriggered: 0
 --- !u!65 &5287330452976799982
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -668,6 +675,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: W
+  mustHaveDoor: 0
+  mustNotHaveDoor: 0
 --- !u!65 &3285947152547901831
 BoxCollider:
   m_ObjectHideFlags: 0

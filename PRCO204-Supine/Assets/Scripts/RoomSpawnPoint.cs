@@ -35,14 +35,12 @@ public class RoomSpawnPoint : MonoBehaviour
 
         levelGenManager.addNewSpawnPt(this.gameObject);
 
-        
         InvokeRepeating("constantSpawnCheck", 0.1f, 3f);
 
     }
 
     public void constantSpawnCheck()
     {
-        //yield return new WaitForSeconds(1f);
         checkSpawnIsOpen();
     }
 
@@ -57,14 +55,12 @@ public class RoomSpawnPoint : MonoBehaviour
     public void setSpawnInactive()
     {
         open = false;
-
     }
 
     public IEnumerator toggleSpawnCollider()
     {
         wasTriggered = false;
         checkSpawnCollider.enabled = true;
-        //Debug.Log("Turned collider on" + gameObject.name);
         yield return new WaitForSeconds(1f);
         checkSpawnCollider.enabled = false;
         if(!wasTriggered && !open)
@@ -82,7 +78,6 @@ public class RoomSpawnPoint : MonoBehaviour
 
         if (other.gameObject.GetComponent<Room>() || other.GetComponentInParent<Room>() && other.tag!= "RoomSpawn")
         {
-
             wasTriggered = true;
             if (open)
             {

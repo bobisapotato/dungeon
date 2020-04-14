@@ -37,49 +37,21 @@ public class LevelGeneration : MonoBehaviour
 		startSpawn = new Vector3(0, 0, 0);
 		startRot = new Quaternion(0, 0, 0, 0);
 		Instantiate(startRoomPrefab, startSpawn, startRot);
-		//populateSpawnPtList();
 		populateRoomDirectionLists();
 		openPaths = openSpawnPts.Count;
 
 		roomsInScene.Add(startRoomPrefab);
 
-		
-
 		//BUILD LEVEL
 		InvokeRepeating("createLevel", 0.5f, 0.1f);
-
 	}
 
 	private void Update()
 	{
-		
-
 		if (openSpawnPts.Count() == 0)
 		{
 			CancelInvoke("createLevel");
 		}
-
-		if(Input.GetKeyDown(KeyCode.Q))
-		{
-			int index = Random.Range(0, openSpawnPts.Count - 1);
-			if (openSpawnPts[index].GetComponent<RoomSpawnPoint>().checkSpawnIsOpen())
-			{
-				if (openSpawnPts[index].GetComponent<RoomSpawnPoint>().open)
-				{
-					//spawnRoomFromList(openSpawnPts[index].GetComponent<RoomSpawnPoint>());
-					pickHowToSpawnRoom(openSpawnPts[index].GetComponent<RoomSpawnPoint>());
-				}
-				else
-				{
-					openSpawnPts.Remove(openSpawnPts[index].GetComponent<RoomSpawnPoint>().gameObject);
-				}
-			}
-			else
-			{
-				Debug.Log("Was wrongly marked as open, fixed now");
-			}
-		}
-
 	}
 
 	public void createLevel()
@@ -89,7 +61,6 @@ public class LevelGeneration : MonoBehaviour
 		{
 			if (openSpawnPts[index].GetComponent<RoomSpawnPoint>().open)
 			{
-				//spawnRoomFromList(openSpawnPts[index].GetComponent<RoomSpawnPoint>());
 				pickHowToSpawnRoom(openSpawnPts[index].GetComponent<RoomSpawnPoint>());
 			}
 			else
@@ -101,8 +72,6 @@ public class LevelGeneration : MonoBehaviour
 		{
 			Debug.Log("Was wrongly marked as open, fixed now");
 		}
-
-		
 	}
 	
 

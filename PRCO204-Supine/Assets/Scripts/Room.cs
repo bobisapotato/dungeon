@@ -46,7 +46,6 @@ public class Room : MonoBehaviour
 
         // get the roomTrigger
         inRoomTrigger = GetComponentInChildren<EnterRoomTrigger>().gameObject.GetComponent<BoxCollider>();
-        //populateEnemiesInRoom();
 
         StartCoroutine("updatebabyBool");
         // get enemyCountManager
