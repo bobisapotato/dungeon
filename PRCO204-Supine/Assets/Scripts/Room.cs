@@ -158,25 +158,20 @@ public class Room : MonoBehaviour
     {
         // Sometimes doors overlap. This shouldn't happen if the spawnSensor script is
         // properly working, but for now the quick fix is just deleting the second room.
+
         if(other.gameObject.GetComponent<Room>())
         {
-
-            Debug.Log("Two rooms collide " + this.gameObject.name + other.gameObject.name);
-
             Room otherRoom = other.gameObject.GetComponent<Room>();
             if(otherRoom.justCreated && !justCreated)
             {
-                Debug.Log("delete other Room, by " + this.name);
                 otherRoom.destroyThisRoom();
-                
+                Debug.Log("delete other Room");
             }
-            //else if (!otherRoom.justCreated && justCreated)
-            //{
-            //    Debug.Log("delete this Room " + this.name);
-            //    destroyThisRoom();
-                
-            //}
-            levelGenMan.refreshOpenSpawnList();
+            else if (!otherRoom.justCreated && justCreated)
+            {
+                destroyThisRoom();
+                Debug.Log("delete this Room");
+            }
         }
     }
 
