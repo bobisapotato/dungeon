@@ -46,7 +46,7 @@ public class LevelGeneration : MonoBehaviour
 		
 
 		//BUILD LEVEL
-		//InvokeRepeating("createLevel", 0.5f, 0.4f);
+		InvokeRepeating("createLevel", 0.5f, 0.1f);
 
 	}
 
@@ -308,12 +308,15 @@ public class LevelGeneration : MonoBehaviour
 
 	public void instantiateRoom(GameObject room, RoomSpawnPoint spawn)
 	{
-		Vector3 tempTransform = spawn.transform.position;
+		if (room && spawn)
+		{
+			Vector3 tempTransform = spawn.transform.position;
 
-		// spawn said room at that pos
-		Instantiate(room, tempTransform, startRot);
+			// spawn said room at that pos
+			Instantiate(room, tempTransform, startRot);
 
-		addNewRoomToScene(room.gameObject, spawn);
+			addNewRoomToScene(room.gameObject, spawn);
+		}
 	}
 
 	public List<GameObject> populateTempRoomList(List<string> requiredDirs, List<string> avoidedDirs)
@@ -523,8 +526,22 @@ public class LevelGeneration : MonoBehaviour
 			}
 		}
 
+		if (requiredDirs.Count() == 4)
+		{
+			perfectRoom = startRoomPrefab;
+		}
 
+		if(!perfectRoom )
+		{
+			Debug.Log("no dead end found. required dirs: " + requiredDirs.Count());
+			if(requiredDirs.Count() == 2)
+			{
+				Debug.Log("dirs needed: " + requiredDirs[0] + requiredDirs[1]);
+			}
+
+		}
 		return perfectRoom;
+		
 	}
 
 }
