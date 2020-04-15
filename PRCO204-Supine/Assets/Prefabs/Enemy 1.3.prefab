@@ -139,8 +139,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d8365875b77bf9438f4a33ab1accf03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 369289203208910561, guid: d1d4990080d8f3e469cc1cada7e269eb, type: 3}
+  player: {fileID: 369289203208910561, guid: d1d4990080d8f3e469cc1cada7e269eb, type: 3}
   pathPositions: []
+  wanderingSpeed: 5
+  followingSpeed: 6.66
+  rotationSpeed: 10
+  isFollowing: 0
+  isMoving: 1
+  isRotating: 0
+  direction: {x: 0, y: 0, z: 0}
 --- !u!54 &4480877981750953657
 Rigidbody:
   m_ObjectHideFlags: 0

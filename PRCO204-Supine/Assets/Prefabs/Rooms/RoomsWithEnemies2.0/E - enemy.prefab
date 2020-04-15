@@ -192,7 +192,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2113780650053793404}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -212,7 +212,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 0}
-  player: {fileID: 0}
+  pathPosPrefab: {fileID: 0}
+  parent: {fileID: 0}
+  numberOfEnemies: 0
+  numberOfPathPositions: 0
+  maxEnemies: 3
+  minEnemies: 1
+  maxPaths: 10
+  minPaths: 2
 --- !u!1 &2849985311239139109
 GameObject:
   m_ObjectHideFlags: 0

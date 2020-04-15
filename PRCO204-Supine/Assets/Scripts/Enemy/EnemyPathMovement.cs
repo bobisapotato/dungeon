@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class EnemyPathMovement : MonoBehaviour
 {
-    [SerializeField]
-    private Transform target;
+    public Transform player;
 
     public GameObject[] pathPositions;
 
@@ -13,18 +12,27 @@ public class EnemyPathMovement : MonoBehaviour
 
     private int currentPos = 0;
 
+    [SerializeField]
     private float wanderingSpeed = 5f;
+    [SerializeField]
     private float followingSpeed = 6.66f;
+    [SerializeField]
     private float rotationSpeed = 7.5f;
 
     private float playerRadius = 5f;
-    private float pointRadius = 1f;
+    private float pointRadius = 0.5f;
 
     private float step;
 
+    [SerializeField]
     private bool isFollowing;
+    [SerializeField]
     private bool isMoving = true;
+    [SerializeField]
     private bool isRotating = false;
+
+    [SerializeField]
+    Vector3 direction;
 
     void Start()
     {
@@ -33,23 +41,25 @@ public class EnemyPathMovement : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {   
+    {
         // Get the distance to the player.
-        float movementDistance = Vector3.Distance(target.position, transform.position);
+        float movementDistance = Vector3.Distance(player.transform.position, 
+            transform.position);
 
         // If inside the radius.
         if (movementDistance <= playerRadius)
         {
+            isFollowing = true;
+
             step = followingSpeed * Time.deltaTime;
 
-            StartCoroutine(FaceTarget(target.gameObject));
+            //StartCoroutine(FaceTarget(player.gameObject));
 
             if (!isRotating)
             {
-                transform.position = Vector3.MoveTowards(transform.position, target.position, step);
+                transform.position = Vector3.MoveTowards(transform.position, 
+                    player.transform.position, step);
             }
-
-            isFollowing = true;
         }
         else
         {
@@ -58,7 +68,6 @@ public class EnemyPathMovement : MonoBehaviour
             if (isFollowing)
             {
                 StartCoroutine(PauseMovement());
-
                 isFollowing = false;
             }
             else
@@ -72,17 +81,19 @@ public class EnemyPathMovement : MonoBehaviour
     {
         if (isMoving)
         {
-            StartCoroutine(FaceTarget(pathPositions[currentPos]));
+            isFollowing = false;
+
+            //StartCoroutine(FaceTarget(pathPositions[currentPos]));
 
             if (!isRotating)
             {
-                rb.position = Vector3.MoveTowards(rb.position, pathPositions[currentPos].transform.position, step);
+                transform.position = Vector3.MoveTowards(transform.position, 
+                    pathPositions[currentPos].transform.position, step);
             }
 
-            isFollowing = false;
-
             // Get the distance to the point.
-            float movementDistance = Vector3.Distance(pathPositions[currentPos].transform.position, transform.position);
+            float movementDistance = Vector3.Distance(pathPositions[currentPos].transform.position, 
+                transform.position);
 
             if (movementDistance <= pointRadius)
             {
@@ -94,22 +105,19 @@ public class EnemyPathMovement : MonoBehaviour
     // Point towards the target GameObject.
     IEnumerator FaceTarget(GameObject target)
     {
-
         // Wait for a bit.
         yield return new WaitForSeconds(0.1f);
 
-
         isRotating = true;
 
-        Vector3 direction = (target.transform.position - rb.position).normalized;
+        direction = (target.transform.position - transform.localPosition).normalized;
 
-        Quaternion lookRotation = Quaternion.LookRotation
-                                  (new Vector3(direction.x, 0, direction.z));
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
 
-        rb.rotation = Quaternion.Slerp(rb.rotation,
-                                      lookRotation, Time.deltaTime * rotationSpeed);
+        transform.rotation = Quaternion.Slerp(transform.rotation,
+                     lookRotation, Time.deltaTime * rotationSpeed);
 
-        if (rb.rotation == lookRotation)
+        if (transform.rotation == lookRotation)
         {
             isRotating = false;
         }
@@ -124,7 +132,8 @@ public class EnemyPathMovement : MonoBehaviour
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
-        // Finally freeze the body in place so forces like gravity or movement won't affect it.
+        // Finally freeze the body in place so forces like gravity or 
+        // movement won't affect it.
         rb.constraints = RigidbodyConstraints.FreezeAll;
 
         isMoving = false;

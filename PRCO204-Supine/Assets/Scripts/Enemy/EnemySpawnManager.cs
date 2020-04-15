@@ -8,8 +8,9 @@ public class EnemySpawnManager : MonoBehaviour
     private GameObject enemyPrefab;
     [SerializeField]
     private GameObject pathPosPrefab;
+
     [SerializeField]
-    private GameObject player;
+    private Transform player;
 
     private GameObject[] paths;
 
@@ -18,8 +19,8 @@ public class EnemySpawnManager : MonoBehaviour
 
     private int maxEnemies = 1;
     private int minEnemies = 1;
-    private int maxPaths = 10;
-    private int minPaths = 2;
+    private int maxPaths = 50;
+    private int minPaths = 10;
 
     private Vector3 startPos;
     private Quaternion startRot;
@@ -39,17 +40,21 @@ public class EnemySpawnManager : MonoBehaviour
 
             for (int j = 0; j < numberOfPathPositions; j++)
             {
-                paths[j] = Instantiate(pathPosPrefab, GetPathPos(),
-                    gameObject.transform.rotation, gameObject.transform);
+                paths[j] = Instantiate(pathPosPrefab, transform, false);
+                paths[j].transform.localPosition = GetPathPos();
             }
 
             startPos = GetStartPos();
             startRot = GetStartRot(startPos);
 
-            enemyInstance = Instantiate(enemyPrefab, startPos, startRot, gameObject.transform);
+            enemyInstance = Instantiate(enemyPrefab, transform, false);
+            enemyInstance.transform.localPosition = startPos;
+            enemyInstance.transform.localRotation = startRot;
+
             enemyMovementScript = enemyInstance.GetComponent<EnemyPathMovement>();
 
             enemyMovementScript.pathPositions = paths;
+            enemyMovementScript.player = player;
         }
     }
 

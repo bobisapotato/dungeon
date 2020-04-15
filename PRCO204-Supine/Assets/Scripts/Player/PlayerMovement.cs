@@ -79,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
         pivot.transform.rotation = rot;
 
         // Player moves on the Z axis based on the camera's rotation.
-        move = mainCamera.transform.right * x + pivot.transform.forward * z;
+        move = (mainCamera.transform.right * x + pivot.transform.forward * z).normalized;
 
         // If there's not input from the input system, 
         // check for alternative input.
