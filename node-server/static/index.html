@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WebSocket Staging Server &middot; Supine Research</title>
+
+    <link rel="stylesheet" href="https://supine.dev/style.css">
+    <script src="https://kit.fontawesome.com/a51a07443c.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="https://media.supine.dev/logos/supine-white.png">
+    <meta property="og:image" content="https://media.supine.dev/logos/supine-white.png" />
+    <meta property="twitter:image" content="https://media.supine.dev/logos/supine-white.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="msapplication-TileColor" content="ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <style>
+        .container {
+            position: absolute;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            top: 50px;
+        }
+
+        .code-explain {
+            font-size: 3em;
+        }
+
+        input {font-family: 'Unica One', sans-serif;text-align: center;font-size: 2em;width: 6em;border-radius: 4px;border: 1px solid #ccc;}
+        button.btn {
+            border: 1px solid rgba(0,0,0,0.2);
+            border-radius: 4px;
+            font-size: 1em;
+            padding: 4px 10px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        input#code {
+            margin-bottom: .25em;
+            margin-top: .1em;
+        }
+
+        .btn-success {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .btn[disabled] {
+            background-color: #e0e0e0;
+            color: #999;
+            cursor: not-allowed;
+        }
+        .hide {
+            display: none !important;
+        }
+        #code-name {
+            font-weight: bold;
+            font-size: 4em;
+            margin-bottom: .2em;
+        }
+        #play .btn {
+            margin: 4px;
+            font-size: 1.5em;
+        }
+    </style>
+    <style>
+        #map {
+            width: 500px;
+            height: 500px;
+            background-color: lightblue;
+            border: 1px solid gray;
+            margin: 20px 0;
+            position: relative;
+        }
+        #player {
+            position: absolute;
+            transition: all 40ms linear;
+        }
+        .player-object {
+            width: 20px;
+            height: 20px;
+            background: dodgerblue;
+            border-radius: 50%;
+            position: relative;
+            bottom: -10px;
+            left: -10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="login">
+    <div class="code-explain">Enter your room code</div>
+    <input type="text" id="code" placeholder="Room code" maxlength="4">
+    <button class="btn btn-success" id="submit-room" disabled>Go!</button>
+</div>
+<div class="container hide" id="play">
+    <div id="code-name"></div>
+
+    <button class="btn action-button" data-action="beep">Beep</button>
+    <button class="btn action-button" data-action="boop">Boop</button>
+
+    <div id="map">
+        <div id="player"><div class="player-object"></div></div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+<script>
+    const socket = io("wss://research.supine.dev:3018");
+
+    socket.on('connection', function() {
+        console.log('Connectioned to research server!');
+    });
+    socket.on('connected', function() {
+        console.log('Connected to research server!');
+    });
+    socket.on('game:action', function(action) {
+        console.log('Game action from client', action);
+    });
+    socket.on('rooms:joined', function(code) {
+        console.log(`Successfully joined room ${code}`);
+        document.querySelector('#code-name').innerHTML = code;
+        document.querySelector('#play').classList.remove('hide');
+        document.querySelector('#login').classList.add('hide');
+    });
+    socket.on('message', console.log);
+
+    socket.on('player:position', function(/* array [x,z] */ pos) {
+        console.log(`Changing player position to`, pos);
+
+        [x,z] = checkPos(pos);
+
+        document.querySelector('#player').style.left = `${x * 100}%`
+        document.querySelector('#player').style.bottom = `${z * 100}%`
+
+    });
+    
+    socket.on('object:position', function(blob) {
+        console.log('object:position', blob);
+    });
+
+    (function() {
+        let el = document.querySelector('#map');
+        el.addEventListener('click', function(evt) {
+            console.log(evt.srcElement);
+            let rect = evt.srcElement.getBoundingClientRect();
+
+            let [x,z] = [
+                evt.offsetX / rect.height,
+                (rect.width - evt.offsetY) / rect.width];
+
+            console.log(x, z);
+
+            socket.emit('game:action', 'bomb', x, z);
+        });
+    })();
+
+    function checkPos(pos) {
+
+        console.log(`Changing player position to`, pos);
+
+        const remoteMap = [-5, 5];
+
+
+        pos = pos.map(p => p += (0 - remoteMap[0]));
+        console.log(pos, `(/${(0 - remoteMap[0]) + remoteMap[1]})`);
+        pos = pos.map(p => p / ((0 - remoteMap[0]) + remoteMap[1]));
+        console.log(pos);
+
+        return pos;
+    }
+
+    document.querySelector('#code').addEventListener('input', function() {
+        let _el = document.querySelector('#code');
+        if (_el.value.toString().length === 4) {
+            document.querySelector('#submit-room').removeAttribute('disabled');
+        } else {
+            document.querySelector('#submit-room').setAttribute('disabled', 'true');
+        }
+    });
+    document.querySelector('#submit-room').addEventListener('click', function() {
+        let code = document.querySelector('#code').value;
+
+
+        console.log(`Joining room ${code}`);
+        socket.emit('rooms:join', code);
+    })
+
+    Array.from(document.querySelectorAll('.action-button')).forEach(el => {
+        el.addEventListener('click', function() {
+            socket.emit('game:action', el.dataset.action);
+        })
+    })
+</script>
+</body>
+</html>
