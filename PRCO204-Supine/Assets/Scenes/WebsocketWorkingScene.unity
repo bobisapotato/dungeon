@@ -326,8 +326,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _room: {fileID: 1637968704}
-  BombPrefab: {fileID: 5573057801229438266, guid: d0767d9f29394344c9439498f9367a2c,
-    type: 3}
+  player: {fileID: 1304952514}
+  server: research.supine.dev:3018
+  bomb:
+    Prefab: {fileID: 0}
 --- !u!4 &1026907713
 Transform:
   m_ObjectHideFlags: 0
@@ -354,9 +356,9 @@ GameObject:
   - component: {fileID: 1304952518}
   - component: {fileID: 1304952517}
   - component: {fileID: 1304952516}
-  - component: {fileID: 1304952515}
   - component: {fileID: 1304952520}
   - component: {fileID: 1304952521}
+  - component: {fileID: 1304952522}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -364,19 +366,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1304952515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1304952514}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08fcce09f187c9d4bb7a19dab025c871, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serverManagerObj: {fileID: 1026907711}
 --- !u!65 &1304952516
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -479,6 +468,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1304952522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1304952514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2796bb25d42763340a61361b29068c19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  identifier: player
 --- !u!1 &1637968704
 GameObject:
   m_ObjectHideFlags: 0

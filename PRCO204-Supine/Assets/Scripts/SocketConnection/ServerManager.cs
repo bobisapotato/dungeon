@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class ServerManager : MonoBehaviour
 {
-
     public GameObject _room;
     public GameObject player;
 
@@ -12,6 +12,8 @@ public class ServerManager : MonoBehaviour
     public string server = "research.supine.dev:3018";
 
     public abstract class Item { public readonly GameObject Prefab; }
+
+    private NetworkPositionRelay[] NetworkPositionRelays;
 
     [System.Serializable]
     public class Bomb : Item {
@@ -50,6 +52,7 @@ public class ServerManager : MonoBehaviour
     {
         float x, z;
 
+        // DecodeMessage(0.5f, 0.5f, "bomb");
         // maths 0..1 -> -5..5
 
         Debug.Log("Spawning item");
@@ -64,15 +67,37 @@ public class ServerManager : MonoBehaviour
         Instantiate(item.Prefab, newPos, Quaternion.identity /*, room.transform*/);
     }
 
-    void Start()
+    void Start() 
     {
-        //DecodeMessage(0.5f, 0.5f, "bomb");
-
+        SetupRelays();
         // Initiate websocket connection here
-        connection = new WSConnection(server);
+        connection = gameObject.AddComponent<WSConnection>();
+        connection.server = server;
+        connection.OnSocketConnected += SocketStart;
+        connection.OnNetworkTickRequest += NetworkTick;
+
+        connection.OnSocketDisconnected += reason => Debug.Log("Disconnected from remote server. Reason: " + reason);
+
+        //connection.OnSocketConnected += 
     }
 
-    void Update() {
+    void SetupRelays() {
+        NetworkPositionRelays = FindObjectsOfType<NetworkPositionRelay>();
+    }
+
+    void TriggerRelays() {
+        foreach (var networkPositionRelay in NetworkPositionRelays) {
+            connection.SendMessage("object:position", networkPositionRelay.RelayData);
+        }
+    }
+
+    void SocketStart() {
+        Debug.Log("Socket is started + event connection");
+        connection.SendMessage("rooms:create");
+    }
+
+    void NetworkTick() {
+        TriggerRelays();
     }
 
 }
