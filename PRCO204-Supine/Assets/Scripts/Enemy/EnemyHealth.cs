@@ -7,11 +7,19 @@ public class EnemyHealth : MonoBehaviour
     // Variables 
     [SerializeField] int health = 100;
     [SerializeField] int knockback;
+    private Room parentRoom;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        if (GetComponentInParent<Room>())
+        {
+            parentRoom = GetComponentInParent<Room>();
+        }
+        else
+        {
+            Debug.LogError("No parent room found attached to enemy " + this.gameObject.name + ". Enemies need to be children of the room object.");
+        }
     }
 
     // Update is called once per frame
@@ -21,6 +29,7 @@ public class EnemyHealth : MonoBehaviour
         if (health <= 0)
         {
             DropItem();
+            parentRoom.enemyKilled(this);
             Destroy(gameObject);
         }
 
@@ -46,7 +55,6 @@ public class EnemyHealth : MonoBehaviour
         {
             //Spawn dropped item here.
         }
-
     }
 
 
