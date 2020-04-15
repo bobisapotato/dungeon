@@ -53,6 +53,8 @@ public class Room : MonoBehaviour
 
         // get LevelGen from parent.
         levelGenMan = GameObject.FindGameObjectWithTag("LevelGenManager").GetComponent<LevelGeneration>();
+
+        populateEnemiesInRoom();
     }
 
     // Update is called once per frame.
