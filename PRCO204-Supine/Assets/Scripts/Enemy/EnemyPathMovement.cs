@@ -6,8 +6,8 @@ public class EnemyPathMovement : MonoBehaviour
 {
     [SerializeField]
     private Transform target;
-    [SerializeField]
-    private GameObject[] pathPositions;
+
+    public GameObject[] pathPositions;
 
     private Rigidbody rb;
 
@@ -15,14 +15,16 @@ public class EnemyPathMovement : MonoBehaviour
 
     private float wanderingSpeed = 5f;
     private float followingSpeed = 6.66f;
-    private float rotationSpeed = 5f;
-    private float radius = 5f;
+    private float rotationSpeed = 7.5f;
+
+    private float playerRadius = 5f;
+    private float pointRadius = 1f;
+
     private float step;
 
     private bool isFollowing;
     private bool isMoving = true;
     private bool isRotating = false;
-
 
     void Start()
     {
@@ -31,12 +33,12 @@ public class EnemyPathMovement : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {   
         // Get the distance to the player.
         float movementDistance = Vector3.Distance(target.position, transform.position);
 
         // If inside the radius.
-        if (movementDistance <= radius)
+        if (movementDistance <= playerRadius)
         {
             step = followingSpeed * Time.deltaTime;
 
@@ -66,26 +68,6 @@ public class EnemyPathMovement : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject == pathPositions[currentPos])
-        {
-            int oldPos = currentPos;
-
-            currentPos = Random.Range(0, pathPositions.Length);
-
-            if (currentPos == oldPos)
-            {
-                currentPos++;
-
-                if (currentPos >= pathPositions.Length)
-                {
-                    currentPos = 0;
-                }
-            }
-        }
-    }
-
     void MoveTowardsNextPoint()
     {
         if (isMoving)
@@ -96,25 +78,38 @@ public class EnemyPathMovement : MonoBehaviour
             {
                 rb.position = Vector3.MoveTowards(rb.position, pathPositions[currentPos].transform.position, step);
             }
+
             isFollowing = false;
+
+            // Get the distance to the point.
+            float movementDistance = Vector3.Distance(pathPositions[currentPos].transform.position, transform.position);
+
+            if (movementDistance <= pointRadius)
+            {
+                NextPoint();
+            }
         }
     }
 
     // Point towards the target GameObject.
     IEnumerator FaceTarget(GameObject target)
     {
+
         // Wait for a bit.
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
+
 
         isRotating = true;
 
         Vector3 direction = (target.transform.position - rb.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation
-            (new Vector3(direction.x, 0, direction.z));
-        rb.rotation = Quaternion.Slerp(rb.rotation,
-            lookRotation, Time.deltaTime * rotationSpeed);
 
-        if (rb.rotation == lookRotation) 
+        Quaternion lookRotation = Quaternion.LookRotation
+                                  (new Vector3(direction.x, 0, direction.z));
+
+        rb.rotation = Quaternion.Slerp(rb.rotation,
+                                      lookRotation, Time.deltaTime * rotationSpeed);
+
+        if (rb.rotation == lookRotation)
         {
             isRotating = false;
         }
@@ -135,10 +130,11 @@ public class EnemyPathMovement : MonoBehaviour
         isMoving = false;
 
         // Wait for a bit.
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.1f);
 
         // Unfreeze before restoring velocities.
         rb.constraints = RigidbodyConstraints.None;
+        rb.constraints = RigidbodyConstraints.FreezePositionY;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         // Restore the velocities.
@@ -146,5 +142,22 @@ public class EnemyPathMovement : MonoBehaviour
         rb.angularVelocity = angularBackup;
 
         isMoving = true;
+    }
+
+    void NextPoint()
+    {
+        int oldPos = currentPos;
+
+        currentPos = Random.Range(0, pathPositions.Length);
+
+        if (currentPos == oldPos)
+        {
+            currentPos++;
+
+            if (currentPos >= pathPositions.Length)
+            {
+                currentPos = 0;
+            }
+        }
     }
 }
