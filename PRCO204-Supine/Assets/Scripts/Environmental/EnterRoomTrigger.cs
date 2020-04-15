@@ -12,15 +12,25 @@ public class EnterRoomTrigger : MonoBehaviour
     {
         if(!this.GetComponentInParent<Room>())
         {
-            Debug.LogError("No Parent Room found. A room trigger should only exist as a child of a door, which is in turn a child of a room.");
+            Debug.LogError("No Parent Room found. A room trigger should only exist as a child a room.");
         }
     }
 
-    private void OnTriggerStay(Collider other)
+   
+
+    private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
             this.GetComponentInParent<Room>().setPlayerInRoom(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            this.GetComponentInParent<Room>().setPlayerInRoom(false);
         }
     }
 }

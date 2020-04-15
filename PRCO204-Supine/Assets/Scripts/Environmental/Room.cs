@@ -15,6 +15,7 @@ public class Room : MonoBehaviour
     public bool roomCleared = false;
     public bool doorsLocked = false;
     public bool playerInRoom;
+    public BoxCollider inRoomTrigger;
 
     // door directions
     public bool nDoor = false;
@@ -22,6 +23,14 @@ public class Room : MonoBehaviour
     public bool sDoor = false;
     public bool wDoor = false;
 
+    // unlock vars
+
+    [SerializeField] private List<EnemyHealth> enemiesInRoom = new List<EnemyHealth>();
+    public EnemyCountManager enemyCountManager;
+
+    private LevelGeneration levelGenMan;
+
+    public bool justCreated = true;
     #endregion
 
     // Start is called before the first frame update.
@@ -35,8 +44,17 @@ public class Room : MonoBehaviour
         doors = this.GetComponentsInChildren<Door>();
         setUpDoorDirections();
 
-        // if theres a spawn point at the same loc, set it to inactive
+        // get the roomTrigger
+        inRoomTrigger = GetComponentInChildren<EnterRoomTrigger>().gameObject.GetComponent<BoxCollider>();
 
+        StartCoroutine("updatebabyBool");
+        // get enemyCountManager
+        enemyCountManager = GameObject.FindGameObjectWithTag("EnemyCountMan").GetComponent<EnemyCountManager>();
+
+        // get LevelGen from parent.
+        levelGenMan = GameObject.FindGameObjectWithTag("LevelGenManager").GetComponent<LevelGeneration>();
+
+        populateEnemiesInRoom();
     }
 
     // Update is called once per frame.
@@ -52,6 +70,39 @@ public class Room : MonoBehaviour
         }
     }
 
+    public IEnumerator updatebabyBool()
+    {
+        yield return new WaitForSeconds(0.1f);
+        justCreated = false;
+    }
+
+    public void populateEnemiesInRoom()
+    {
+        EnemyHealth[] tempArray = GetComponentsInChildren<EnemyHealth>();
+
+        foreach(EnemyHealth enemy in tempArray)
+        {
+            enemiesInRoom.Add(enemy);
+        }
+    }
+
+    public void enemyKilled(EnemyHealth enemyKilled)
+    {
+        enemiesInRoom.Remove(enemyKilled);
+
+        if(enemiesInRoom.Count == 0)
+        {
+            // all enemies killed
+            unlockAllDoors();
+        }
+
+        enemyCountManager.enemyKilled(enemyKilled);
+    }
+
+    public List<EnemyHealth> getEnemiesInRoom()
+    {
+        return enemiesInRoom;
+    }
     private void setUpDoorDirections()
     {
         // sets bools for each door dir based on the spawn pts in the children
@@ -102,4 +153,34 @@ public class Room : MonoBehaviour
         roomCleared = true;
         doorsLocked = false;
     }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // Sometimes doors overlap. This shouldn't happen if the spawnSensor script is
+        // properly working, but for now the quick fix is just deleting the second room.
+
+        if(other.gameObject.GetComponent<Room>())
+        {
+            Room otherRoom = other.gameObject.GetComponent<Room>();
+            if(otherRoom.justCreated && !justCreated)
+            {
+                otherRoom.destroyThisRoom();
+                Debug.Log("delete other Room");
+            }
+
+        }
+    }
+
+    public void destroyThisRoom()
+    {
+        levelGenMan.removeRoomFromScene(this.gameObject);
+
+        foreach(RoomSpawnPoint spawn in GetComponentsInChildren<RoomSpawnPoint>())
+        {
+            levelGenMan.removeFromSpawnList(spawn.gameObject);
+        }
+        Destroy(this.gameObject);
+    }
+
 }
