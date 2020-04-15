@@ -19,6 +19,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("DemoScene");
     }
 
+    public void openDemo2()
+    {
+        SceneManager.LoadScene("Demo_Release2");
+    }
+
     public void openDemoMenu()
     {
         SceneManager.LoadScene("DemoMenu");
