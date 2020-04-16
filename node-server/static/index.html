@@ -76,18 +76,20 @@
             margin: 20px 0;
             position: relative;
         }
-        #player {
+        .blob {
             position: absolute;
             transition: all 40ms linear;
         }
-        .player-object {
+        .blob--player .blob-content { background: dodgerblue; }
+        .blob--enemy .blob-content { background: darkred; }
+        .blob-content {
             width: 20px;
             height: 20px;
-            background: dodgerblue;
+            background: gray;
             border-radius: 50%;
             position: relative;
             bottom: -10px;
-            left: -10px;
+            left: -10px;            
         }
     </style>
 </head>
@@ -105,7 +107,8 @@
     <button class="btn action-button" data-action="boop">Boop</button>
 
     <div id="map">
-        <div id="player"><div class="player-object"></div></div>
+        <div id="player"  class="blob blob--player"><div class="blob-content"></div></div>
+        <div id="enemy-1" class="blob blob--enemy"><div class="blob-content"></div></div>
     </div>
 </div>
 
@@ -142,6 +145,11 @@
     
     socket.on('object:position', function(blob) {
         console.log('object:position', blob);
+        
+        [x,z] = checkPos(blob.position);
+
+        document.querySelector(`#${blob.identifier}`).style.left = `${x * 100}%`
+        document.querySelector(`#${blob.identifier}`).style.bottom = `${z * 100}%`
     });
 
     (function() {
