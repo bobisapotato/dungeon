@@ -169,7 +169,7 @@ public class EnemyPathMovement : MonoBehaviour
                 isRotating = false;
             }
         }
-
+        
         // This is an extra step check to make sure it definitely works.
         if (transform.rotation == lookRotation || transform.rotation == lookRotationPositive || transform.rotation == lookRotationNegative)
         {
@@ -198,8 +198,7 @@ public class EnemyPathMovement : MonoBehaviour
 
         // Unfreeze before restoring velocities.
         rb.constraints = RigidbodyConstraints.None;
-        rb.constraints = RigidbodyConstraints.FreezePositionY;
-        rb.constraints = RigidbodyConstraints.FreezeRotation;
+        rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
 
         // Restore the velocities.
         rb.velocity = linearBackup;
