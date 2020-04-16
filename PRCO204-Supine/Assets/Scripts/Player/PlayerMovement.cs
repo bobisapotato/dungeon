@@ -199,7 +199,7 @@ public class PlayerMovement : MonoBehaviour
         return move;
     }
 
-    // Point towards the direction of movement.
+    // Point towards the direction of the right analogue stick.
     void FaceTarget(Vector2 rot)
     {
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(-rot.x, 0f, -rot.y));

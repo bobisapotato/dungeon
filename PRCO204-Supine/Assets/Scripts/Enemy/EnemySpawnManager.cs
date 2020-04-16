@@ -32,8 +32,10 @@ public class EnemySpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        // Set the number of enemies for the room.
         numberOfEnemies = GetNumberOfEnemiesInRoom();
 
+        // For each enemy, instantiate a number of paths.
         for (int i = 0; i < numberOfEnemies; i++)
         {
             paths = new GameObject[numberOfPathPositions = GetNumbeOfPathPositions()];
@@ -44,13 +46,16 @@ public class EnemySpawnManager : MonoBehaviour
                 paths[j].transform.localPosition = GetPathPos();
             }
 
+            // Set the start position and rotation for the enemy.
             startPos = GetStartPos();
             startRot = GetStartRot(startPos);
 
+            // Instantiate the enemy, not in world space.
             enemyInstance = Instantiate(enemyPrefab, transform, false);
             enemyInstance.transform.localPosition = startPos;
             enemyInstance.transform.localRotation = startRot;
 
+            // Set the paths and the target for the enemy.
             enemyMovementScript = enemyInstance.GetComponent<EnemyPathMovement>();
 
             enemyMovementScript.pathPositions = paths;
@@ -58,6 +63,8 @@ public class EnemySpawnManager : MonoBehaviour
         }
     }
 
+    // Returns a random number within a specified range.
+    // This value is the number of enemies in the room.
     int GetNumberOfEnemiesInRoom()
     {
         int num = Random.Range(minEnemies, maxEnemies);
@@ -65,6 +72,8 @@ public class EnemySpawnManager : MonoBehaviour
         return num;
     }
 
+    // Returns a random number within a specified range.
+    // This value is the number of paths for 1 enemy.
     int GetNumbeOfPathPositions()
     {
         int num = Random.Range(minPaths, maxPaths);
@@ -72,6 +81,7 @@ public class EnemySpawnManager : MonoBehaviour
         return num;
     }
 
+    // Returns a random Vector3 for position.
     Vector3 GetStartPos()
     {
         Vector3 pos;
@@ -83,6 +93,8 @@ public class EnemySpawnManager : MonoBehaviour
         return pos;
     }
 
+    // Returns a Quaternion for the enemy to
+    // be facing the first target point.
     Quaternion GetStartRot(Vector3 pos)
     {
         Vector3 direction = (paths[0].transform.position - pos).normalized;
@@ -92,6 +104,7 @@ public class EnemySpawnManager : MonoBehaviour
         return rot;
     }
 
+    // Gets a random point for a path.
     Vector3 GetPathPos()
     {
         Vector3 pos;
