@@ -93,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
         // If there's not input from the input system, 
         // check for alternative input.
         // This is temporary, for Zack.
-        if (move == new Vector3(0f, 0f, 0f)) 
+        if (move == Vector3.zero) 
         {
             move = KeyboardMovement(move);
         }
@@ -111,6 +111,10 @@ public class PlayerMovement : MonoBehaviour
         if (rotY != Vector2.zero)
         {
             FaceTarget(rotY);
+        }
+        else
+        {
+            FaceMouse();
         }
     }
 
@@ -187,18 +191,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // Temporary alternative movement.
-    Vector3 KeyboardMovement(Vector3 move) 
-    {
-        float keyboardX = Input.GetAxis("Horizontal");
-        float keyboardZ = Input.GetAxis("Vertical");
-
-        move = mainCamera.transform.right * keyboardX + pivot.transform.forward 
-            * keyboardZ;
-
-        return move;
-    }
-
     // Point towards the direction of the right analogue stick.
     void FaceTarget(Vector2 rot)
     {
@@ -206,5 +198,30 @@ public class PlayerMovement : MonoBehaviour
 
         transform.rotation = Quaternion.Slerp(transform.rotation,
                      lookRotation, Time.deltaTime * rotationSpeed);
+    }
+
+    // Temporary alternative movement.
+    Vector3 KeyboardMovement(Vector3 move)
+    {
+        float keyboardX = Input.GetAxis("Horizontal");
+        float keyboardZ = Input.GetAxis("Vertical");
+
+        move = mainCamera.transform.right * keyboardX + pivot.transform.forward
+            * keyboardZ;
+
+        return move;
+    }
+
+    void FaceMouse()
+    {
+        Vector3 mouse = Input.mousePosition;
+
+        Vector3 screenPoint = Camera.main.WorldToScreenPoint(transform.localPosition);
+
+        Vector2 offset = new Vector2(mouse.x - screenPoint.x, mouse.y - screenPoint.y);
+
+        float angle = Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg + 90f;
+
+        transform.rotation = Quaternion.Euler(0, -angle, 0);
     }
 }
