@@ -19,8 +19,8 @@ public class EnemySpawnManager : MonoBehaviour
 
     private int maxEnemies = 1;
     private int minEnemies = 1;
-    private int maxPaths = 50;
-    private int minPaths = 10;
+    private int maxPaths = 10;
+    private int minPaths = 2;
 
     private Vector3 startPos;
     private Quaternion startRot;
