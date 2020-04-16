@@ -65,6 +65,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""PlayerRotY"",
+                    ""type"": ""Value"",
+                    ""id"": ""09a099f2-9125-4502-965d-47ebaf48057d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -133,6 +141,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""CameraRotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c39a695c-5834-4e12-8a38-972c191bb33b"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlayerRotY"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -147,6 +166,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Gameplay_PlayerRun = m_Gameplay.FindAction("PlayerRun", throwIfNotFound: true);
         m_Gameplay_PlayerCrouch = m_Gameplay.FindAction("PlayerCrouch", throwIfNotFound: true);
         m_Gameplay_CameraRotate = m_Gameplay.FindAction("CameraRotate", throwIfNotFound: true);
+        m_Gameplay_PlayerRotY = m_Gameplay.FindAction("PlayerRotY", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -202,6 +222,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_PlayerRun;
     private readonly InputAction m_Gameplay_PlayerCrouch;
     private readonly InputAction m_Gameplay_CameraRotate;
+    private readonly InputAction m_Gameplay_PlayerRotY;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -212,6 +233,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @PlayerRun => m_Wrapper.m_Gameplay_PlayerRun;
         public InputAction @PlayerCrouch => m_Wrapper.m_Gameplay_PlayerCrouch;
         public InputAction @CameraRotate => m_Wrapper.m_Gameplay_CameraRotate;
+        public InputAction @PlayerRotY => m_Wrapper.m_Gameplay_PlayerRotY;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -239,6 +261,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @CameraRotate.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCameraRotate;
                 @CameraRotate.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCameraRotate;
                 @CameraRotate.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCameraRotate;
+                @PlayerRotY.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlayerRotY;
+                @PlayerRotY.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlayerRotY;
+                @PlayerRotY.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlayerRotY;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -261,6 +286,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @CameraRotate.started += instance.OnCameraRotate;
                 @CameraRotate.performed += instance.OnCameraRotate;
                 @CameraRotate.canceled += instance.OnCameraRotate;
+                @PlayerRotY.started += instance.OnPlayerRotY;
+                @PlayerRotY.performed += instance.OnPlayerRotY;
+                @PlayerRotY.canceled += instance.OnPlayerRotY;
             }
         }
     }
@@ -273,5 +301,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnPlayerRun(InputAction.CallbackContext context);
         void OnPlayerCrouch(InputAction.CallbackContext context);
         void OnCameraRotate(InputAction.CallbackContext context);
+        void OnPlayerRotY(InputAction.CallbackContext context);
     }
 }

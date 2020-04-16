@@ -27,6 +27,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private Vector3 move;
 
+    [SerializeField]
+    private Vector2 rotY;
+
     private Rigidbody rb;
 
     private PlayerControls controls;
@@ -63,6 +66,12 @@ public class PlayerMovement : MonoBehaviour
         = ctx.ReadValue<float>();
         controls.Gameplay.PlayerMoveZ.canceled += ctx => z = 0f;
 
+
+        controls.Gameplay.PlayerRotY.performed += ctx => rotY
+        = ctx.ReadValue<Vector2>();
+        controls.Gameplay.PlayerRotY.canceled += ctx => rotY = Vector3.zero;
+
+
         controls.Gameplay.PlayerJump.performed += ctx => Jump();
         controls.Gameplay.PlayerCrouch.performed += ctx => Crouch();
         controls.Gameplay.PlayerRun.performed += ctx => Run();
@@ -79,12 +88,12 @@ public class PlayerMovement : MonoBehaviour
         pivot.transform.rotation = rot;
 
         // Player moves on the Z axis based on the camera's rotation.
-        move = mainCamera.transform.right * x + pivot.transform.forward * z;
+        move = (mainCamera.transform.right * x + pivot.transform.forward * z).normalized;
 
         // If there's not input from the input system, 
         // check for alternative input.
         // This is temporary, for Zack.
-        if (move == new Vector3(0f, 0f, 0f)) 
+        if (move == Vector3.zero) 
         {
             move = KeyboardMovement(move);
         }
@@ -99,9 +108,13 @@ public class PlayerMovement : MonoBehaviour
             isGrounded = false;
         }
 
-        if (move != new Vector3(0f, 0f, 0f)) 
+        if (rotY != Vector2.zero)
         {
-            FaceTarget(transform.position + move);
+            FaceTarget(rotY);
+        }
+        else
+        {
+            FaceMouse();
         }
     }
 
@@ -178,25 +191,37 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // Point towards the direction of the right analogue stick.
+    void FaceTarget(Vector2 rot)
+    {
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(-rot.x, 0f, -rot.y));
+
+        transform.rotation = Quaternion.Slerp(transform.rotation,
+                     lookRotation, Time.deltaTime * rotationSpeed);
+    }
+
     // Temporary alternative movement.
-    Vector3 KeyboardMovement(Vector3 move) 
+    Vector3 KeyboardMovement(Vector3 move)
     {
         float keyboardX = Input.GetAxis("Horizontal");
         float keyboardZ = Input.GetAxis("Vertical");
 
-        move = mainCamera.transform.right * keyboardX + pivot.transform.forward 
+        move = mainCamera.transform.right * keyboardX + pivot.transform.forward
             * keyboardZ;
 
         return move;
     }
 
-    // Point towards the direction of movement.
-    void FaceTarget(Vector3 move)
+    void FaceMouse()
     {
-        Vector3 direction = (move - transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation
-            (new Vector3(direction.x, 0, direction.z));
-        transform.rotation = Quaternion.Slerp(transform.rotation,
-            lookRotation, Time.deltaTime * rotationSpeed);
+        Vector3 mouse = Input.mousePosition;
+
+        Vector3 screenPoint = Camera.main.WorldToScreenPoint(transform.localPosition);
+
+        Vector2 offset = new Vector2(mouse.x - screenPoint.x, mouse.y - screenPoint.y);
+
+        float angle = Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg + 90f;
+
+        transform.rotation = Quaternion.Euler(0, -angle, 0);
     }
 }
