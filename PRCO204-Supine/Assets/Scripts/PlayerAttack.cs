@@ -48,7 +48,7 @@ public class PlayerAttack : MonoBehaviour
     private void Attack2()
     {
 
-        Instantiate(projectile, meleeObject.transform.position, projectile.transform.rotation);
+        Instantiate(projectile, meleeObject.transform.position, meleeObject.transform.rotation);
 
         //   RaycastHit hit;
         //   Ray ray = new Ray(transform.position, transform.TransformDirection(Vector3.forward));
