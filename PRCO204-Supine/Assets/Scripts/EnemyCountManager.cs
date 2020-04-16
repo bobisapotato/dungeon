@@ -75,6 +75,6 @@ public class EnemyCountManager : MonoBehaviour
 
     public void updateLabel()
     {
-        enemyCountLabel.text = ("Enemy Count = " + enemyCount.ToString());
+        enemyCountLabel.text = ("x" + enemyCount.ToString());
     }
 }
