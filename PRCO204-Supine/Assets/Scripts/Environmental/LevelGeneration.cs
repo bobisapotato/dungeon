@@ -45,6 +45,9 @@ public class LevelGeneration : MonoBehaviour
 
 		//BUILD LEVEL
 		InvokeRepeating("createLevel", 0.5f, 0.1f);
+
+		
+
 	}
 
 	private void Update()
@@ -58,6 +61,7 @@ public class LevelGeneration : MonoBehaviour
 				startedEnemyCounter = true;
 			}
 		}
+
 	}
 
 	public void createLevel()
