@@ -33,11 +33,13 @@ public class HealthManager : MonoBehaviour
         if (playerHealth.GetHealth() != oldHealth) 
         {
             healthbar.value = ((float)playerHealth.GetHealth() / 100);
+            Debug.Log(oldHealth);
 
         }
 
         oldHealth = playerHealth.GetHealth();
 
+        
 
         if (oldHealth <= 0)
         {
