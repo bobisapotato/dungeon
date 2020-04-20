@@ -36,7 +36,7 @@ public class PickUpWeapon : MonoBehaviour
         timer += Time.deltaTime;
     }
 
-    // Display UI here: "Press X".
+    // Display UI here: "Pick Up/Press X".
     void OnTriggerStay(Collider other)
     {
         if (other.tag == "Weapon" && !isStandingOnWeapon && timer >= pickUpCoolDown)
@@ -64,11 +64,11 @@ public class PickUpWeapon : MonoBehaviour
 
         if (heldWeapon.name.Contains("Sword"))
         {
-            Instantiate(swordPrefab, transform.position, /*swordPrefab.*/transform.rotation);
+            Instantiate(swordPrefab, transform.position, transform.rotation);
         }
         else if (heldWeapon.name.Contains("Crossbow"))
         {
-            Instantiate(crossbowPrefab, transform.position, /*crossbowPrefab.*/transform.rotation);
+            Instantiate(crossbowPrefab, transform.position, transform.rotation);
         }
 
         timer = 0f;
