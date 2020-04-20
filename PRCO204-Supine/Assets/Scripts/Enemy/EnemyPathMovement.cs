@@ -38,6 +38,11 @@ public class EnemyPathMovement : MonoBehaviour
     [SerializeField]
     Quaternion lookRotation;
 
+    private int damage = 10;
+    private float attackCoolDown = 0f;
+    private float attackCoolDownTime = 1f;
+    private float attackRadius = 5f;
+
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
@@ -49,6 +54,12 @@ public class EnemyPathMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Add to attack cooldown.
+        if (attackCoolDown <= attackCoolDownTime)
+        {
+            attackCoolDown += Time.deltaTime;
+        }
+
         // Get the distance to the player.
         float movementDistance = Vector3.Distance(player.transform.position, 
             transform.position);
@@ -69,6 +80,18 @@ public class EnemyPathMovement : MonoBehaviour
             {
                 transform.position = Vector3.MoveTowards(transform.position, 
                     player.transform.position, step);
+            }
+
+
+            // If inside the radius & attack isn't on cooldown attack.
+            if (movementDistance <= attackRadius && attackCoolDown > attackCoolDownTime)
+            {
+                attackCoolDown = 0f;
+
+                HealthManager.playerHealth.TakeDamage(damage);
+
+                // Debug until we have UI set up for player health.
+                Debug.Log(HealthManager.playerHealth.GetHealth());
             }
         }
         else
