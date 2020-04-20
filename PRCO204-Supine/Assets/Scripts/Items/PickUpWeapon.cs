@@ -64,11 +64,11 @@ public class PickUpWeapon : MonoBehaviour
 
         if (heldWeapon.name.Contains("Sword"))
         {
-            Instantiate(swordPrefab, transform.position, swordPrefab.transform.rotation);
+            Instantiate(swordPrefab, transform.position, /*swordPrefab.*/transform.rotation);
         }
         else if (heldWeapon.name.Contains("Crossbow"))
         {
-            Instantiate(crossbowPrefab, transform.position, crossbowPrefab.transform.rotation);
+            Instantiate(crossbowPrefab, transform.position, /*crossbowPrefab.*/transform.rotation);
         }
 
         timer = 0f;
