@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-
     // Variables
     Collider hitbox;
-    [SerializeField] GameObject meleeObject;
+    [SerializeField] 
+    GameObject meleeObject;
 
-    [SerializeField] GameObject projectile;
+    [SerializeField]
+    GameObject projectile;
 
     private PlayerControls controls;
     private float rightTriggerDown;
 
     private float timer = 0f;
     private float reloadTime = 0.5f;
+
+    public static bool isHoldingWeapon;
+    public static bool isHoldingRangedWeapon;
 
     void Awake()
     {
@@ -42,17 +46,23 @@ public class PlayerAttack : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if (timer >= reloadTime)
+        if (timer >= reloadTime && isHoldingWeapon)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0) == true)
+            if (!isHoldingRangedWeapon && (Input.GetKeyDown(KeyCode.Mouse0) == true || rightTriggerDown != 0))
             {
                 Attack1();
                 timer = 0f;
+
+                // Play "swinging a sword" animation:
+                // ...
             }
-            else if (Input.GetKeyDown(KeyCode.Mouse1) == true || rightTriggerDown != 0)
+            else if (isHoldingRangedWeapon && (Input.GetKeyDown(KeyCode.Mouse1) == true || rightTriggerDown != 0))
             {
                 Attack2();
                 timer = 0f;
+
+                // Play "pulling back the crossbow" animation:
+                // ...
             }
         }
     }
@@ -93,6 +103,7 @@ public class PlayerAttack : MonoBehaviour
         hitbox.enabled = false;
     }
 
+    // Required for the input system.
     void OnEnable()
     {
         controls.Gameplay.Enable();

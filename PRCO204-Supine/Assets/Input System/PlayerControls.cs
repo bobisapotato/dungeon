@@ -35,30 +35,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""PlayerJump"",
-                    ""type"": ""Button"",
-                    ""id"": ""eb3829af-1966-4c7a-b8b6-78621a82de41"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""PlayerRun"",
-                    ""type"": ""Button"",
-                    ""id"": ""32cc8910-2525-4b4f-8ef1-a0d44c69b32f"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""PlayerCrouch"",
-                    ""type"": ""Button"",
-                    ""id"": ""61cfd98d-3873-4337-9dd2-130f385c88c8"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
                     ""name"": ""CameraRotate"",
                     ""type"": ""Value"",
                     ""id"": ""f6ba4a6e-7970-44ea-9484-c5d8d78789a9"",
@@ -79,6 +55,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""type"": ""Value"",
                     ""id"": ""7abd3f0c-015b-41cc-bad8-b461b23d84a8"",
                     ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""PlayerPickUpWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""8964473c-a5c1-46c2-9a40-f461ef3692b5"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -103,39 +87,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""PlayerMoveZ"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0d13bc84-1328-4f63-befe-4ff9a3c623ac"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PlayerJump"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ea16a623-7621-4a86-b611-3604b7c36080"",
-                    ""path"": ""<Gamepad>/leftStickPress"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PlayerRun"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""20044d31-98ac-42ad-a6d4-61c0f2bf9d44"",
-                    ""path"": ""<Gamepad>/rightStickPress"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PlayerCrouch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -171,6 +122,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""PlayerAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9c976105-abd6-49b0-ade7-309a3057e681"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlayerPickUpWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -181,12 +143,10 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_PlayerMoveX = m_Gameplay.FindAction("PlayerMoveX", throwIfNotFound: true);
         m_Gameplay_PlayerMoveZ = m_Gameplay.FindAction("PlayerMoveZ", throwIfNotFound: true);
-        m_Gameplay_PlayerJump = m_Gameplay.FindAction("PlayerJump", throwIfNotFound: true);
-        m_Gameplay_PlayerRun = m_Gameplay.FindAction("PlayerRun", throwIfNotFound: true);
-        m_Gameplay_PlayerCrouch = m_Gameplay.FindAction("PlayerCrouch", throwIfNotFound: true);
         m_Gameplay_CameraRotate = m_Gameplay.FindAction("CameraRotate", throwIfNotFound: true);
         m_Gameplay_PlayerRotY = m_Gameplay.FindAction("PlayerRotY", throwIfNotFound: true);
         m_Gameplay_PlayerAttack = m_Gameplay.FindAction("PlayerAttack", throwIfNotFound: true);
+        m_Gameplay_PlayerPickUpWeapon = m_Gameplay.FindAction("PlayerPickUpWeapon", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -238,24 +198,20 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private IGameplayActions m_GameplayActionsCallbackInterface;
     private readonly InputAction m_Gameplay_PlayerMoveX;
     private readonly InputAction m_Gameplay_PlayerMoveZ;
-    private readonly InputAction m_Gameplay_PlayerJump;
-    private readonly InputAction m_Gameplay_PlayerRun;
-    private readonly InputAction m_Gameplay_PlayerCrouch;
     private readonly InputAction m_Gameplay_CameraRotate;
     private readonly InputAction m_Gameplay_PlayerRotY;
     private readonly InputAction m_Gameplay_PlayerAttack;
+    private readonly InputAction m_Gameplay_PlayerPickUpWeapon;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
         public GameplayActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @PlayerMoveX => m_Wrapper.m_Gameplay_PlayerMoveX;
         public InputAction @PlayerMoveZ => m_Wrapper.m_Gameplay_PlayerMoveZ;
-        public InputAction @PlayerJump => m_Wrapper.m_Gameplay_PlayerJump;
-        public InputAction @PlayerRun => m_Wrapper.m_Gameplay_PlayerRun;
-        public InputAction @PlayerCrouch => m_Wrapper.m_Gameplay_PlayerCrouch;
         public InputAction @CameraRotate => m_Wrapper.m_Gameplay_CameraRotate;
         public InputAction @PlayerRotY => m_Wrapper.m_Gameplay_PlayerRotY;
         public InputAction @PlayerAttack => m_Wrapper.m_Gameplay_PlayerAttack;
+        public InputAction @PlayerPickUpWeapon => m_Wrapper.m_Gameplay_PlayerPickUpWeapon;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -271,15 +227,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @PlayerMoveZ.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlayerMoveZ;
                 @PlayerMoveZ.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlayerMoveZ;
                 @PlayerMoveZ.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlayerMoveZ;
-                @PlayerJump.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlayerJump;
-                @PlayerJump.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlayerJump;
-                @PlayerJump.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlayerJump;
-                @PlayerRun.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlayerRun;
-                @PlayerRun.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlayerRun;
-                @PlayerRun.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlayerRun;
-                @PlayerCrouch.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlayerCrouch;
-                @PlayerCrouch.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlayerCrouch;
-                @PlayerCrouch.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlayerCrouch;
                 @CameraRotate.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCameraRotate;
                 @CameraRotate.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCameraRotate;
                 @CameraRotate.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCameraRotate;
@@ -289,6 +236,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @PlayerAttack.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlayerAttack;
                 @PlayerAttack.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlayerAttack;
                 @PlayerAttack.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlayerAttack;
+                @PlayerPickUpWeapon.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlayerPickUpWeapon;
+                @PlayerPickUpWeapon.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlayerPickUpWeapon;
+                @PlayerPickUpWeapon.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPlayerPickUpWeapon;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -299,15 +249,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @PlayerMoveZ.started += instance.OnPlayerMoveZ;
                 @PlayerMoveZ.performed += instance.OnPlayerMoveZ;
                 @PlayerMoveZ.canceled += instance.OnPlayerMoveZ;
-                @PlayerJump.started += instance.OnPlayerJump;
-                @PlayerJump.performed += instance.OnPlayerJump;
-                @PlayerJump.canceled += instance.OnPlayerJump;
-                @PlayerRun.started += instance.OnPlayerRun;
-                @PlayerRun.performed += instance.OnPlayerRun;
-                @PlayerRun.canceled += instance.OnPlayerRun;
-                @PlayerCrouch.started += instance.OnPlayerCrouch;
-                @PlayerCrouch.performed += instance.OnPlayerCrouch;
-                @PlayerCrouch.canceled += instance.OnPlayerCrouch;
                 @CameraRotate.started += instance.OnCameraRotate;
                 @CameraRotate.performed += instance.OnCameraRotate;
                 @CameraRotate.canceled += instance.OnCameraRotate;
@@ -317,6 +258,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @PlayerAttack.started += instance.OnPlayerAttack;
                 @PlayerAttack.performed += instance.OnPlayerAttack;
                 @PlayerAttack.canceled += instance.OnPlayerAttack;
+                @PlayerPickUpWeapon.started += instance.OnPlayerPickUpWeapon;
+                @PlayerPickUpWeapon.performed += instance.OnPlayerPickUpWeapon;
+                @PlayerPickUpWeapon.canceled += instance.OnPlayerPickUpWeapon;
             }
         }
     }
@@ -325,11 +269,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     {
         void OnPlayerMoveX(InputAction.CallbackContext context);
         void OnPlayerMoveZ(InputAction.CallbackContext context);
-        void OnPlayerJump(InputAction.CallbackContext context);
-        void OnPlayerRun(InputAction.CallbackContext context);
-        void OnPlayerCrouch(InputAction.CallbackContext context);
         void OnCameraRotate(InputAction.CallbackContext context);
         void OnPlayerRotY(InputAction.CallbackContext context);
         void OnPlayerAttack(InputAction.CallbackContext context);
+        void OnPlayerPickUpWeapon(InputAction.CallbackContext context);
     }
 }

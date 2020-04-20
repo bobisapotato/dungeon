@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class IdleItem : MonoBehaviour
 {
-    [SerializeField]
-    private bool isIdle;
+    public bool isIdle;
 
-    [SerializeField]
     private bool isUp = false;
 
     private float step = 0.002f;
