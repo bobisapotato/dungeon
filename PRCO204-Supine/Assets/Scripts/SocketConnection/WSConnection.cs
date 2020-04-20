@@ -227,7 +227,7 @@ public class WSConnection : MonoBehaviour {
             lock (items) ;
             queuedEvents = new List<NetworkEvent>();
             
-            Debug.Log($"Event count: {items.Count}");
+            //Debug.Log($"Event count: {items.Count}");
             try {
                 foreach (NetworkEvent item in items) {
                     item.Dispatch();

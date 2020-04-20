@@ -149,7 +149,12 @@ public class ServerManager : MonoBehaviour {
 
     public void CreateRelay(NetworkEntityRelay relay) => connection.SendMessage("entity:create", relay.RelayData);
     public void Destroy(NetworkEntityRelay relay) => connection.SendMessage("entity:destroy", relay.RelayData);
-    
+
+    private NetworkRoomRelay.NetworkRoomData previousRoom;
+    public void EnteredRoom(NetworkRoomRelay.NetworkRoomData data) {
+        previousRoom = data;
+        connection.SendMessage("room:update", data);
+    }
 
 
     void SocketStart() {
@@ -164,6 +169,8 @@ public class ServerManager : MonoBehaviour {
         Debug.Log($"Backfill: {NetworkEntityRelays.Count} NERs, {NetworkRelays.Count} NRs");
         NetworkRelays.ForEach(CreateRelay);
         NetworkEntityRelays.ForEach(CreateRelay);
+        // Cache the last room update
+        connection.SendMessage("room:update", previousRoom);
     }
 
     void NetworkTick() {
