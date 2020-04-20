@@ -24,6 +24,12 @@ public class NetworkEntityRelay : NetworkRelay
     public string identifier;
     public string className;
 
+    private string generateIdentifier() {
+        return $"{className}-{Guid.NewGuid()}";
+    }
+    
+    
+
     public new NetworkEntityData RelayData => new NetworkEntityData(identifier, className, gameObject.transform.position);
 
     
@@ -43,5 +49,10 @@ public class NetworkEntityRelay : NetworkRelay
         ServerManager.Instance.RemoveFromRelaySet(this);
         ServerManager.Instance.DestroyRelay(this);
     }
-    
+
+    private void Awake() {
+        if (string.IsNullOrEmpty(identifier)) {
+            identifier = generateIdentifier();
+        }
+    }
 }

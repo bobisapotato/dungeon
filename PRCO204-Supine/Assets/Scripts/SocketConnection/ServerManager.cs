@@ -157,6 +157,15 @@ public class ServerManager : MonoBehaviour {
         connection.SendMessage("rooms:create");
     }
 
+    /// <summary>
+    /// Call this when there's a new player 2 client that needs data backfilled.
+    /// </summary>
+    void ClientConnectionResponse() {
+        Debug.Log($"Backfill: {NetworkEntityRelays.Count} NERs, {NetworkRelays.Count} NRs");
+        NetworkRelays.ForEach(CreateRelay);
+        NetworkEntityRelays.ForEach(CreateRelay);
+    }
+
     void NetworkTick() {
         TriggerRelays();
     }
@@ -169,12 +178,16 @@ public class ServerManager : MonoBehaviour {
     public void DispatchMessage(string action, ArrayList data) {
         
         
-        Debug.Log("Dispatching message: " + action);
+        //Debug.Log("Dispatching message: " + action);
         if (action == "rooms:joined") {
             // Joined a room :D
             string roomCode = (string) data[0];
             UpdateRoomCodeUI(roomCode);
             //string roomCode = data;
+        }
+        if (action == "rooms:backfill") {
+            // a web client has connected successfully to this room
+            ClientConnectionResponse();
         }
     }
     
