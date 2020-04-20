@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +17,8 @@ public class UIManager : MonoBehaviour
 
     void FindRoomCode() 
     {
-        roomCodeUI.text = WSConnection.roomCode;
+        //roomCodeUI.text = WSConnection.roomCode;
     }
+
+    public void SetText(string text) => roomCodeUI.text = $"Code: {text}";
 }

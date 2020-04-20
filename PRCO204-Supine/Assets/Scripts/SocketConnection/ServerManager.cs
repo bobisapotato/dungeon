@@ -101,6 +101,8 @@ public class ServerManager : MonoBehaviour {
         connection.OnSocketDisconnected +=
             reason => Debug.Log("Disconnected from remote server. Reason: " + reason);
 
+        connection.Connect();
+
         //connection.OnSocketConnected += 
     }
 
@@ -159,8 +161,21 @@ public class ServerManager : MonoBehaviour {
         TriggerRelays();
     }
 
-    public void DispatchMessage(string action, object data) {
-        Debug.Log("Dispatching message: " + action);    
+    void UpdateRoomCodeUI(string roomCode) {
+        UIManager ui = FindObjectOfType<UIManager>();
+        ui.SetText(roomCode);
+    }
+
+    public void DispatchMessage(string action, ArrayList data) {
+        
+        
+        Debug.Log("Dispatching message: " + action);
+        if (action == "rooms:joined") {
+            // Joined a room :D
+            string roomCode = (string) data[0];
+            UpdateRoomCodeUI(roomCode);
+            //string roomCode = data;
+        }
     }
     
     

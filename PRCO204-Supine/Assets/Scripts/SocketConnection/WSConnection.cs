@@ -42,10 +42,10 @@ public class WSConnection : MonoBehaviour {
 
     class BasicNetworkEvent : NetworkEvent {
         private string action;
-        private object data;
+        private ArrayList data;
         private ServerManager serverManager;
 
-        public BasicNetworkEvent(string action, object data, ServerManager serverManager) {
+        public BasicNetworkEvent(string action, ArrayList data, ServerManager serverManager) {
             this.action = action;
             this.data = data;
             this.serverManager = serverManager;
@@ -91,7 +91,7 @@ public class WSConnection : MonoBehaviour {
 
     private List<NetworkEvent> queuedEvents = new List<NetworkEvent>();
 
-    private void Connect() {
+    public void Connect() {
         socket = new WebSocket($"wss://{server}/socket.io/?EIO=3&transport=websocket");
 
         socket.Log.Level = LogLevel.Trace;
@@ -206,14 +206,9 @@ public class WSConnection : MonoBehaviour {
     public void SendMessage(String action, params object[] args) {
         var data = new object[] {action, args};
         String socketData = EncodeMessage(data);
-        Debug.Log("Attempting to send " + socketData);
         queuedEvents.Add(new BasicSendingNetworkEvent(socketData, socket));
     }
 
-
-    private void Start() {
-        Connect();
-    }
 
     private void Awake() {
         serverManager = gameObject.GetComponent<ServerManager>();
@@ -223,11 +218,8 @@ public class WSConnection : MonoBehaviour {
     private void Update() {
         if (queuedEvents.Count > 0) {
             foreach (NetworkEvent item in queuedEvents.ToList()) {
-                // handle each item
-                Debug.Log("Event" + item.ToString());
                 item.Dispatch();
             }
-            // remove queue
             queuedEvents = new List<NetworkEvent>();
         }
     }
