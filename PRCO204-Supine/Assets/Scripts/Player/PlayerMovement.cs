@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody rb;
 
-    private PlayerControls controls;
+    public static PlayerControls controls;
 
     [SerializeField]
     private GameObject mainCamera;
@@ -51,6 +51,9 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     private LayerMask groundLayer;
+
+    [SerializeField]
+    private bool isUsingMouse;
 
     void Awake()
     {
@@ -114,7 +117,10 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            FaceMouse();
+            if (isUsingMouse)
+            {
+                FaceMouse();
+            }
         }
     }
 
