@@ -1,12 +1,14 @@
 using System.Data.Common;
+using SocketConnection.NetworkRelays;
+using UnityEngine;
 
-namespace SocketConnection.NetworkRelays { 
-    public class NetworkDataRelay : NetworkRelay {
+public class NetworkDataRelay : NetworkRelay {
+        [Header("For objects with abstract data")]
         public string identifier;
         public string attribute;
         public object value;
             
-        public class NetworkDataData {
+        public class NetworkDataData : NetworkData {
             private string identifier;
             private string attribute;
             private object value;
@@ -27,4 +29,3 @@ namespace SocketConnection.NetworkRelays {
         }
         
     }
-}

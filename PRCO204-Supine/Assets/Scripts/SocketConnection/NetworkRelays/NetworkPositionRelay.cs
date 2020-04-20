@@ -6,11 +6,11 @@ using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
 using SocketConnection.NetworkRelays;
 
-public class NetworkPositionRelay : MonoBehaviour
+public class NetworkPositionRelay : NetworkRelay
     {
-        public class NetworkPositionData : NetworkRelay.NetworkData {
-            public float[] position;
-            public string identifier;
+        public class NetworkPositionData : NetworkData {
+            private float[] position;
+            private string identifier;
             public NetworkPositionData(string identifier, Vector3 position) {
                 this.position = new float[] { position.x, position.z};
                 this.identifier = identifier;
@@ -20,9 +20,11 @@ public class NetworkPositionRelay : MonoBehaviour
             }
         }
         
+        [Header("For objects with position")]
         public string identifier;
 
         public NetworkPositionData RelayData {
             get { return new NetworkPositionData(identifier, gameObject.transform.position); }
         }
+        
     }
