@@ -10,7 +10,10 @@ public class IdleItem : MonoBehaviour
     [SerializeField]
     private bool isUp = false;
 
-    float step = 0.002f;
+    private float step = 0.002f;
+
+    private float maxHeight = -2.75f;
+    private float minHeight = -3.25f;
 
     // Update is called once per frame
     void Update()
@@ -24,11 +27,11 @@ public class IdleItem : MonoBehaviour
             transform.position -= new Vector3(0f, step, 0f);
         }
 
-        if (transform.position.y >= 1f)
+        if (transform.position.y >= maxHeight)
         {
             isUp = true;
         }
-        else if (transform.position.y <= 0.5f)
+        else if (transform.position.y <= minHeight)
         {
             isUp = false;
         }
