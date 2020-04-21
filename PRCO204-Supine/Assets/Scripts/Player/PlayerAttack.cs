@@ -4,14 +4,33 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-
     // Variables
     Collider hitbox;
-    [SerializeField] GameObject meleeObject;
+    [SerializeField] 
+    GameObject meleeObject;
 
-    
-    [SerializeField] GameObject projectile;
+    [SerializeField]
+    GameObject projectile;
 
+    private PlayerControls controls;
+    private float rightTriggerDown;
+
+    private float timer = 0f;
+    private float reloadTime = 0.5f;
+
+    public static bool isHoldingWeapon;
+    public static bool isHoldingRangedWeapon;
+
+    void Awake()
+    {
+        controls = new PlayerControls();
+
+        // Controller input.
+        controls.Gameplay.PlayerAttack.performed += ctx => rightTriggerDown
+        = ctx.ReadValue<float>();
+        controls.Gameplay.PlayerAttack.canceled += ctx => rightTriggerDown
+        = ctx.ReadValue<float>();
+    }
 
     // Start is called before the first frame update
     // Gets the collider of the gameobject and stores it 
@@ -25,16 +44,27 @@ public class PlayerAttack : MonoBehaviour
     // Executes the corrisponding attack.
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0) == true)
-        {
-            Attack1();
-        }
+        timer += Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.Mouse1) == true)
+        if (timer >= reloadTime && isHoldingWeapon)
         {
-            Attack2();
-        }
+            if (!isHoldingRangedWeapon && (Input.GetKeyDown(KeyCode.Mouse0) == true || rightTriggerDown != 0))
+            {
+                Attack1();
+                timer = 0f;
 
+                // Play "swinging a sword" animation:
+                // ...
+            }
+            else if (isHoldingRangedWeapon && (Input.GetKeyDown(KeyCode.Mouse1) == true || rightTriggerDown != 0))
+            {
+                Attack2();
+                timer = 0f;
+
+                // Play "pulling back the crossbow" animation:
+                // ...
+            }
+        }
     }
 
     // Enables the hitbox to attack.
@@ -71,5 +101,16 @@ public class PlayerAttack : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
 
         hitbox.enabled = false;
+    }
+
+    // Required for the input system.
+    void OnEnable()
+    {
+        controls.Gameplay.Enable();
+    }
+
+    void OnDisable()
+    {
+        controls.Gameplay.Disable();
     }
 }
