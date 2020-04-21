@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.Android;
 
 public class CameraHideObstacles : MonoBehaviour
 {
@@ -9,13 +10,15 @@ public class CameraHideObstacles : MonoBehaviour
 
     // VARS
     #region
-    private float maxRayRange = 15f;
+    private float maxRayRange = 50f;
     private RaycastHit hit;
     private GameObject player;
     private Camera mainCamera;
+    private LevelGeneration levelGenMan;
     [SerializeField] GameObject obstacle;
 
-    //[SerializeField] GameObject[] obstacles;
+    [SerializeField] List<GameObject> obstacles = new List<GameObject>();
+    [SerializeField] List<GameObject> targets = new List<GameObject>();
     #endregion
     private GameObject lastWall;
     float alpha = 1f;
@@ -24,14 +27,22 @@ public class CameraHideObstacles : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         mainCamera = GetComponentInChildren<Camera>();
+        levelGenMan = GameObject.FindGameObjectWithTag("LevelGenManager").GetComponent<LevelGeneration>();
+        updateEnemyTargetList();
     }
 
     // Update is called once per frame
-   
+
     private void FixedUpdate()
     {
         //Debug.Log("player is hidden = " + checkPlayerObscured());
         checkPlayerObscured();
+
+        foreach(GameObject target in targets)
+        {
+            checkTargetObscured(target);
+        }
+        checkOldObstacles();
 
         if (obstacle)
         {
@@ -51,12 +62,12 @@ public class CameraHideObstacles : MonoBehaviour
         if (Physics.Raycast(mainCamera.transform.position, (player.transform.position - mainCamera.transform.position),
             out hit, maxRayRange))
         {
-            
+
             // sets bool based on what raycast hits
 
-            if(hit.transform == player.transform)
+            if (hit.transform == player.transform)
             {
-                resetObstacle();
+                //resetObstacle();
                 return false;
             }
             else
@@ -67,24 +78,52 @@ public class CameraHideObstacles : MonoBehaviour
         }
         else
         {
-            resetObstacle();
+            //resetObstacle();
             return false;
         }
     }
 
-    public GameObject findObstacle()
+    public bool checkTargetObscured(GameObject target)
     {
-        // returns the gameobject which is hiding the player from the camera
+        // returns true if player is hidden from camera by an obstacle
 
-        return obstacle;
+        // draws ray to see in scene for testing
+        Debug.DrawRay(mainCamera.transform.position,
+            (target.transform.position - mainCamera.transform.position), Color.blue);
+
+        // checks if ray cast hits anything
+        if (Physics.Raycast(mainCamera.transform.position, (target.transform.position - mainCamera.transform.position),
+            out hit, maxRayRange))
+        {
+
+            // sets bool based on what raycast hits
+
+            if (hit.transform == target.transform)
+            {
+                //resetObstacle();
+                return false;
+            }
+            else
+            {
+                newObstacle(hit.collider.gameObject);
+                return true;
+            }
+        }
+        else
+        {
+            //resetObstacle();
+            return false;
+        }
     }
+
+   
 
     public void hideObstacle()
     {
         // sets mesh renderer to inactive for given GO
         if (obstacle.GetComponent<MeshRenderer>())
         {
-            if (lastWall != obstacle) 
+            if (lastWall != obstacle)
             {
                 alpha = 1f;
 
@@ -93,7 +132,7 @@ public class CameraHideObstacles : MonoBehaviour
             else
             {
                 //obstacle.GetComponent<MeshRenderer>().enabled = false;
-                if (alpha > 0.5f) 
+                if (alpha > 0.5f)
                 {
                     alpha -= 0.1f;
                 }
@@ -106,30 +145,103 @@ public class CameraHideObstacles : MonoBehaviour
         }
     }
 
-    public void resetObstacle()
+    public void checkOldObstacles()
+    {
+        // goes through obstacle list, if any don't need to be there anymore
+        // then we run resetObstacle for it 
+
+        foreach(GameObject obsGO in obstacles)
+        {
+            bool beingUsed = false;
+
+            // run all the raycasts for all targets. 
+            // if none hit the obstacle, remove it 
+            foreach(GameObject target in targets)
+            {
+                if (Physics.Raycast(mainCamera.transform.position, (target.transform.position - mainCamera.transform.position),
+                    out hit, maxRayRange))
+                {
+                    if (hit.transform == obsGO.transform)
+                    {
+                        beingUsed = true;
+                    }
+                }
+            }
+            if(!beingUsed)
+            {
+                // reset it 
+                Debug.Log("old obs removed");
+                resetObstacle(obsGO);
+            }
+
+        }
+    }
+
+    public void resetObstacle(GameObject obs)
     {
         // sets old obstacle to visible again and sets obstacle value to null
 
-        if (obstacle)
+        if (obs)
         {
-            if (obstacle.GetComponent<MeshRenderer>())
+            if (obs.GetComponent<MeshRenderer>())
             {
-                obstacle.GetComponent<MeshRenderer>().material.color = new Color
-                   (obstacle.GetComponent<MeshRenderer>().material.color.r,
-                   obstacle.GetComponent<MeshRenderer>().material.color.g,
-                   obstacle.GetComponent<MeshRenderer>().material.color.b, 1f);
+                obs.GetComponent<MeshRenderer>().material.color = new Color
+                   (obs.GetComponent<MeshRenderer>().material.color.r,
+                   obs.GetComponent<MeshRenderer>().material.color.g,
+                   obs.GetComponent<MeshRenderer>().material.color.b, 1f);
             }
-            obstacle = null;
+            obstacles.Remove(obs);
         }
     }
 
     public void newObstacle(GameObject newObstacle)
     {
         // sets new obstacle so old obstacle can be properly reset
-
-        resetObstacle();
+        obstacles.Add(newObstacle);
+        //resetObstacle();
         obstacle = newObstacle;
     }
 
+    public GameObject[] getEnemiesInRoom()
+    {
+        // finds current room
+        // returns all the enemies in that room
+
+        Room currentRoom = null;
+        foreach(GameObject g in levelGenMan.getRoomsInScene())
+        {
+            Room tempRoom = g.GetComponent<Room>();
+
+            if(tempRoom.playerInRoom)
+            {
+                currentRoom = tempRoom;
+            }
+        }
+
+        GameObject[] enemies = new GameObject[currentRoom.getEnemiesInRoom().Count];
+
+        int counter = 0;
+        foreach(EnemyHealth enem in currentRoom.getEnemiesInRoom())
+        {
+            enemies[counter] = enem.gameObject;
+            counter++;
+        }
+
+        return enemies;
+    }
+
+    public void updateEnemyTargetList()
+    {
+        // whenever we enter a new room, change the enemies on the target list
+        // to the ones in that room. 
+
+        targets.Clear();
+        targets.Add(player);
+
+        foreach(GameObject g in getEnemiesInRoom())
+        {
+            targets.Add(g);
+        }
+    }
 
 }
