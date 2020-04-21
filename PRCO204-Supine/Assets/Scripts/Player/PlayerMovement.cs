@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody rb;
 
-    private PlayerControls controls;
+    public static PlayerControls controls;
 
     [SerializeField]
     private GameObject mainCamera;
@@ -52,6 +52,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private LayerMask groundLayer;
 
+    [SerializeField]
+    private bool isUsingMouse;
+
     void Awake()
     {
         controls = new PlayerControls();
@@ -70,11 +73,6 @@ public class PlayerMovement : MonoBehaviour
         controls.Gameplay.PlayerRotY.performed += ctx => rotY
         = ctx.ReadValue<Vector2>();
         controls.Gameplay.PlayerRotY.canceled += ctx => rotY = Vector3.zero;
-
-
-        controls.Gameplay.PlayerJump.performed += ctx => Jump();
-        controls.Gameplay.PlayerCrouch.performed += ctx => Crouch();
-        controls.Gameplay.PlayerRun.performed += ctx => Run();
     }
 
     void Update()
@@ -114,7 +112,10 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            FaceMouse();
+            if (isUsingMouse)
+            {
+                FaceMouse();
+            }
         }
     }
 
@@ -142,6 +143,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // Required for the input system.
     void OnEnable()
     {
         controls.Gameplay.Enable();
@@ -150,45 +152,6 @@ public class PlayerMovement : MonoBehaviour
     void OnDisable()
     {
         controls.Gameplay.Disable();
-    }
-
-    void Jump()
-    {
-        isJumping = true;
-    }
-
-    void Crouch()
-    {
-        if (isCrouching)
-        {
-            isCrouching = false;
-
-            playerSpeed = 7.5f;
-            jumpHeight = 750f;
-        }
-        else
-        {
-            isCrouching = true;
-
-            playerSpeed = 3.33f;
-            jumpHeight = 700f;
-        }
-    }
-
-    void Run() 
-    {
-        if (isRunning)
-        {
-            isRunning = false;
-
-            playerSpeed = 7.5f;
-        }
-        else
-        {
-            isRunning = true;
-
-            playerSpeed = 15f;
-        }
     }
 
     // Point towards the direction of the right analogue stick.
