@@ -17,12 +17,6 @@ public class PlayerMovement : MonoBehaviour
     private float x;
     [SerializeField]
     private float z;
-    [SerializeField]
-    private float distanceToGround = 1.2f;
-    [SerializeField]
-    private float jumpHeight = 750f;
-    [SerializeField]
-    private float rollDistance = 500f;
 
     [SerializeField]
     private Vector3 move;
@@ -42,15 +36,6 @@ public class PlayerMovement : MonoBehaviour
     // camera, but always faces forward. It's rotation is not
     // changed.
     private GameObject pivot;
-
-    [SerializeField]
-    private bool isGrounded;
-    private bool isJumping;
-    private bool isCrouching;
-    private bool isRunning;
-
-    [SerializeField]
-    private LayerMask groundLayer;
 
     [SerializeField]
     private bool isUsingMouse;
@@ -96,16 +81,6 @@ public class PlayerMovement : MonoBehaviour
             move = KeyboardMovement(move);
         }
 
-        if (Physics.Raycast(transform.position, Vector3.down, 
-            distanceToGround, groundLayer))
-        {
-            isGrounded = true;
-        }
-        else
-        {
-            isGrounded = false;
-        }
-
         if (rotY != Vector2.zero)
         {
             FaceTarget(rotY);
@@ -124,23 +99,6 @@ public class PlayerMovement : MonoBehaviour
     {
         // Move the player.
         rb.position += (move * playerSpeed * Time.deltaTime);
-
-        // Execute jump.
-        if (isJumping && isGrounded)
-        {
-            rb.AddForce(0f, jumpHeight, 0f, ForceMode.Impulse);
-            isJumping = false;
-        }
-
-        // Execute crouch.
-        if (isCrouching)
-        {
-            transform.localScale = new Vector3(1f, 0.5f, 1f);
-        }
-        else
-        {
-            transform.localScale = new Vector3(1f, 1f, 1f);
-        }
     }
 
     // Required for the input system.
@@ -157,11 +115,13 @@ public class PlayerMovement : MonoBehaviour
     // Point towards the direction of the right analogue stick.
     void FaceTarget(Vector2 rot)
     {
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(-rot.x, 0f, -rot.y));
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(-rot.x, 0f, -rot.y)).normalized;
 
         transform.rotation = Quaternion.Slerp(transform.rotation,
-                     lookRotation, Time.deltaTime * rotationSpeed);
+                     lookRotation, Time.deltaTime * rotationSpeed).normalized;
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     // Temporary alternative movement.
     Vector3 KeyboardMovement(Vector3 move)

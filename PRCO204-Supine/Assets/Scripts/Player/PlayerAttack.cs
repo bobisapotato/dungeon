@@ -77,21 +77,7 @@ public class PlayerAttack : MonoBehaviour
     // Instantiates the projectile to be shot.
     private void Attack2()
     {
-
         Instantiate(projectile, meleeObject.transform.position, meleeObject.transform.rotation);
-
-        //   RaycastHit hit;
-        //   Ray ray = new Ray(transform.position, transform.TransformDirection(Vector3.forward));
-
-
-        //if (Physics.Raycast(ray, out hit, hitRange))
-        //   {
-        //       if (hit.transform.gameObject.tag == "Enemy")
-        //       {
-        //           Debug.Log("hit");
-        //           hit.transform.gameObject.SendMessage("TakeDamage", ranged);
-        //       }
-        //   }
     }
 
     // After 1 second, if nothing with the enemy tag
