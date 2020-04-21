@@ -22,6 +22,8 @@ public class PickUpWeapon : MonoBehaviour
     [SerializeField]
     private bool isStandingOnWeapon = false;
 
+    public static bool isHoldingKey = false;
+
     void Awake()
     {
         controls = new PlayerControls();
@@ -44,6 +46,31 @@ public class PickUpWeapon : MonoBehaviour
             isStandingOnWeapon = true;
             weaponPlayerIsStandingOn = other.gameObject;
             timer = 0f;
+        }
+
+        if (other.tag == "Key")
+        {
+            isHoldingKey = true;
+            Destroy(other.gameObject);
+        }
+
+        if (other.tag == "Trap Door" && isHoldingKey)
+        {
+            // Reset static values for next level.
+            LevelGeneration.hasTrapDoorSpawned = false;
+            isHoldingKey = false;
+
+            // End level here:
+            // ...
+
+            Debug.Log("Level over");
+        }
+        else if (other.tag == "Trap Door" && !isHoldingKey)
+        {
+            // Display "You need to find the key" message here:
+            // ...
+
+            Debug.Log("You need to find the key");
         }
     }
 

@@ -5,8 +5,13 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     // Variables 
-    [SerializeField] int health = 100;
-    [SerializeField] int knockback;
+    [SerializeField]
+    private GameObject keyPrefab;
+
+    [SerializeField] 
+    private int health = 100;
+    [SerializeField] 
+    private int knockback;
     private Room parentRoom;
 
     // Start is called before the first frame update
@@ -30,6 +35,12 @@ public class EnemyHealth : MonoBehaviour
         {
             DropItem();
             parentRoom.enemyKilled(this);
+
+            if (parentRoom.enemyCountManager.enemyCount == 0)
+            {
+                Instantiate(keyPrefab, transform.position, transform.rotation);
+            }
+
             Destroy(gameObject);
         }
 
