@@ -21,6 +21,8 @@ public class PlayerAttack : MonoBehaviour
     public static bool isHoldingWeapon;
     public static bool isHoldingRangedWeapon;
 
+    public Animator animator;
+
     void Awake()
     {
         controls = new PlayerControls();
@@ -30,6 +32,9 @@ public class PlayerAttack : MonoBehaviour
         = ctx.ReadValue<float>();
         controls.Gameplay.PlayerAttack.canceled += ctx => rightTriggerDown
         = ctx.ReadValue<float>();
+
+
+        animator = this.gameObject.GetComponent<Animator>();
     }
 
     // Start is called before the first frame update
@@ -54,7 +59,8 @@ public class PlayerAttack : MonoBehaviour
                 timer = 0f;
 
                 // Play "swinging a sword" animation:
-                // ...
+                animator.Play("SwingSword2");
+
             }
             else if (isHoldingRangedWeapon && (Input.GetKeyDown(KeyCode.Mouse1) == true || rightTriggerDown != 0))
             {
