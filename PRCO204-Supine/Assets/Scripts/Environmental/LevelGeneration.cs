@@ -35,6 +35,8 @@ public class LevelGeneration : MonoBehaviour
 	public static bool hasTrapDoorSpawned = false;
 	[SerializeField]
 	private GameObject trapDoorPrefab;
+	[SerializeField]
+	private int spawnTrapDoorChance = 75;
 
 	private void Start()
 	{
@@ -304,7 +306,7 @@ public class LevelGeneration : MonoBehaviour
 				{
 					int rnd = Random.Range(0, 100);
 
-					if (rnd >= 75)
+					if (rnd >= spawnTrapDoorChance)
 					{
 						SpawnTrapDoor(newRoom);
 					}
