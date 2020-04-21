@@ -31,6 +31,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private GameObject mainCamera;
 
+    public float adjustmentAngle;
+
     [SerializeField]
     // Pivot is an empty gameobject that shares the position of the
     // camera, but always faces forward. It's rotation is not
@@ -143,7 +145,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 offset = new Vector2(mouse.x - screenPoint.x, mouse.y - screenPoint.y);
 
-        float angle = Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg + 90f;
+        float angle = Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg + adjustmentAngle;
 
         transform.rotation = Quaternion.Euler(0, -angle, 0);
     }
