@@ -14,6 +14,13 @@ public class GameManager : MonoBehaviour
             openDemoMenu();
         }
     }
+    
+	public void closeGame()
+    {
+        Application.Quit();
+    }
+    // Demo 1 
+    #region
     public void openDemo()
     {
         SceneManager.LoadScene("DemoScene");
@@ -23,9 +30,35 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("DemoMenu");
     }
+    #endregion
 
-    public void closeGame()
+    // Demo 2
+    #region
+    public void openDemoScene2()
     {
-        Application.Quit();
+        SceneManager.LoadScene("Demo_Release2");
     }
+
+    public void openDemoWin2()
+    {
+        SceneManager.LoadScene("DemoWin2");
+    }
+    public void openDemoLose2()
+    {
+        Invoke("loadLose2", 1f);
+    }
+
+    public void loadLose2()
+    {
+        SceneManager.LoadScene("DemoLose2");
+    }
+
+    public void openDemoMenu2()
+    {
+        SceneManager.LoadScene("DemoMenu2");
+    }
+
+
+	#endregion
+
 }
