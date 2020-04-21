@@ -29,7 +29,8 @@ public class LevelGeneration : MonoBehaviour
 	public GameObject deadEndS;
 	public GameObject deadEndW;
 
-
+	public EnemyCountManager enemyCountMan;
+	public bool startedEnemyCounter = false;
 
 	private void Start()
 	{
@@ -44,6 +45,9 @@ public class LevelGeneration : MonoBehaviour
 
 		//BUILD LEVEL
 		InvokeRepeating("createLevel", 0.5f, 0.1f);
+
+		
+
 	}
 
 	private void Update()
@@ -51,7 +55,13 @@ public class LevelGeneration : MonoBehaviour
 		if (openSpawnPts.Count() == 0)
 		{
 			CancelInvoke("createLevel");
+			if (!startedEnemyCounter)
+			{
+				enemyCountMan.startUpEnemyCounter();
+				startedEnemyCounter = true;
+			}
 		}
+
 	}
 
 	public void createLevel()

@@ -17,12 +17,6 @@ public class PlayerMovement : MonoBehaviour
     private float x;
     [SerializeField]
     private float z;
-    [SerializeField]
-    private float distanceToGround = 1.2f;
-    [SerializeField]
-    private float jumpHeight = 750f;
-    [SerializeField]
-    private float rollDistance = 500f;
 
     [SerializeField]
     private Vector3 move;
@@ -32,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody rb;
 
-    private PlayerControls controls;
+    public static PlayerControls controls;
 
     [SerializeField]
     private GameObject mainCamera;
@@ -44,13 +38,7 @@ public class PlayerMovement : MonoBehaviour
     private GameObject pivot;
 
     [SerializeField]
-    private bool isGrounded;
-    private bool isJumping;
-    private bool isCrouching;
-    private bool isRunning;
-
-    [SerializeField]
-    private LayerMask groundLayer;
+    private bool isUsingMouse;
 
     void Awake()
     {
@@ -70,11 +58,6 @@ public class PlayerMovement : MonoBehaviour
         controls.Gameplay.PlayerRotY.performed += ctx => rotY
         = ctx.ReadValue<Vector2>();
         controls.Gameplay.PlayerRotY.canceled += ctx => rotY = Vector3.zero;
-
-
-        controls.Gameplay.PlayerJump.performed += ctx => Jump();
-        controls.Gameplay.PlayerCrouch.performed += ctx => Crouch();
-        controls.Gameplay.PlayerRun.performed += ctx => Run();
     }
 
     void Update()
@@ -98,23 +81,16 @@ public class PlayerMovement : MonoBehaviour
             move = KeyboardMovement(move);
         }
 
-        if (Physics.Raycast(transform.position, Vector3.down, 
-            distanceToGround, groundLayer))
-        {
-            isGrounded = true;
-        }
-        else
-        {
-            isGrounded = false;
-        }
-
         if (rotY != Vector2.zero)
         {
             FaceTarget(rotY);
         }
         else
         {
-            FaceMouse();
+            if (isUsingMouse)
+            {
+                FaceMouse();
+            }
         }
     }
 
@@ -123,25 +99,9 @@ public class PlayerMovement : MonoBehaviour
     {
         // Move the player.
         rb.position += (move * playerSpeed * Time.deltaTime);
-
-        // Execute jump.
-        if (isJumping && isGrounded)
-        {
-            rb.AddForce(0f, jumpHeight, 0f, ForceMode.Impulse);
-            isJumping = false;
-        }
-
-        // Execute crouch.
-        if (isCrouching)
-        {
-            transform.localScale = new Vector3(1f, 0.5f, 1f);
-        }
-        else
-        {
-            transform.localScale = new Vector3(1f, 1f, 1f);
-        }
     }
 
+    // Required for the input system.
     void OnEnable()
     {
         controls.Gameplay.Enable();
@@ -152,53 +112,16 @@ public class PlayerMovement : MonoBehaviour
         controls.Gameplay.Disable();
     }
 
-    void Jump()
-    {
-        isJumping = true;
-    }
-
-    void Crouch()
-    {
-        if (isCrouching)
-        {
-            isCrouching = false;
-
-            playerSpeed = 7.5f;
-            jumpHeight = 750f;
-        }
-        else
-        {
-            isCrouching = true;
-
-            playerSpeed = 3.33f;
-            jumpHeight = 700f;
-        }
-    }
-
-    void Run() 
-    {
-        if (isRunning)
-        {
-            isRunning = false;
-
-            playerSpeed = 7.5f;
-        }
-        else
-        {
-            isRunning = true;
-
-            playerSpeed = 15f;
-        }
-    }
-
     // Point towards the direction of the right analogue stick.
     void FaceTarget(Vector2 rot)
     {
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(-rot.x, 0f, -rot.y));
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(-rot.x, 0f, -rot.y)).normalized;
 
         transform.rotation = Quaternion.Slerp(transform.rotation,
-                     lookRotation, Time.deltaTime * rotationSpeed);
+                     lookRotation, Time.deltaTime * rotationSpeed).normalized;
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     // Temporary alternative movement.
     Vector3 KeyboardMovement(Vector3 move)
