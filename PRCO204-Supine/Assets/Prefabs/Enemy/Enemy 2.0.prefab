@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5624515174502555105}
   - component: {fileID: 5624515174502555104}
   - component: {fileID: 3338770777059851538}
+  - component: {fileID: -3083303411565336217}
   m_Layer: 0
   m_Name: Enemy 2.0
   m_TagString: Enemy
@@ -148,8 +149,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593b3f44b523cdc4eb1967ec4748d844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
-  knockback: 10
+  health: 50
+  knockback: 0
+--- !u!114 &-3083303411565336217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5624515174502555135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b58ade40deb6ad7498f22c727db382db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &717217111300848165
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -58,6 +58,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("DemoMenu2");
     }
 
+    public void openDemoInstructions2()
+    {
+        SceneManager.LoadScene("DemoInstructions2");
+    }
+
 
 	#endregion
 
