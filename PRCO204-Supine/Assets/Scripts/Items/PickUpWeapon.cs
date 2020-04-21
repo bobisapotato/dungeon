@@ -24,6 +24,9 @@ public class PickUpWeapon : MonoBehaviour
 
     public static bool isHoldingKey = false;
 
+    [SerializeField]
+    private Mesh openTrapDoorMesh;
+
     void Awake()
     {
         controls = new PlayerControls();
@@ -56,14 +59,11 @@ public class PickUpWeapon : MonoBehaviour
 
         if (other.tag == "Trap Door" && isHoldingKey)
         {
-            // Reset static values for next level.
-            LevelGeneration.hasTrapDoorSpawned = false;
-            isHoldingKey = false;
+            // Open Trap Door
+            other.gameObject.GetComponentInChildren<MeshFilter>().mesh = openTrapDoorMesh;
 
-            // End level here:
-            // ...
-
-            Debug.Log("Level over");
+            // Invoke level change OR game end in this method.
+            Invoke("NextLevel", 0.5f);
         }
         else if (other.tag == "Trap Door" && !isHoldingKey)
         {
@@ -168,6 +168,23 @@ public class PickUpWeapon : MonoBehaviour
                 isStandingOnWeapon = false;
             }
         }
+    }
+
+    void NextLevel()
+    {
+        // Reset static values for next level.
+        LevelGeneration.hasTrapDoorSpawned = false;
+        isHoldingKey = false;
+
+        // End level here:
+        // ...
+
+        // If (last level) 
+        //     -> Main menu
+        // Else
+        //     -> Next level
+
+        Debug.Log("Level over");
     }
 
     // Required for the input system.

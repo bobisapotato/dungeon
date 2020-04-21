@@ -304,8 +304,6 @@ public class LevelGeneration : MonoBehaviour
 				{
 					int rnd = Random.Range(0, 100);
 
-					Debug.Log(rnd);
-
 					if (rnd >= 75)
 					{
 						SpawnTrapDoor(newRoom);
