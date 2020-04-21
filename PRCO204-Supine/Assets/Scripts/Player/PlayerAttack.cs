@@ -53,7 +53,8 @@ public class PlayerAttack : MonoBehaviour
 
         if (timer >= reloadTime && isHoldingWeapon)
         {
-            if (!isHoldingRangedWeapon && (Input.GetKeyDown(KeyCode.Mouse0) == true || rightTriggerDown != 0))
+            //if (!isHoldingRangedWeapon && (Input.GetKeyDown(KeyCode.Mouse0) == true || rightTriggerDown != 0))
+            if (!isHoldingRangedWeapon && (Input.GetKeyDown(KeyCode.Mouse1) == true || rightTriggerDown != 0))
             {
                 Attack1();
                 timer = 0f;
