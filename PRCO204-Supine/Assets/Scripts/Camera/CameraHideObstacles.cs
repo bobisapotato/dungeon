@@ -30,7 +30,6 @@ public class CameraHideObstacles : MonoBehaviour
    
     private void FixedUpdate()
     {
-        //Debug.Log("player is hidden = " + checkPlayerObscured());
         checkPlayerObscured();
 
         if (obstacle)
@@ -58,13 +57,10 @@ public class CameraHideObstacles : MonoBehaviour
             if (hit.transform == player.transform)
             {
                 resetObstacle();
-                Debug.Log("can see char");
                 return false;
-                
             }
             else
             {
-                Debug.Log("Hitting not player");
                 newObstacle(hit.collider.gameObject);
                 return true;
             }
