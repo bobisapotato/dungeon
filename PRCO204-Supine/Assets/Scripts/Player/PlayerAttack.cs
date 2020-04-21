@@ -68,7 +68,7 @@ public class PlayerAttack : MonoBehaviour
                 timer = 0f;
 
                 // Play "pulling back the crossbow" animation:
-                // ...
+                animator.Play("ShootCrossbow");
             }
         }
     }
