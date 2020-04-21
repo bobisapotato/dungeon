@@ -1165,12 +1165,12 @@ MonoBehaviour:
   - {fileID: 6603296649409033566, guid: d012078eb9aed9b4db32aac8a4f3ed0a, type: 3}
   - {fileID: 8531678944976247615, guid: dcbc288cba36cca40ad8c52251929185, type: 3}
   - {fileID: 4262455715604526784, guid: d1f53904e41f96d4b8d3d9c88d55a14c, type: 3}
-  - {fileID: 9197626417217089907, guid: ad2c315fde84d054cb06bfc7aea5d77d, type: 3}
-  - {fileID: 2383568938516457576, guid: e49830636a4453746b82c7c265e8ab36, type: 3}
-  - {fileID: 1777984495318919027, guid: 3f63c1945ed7272448e08dd384aae391, type: 3}
-  - {fileID: 4536395540284735614, guid: cc4e8accb852b2849b7227c595f7fa3a, type: 3}
-  - {fileID: 854621663077859800, guid: 68e581e592b83e24ea117fedd2ed262a, type: 3}
   - {fileID: 7302497771053763621, guid: 837d8919af2b56041955314d464ca592, type: 3}
+  - {fileID: 854621663077859800, guid: 68e581e592b83e24ea117fedd2ed262a, type: 3}
+  - {fileID: 4536395540284735614, guid: cc4e8accb852b2849b7227c595f7fa3a, type: 3}
+  - {fileID: 1777984495318919027, guid: 3f63c1945ed7272448e08dd384aae391, type: 3}
+  - {fileID: 2383568938516457576, guid: e49830636a4453746b82c7c265e8ab36, type: 3}
+  - {fileID: 9197626417217089907, guid: ad2c315fde84d054cb06bfc7aea5d77d, type: 3}
   roomsInScene: []
   maximumRooms: 10
   totalRoomsSoFar: 0
@@ -1326,6 +1326,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player - crossbow
+      objectReference: {fileID: 0}
+    - target: {fileID: 1573434437141123363, guid: 3393b251d2d9ed44aa7916c50142f1ac,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3900478663042635767, guid: 3393b251d2d9ed44aa7916c50142f1ac,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 3900478663042635767, guid: 3393b251d2d9ed44aa7916c50142f1ac,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3393b251d2d9ed44aa7916c50142f1ac, type: 3}

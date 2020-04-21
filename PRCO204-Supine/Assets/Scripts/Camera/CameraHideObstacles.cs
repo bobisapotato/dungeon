@@ -9,10 +9,10 @@ public class CameraHideObstacles : MonoBehaviour
 
     // VARS
     #region
-    private float maxRayRange = 15f;
+    private float maxRayRange = 30f;
     private RaycastHit hit;
-    private GameObject player;
-    private Camera mainCamera;
+    [SerializeField] private GameObject player;
+    [SerializeField] private Camera mainCamera;
     [SerializeField] GameObject obstacle;
 
     //[SerializeField] GameObject[] obstacles;
@@ -30,7 +30,6 @@ public class CameraHideObstacles : MonoBehaviour
    
     private void FixedUpdate()
     {
-        //Debug.Log("player is hidden = " + checkPlayerObscured());
         checkPlayerObscured();
 
         if (obstacle)
@@ -47,14 +46,15 @@ public class CameraHideObstacles : MonoBehaviour
         Debug.DrawRay(mainCamera.transform.position,
             (player.transform.position - mainCamera.transform.position), Color.magenta);
 
+
+
         // checks if ray cast hits anything
         if (Physics.Raycast(mainCamera.transform.position, (player.transform.position - mainCamera.transform.position),
-            out hit, maxRayRange))
+            out hit))
         {
-            
             // sets bool based on what raycast hits
 
-            if(hit.transform == player.transform)
+            if (hit.transform == player.transform)
             {
                 resetObstacle();
                 return false;
