@@ -43,7 +43,7 @@ public class PickUpWeapon : MonoBehaviour
         timer += Time.deltaTime;
 
         // get keyboard input
-        if(Input.GetKeyDown(KeyCode.Q))
+        if(Input.GetKeyDown(KeyCode.E))
         {
             PickUp();
         }
