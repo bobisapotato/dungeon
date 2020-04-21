@@ -22,12 +22,19 @@ public class PickUpWeapon : MonoBehaviour
     [SerializeField]
     private bool isStandingOnWeapon = false;
 
+    // model stuff.
+    public GameObject playerNoWeapon;
+    public GameObject playerSword;
+    public GameObject playerCrossbow;
+
     void Awake()
     {
         controls = new PlayerControls();
 
         // Controller input.
         controls.Gameplay.PlayerPickUpWeapon.performed += ctx => PickUp();
+
+        switchPlayerModel();
     }
 
     // Update is called once per frame
@@ -75,11 +82,12 @@ public class PickUpWeapon : MonoBehaviour
         heldWeapon = null;
 
         // Make the player model one holding nothing:
-        // ...
+        switchPlayerModel();
     }
 
     void PickUp()
     {
+        
         // If the cooldown is over.
         if (timer >= dropCoolDown)
         {
@@ -141,7 +149,39 @@ public class PickUpWeapon : MonoBehaviour
                 isStandingOnWeapon = false;
             }
         }
+        switchPlayerModel();
     }
+
+    public void switchPlayerModel()
+    {
+        // based on the heldweapon, change the model used for the player
+
+        if (heldWeapon)
+        {
+            if (heldWeapon.name.Contains("Sword"))
+            {
+                showWeapon(playerSword);
+            }
+            else if (heldWeapon.name.Contains("Crossbow"))
+            {
+                showWeapon(playerCrossbow);
+            }
+        }
+        else
+        {
+            showWeapon(playerNoWeapon);
+        }
+    }
+
+    public void showWeapon(GameObject currentWeapon)
+    {
+        playerNoWeapon.SetActive(false);
+        playerSword.SetActive(false);
+        playerCrossbow.SetActive(false);
+
+        currentWeapon.SetActive(true);
+    }
+
 
     // Required for the input system.
     void OnEnable()
