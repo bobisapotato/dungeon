@@ -43,8 +43,9 @@ public class LevelGeneration : MonoBehaviour
 
 		roomsInScene.Add(startRoomPrefab);
 
-		//BUILD LEVEL
-		InvokeRepeating("createLevel", 0.5f, 0.1f);
+		////BUILD LEVEL
+		
+		InvokeRepeating("createLevel", 2f, 0.1f);
 
 		
 
@@ -52,14 +53,19 @@ public class LevelGeneration : MonoBehaviour
 
 	private void Update()
 	{
-		if (openSpawnPts.Count() == 0)
+		//if (openSpawnPts.Count() == 0)
+		//{
+		//	CancelInvoke("createLevel");
+		//	if (!startedEnemyCounter)
+		//	{
+		//		enemyCountMan.startUpEnemyCounter();
+		//		startedEnemyCounter = true;
+		//	}
+		//}
+
+		if(openSpawnPts.Count != 0 && !startedEnemyCounter)
 		{
-			CancelInvoke("createLevel");
-			if (!startedEnemyCounter)
-			{
-				enemyCountMan.startUpEnemyCounter();
-				startedEnemyCounter = true;
-			}
+			InvokeRepeating("createLevel", 0.5f, 0.1f);
 		}
 
 	}
@@ -81,6 +87,16 @@ public class LevelGeneration : MonoBehaviour
 		else
 		{
 			Debug.Log("Was wrongly marked as open, fixed now");
+		}
+
+		if (openSpawnPts.Count() == 0)
+		{
+			CancelInvoke("createLevel");
+			if (!startedEnemyCounter)
+			{
+				enemyCountMan.startUpEnemyCounter();
+				startedEnemyCounter = true;
+			}
 		}
 	}
 	
