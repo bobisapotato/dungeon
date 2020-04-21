@@ -20,7 +20,7 @@ public class BombExplode : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     private IEnumerator DisableCollider()
@@ -36,17 +36,28 @@ public class BombExplode : MonoBehaviour
         {
             other.gameObject.SendMessage("TakeDamage", damage);
             hitbox.enabled = false;
+            Destroy(gameObject);
         }
 
         if (other.gameObject.tag == "Player")
         {
-            other.gameObject.SendMessage("TakeDamage", damage / 2);
+            HealthManager.playerHealth.TakeDamage(damage / 2);
             hitbox.enabled = false;
+            Destroy(gameObject);
         }
 
         else
         {
-            hitbox.enabled = false;
+            Invoke("Die", 3f);
+            
         }
+
     }
+
+    private void Die()
+    {
+        Destroy(gameObject);
+    }
+
+    
 }
