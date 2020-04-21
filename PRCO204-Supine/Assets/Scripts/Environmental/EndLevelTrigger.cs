@@ -16,6 +16,4 @@ public class EndLevelTrigger : MonoBehaviour
 		Debug.Log("colliding");
 		gameMan.openDemoMenu();
 	}
-	
-
 }

@@ -528,6 +528,24 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &651177965 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1573434437141123362, guid: 3393b251d2d9ed44aa7916c50142f1ac,
+    type: 3}
+  m_PrefabInstance: {fileID: 1894750565}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &651177973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 651177965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d00c79ca4c6bff40970ec699f9a8c49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &692685168
 GameObject:
   m_ObjectHideFlags: 0
@@ -1260,6 +1278,15 @@ PrefabInstance:
       propertyPath: crossbowPrefab
       value: 
       objectReference: {fileID: 3870336255925155164, guid: bcab3a7c5d2559045b00d474e67a0011,
+        type: 3}
+    - target: {fileID: 1814722806, guid: 3393b251d2d9ed44aa7916c50142f1ac, type: 3}
+      propertyPath: gameMan
+      value: 
+      objectReference: {fileID: 44796320}
+    - target: {fileID: 1814722806, guid: 3393b251d2d9ed44aa7916c50142f1ac, type: 3}
+      propertyPath: openTrapDoorMesh
+      value: 
+      objectReference: {fileID: -2432090755550338912, guid: c5baa9c6277853d48bc3a37ed1f1fab4,
         type: 3}
     - target: {fileID: 1573434437141123358, guid: 3393b251d2d9ed44aa7916c50142f1ac,
         type: 3}

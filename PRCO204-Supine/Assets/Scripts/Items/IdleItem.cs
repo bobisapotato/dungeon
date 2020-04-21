@@ -13,6 +13,20 @@ public class IdleItem : MonoBehaviour
     private float maxHeight = -2.75f;
     private float minHeight = -3.25f;
 
+    private SphereCollider col;
+
+    void Awake()
+    {
+        col = gameObject.GetComponent<SphereCollider>();
+
+        if (gameObject.tag == "Key")
+        {
+            col.enabled = false;
+
+            Invoke("EnablePickUp", 1f);
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -33,5 +47,10 @@ public class IdleItem : MonoBehaviour
         {
             isUp = false;
         }
+    }
+
+    void EnablePickUp()
+    {
+        col.enabled = true;
     }
 }

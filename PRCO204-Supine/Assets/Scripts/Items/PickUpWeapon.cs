@@ -27,12 +27,16 @@ public class PickUpWeapon : MonoBehaviour
     [SerializeField]
     private Mesh openTrapDoorMesh;
 
+    public GameManager gameMan;
+
     void Awake()
     {
         controls = new PlayerControls();
 
         // Controller input.
         controls.Gameplay.PlayerPickUpWeapon.performed += ctx => PickUp();
+
+        gameMan = FindObjectOfType<GameManager>();
     }
 
     // Update is called once per frame
@@ -176,15 +180,7 @@ public class PickUpWeapon : MonoBehaviour
         LevelGeneration.hasTrapDoorSpawned = false;
         isHoldingKey = false;
 
-        // End level here:
-        // ...
-
-        // If (last level) 
-        //     -> Main menu
-        // Else
-        //     -> Next level
-
-        Debug.Log("Level over");
+        gameMan.openDemoWin2();
     }
 
     // Required for the input system.
