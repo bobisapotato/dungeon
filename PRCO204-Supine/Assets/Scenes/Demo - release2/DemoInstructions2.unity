@@ -176,9 +176,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\t XBOX CONTROLLER\tKEYBOARD AND MOUSE\nMovement   Right Joystick \tWASD
-    keys\nRotation   Left Joystick\tMouse\nPickUps    X button \tQ key\nAttack    
-    Right Trigger\tRight Mouse Button"
+  m_text: '- Move with the Left Joystick
+
+    - Change direction with the Right Joystick
+
+    -
+    Pick up or drop items with X (on an xbox controller)
+
+    - If you''re holding
+    a weapon, attack with the Right Trigger
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3d4cd84d87bea7e4fb011ce27b8150fd, type: 2}
   m_sharedMaterial: {fileID: 5180094762843802536, guid: 3d4cd84d87bea7e4fb011ce27b8150fd,
@@ -219,7 +227,7 @@ MonoBehaviour:
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
+  m_paragraphSpacing: 42.2
   m_charWidthMaxAdj: 0
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
@@ -248,12 +256,12 @@ MonoBehaviour:
   m_margin: {x: -60.056927, y: 131.5308, z: -63.136826, w: -86.690735}
   m_textInfo:
     textComponent: {fileID: 298386005}
-    characterCount: 175
+    characterCount: 188
     spriteCount: 0
-    spaceCount: 39
-    wordCount: 26
+    spaceCount: 36
+    wordCount: 36
     linkCount: 0
-    lineCount: 5
+    lineCount: 6
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -1711,7 +1719,11 @@ MonoBehaviour:
   m_text: 'The aim of the game is to clear the dungeon of baddies!
 
     Once you''ve
-    cleared the dungeon, find the trapdoor and escape!'
+    cleared the dungeon, find the trapdoor and escape!
+
+
+    Note: This game is player
+    with a controller'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3d4cd84d87bea7e4fb011ce27b8150fd, type: 2}
   m_sharedMaterial: {fileID: 5180094762843802536, guid: 3d4cd84d87bea7e4fb011ce27b8150fd,
@@ -1740,8 +1752,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 32.1
-  m_fontSizeBase: 32.1
+  m_fontSize: 26.15
+  m_fontSizeBase: 26.15
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1781,12 +1793,12 @@ MonoBehaviour:
   m_margin: {x: -99.01038, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1956108220}
-    characterCount: 118
+    characterCount: 163
     spriteCount: 0
-    spaceCount: 21
-    wordCount: 22
+    spaceCount: 30
+    wordCount: 30
     linkCount: 0
-    lineCount: 5
+    lineCount: 7
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
