@@ -227,4 +227,16 @@ public class PickUpWeapon : MonoBehaviour
 
     }
 
+    public bool isHoldingWeapon()
+    {
+        if(heldWeapon)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 }
