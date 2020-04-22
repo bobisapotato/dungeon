@@ -45,13 +45,9 @@ public class GameManager : MonoBehaviour
     }
     public void openDemoLose2()
     {
-        Invoke("loadLose2", 1f);
-    }
-
-    public void loadLose2()
-    {
         SceneManager.LoadScene("DemoLose2");
     }
+
 
     public void openDemoMenu2()
     {
