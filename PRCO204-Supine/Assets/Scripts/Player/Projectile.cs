@@ -6,8 +6,15 @@ public class Projectile : MonoBehaviour
 {
     
     //Variables
-    [SerializeField] float velocity;
-    [SerializeField] int damage;
+    [SerializeField] 
+    private float velocity;
+    [SerializeField] 
+    private int damage;
+
+    [SerializeField]
+    private GameObject explosionPrefab;
+    [SerializeField]
+    private GameObject arrow;
 
     // Start is called before the first frame update
     // Adds a force the the projectile.
@@ -22,7 +29,7 @@ public class Projectile : MonoBehaviour
     private IEnumerator Despawn()
     {
         yield return new WaitForSeconds(5.0f);
-        Die();
+        Explode();
         
     }
 
@@ -40,18 +47,37 @@ public class Projectile : MonoBehaviour
         if (other.gameObject.tag == "Enemy")
         {
             other.gameObject.SendMessage("TakeDamage", damage);
-            Die();
+            Explode();
         }
-        else
+        else if (other.gameObject.tag != "Weapon")
         {
-            Die();
+            Explode();
         }
     }
 
 
     // Destroys the gameobject this is attached to.
-    private void Die()
+    private void Explode()
+    {
+        CapsuleCollider cc = GetComponent<CapsuleCollider>();
+        Rigidbody rb = GetComponent<Rigidbody>();
+
+        rb.isKinematic = true;
+        cc.enabled = false;
+
+        explosionPrefab.SetActive(true);
+        arrow.SetActive(false);
+
+        Invoke("Die", 2.5f);
+    }
+
+    void Die()
     {
         Destroy(gameObject);
+    }
+
+    Vector3 GetBehindPosition(Transform target)
+    {
+        return target.position - target.forward;
     }
 }
