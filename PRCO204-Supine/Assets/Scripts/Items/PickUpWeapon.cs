@@ -61,6 +61,7 @@ public class PickUpWeapon : MonoBehaviour
         if (other.tag == "Key")
         {
             isHoldingKey = true;
+            models.hasKey();
             Destroy(other.gameObject);
         }
 
@@ -225,4 +226,5 @@ public class PickUpWeapon : MonoBehaviour
         currentWeapon.SetActive(true);
 
     }
+
 }
