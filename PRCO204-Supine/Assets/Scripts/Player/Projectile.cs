@@ -44,15 +44,17 @@ public class Projectile : MonoBehaviour
     // method. It then kills itself.
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Enemy")
+        if (other.gameObject.CompareTag("Enemy"))
         {
             other.gameObject.SendMessage("TakeDamage", damage);
             FireDebris();
         }
-        else if (other.gameObject.tag != "Weapon" && other.gameObject.tag != "Key" && other.gameObject.tag != "Trap Door" 
-            && other.gameObject.tag != "RoomSpawn" && other.gameObject.tag != "RoomTrigger")
+        else 
         {
-            FireDebris();
+            List<string> excludedTags = new List<string>() { "Weapon", "Key", "Trap Door", "RoomSpawn", "RoomTrigger"};
+            if (excludedTags.TrueForAll(tag => !other.gameObject.CompareTag(tag))) {
+                FireDebris();
+            }
         }
     }
 
