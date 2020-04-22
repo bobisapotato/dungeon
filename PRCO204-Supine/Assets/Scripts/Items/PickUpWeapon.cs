@@ -65,6 +65,9 @@ public class PickUpWeapon : MonoBehaviour
         if (other.tag == "Key")
         {
             isHoldingKey = true;
+            PlayerAttack.isHoldingWeapon = false;
+            PlayerAttack.isHoldingRangedWeapon = false;
+            DropWeapon();
             models.setAll(false);
             models.activateKey();
             heldWeapon = null;
@@ -84,7 +87,7 @@ public class PickUpWeapon : MonoBehaviour
             // Display "You need to find the key" message here:
             // ...
 
-            Debug.Log("You need to find the key");
+            // Debug.Log("You need to find the key");
         }
     }
 
