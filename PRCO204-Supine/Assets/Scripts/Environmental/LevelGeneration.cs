@@ -32,6 +32,12 @@ public class LevelGeneration : MonoBehaviour
 	public EnemyCountManager enemyCountMan;
 	public bool startedEnemyCounter = false;
 
+	public static bool hasTrapDoorSpawned = false;
+	[SerializeField]
+	private GameObject trapDoorPrefab;
+	[SerializeField]
+	private int spawnTrapDoorChance = 75;
+
 	private void Start()
 	{
 		// to start, we just create the starter room at 0.0
@@ -43,29 +49,20 @@ public class LevelGeneration : MonoBehaviour
 
 		roomsInScene.Add(startRoomPrefab);
 
-		////BUILD LEVEL
-		
-		InvokeRepeating("createLevel", 2f, 0.1f);
-
-		
-
+		//BUILD LEVEL
+		InvokeRepeating("createLevel", 0.5f, 0.1f);
 	}
 
 	private void Update()
 	{
-		//if (openSpawnPts.Count() == 0)
-		//{
-		//	CancelInvoke("createLevel");
-		//	if (!startedEnemyCounter)
-		//	{
-		//		enemyCountMan.startUpEnemyCounter();
-		//		startedEnemyCounter = true;
-		//	}
-		//}
-
-		if(openSpawnPts.Count != 0 && !startedEnemyCounter)
+		if (openSpawnPts.Count() == 0)
 		{
-			InvokeRepeating("createLevel", 0.5f, 0.1f);
+			CancelInvoke("createLevel");
+			if (!startedEnemyCounter)
+			{
+				enemyCountMan.startUpEnemyCounter();
+				startedEnemyCounter = true;
+			}
 		}
 
 	}
@@ -87,16 +84,6 @@ public class LevelGeneration : MonoBehaviour
 		else
 		{
 			Debug.Log("Was wrongly marked as open, fixed now");
-		}
-
-		if (openSpawnPts.Count() == 0)
-		{
-			CancelInvoke("createLevel");
-			if (!startedEnemyCounter)
-			{
-				enemyCountMan.startUpEnemyCounter();
-				startedEnemyCounter = true;
-			}
 		}
 	}
 	
@@ -308,9 +295,27 @@ public class LevelGeneration : MonoBehaviour
 			Vector3 tempTransform = spawn.transform.position;
 
 			// spawn said room at that pos
-			Instantiate(room, tempTransform, startRot);
+			GameObject newRoom = Instantiate(room, tempTransform, startRot);
 
 			addNewRoomToScene(room.gameObject, spawn);
+
+			// Spawn 1 trap door.
+			if (!hasTrapDoorSpawned)
+			{
+				if (totalRoomsSoFar < maximumRooms)
+				{
+					int rnd = Random.Range(0, 100);
+
+					if (rnd >= spawnTrapDoorChance)
+					{
+						SpawnTrapDoor(newRoom);
+					}
+				}
+				else
+				{
+					SpawnTrapDoor(newRoom);
+				}
+			}
 		}
 	}
 
@@ -539,4 +544,11 @@ public class LevelGeneration : MonoBehaviour
 		
 	}
 
+	// Spawns the trap door prefab. 1 per level.
+	void SpawnTrapDoor(GameObject room)
+	{
+		Instantiate(trapDoorPrefab, room.transform, false);
+
+		hasTrapDoorSpawned = true;
+	}
 }

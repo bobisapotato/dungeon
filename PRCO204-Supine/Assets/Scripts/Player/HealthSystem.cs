@@ -42,7 +42,7 @@ public class HealthSystem : MonoBehaviour
         }
         else
         {
-            health -= heal;
+            health += heal;
         }
     }
 }

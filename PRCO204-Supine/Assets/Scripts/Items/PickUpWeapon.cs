@@ -22,10 +22,12 @@ public class PickUpWeapon : MonoBehaviour
     [SerializeField]
     private bool isStandingOnWeapon = false;
 
-    // model stuff.
-    public GameObject playerNoWeapon;
-    public GameObject playerSword;
-    public GameObject playerCrossbow;
+    public static bool isHoldingKey = false;
+
+    [SerializeField]
+    private Mesh openTrapDoorMesh;
+
+    public GameManager gameMan;
 
     void Awake()
     {
@@ -34,19 +36,13 @@ public class PickUpWeapon : MonoBehaviour
         // Controller input.
         controls.Gameplay.PlayerPickUpWeapon.performed += ctx => PickUp();
 
-        switchPlayerModel();
+        gameMan = FindObjectOfType<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
         timer += Time.deltaTime;
-
-        // get keyboard input
-        if(Input.GetKeyDown(KeyCode.E))
-        {
-            PickUp();
-        }
     }
 
     // Display UI here: "Pick Up/Press X".
@@ -57,6 +53,28 @@ public class PickUpWeapon : MonoBehaviour
             isStandingOnWeapon = true;
             weaponPlayerIsStandingOn = other.gameObject;
             timer = 0f;
+        }
+
+        if (other.tag == "Key")
+        {
+            isHoldingKey = true;
+            Destroy(other.gameObject);
+        }
+
+        if (other.tag == "Trap Door" && isHoldingKey)
+        {
+            // Open Trap Door
+            other.gameObject.GetComponentInChildren<MeshFilter>().mesh = openTrapDoorMesh;
+
+            // Invoke level change OR game end in this method.
+            Invoke("NextLevel", 0.5f);
+        }
+        else if (other.tag == "Trap Door" && !isHoldingKey)
+        {
+            // Display "You need to find the key" message here:
+            // ...
+
+            Debug.Log("You need to find the key");
         }
     }
 
@@ -88,12 +106,11 @@ public class PickUpWeapon : MonoBehaviour
         heldWeapon = null;
 
         // Make the player model one holding nothing:
-        switchPlayerModel();
+        // ...
     }
 
     void PickUp()
     {
-        
         // If the cooldown is over.
         if (timer >= dropCoolDown)
         {
@@ -155,39 +172,16 @@ public class PickUpWeapon : MonoBehaviour
                 isStandingOnWeapon = false;
             }
         }
-        switchPlayerModel();
     }
 
-    public void switchPlayerModel()
+    void NextLevel()
     {
-        // based on the heldweapon, change the model used for the player
+        // Reset static values for next level.
+        LevelGeneration.hasTrapDoorSpawned = false;
+        isHoldingKey = false;
 
-        if (heldWeapon)
-        {
-            if (heldWeapon.name.Contains("Sword"))
-            {
-                showWeapon(playerSword);
-            }
-            else if (heldWeapon.name.Contains("Crossbow"))
-            {
-                showWeapon(playerCrossbow);
-            }
-        }
-        else
-        {
-            showWeapon(playerNoWeapon);
-        }
+        gameMan.openDemoWin2();
     }
-
-    public void showWeapon(GameObject currentWeapon)
-    {
-        playerNoWeapon.SetActive(false);
-        playerSword.SetActive(false);
-        playerCrossbow.SetActive(false);
-
-        currentWeapon.SetActive(true);
-    }
-
 
     // Required for the input system.
     void OnEnable()

@@ -17,21 +17,6 @@ public class EnemyCountManager : MonoBehaviour
     public GameManager gameManager;
     public TextMeshProUGUI enemyCountLabel;
 
-
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void startUpEnemyCounter()
     {
         // save list of rooms
@@ -66,11 +51,6 @@ public class EnemyCountManager : MonoBehaviour
         enemiesInLevel.Remove(enemyKilled);
         enemyCount--;
         updateLabel();
-        if(enemyCount == 0)
-        {
-            // show win screen via the gameManager
-            gameManager.openDemoWin2();
-        }
     }
 
     public void updateLabel()
