@@ -195,7 +195,6 @@ public class PickUpWeapon : MonoBehaviour
         LevelGeneration.hasTrapDoorSpawned = false;
         PlayerAttack.isHoldingRangedWeapon = false;
         PlayerAttack.isHoldingWeapon = false;
-        
         isHoldingKey = false;
 
         gameManager.openDemoWin2();
