@@ -46,6 +46,10 @@ public class PickUpWeapon : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            PickUp();
+        }
     }
 
     // Display UI here: "Pick Up/Press X".

@@ -16,7 +16,7 @@ public class PlayerAttack : MonoBehaviour
     private float rightTriggerDown;
 
     private float timer = 0f;
-    private float reloadTime = 0.5f;
+    private float reloadTime = 0.2f;
 
     public static bool isHoldingWeapon;
     public static bool isHoldingRangedWeapon;
