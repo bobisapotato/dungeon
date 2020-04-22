@@ -29,9 +29,7 @@ public class PickUpWeapon : MonoBehaviour
 
     public GameManager gameManager;
 
-    public GameObject noWeapon;
-    public GameObject crossbow;
-    public GameObject sword;
+    public Models models;
 
     void Awake()
     {
@@ -39,7 +37,7 @@ public class PickUpWeapon : MonoBehaviour
 
         // Controller input.
         controls.Gameplay.PlayerPickUpWeapon.performed += ctx => PickUp();
-
+        models = GetComponentInChildren<Models>();
         gameManager = FindObjectOfType<GameManager>();
         newPlayerWeapon();
     }
@@ -207,24 +205,22 @@ public class PickUpWeapon : MonoBehaviour
         {
             if (heldWeapon.name.Contains("Sword"))
             {
-                setPlayerModel(sword);
+                setPlayerModel(models.sword);
             }
             else if (heldWeapon.name.Contains("Crossbow"))
             {
-                setPlayerModel(crossbow);
+                setPlayerModel(models.crossbow);
             }
         }
         else
         {
-            setPlayerModel(noWeapon);
+            setPlayerModel(models.noweapon);
         }
     }
     public void setPlayerModel(GameObject currentWeapon)
     {
         // sets all the weapons to disables apart from current heldweapon.
-        noWeapon.SetActive(false);
-        crossbow.SetActive(false);
-        sword.SetActive(false);
+        models.setAll(false);
 
         currentWeapon.SetActive(true);
 
