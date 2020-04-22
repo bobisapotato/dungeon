@@ -21,7 +21,12 @@ public class PlayerAttack : MonoBehaviour
     public static bool isHoldingWeapon;
     public static bool isHoldingRangedWeapon;
 
+    private bool shouldLastOneMoreFrame = false;
+
     public Animator animator;
+
+    [SerializeField]
+    ParticleSystem swordSwing;
 
     void Awake()
     {
@@ -61,7 +66,9 @@ public class PlayerAttack : MonoBehaviour
 
                 // Play "swinging a sword" animation:
                 animator.Play("SwingSword2");
+                swordSwing.Play();
 
+                shouldLastOneMoreFrame = true;
             }
             
             else if (isHoldingRangedWeapon && (Input.GetKeyDown(KeyCode.Mouse1) == true || rightTriggerDown != 0))
@@ -72,6 +79,12 @@ public class PlayerAttack : MonoBehaviour
                 // Play "pulling back the crossbow" animation:
                 animator.Play("ShootCrossbow");
             }
+        }
+
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") && shouldLastOneMoreFrame)
+        {
+            swordSwing.Clear();
+            shouldLastOneMoreFrame = false;
         }
     }
 
