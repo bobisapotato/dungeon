@@ -27,7 +27,9 @@ public class PickUpWeapon : MonoBehaviour
     [SerializeField]
     private Mesh openTrapDoorMesh;
 
-    public GameManager gameMan;
+    public GameManager gameManager;
+
+    public Models models;
 
     void Awake()
     {
@@ -35,8 +37,9 @@ public class PickUpWeapon : MonoBehaviour
 
         // Controller input.
         controls.Gameplay.PlayerPickUpWeapon.performed += ctx => PickUp();
-
-        gameMan = FindObjectOfType<GameManager>();
+        models = GetComponentInChildren<Models>();
+        gameManager = FindObjectOfType<GameManager>();
+        newPlayerWeapon();
     }
 
     // Update is called once per frame
@@ -172,6 +175,7 @@ public class PickUpWeapon : MonoBehaviour
                 isStandingOnWeapon = false;
             }
         }
+        newPlayerWeapon();
     }
 
     void NextLevel()
@@ -180,7 +184,7 @@ public class PickUpWeapon : MonoBehaviour
         LevelGeneration.hasTrapDoorSpawned = false;
         isHoldingKey = false;
 
-        gameMan.openDemoWin2();
+        gameManager.openDemoWin2();
     }
 
     // Required for the input system.
@@ -192,5 +196,33 @@ public class PickUpWeapon : MonoBehaviour
     void OnDisable()
     {
         controls.Gameplay.Disable();
+    }
+
+    public void newPlayerWeapon()
+    {
+        // finds what current weapon is, and sends message to change model accordingly.
+        if (heldWeapon)
+        {
+            if (heldWeapon.name.Contains("Sword"))
+            {
+                setPlayerModel(models.sword);
+            }
+            else if (heldWeapon.name.Contains("Crossbow"))
+            {
+                setPlayerModel(models.crossbow);
+            }
+        }
+        else
+        {
+            setPlayerModel(models.noweapon);
+        }
+    }
+    public void setPlayerModel(GameObject currentWeapon)
+    {
+        // sets all the weapons to disables apart from current heldweapon.
+        models.setAll(false);
+
+        currentWeapon.SetActive(true);
+
     }
 }
