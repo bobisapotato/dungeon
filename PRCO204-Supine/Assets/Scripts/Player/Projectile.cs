@@ -12,7 +12,7 @@ public class Projectile : MonoBehaviour
     private int damage;
 
     [SerializeField]
-    private GameObject explosionPrefab;
+    private GameObject debrisPrefab;
     [SerializeField]
     private GameObject arrow;
 
@@ -29,7 +29,7 @@ public class Projectile : MonoBehaviour
     private IEnumerator Despawn()
     {
         yield return new WaitForSeconds(5.0f);
-        Explode();
+        FireDebris();
         
     }
 
@@ -47,28 +47,29 @@ public class Projectile : MonoBehaviour
         if (other.gameObject.tag == "Enemy")
         {
             other.gameObject.SendMessage("TakeDamage", damage);
-            Explode();
+            FireDebris();
         }
-        else if (other.gameObject.tag != "Weapon")
+        else if (other.gameObject.tag != "Weapon" && other.gameObject.tag != "Key" && other.gameObject.tag != "Trap Door" 
+            && other.gameObject.tag != "RoomSpawn" && other.gameObject.tag != "RoomTrigger")
         {
-            Explode();
+            FireDebris();
         }
     }
 
 
     // Destroys the gameobject this is attached to.
-    private void Explode()
+    private void FireDebris()
     {
         CapsuleCollider cc = GetComponent<CapsuleCollider>();
         Rigidbody rb = GetComponent<Rigidbody>();
 
-        rb.isKinematic = true;
+        rb.constraints = RigidbodyConstraints.FreezeAll;
         cc.enabled = false;
 
-        explosionPrefab.SetActive(true);
+        debrisPrefab.SetActive(true);
         arrow.SetActive(false);
 
-        Invoke("Die", 2.5f);
+        Invoke("Die", 4f);
     }
 
     void Die()

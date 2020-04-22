@@ -37,9 +37,6 @@ public class EnemyAttack : MonoBehaviour
 
             CameraShake.shake = 0.2f;
             HealthManager.playerHealth.TakeDamage(damage);
-
-            // Debug until we have UI set up for player health.
-            Debug.Log(HealthManager.playerHealth.GetHealth());
         }
     }
 }
