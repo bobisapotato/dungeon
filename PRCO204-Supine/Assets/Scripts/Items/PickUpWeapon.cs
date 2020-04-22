@@ -27,7 +27,7 @@ public class PickUpWeapon : MonoBehaviour
     [SerializeField]
     private Mesh openTrapDoorMesh;
 
-    public GameManager gameMan;
+    public GameManager gameManager;
 
     public GameObject noWeapon;
     public GameObject crossbow;
@@ -40,7 +40,7 @@ public class PickUpWeapon : MonoBehaviour
         // Controller input.
         controls.Gameplay.PlayerPickUpWeapon.performed += ctx => PickUp();
 
-        gameMan = FindObjectOfType<GameManager>();
+        gameManager = FindObjectOfType<GameManager>();
         newPlayerWeapon();
     }
 
@@ -186,7 +186,7 @@ public class PickUpWeapon : MonoBehaviour
         LevelGeneration.hasTrapDoorSpawned = false;
         isHoldingKey = false;
 
-        gameMan.openDemoWin2();
+        gameManager.openDemoWin2();
     }
 
     // Required for the input system.
