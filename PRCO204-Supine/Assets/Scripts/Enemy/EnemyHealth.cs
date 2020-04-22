@@ -14,6 +14,9 @@ public class EnemyHealth : MonoBehaviour
     private int knockback;
     private Room parentRoom;
 
+    [SerializeField]
+    private GameObject explosionPrefab;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,16 +35,10 @@ public class EnemyHealth : MonoBehaviour
     void Update()
     {
         if (health <= 0)
-        {
-            DropItem();
-            parentRoom.enemyKilled(this);
+        { 
+            Instantiate(explosionPrefab, transform.position, transform.rotation);
 
-            if (parentRoom.enemyCountManager.enemyCount == 0)
-            {
-                Instantiate(keyPrefab, transform.position, transform.rotation);
-            }
-
-            Destroy(gameObject);
+            Die();
         }
 
     }
@@ -68,5 +65,18 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
+    void Die()
+    {
+        DropItem();
+
+        parentRoom.enemyKilled(this);
+
+        if (parentRoom.enemyCountManager.enemyCount == 0)
+        {
+            Instantiate(keyPrefab, transform.position, transform.rotation);
+        }
+
+        Destroy(gameObject);
+    }
 
 }
