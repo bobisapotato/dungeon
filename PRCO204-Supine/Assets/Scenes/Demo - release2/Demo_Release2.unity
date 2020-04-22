@@ -850,7 +850,7 @@ PrefabInstance:
         type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 1814722804}
+      objectReference: {fileID: 0}
     - target: {fileID: 6891481409815932312, guid: 42c7e7b9a75cbef48afb8c61124e87c8,
         type: 3}
       propertyPath: m_Enabled
@@ -1135,12 +1135,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1510816797}
   m_CullTransparentMesh: 0
---- !u!4 &1814722804 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1573434437141123358, guid: 3393b251d2d9ed44aa7916c50142f1ac,
-    type: 3}
-  m_PrefabInstance: {fileID: 1894750565}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1847538783
 GameObject:
   m_ObjectHideFlags: 0
@@ -1209,6 +1203,7 @@ MonoBehaviour:
   startedEnemyCounter: 0
   trapDoorPrefab: {fileID: 6264978274770045171, guid: c439f403abe416f4fb28da8984d80f7c,
     type: 3}
+  spawnTrapDoorChance: 75
 --- !u!4 &1847538785
 Transform:
   m_ObjectHideFlags: 0
@@ -1288,6 +1283,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -2432090755550338912, guid: c5baa9c6277853d48bc3a37ed1f1fab4,
         type: 3}
+    - target: {fileID: 1155391948001616275, guid: 3393b251d2d9ed44aa7916c50142f1ac,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1573434437141123358, guid: 3393b251d2d9ed44aa7916c50142f1ac,
         type: 3}
       propertyPath: m_LocalPosition.x
