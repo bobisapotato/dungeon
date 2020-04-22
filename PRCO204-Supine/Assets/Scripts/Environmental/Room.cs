@@ -29,6 +29,7 @@ public class Room : MonoBehaviour
     public EnemyCountManager enemyCountManager;
 
     private LevelGeneration levelGenMan;
+    private PickUpWeapon playerPickUp;
 
     public bool justCreated = true;
     #endregion
@@ -54,6 +55,8 @@ public class Room : MonoBehaviour
         // get LevelGen from parent.
         levelGenMan = GameObject.FindGameObjectWithTag("LevelGenManager").GetComponent<LevelGeneration>();
 
+        playerPickUp = GameObject.FindGameObjectWithTag("Player").GetComponent<PickUpWeapon>();
+
         populateEnemiesInRoom();
     }
 
@@ -67,6 +70,15 @@ public class Room : MonoBehaviour
         else if (playerInRoom & roomCleared & doorsLocked)
         {
             unlockAllDoors();
+        }
+
+        // If this is the start room, unlock doors when they have the sword
+        if(this.gameObject.name.Contains("start") && doorsLocked)
+        {
+            if(playerPickUp.isHoldingWeapon())
+            {
+                unlockAllDoors();
+            }
         }
     }
 
