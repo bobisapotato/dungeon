@@ -10,7 +10,7 @@ public class EnemyAttack : MonoBehaviour
 
     private float attackCoolDown = 0f;
     private float attackCoolDownTime = 1f;
-    private float attackRadius = 5f;
+    private float attackRadius = 2.5f;
 
     void Start()
     {
