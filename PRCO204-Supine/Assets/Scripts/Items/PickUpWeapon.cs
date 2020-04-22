@@ -61,7 +61,7 @@ public class PickUpWeapon : MonoBehaviour
         if (other.tag == "Key")
         {
             isHoldingKey = true;
-            models.hasKey();
+            models.activateKey();
             Destroy(other.gameObject);
         }
 

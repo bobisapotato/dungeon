@@ -17,7 +17,7 @@ public class Models : MonoBehaviour
         sword.SetActive(value);
     }
 
-    public void hasKey()
+    public void activateKey()
     {
         Debug.Log("showingKey");
         key.SetActive(true);
