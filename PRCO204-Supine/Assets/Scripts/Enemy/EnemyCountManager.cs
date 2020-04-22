@@ -19,7 +19,8 @@ public class EnemyCountManager : MonoBehaviour
    // public int halfEnemyCount { get => (int)Mathf.Ceil(startEnemyTotal / 2); }
     public int startEnemyTotal;
 
-public void startUpEnemyCounter()
+
+    public void startUpEnemyCounter()
     {
         // save list of rooms
 
