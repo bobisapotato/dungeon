@@ -16,9 +16,10 @@ public class EnemyCountManager : MonoBehaviour
     public int enemyCount = 0;
     public GameManager gameManager;
     public TextMeshProUGUI enemyCountLabel;
-    private int halfEnemyCount;
+   // public int halfEnemyCount { get => (int)Mathf.Ceil(startEnemyTotal / 2); }
+    public int startEnemyTotal;
 
-    public void startUpEnemyCounter()
+public void startUpEnemyCounter()
     {
         // save list of rooms
 
@@ -28,8 +29,6 @@ public class EnemyCountManager : MonoBehaviour
 
     private void populateEnemyList()
     {
-        
-
         foreach(GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             
@@ -37,8 +36,10 @@ public class EnemyCountManager : MonoBehaviour
         }
 
         enemyCount = enemiesInLevel.Count;
+        startEnemyTotal = enemyCount;
         updateLabel();
-        calculateHalfEnemyCount();
+        //startEnemyTotal = enemyCount;
+        //halfEnemyCount = (int)Mathf.Ceil(startEnemyTotal / 2f);
     }
 
     public void enemyKilled(EnemyHealth enemyKilled)
@@ -54,24 +55,10 @@ public class EnemyCountManager : MonoBehaviour
         enemyCountLabel.text = ("x" + enemyCount.ToString());
     }
 
-    private void calculateHalfEnemyCount()
+    public int halfEnemyCount
     {
-        // returns the value for half of the enemies, to spawn in a crossbox. 
-        int startTotal = enemyCount;
-
-        if(enemyCount % 2 == 0)
-        {
-            halfEnemyCount = (enemyCount / 2);
-        }
-        else
-        {
-            halfEnemyCount = ((enemyCount + 1) / 2);
-        }
-
+        get => (int)Mathf.Ceil(startEnemyTotal / 2f); 
     }
 
-    public int getHalfEnemyCount()
-    {
-        return halfEnemyCount;
-    }
+    
 }

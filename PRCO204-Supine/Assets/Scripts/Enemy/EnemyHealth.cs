@@ -38,7 +38,8 @@ public class EnemyHealth : MonoBehaviour
     {
         if (health <= 0)
         {
-            spawnInCrossbow();
+            Debug.Log("Enem die");
+            triggerCrossbowCheck();
             parentRoom.enemyKilled(this);
 
             if (parentRoom.enemyCountManager.enemyCount == 0)
@@ -73,12 +74,15 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    public void spawnInCrossbow()
+    public void triggerCrossbowCheck()
     {
+        Debug.Log("half enems" + enemyCountManager.halfEnemyCount);
         // if half the enemies have been killed, spawn a crossbow
-        if(enemyCountManager.getHalfEnemyCount() == enemyCountManager.enemyCount)
+        if (enemyCountManager.halfEnemyCount == enemyCountManager.enemyCount)
         {
             Instantiate(crossbowPrefab, parentRoom.transform, false);
         }
+
+        
     }
 }
