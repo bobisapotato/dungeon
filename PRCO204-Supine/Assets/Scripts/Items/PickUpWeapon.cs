@@ -29,6 +29,10 @@ public class PickUpWeapon : MonoBehaviour
 
     public GameManager gameMan;
 
+    public GameObject noWeapon;
+    public GameObject crossbow;
+    public GameObject sword;
+
     void Awake()
     {
         controls = new PlayerControls();
@@ -37,6 +41,7 @@ public class PickUpWeapon : MonoBehaviour
         controls.Gameplay.PlayerPickUpWeapon.performed += ctx => PickUp();
 
         gameMan = FindObjectOfType<GameManager>();
+        newPlayerWeapon();
     }
 
     // Update is called once per frame
@@ -172,6 +177,7 @@ public class PickUpWeapon : MonoBehaviour
                 isStandingOnWeapon = false;
             }
         }
+        newPlayerWeapon();
     }
 
     void NextLevel()
@@ -192,5 +198,35 @@ public class PickUpWeapon : MonoBehaviour
     void OnDisable()
     {
         controls.Gameplay.Disable();
+    }
+
+    public void newPlayerWeapon()
+    {
+        // finds what current weapon is, and sends message to change model accordingly.
+        if (heldWeapon)
+        {
+            if (heldWeapon.name.Contains("Sword"))
+            {
+                setPlayerModel(sword);
+            }
+            else if (heldWeapon.name.Contains("Crossbow"))
+            {
+                setPlayerModel(crossbow);
+            }
+        }
+        else
+        {
+            setPlayerModel(noWeapon);
+        }
+    }
+    public void setPlayerModel(GameObject currentWeapon)
+    {
+        // sets all the weapons to disables apart from current heldweapon.
+        noWeapon.SetActive(false);
+        crossbow.SetActive(false);
+        sword.SetActive(false);
+
+        currentWeapon.SetActive(true);
+
     }
 }
