@@ -46,7 +46,8 @@ public class PickUpWeapon : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if(Input.GetKeyDown(KeyCode.E))
+
+        if(Input.GetKeyDown(KeyCode.E) && !isHoldingKey)
         {
             PickUp();
         }
@@ -125,7 +126,7 @@ public class PickUpWeapon : MonoBehaviour
     void PickUp()
     {
         // If the cooldown is over.
-        if (timer >= dropCoolDown)
+        if (timer >= dropCoolDown && !isHoldingKey)
         {
             // If the player is holding a weapon, and is not stood on a new one.
             if (PlayerAttack.isHoldingWeapon && !isStandingOnWeapon && weaponPlayerIsStandingOn == null)

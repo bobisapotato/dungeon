@@ -573,7 +573,7 @@ public class LevelGeneration : MonoBehaviour
 	// Spawns the trap door prefab. 1 per level.
 	void SpawnTrapDoor(GameObject room)
 	{
-		Instantiate(trapDoorPrefab, room.transform, false);
+		GameObject trapDoor = Instantiate(trapDoorPrefab, room.transform, false);
 
 		hasTrapDoorSpawned = true;
 	}
