@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 public class EnemyCountManager : MonoBehaviour
 {
@@ -23,24 +24,21 @@ public class EnemyCountManager : MonoBehaviour
     public void startUpEnemyCounter()
     {
         // save list of rooms
-
+        Debug.Log("starting enemy counter");
         rooms = levelManager.getRoomsInScene();
-        populateEnemyList();
+        Invoke("populateEnemyList", 1f);
     }
 
     private void populateEnemyList()
     {
         foreach(GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
-            
             enemiesInLevel.Add(enemy.GetComponent<EnemyHealth>());
         }
 
         enemyCount = enemiesInLevel.Count;
         startEnemyTotal = enemyCount;
         updateLabel();
-        //startEnemyTotal = enemyCount;
-        //halfEnemyCount = (int)Mathf.Ceil(startEnemyTotal / 2f);
     }
 
     public void enemyKilled(EnemyHealth enemyKilled)

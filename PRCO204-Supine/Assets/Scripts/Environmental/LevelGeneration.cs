@@ -63,6 +63,7 @@ public class LevelGeneration : MonoBehaviour
 		{
 			CancelInvoke("createLevel");
 			hasStoppedSpawning = true;
+
 			if (!startedEnemyCounter)
 			{
 				enemyCountMan.startUpEnemyCounter();
