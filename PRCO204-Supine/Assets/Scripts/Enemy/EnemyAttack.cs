@@ -35,6 +35,7 @@ public class EnemyAttack : MonoBehaviour
         {
             attackCoolDown = 0f;
 
+            CameraShake.shake = 0.2f;
             HealthManager.playerHealth.TakeDamage(damage);
 
             // Debug until we have UI set up for player health.

@@ -28,7 +28,7 @@ public class HealthSystem : MonoBehaviour
         {
             health = minHealth;
         }
-        else 
+        else
         {
             health -= damage;
         }
