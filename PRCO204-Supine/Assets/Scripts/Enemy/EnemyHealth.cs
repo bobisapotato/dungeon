@@ -76,7 +76,7 @@ public class EnemyHealth : MonoBehaviour
 
     public void triggerCrossbowCheck()
     {
-        Debug.Log("half enems" + enemyCountManager.halfEnemyCount);
+        
         // if half the enemies have been killed, spawn a crossbow
         if (enemyCountManager.halfEnemyCount == enemyCountManager.enemyCount)
         {
