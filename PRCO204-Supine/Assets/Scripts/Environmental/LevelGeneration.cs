@@ -40,6 +40,8 @@ public class LevelGeneration : MonoBehaviour
 	[SerializeField]
 	private int spawnTrapDoorChance = 75;
 
+	
+
 	private void Start()
 	{
 		// to start, we just create the starter room at 0.0
@@ -65,6 +67,7 @@ public class LevelGeneration : MonoBehaviour
 			{
 				enemyCountMan.startUpEnemyCounter();
 				startedEnemyCounter = true;
+				
 			}
 		}
 
@@ -334,6 +337,8 @@ public class LevelGeneration : MonoBehaviour
 					SpawnTrapDoor(newRoom);
 				}
 			}
+
+			
 		}
 	}
 
@@ -572,4 +577,6 @@ public class LevelGeneration : MonoBehaviour
 
 		hasTrapDoorSpawned = true;
 	}
+
+	
 }

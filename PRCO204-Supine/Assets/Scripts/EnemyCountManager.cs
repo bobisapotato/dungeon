@@ -16,8 +16,10 @@ public class EnemyCountManager : MonoBehaviour
     public int enemyCount = 0;
     public GameManager gameManager;
     public TextMeshProUGUI enemyCountLabel;
+   // public int halfEnemyCount { get => (int)Mathf.Ceil(startEnemyTotal / 2); }
+    public int startEnemyTotal;
 
-    public void startUpEnemyCounter()
+public void startUpEnemyCounter()
     {
         // save list of rooms
 
@@ -27,14 +29,6 @@ public class EnemyCountManager : MonoBehaviour
 
     private void populateEnemyList()
     {
-        //foreach(GameObject g in rooms)
-        //{
-        //    foreach(EnemyHealth enemy in g.GetComponent<Room>().getEnemiesInRoom())
-        //    {
-        //        enemiesInLevel.Add(enemy);
-        //    }
-        //}
-
         foreach(GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             
@@ -42,7 +36,10 @@ public class EnemyCountManager : MonoBehaviour
         }
 
         enemyCount = enemiesInLevel.Count;
+        startEnemyTotal = enemyCount;
         updateLabel();
+        //startEnemyTotal = enemyCount;
+        //halfEnemyCount = (int)Mathf.Ceil(startEnemyTotal / 2f);
     }
 
     public void enemyKilled(EnemyHealth enemyKilled)
@@ -57,4 +54,11 @@ public class EnemyCountManager : MonoBehaviour
     {
         enemyCountLabel.text = ("x" + enemyCount.ToString());
     }
+
+    public int halfEnemyCount
+    {
+        get => (int)Mathf.Ceil(startEnemyTotal / 2f); 
+    }
+
+    
 }

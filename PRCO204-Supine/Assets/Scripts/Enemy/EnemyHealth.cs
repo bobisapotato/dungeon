@@ -14,6 +14,9 @@ public class EnemyHealth : MonoBehaviour
     private int knockback;
     private Room parentRoom;
 
+    private EnemyCountManager enemyCountManager;
+    public GameObject crossbowPrefab;
+
     [SerializeField]
     private GameObject explosionPrefab;
 
@@ -28,6 +31,8 @@ public class EnemyHealth : MonoBehaviour
         {
             Debug.LogError("No parent room found attached to enemy " + this.gameObject.name + ". Enemies need to be children of the room object.");
         }
+
+        enemyCountManager = GameObject.FindGameObjectWithTag("EnemyCountMan").GetComponent<EnemyCountManager>();
     }
 
     // Update is called once per frame
@@ -37,6 +42,8 @@ public class EnemyHealth : MonoBehaviour
         if (health <= 0)
         { 
             Instantiate(explosionPrefab, transform.position, transform.rotation);
+            Debug.Log("Enem die");
+            triggerCrossbowCheck();
 
             Die();
         }
@@ -78,5 +85,13 @@ public class EnemyHealth : MonoBehaviour
 
         Destroy(gameObject);
     }
-
+    
+    public void triggerCrossbowCheck()
+    {
+        // if half the enemies have been killed, spawn a crossbow
+        if (enemyCountManager.halfEnemyCount == enemyCountManager.enemyCount)
+        {
+            Instantiate(crossbowPrefab, parentRoom.transform, false);
+        }
+    }
 }
