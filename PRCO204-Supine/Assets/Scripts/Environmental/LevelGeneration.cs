@@ -28,9 +28,11 @@ public class LevelGeneration : MonoBehaviour
 	public GameObject deadEndE;
 	public GameObject deadEndS;
 	public GameObject deadEndW;
+	public GameObject all4;
 
 	public EnemyCountManager enemyCountMan;
 	public bool startedEnemyCounter = false;
+	private bool hasStoppedSpawning = false;
 
 	public static bool hasTrapDoorSpawned = false;
 	[SerializeField]
@@ -58,11 +60,17 @@ public class LevelGeneration : MonoBehaviour
 		if (openSpawnPts.Count() == 0)
 		{
 			CancelInvoke("createLevel");
+			hasStoppedSpawning = true;
 			if (!startedEnemyCounter)
 			{
 				enemyCountMan.startUpEnemyCounter();
 				startedEnemyCounter = true;
 			}
+		}
+
+		if (openSpawnPts.Count() != 0 && hasStoppedSpawning)
+		{
+			InvokeRepeating("createLevel", 0.5f, 0.1f);
 		}
 
 	}
@@ -253,7 +261,17 @@ public class LevelGeneration : MonoBehaviour
 
 		GameObject roomToSpawn = null;
 
-		
+		if(requiredDirs.Count() == 0)
+		{
+			foreach(GameObject room in roomsInScene)
+			{
+				if(transform.position == spawnPoint.transform.position)
+				{
+					Debug.Log("Deleting room spec way");
+					room.GetComponent<Room>().destroyThisRoom();
+				}
+			}
+		}
 		List<GameObject> roomsToChooseFrom = populateTempRoomList(requiredDirs, avoidedDirs);
 		
 
@@ -324,7 +342,10 @@ public class LevelGeneration : MonoBehaviour
 		List<GameObject> tempRoomList = new List<GameObject>();
 		List<GameObject> secondTempRoomList = new List<GameObject>();
 
-		
+		if(requiredDirs.Count() == 0)
+		{
+			GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().closeGame();
+		}
 
 		// add all the doors with required directions to temp List
 		if (requiredDirs.Contains("N"))
@@ -528,7 +549,7 @@ public class LevelGeneration : MonoBehaviour
 
 		if (requiredDirs.Count() == 4)
 		{
-			perfectRoom = startRoomPrefab;
+			perfectRoom = all4;
 		}
 
 		if(!perfectRoom )
