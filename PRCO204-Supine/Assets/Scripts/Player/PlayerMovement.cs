@@ -31,16 +31,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private GameObject mainCamera;
 
-    public float adjustmentAngle;
-
     [SerializeField]
     // Pivot is an empty gameobject that shares the position of the
     // camera, but always faces forward. It's rotation is not
     // changed.
     private GameObject pivot;
 
-    [SerializeField]
-    private bool isUsingMouse;
+    // Mouse controls.
+    public bool isUsingMouse;
+    public float adjustmentAngle;
 
     void Awake()
     {

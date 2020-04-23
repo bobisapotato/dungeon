@@ -46,7 +46,8 @@ public class PickUpWeapon : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if(Input.GetKeyDown(KeyCode.E))
+
+        if(Input.GetKeyDown(KeyCode.E) && !isHoldingKey)
         {
             PickUp();
         }
@@ -65,6 +66,9 @@ public class PickUpWeapon : MonoBehaviour
         if (other.tag == "Key")
         {
             isHoldingKey = true;
+            PlayerAttack.isHoldingWeapon = false;
+            PlayerAttack.isHoldingRangedWeapon = false;
+            DropWeapon();
             models.setAll(false);
             models.activateKey();
             heldWeapon = null;
@@ -84,7 +88,7 @@ public class PickUpWeapon : MonoBehaviour
             // Display "You need to find the key" message here:
             // ...
 
-            Debug.Log("You need to find the key");
+            // Debug.Log("You need to find the key");
         }
     }
 
@@ -122,7 +126,7 @@ public class PickUpWeapon : MonoBehaviour
     void PickUp()
     {
         // If the cooldown is over.
-        if (timer >= dropCoolDown)
+        if (timer >= dropCoolDown && !isHoldingKey)
         {
             // If the player is holding a weapon, and is not stood on a new one.
             if (PlayerAttack.isHoldingWeapon && !isStandingOnWeapon && weaponPlayerIsStandingOn == null)
@@ -189,6 +193,8 @@ public class PickUpWeapon : MonoBehaviour
     {
         // Reset static values for next level.
         LevelGeneration.hasTrapDoorSpawned = false;
+        PlayerAttack.isHoldingRangedWeapon = false;
+        PlayerAttack.isHoldingWeapon = false;
         isHoldingKey = false;
 
         gameManager.openDemoWin2();
