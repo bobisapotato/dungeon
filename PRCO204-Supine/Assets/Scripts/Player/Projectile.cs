@@ -16,6 +16,12 @@ public class Projectile : MonoBehaviour
     [SerializeField]
     private GameObject arrow;
 
+    [SerializeField]
+    private AudioSource arrowHit;
+    [SerializeField]
+    private AudioSource arrowExplode;
+
+
     // Start is called before the first frame update
     // Adds a force the the projectile.
     void Start()
@@ -47,6 +53,7 @@ public class Projectile : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             other.gameObject.SendMessage("TakeDamage", damage);
+            arrowExplode.Play();
             FireDebris();
         }
         else 
@@ -70,6 +77,8 @@ public class Projectile : MonoBehaviour
 
         debrisPrefab.SetActive(true);
         arrow.SetActive(false);
+
+        arrowHit.Play();
 
         Invoke("Die", 4f);
     }

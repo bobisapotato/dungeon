@@ -7,7 +7,11 @@ public class MeleeHitbox : MonoBehaviour
 
     Collider hitbox;
 
-    [SerializeField] int melee;
+    [SerializeField] 
+    private int melee;
+
+    [SerializeField]
+    private AudioSource swordHit;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +32,7 @@ public class MeleeHitbox : MonoBehaviour
     {
         if (other.gameObject.tag == "Enemy")
         {
+            swordHit.Play();
             other.gameObject.SendMessage("TakeDamage", melee);
             hitbox.enabled = false;
         }

@@ -9,13 +9,17 @@ public class HealOverTime : MonoBehaviour
 
     private int hpBoost = 2;
 
+    [SerializeField]
+    private AudioSource playerAudio;
+
     // Update is called once per frame
     void Update()
     {
         timer += Time.deltaTime;
 
-        if (timer >= coolDown)
+        if (timer >= coolDown && HealthManager.playerHealth.GetHealth() <= 98)
         {
+            playerAudio.Play();
             HealthManager.playerHealth.Heal(hpBoost);
             timer = 0f;
         }
