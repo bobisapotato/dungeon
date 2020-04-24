@@ -31,8 +31,6 @@ public class RoomSpawnPoint : MonoBehaviour
 
         open = true;
 
-       // checkSpawnIsOpen();
-
         levelGenManager.addNewSpawnPt(this.gameObject);
 
         //InvokeRepeating("constantSpawnCheck", 0.1f, 3f);
@@ -40,18 +38,7 @@ public class RoomSpawnPoint : MonoBehaviour
 
     }
 
-    public void constantSpawnCheck()
-    {
-        checkSpawnIsOpen();
-    }
-
-    public bool checkSpawnIsOpen()
-    {
-        // turns on collider, if it triggers it will change value of open
-        StartCoroutine("toggleSpawnCollider");
-
-        return open;
-    }
+   
 
     public void setSpawnInactive()
     {
