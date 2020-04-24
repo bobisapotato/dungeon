@@ -24,7 +24,7 @@ public class EnemyCountManager : MonoBehaviour
     public void startUpEnemyCounter()
     {
         // save list of rooms
-        Debug.Log("starting enemy counter");
+
         rooms = levelManager.getRoomsInScene();
         Invoke("populateEnemyList", 1f);
     }
