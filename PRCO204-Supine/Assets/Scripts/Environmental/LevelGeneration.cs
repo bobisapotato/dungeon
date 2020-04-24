@@ -54,7 +54,7 @@ public class LevelGeneration : MonoBehaviour
 		roomsInScene.Add(startRoomPrefab);
 
 		//BUILD LEVEL
-		//InvokeRepeating("spawnNewRoom", 0.5f, 0.1f);
+		InvokeRepeating("spawnNewRoom", 0.5f, 0.1f);
 	}
 
 	private void Update()
@@ -76,21 +76,6 @@ public class LevelGeneration : MonoBehaviour
 		{
 			InvokeRepeating("spawnNewRoom", 0.5f, 0.1f);
 		}
-
-		if(Input.GetKeyDown(KeyCode.Q))
-		{
-			spawnNewRoom();
-		}
-
-		if (Input.GetKeyDown(KeyCode.E))
-		{
-			InvokeRepeating("spawnNewRoom", 0.5f, 1f);
-		}
-		if (Input.GetKeyDown(KeyCode.F))
-		{
-			InvokeRepeating("spawnNewRoom", 0.5f, 0.1f);
-		}
-
 
 	}
 
