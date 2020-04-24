@@ -15,6 +15,9 @@ public class RoomSpawnSensor : MonoBehaviour
     private Room foundRoom;
     [SerializeField] private bool mustHaveDoor = false;
     [SerializeField] private bool mustNotHaveDoor = false;
+    [SerializeField] private string foundRoomName;
+
+    bool secondRoomFound = false;
 
     // Start is called before the first frame update
     void Start()
@@ -79,68 +82,83 @@ public class RoomSpawnSensor : MonoBehaviour
         // when something alerts the sensor, it checks the associated room and 
         // updates the 'need related room' bool
 
+        if (foundRoom && foundRoom != other.gameObject.GetComponentInParent<Room>() && !secondRoomFound && other.CompareTag("Floor"))
+        {
+            Debug.Log("Found 2 rooms at spot for spawn sensor in position " + direction);
+            Debug.Log("Room 1 = " + foundRoom.gameObject.name);
+            Debug.Log("Room 2 = " + other.gameObject.GetComponentInParent<Room>().gameObject.name);
+            Debug.Log("We found a sensor at rm 1? " + other.CompareTag("sensor"));
+            Debug.Log("--------------------------------------------------------------------");
+
+            secondRoomFound = true;
+        }
+
         if (foundRoom == null)
         {
-            foundRoom = other.gameObject.GetComponentInParent<Room>();
-
-            if (other.gameObject.GetComponentInParent<Room>())
+            if (other.CompareTag("Floor"))
             {
+                foundRoom = other.gameObject.GetComponentInParent<Room>();
+                foundRoomName = foundRoom.gameObject.name;
 
-                if (direction == "N")
+                if (other.gameObject.GetComponentInParent<Room>())
                 {
-                    if (foundRoom.sDoor)
-                    {
-                        mustHaveDoor = true;
-                        mustNotHaveDoor = false;
-                    }
-                    else
-                    {
-                        mustNotHaveDoor = true;
-                        mustHaveDoor = false;
-                    }
-                }
-                if (direction == "E")
-                {
-                    if (foundRoom.wDoor)
-                    {
-                        mustHaveDoor = true;
-                        mustNotHaveDoor = false;
-                    }
-                    else
-                    {
-                        mustNotHaveDoor = true;
-                        mustHaveDoor = false;
-                    }
-                }
-                if (direction == "S")
-                {
-                    if (foundRoom.nDoor)
-                    {
-                        mustHaveDoor = true;
-                        mustNotHaveDoor = false;
-                    }
 
-                    else
+                    if (direction == "N")
                     {
-                        mustNotHaveDoor = true;
-                        mustHaveDoor = false;
+                        if (foundRoom.sDoor)
+                        {
+                            mustHaveDoor = true;
+                            mustNotHaveDoor = false;
+                        }
+                        else
+                        {
+                            mustNotHaveDoor = true;
+                            mustHaveDoor = false;
+                        }
                     }
-                }
-                if (direction == "W")
-                {
-                    if (foundRoom.eDoor)
+                    if (direction == "E")
                     {
-                        mustHaveDoor = true;
-                        mustNotHaveDoor = false;
+                        if (foundRoom.wDoor)
+                        {
+                            mustHaveDoor = true;
+                            mustNotHaveDoor = false;
+                        }
+                        else
+                        {
+                            mustNotHaveDoor = true;
+                            mustHaveDoor = false;
+                        }
                     }
+                    if (direction == "S")
+                    {
+                        if (foundRoom.nDoor)
+                        {
+                            mustHaveDoor = true;
+                            mustNotHaveDoor = false;
+                        }
 
-                    else
-                    {
-                        mustNotHaveDoor = true;
-                        mustHaveDoor = false;
+                        else
+                        {
+                            mustNotHaveDoor = true;
+                            mustHaveDoor = false;
+                        }
                     }
+                    if (direction == "W")
+                    {
+                        if (foundRoom.eDoor)
+                        {
+                            mustHaveDoor = true;
+                            mustNotHaveDoor = false;
+                        }
+
+                        else
+                        {
+                            mustNotHaveDoor = true;
+                            mustHaveDoor = false;
+                        }
+                    }
+                    //sensorCollider.enabled = false;
                 }
-                //sensorCollider.enabled = false;
             }
         }
     }
