@@ -54,7 +54,7 @@ public class LevelGeneration : MonoBehaviour
 		roomsInScene.Add(startRoomPrefab);
 
 		//BUILD LEVEL
-		InvokeRepeating("createLevel", 0.5f, 0.1f);
+		//InvokeRepeating("createLevel", 0.5f, 0.1f);
 	}
 
 	private void Update()
@@ -76,6 +76,21 @@ public class LevelGeneration : MonoBehaviour
 		{
 			InvokeRepeating("createLevel", 0.5f, 0.1f);
 		}
+
+		if(Input.GetKeyDown(KeyCode.Q))
+		{
+			createLevel();
+		}
+
+		if (Input.GetKeyDown(KeyCode.E))
+		{
+			InvokeRepeating("createLevel", 0.5f, 1f);
+		}
+		if (Input.GetKeyDown(KeyCode.F))
+		{
+			InvokeRepeating("createLevel", 0.5f, 0.1f);
+		}
+
 
 	}
 
@@ -129,7 +144,7 @@ public class LevelGeneration : MonoBehaviour
 
 		// double check that point is open, it will remove itself if it isn't
 		g.GetComponent<RoomSpawnPoint>().checkSpawnIsOpen();
-		
+		//Debug.Log(openSpawnPts.Count());
 	}
 
 
@@ -159,6 +174,8 @@ public class LevelGeneration : MonoBehaviour
 			g.GetComponent<RoomSpawnPoint>().setSpawnInactive();
 			//Debug.Log("has removed " + g.name);
 		}
+
+		//Debug.Log(openSpawnPts.Count());
 	}
 
 
@@ -250,6 +267,7 @@ public class LevelGeneration : MonoBehaviour
 
 		if (totalRoomsSoFar + openPaths >= maximumRooms)
 		{
+			//Debug.Log("needs dead end");
 			spawnDeadEnd(spawnPoint, doorsRequired, doorsAvoided);
 		}
 		else if(totalRoomsSoFar + openPaths < maximumRooms)
@@ -305,9 +323,14 @@ public class LevelGeneration : MonoBehaviour
 		// If we can't think of anything better, as a quick fix we can just add all the corner room prefabs 
 		// to the levelGen, as we have with dead ends, and add more if statements, but this is clunky af.
 
-		GameObject roomToSpawn = findDeadEnd(requiredDirs, avoidedDirs);
 
-		instantiateRoom(roomToSpawn, spawnPoint);
+		if (requiredDirs.Count() != 0)
+		{
+			GameObject roomToSpawn = findDeadEnd(requiredDirs, avoidedDirs);
+
+			instantiateRoom(roomToSpawn, spawnPoint);
+		}
+		
 	}
 
 	public void instantiateRoom(GameObject room, RoomSpawnPoint spawn)

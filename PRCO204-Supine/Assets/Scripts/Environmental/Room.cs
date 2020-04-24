@@ -174,12 +174,14 @@ public class Room : MonoBehaviour
 
         if(other.gameObject.GetComponent<Room>())
         {
-            Room otherRoom = other.gameObject.GetComponent<Room>();
-            if(otherRoom.justCreated && !justCreated)
-            {
-                otherRoom.destroyThisRoom();
-                Debug.Log("delete other Room");
-            }
+
+            Debug.Log("Rooms colliding :( " + this.gameObject.name + " and " + other.gameObject.name);
+            //Room otherRoom = other.gameObject.GetComponent<Room>();
+            //if(otherRoom.justCreated && !justCreated)
+            //{
+            //    otherRoom.destroyThisRoom();
+            //    Debug.Log("delete other Room");
+            //}
 
         }
     }

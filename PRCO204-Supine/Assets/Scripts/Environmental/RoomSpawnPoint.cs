@@ -31,11 +31,12 @@ public class RoomSpawnPoint : MonoBehaviour
 
         open = true;
 
-        checkSpawnIsOpen();
+       // checkSpawnIsOpen();
 
         levelGenManager.addNewSpawnPt(this.gameObject);
 
-        InvokeRepeating("constantSpawnCheck", 0.1f, 3f);
+        //InvokeRepeating("constantSpawnCheck", 0.1f, 3f);
+        checkSpawnCollider.enabled = true;
 
     }
 
@@ -68,6 +69,8 @@ public class RoomSpawnPoint : MonoBehaviour
             open = true;
             levelGenManager.addNewSpawnPt(this.gameObject);
         }
+
+        checkSpawnCollider.enabled = true;
     }
 
   
