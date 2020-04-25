@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthSystem
+public class HealthSystem : MonoBehaviour
 {
     // Variables.
-    private int health;
+    public int health;
 
     private int minHealth = 0;
     private int maxHealth = 100;
@@ -28,7 +28,7 @@ public class HealthSystem
         {
             health = minHealth;
         }
-        else 
+        else
         {
             health -= damage;
         }
@@ -42,7 +42,7 @@ public class HealthSystem
         }
         else
         {
-            health -= heal;
+            health += heal;
         }
     }
 }

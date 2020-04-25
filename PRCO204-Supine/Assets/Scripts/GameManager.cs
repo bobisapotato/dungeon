@@ -11,9 +11,16 @@ public class GameManager : MonoBehaviour
     {
         if(Input.GetKeyDown("escape"))
         {
-            openDemoMenu();
+            openDemoMenu2();
         }
     }
+    
+	public void closeGame()
+    {
+        Application.Quit();
+    }
+    // Demo 1 
+    #region
     public void openDemo()
     {
         SceneManager.LoadScene("DemoScene");
@@ -23,9 +30,61 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("DemoMenu");
     }
+    #endregion
 
-    public void closeGame()
+    // Demo 2
+    #region
+    public void openDemoScene2()
     {
-        Application.Quit();
+        // Reset static values for next level.
+        LevelGeneration.hasTrapDoorSpawned = false;
+        PlayerAttack.isHoldingRangedWeapon = false;
+        PlayerAttack.isHoldingWeapon = false;
+
+        SceneManager.LoadScene("Demo_Release2");
     }
+
+    public void openDemoWin2()
+    {
+        // Reset static values for next level.
+        LevelGeneration.hasTrapDoorSpawned = false;
+        PlayerAttack.isHoldingRangedWeapon = false;
+        PlayerAttack.isHoldingWeapon = false;
+
+        SceneManager.LoadScene("DemoWin2");
+    }
+    public void openDemoLose2()
+    {
+        // Reset static values for next level.
+        LevelGeneration.hasTrapDoorSpawned = false;
+        PlayerAttack.isHoldingRangedWeapon = false;
+        PlayerAttack.isHoldingWeapon = false;
+
+        SceneManager.LoadScene("DemoLose2");
+    }
+
+
+    public void openDemoMenu2()
+    {
+        // Reset static values for next level.
+        LevelGeneration.hasTrapDoorSpawned = false;
+        PlayerAttack.isHoldingRangedWeapon = false;
+        PlayerAttack.isHoldingWeapon = false;
+
+        SceneManager.LoadScene("DemoMenu2");
+    }
+
+    public void openDemoInstructions2()
+    {
+        // Reset static values for next level.
+        LevelGeneration.hasTrapDoorSpawned = false;
+        PlayerAttack.isHoldingRangedWeapon = false;
+        PlayerAttack.isHoldingWeapon = false;
+
+        SceneManager.LoadScene("DemoInstructions2");
+    }
+
+
+	#endregion
+
 }

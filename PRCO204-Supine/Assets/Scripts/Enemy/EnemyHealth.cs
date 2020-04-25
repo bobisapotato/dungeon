@@ -5,9 +5,20 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     // Variables 
-    [SerializeField] int health = 100;
-    [SerializeField] int knockback;
+    [SerializeField]
+    private GameObject keyPrefab;
+
+    [SerializeField] 
+    private int health = 100;
+    [SerializeField] 
+    private int knockback;
     private Room parentRoom;
+
+    private EnemyCountManager enemyCountManager;
+    public GameObject crossbowPrefab;
+
+    [SerializeField]
+    private GameObject explosionPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +31,8 @@ public class EnemyHealth : MonoBehaviour
         {
             Debug.LogError("No parent room found attached to enemy " + this.gameObject.name + ". Enemies need to be children of the room object.");
         }
+
+        enemyCountManager = GameObject.FindGameObjectWithTag("EnemyCountMan").GetComponent<EnemyCountManager>();
     }
 
     // Update is called once per frame
@@ -27,10 +40,12 @@ public class EnemyHealth : MonoBehaviour
     void Update()
     {
         if (health <= 0)
-        {
-            DropItem();
-            parentRoom.enemyKilled(this);
-            Destroy(gameObject);
+        { 
+            Instantiate(explosionPrefab, transform.position, transform.rotation);
+            Debug.Log("Enem die");
+            triggerCrossbowCheck();
+
+            Die();
         }
 
     }
@@ -57,5 +72,26 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
+    void Die()
+    {
+        DropItem();
 
+        parentRoom.enemyKilled(this);
+
+        if (parentRoom.enemyCountManager.enemyCount == 0)
+        {
+            Instantiate(keyPrefab, transform.position, transform.rotation);
+        }
+
+        Destroy(gameObject);
+    }
+    
+    public void triggerCrossbowCheck()
+    {
+        // if half the enemies have been killed, spawn a crossbow
+        if (enemyCountManager.halfEnemyCount == enemyCountManager.enemyCount)
+        {
+            Instantiate(crossbowPrefab, parentRoom.transform, false);
+        }
+    }
 }
