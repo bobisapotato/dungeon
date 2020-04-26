@@ -15,6 +15,8 @@ public class Door : MonoBehaviour
     public Material unlockedMaterial;
     public Material lockedMaterial;
 
+    public GameObject lockedBars;
+
     public string direction; // Allocated in the prefab instance, either N E S or W
     
     private void Start()
@@ -24,6 +26,7 @@ public class Door : MonoBehaviour
         {
             Debug.LogError("No parent room found. A door should always be a child of a room");
         }
+        lockedBars.SetActive(false);
     }
 
     private void Update()
@@ -74,7 +77,8 @@ public class Door : MonoBehaviour
         // Door can be locked from other scripts - doors close and player can't pass through doorway.
         animator.SetBool("Locked", true);
         locked = true;
-        this.gameObject.GetComponentInChildren<MeshRenderer>().material = lockedMaterial;
+        //this.gameObject.GetComponentInChildren<MeshRenderer>().material = lockedMaterial;
+        lockedBars.SetActive(true);
     }
 
     public void unlockDoor()
@@ -82,6 +86,7 @@ public class Door : MonoBehaviour
         // Door unlocks, opens, can be passed through.
         animator.SetBool("Locked", false);
         locked = false;
-        this.gameObject.GetComponentInChildren<MeshRenderer>().material = unlockedMaterial;
+        //this.gameObject.GetComponentInChildren<MeshRenderer>().material = unlockedMaterial;
+        lockedBars.SetActive(false);
     }
 }
