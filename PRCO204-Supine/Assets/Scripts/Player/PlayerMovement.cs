@@ -41,6 +41,8 @@ public class PlayerMovement : MonoBehaviour
     public bool isUsingMouse;
     public float adjustmentAngle;
 
+    [SerializeField]
+    private AudioSource playerAudio;
     void Awake()
     {
         controls = new PlayerControls();
@@ -98,6 +100,15 @@ public class PlayerMovement : MonoBehaviour
     // Physics.
     void FixedUpdate()
     {
+        if (move != Vector3.zero && !playerAudio.isPlaying)
+        {
+            playerAudio.Play();
+        }
+        else
+        {
+            playerAudio.Pause();
+        }
+
         // Move the player.
         rb.position += (move * playerSpeed * Time.deltaTime);
     }

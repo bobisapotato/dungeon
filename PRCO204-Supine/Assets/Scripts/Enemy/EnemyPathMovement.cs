@@ -38,6 +38,9 @@ public class EnemyPathMovement : MonoBehaviour
     [SerializeField]
     Quaternion lookRotation;
 
+    [SerializeField]
+    private AudioSource enemyMove;
+
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
@@ -56,6 +59,8 @@ public class EnemyPathMovement : MonoBehaviour
         // If inside the radius.
         if (movementDistance <= playerRadius)
         {
+            enemyMove.UnPause();
+
             isFollowing = true;
 
             // Increase the speed.
@@ -94,6 +99,8 @@ public class EnemyPathMovement : MonoBehaviour
     {
         if (isMoving)
         {
+            enemyMove.UnPause();
+
             isFollowing = false;
 
             // Face the next point.
@@ -116,6 +123,10 @@ public class EnemyPathMovement : MonoBehaviour
             {
                 NextPoint();
             }
+        }
+        else
+        {
+            enemyMove.Pause();
         }
     }
 
@@ -183,6 +194,8 @@ public class EnemyPathMovement : MonoBehaviour
     // Pauses movement for x number of seconds.
     IEnumerator PauseMovement()
     {
+        enemyMove.Pause();
+
         // Backup and clear velocities.
         Vector3 linearBackup = rb.velocity;
         Vector3 angularBackup = rb.angularVelocity;
@@ -208,6 +221,8 @@ public class EnemyPathMovement : MonoBehaviour
         rb.angularVelocity = angularBackup;
 
         isMoving = true;
+
+        enemyMove.UnPause();
     }
 
     // Sets the next destination point to a random element in the array.

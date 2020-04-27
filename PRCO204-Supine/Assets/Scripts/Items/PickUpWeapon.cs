@@ -15,7 +15,7 @@ public class PickUpWeapon : MonoBehaviour
     [SerializeField]
     private float timer = 2f;
     private float dropCoolDown = 0.1f;
-    private float pickUpCoolDown = 0.2f;
+    private float pickUpCoolDown = 0.11f;
 
     private PlayerControls controls;
 
@@ -30,6 +30,9 @@ public class PickUpWeapon : MonoBehaviour
     public GameManager gameManager;
 
     public Models models;
+
+    [SerializeField]
+    private AudioSource pickUpAudio;
 
     void Awake()
     {
@@ -68,10 +71,14 @@ public class PickUpWeapon : MonoBehaviour
             isHoldingKey = true;
             PlayerAttack.isHoldingWeapon = false;
             PlayerAttack.isHoldingRangedWeapon = false;
+
             DropWeapon();
+
             models.setAll(false);
             models.activateKey();
+
             heldWeapon = null;
+
             Destroy(other.gameObject);
         }
 
@@ -184,6 +191,11 @@ public class PickUpWeapon : MonoBehaviour
                 weaponPlayerIsStandingOn.SetActive(false);
                 weaponPlayerIsStandingOn = null;
                 isStandingOnWeapon = false;
+            }
+
+            if (PlayerAttack.isHoldingWeapon)
+            {
+                pickUpAudio.Play();
             }
         }
         newPlayerWeapon();
