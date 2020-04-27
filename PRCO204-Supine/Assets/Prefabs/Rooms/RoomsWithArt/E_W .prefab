@@ -824,7 +824,6 @@ GameObject:
   m_Component:
   - component: {fileID: 234986220236152890}
   - component: {fileID: 8418594385055192179}
-  - component: {fileID: 4594147638656362711}
   - component: {fileID: 3067027269933861248}
   m_Layer: 0
   m_Name: 'E_W '
@@ -879,19 +878,6 @@ MonoBehaviour:
   enemiesInRoom: []
   enemyCountManager: {fileID: 0}
   justCreated: 1
---- !u!135 &4594147638656362711
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5320936962094644548}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &3067027269933861248
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -58,7 +58,7 @@ public class Projectile : MonoBehaviour
         }
         else 
         {
-            List<string> excludedTags = new List<string>() { "Weapon", "Key", "Trap Door", "RoomSpawn", "RoomTrigger"};
+            List<string> excludedTags = new List<string>() { "Weapon", "Key", "Trap Door", "RoomSpawn", "RoomTrigger", "RoomSpawnSensor"};
             if (excludedTags.TrueForAll(tag => !other.gameObject.CompareTag(tag))) {
                 FireDebris();
             }
