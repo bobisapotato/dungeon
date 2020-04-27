@@ -22,6 +22,11 @@ public class HealthSystem : MonoBehaviour
         return health;
     }
 
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
     public void TakeDamage(int damage)
     {
         if ((health - damage) <= minHealth)
