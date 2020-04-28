@@ -35,7 +35,6 @@ public class CameraHideObstacles : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Debug.Log("player is hidden = " + checkPlayerObscured());
         checkPlayerObscured();
 
         foreach(GameObject target in targets)
@@ -58,11 +57,13 @@ public class CameraHideObstacles : MonoBehaviour
         Debug.DrawRay(mainCamera.transform.position,
             (player.transform.position - mainCamera.transform.position), Color.magenta);
 
+
+
         // checks if ray cast hits anything
         if (Physics.Raycast(mainCamera.transform.position, (player.transform.position - mainCamera.transform.position),
-            out hit, maxRayRange))
+            out hit))
         {
-
+			
             // sets bool based on what raycast hits
 
             if (hit.transform == player.transform)

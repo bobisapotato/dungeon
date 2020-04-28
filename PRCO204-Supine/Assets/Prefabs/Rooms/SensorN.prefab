@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -5459969462054893295}
   m_Layer: 0
   m_Name: SensorN
-  m_TagString: Untagged
+  m_TagString: sensor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46,6 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: N
+  mustHaveDoor: 0
+  mustNotHaveDoor: 0
+  foundRoomName: 
 --- !u!65 &4607381722470751101
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -29,6 +29,7 @@ public class Room : MonoBehaviour
     public EnemyCountManager enemyCountManager;
 
     private LevelGeneration levelGenMan;
+    private PickUpWeapon playerPickUp;
 
     public bool justCreated = true;
     #endregion
@@ -47,12 +48,14 @@ public class Room : MonoBehaviour
         // get the roomTrigger
         inRoomTrigger = GetComponentInChildren<EnterRoomTrigger>().gameObject.GetComponent<BoxCollider>();
 
-        StartCoroutine("updatebabyBool");
+        
         // get enemyCountManager
         enemyCountManager = GameObject.FindGameObjectWithTag("EnemyCountMan").GetComponent<EnemyCountManager>();
 
         // get LevelGen from parent.
         levelGenMan = GameObject.FindGameObjectWithTag("LevelGenManager").GetComponent<LevelGeneration>();
+
+        playerPickUp = GameObject.FindGameObjectWithTag("Player").GetComponent<PickUpWeapon>();
 
         populateEnemiesInRoom();
     }
@@ -68,13 +71,17 @@ public class Room : MonoBehaviour
         {
             unlockAllDoors();
         }
+
+        // If this is the start room, unlock doors when they have the sword
+        if(this.gameObject.name.Contains("start") && doorsLocked)
+        {
+            if(playerPickUp.isHoldingWeapon())
+            {
+                unlockAllDoors();
+            }
+        }
     }
 
-    public IEnumerator updatebabyBool()
-    {
-        yield return new WaitForSeconds(0.1f);
-        justCreated = false;
-    }
 
     public void populateEnemiesInRoom()
     {
@@ -153,34 +160,4 @@ public class Room : MonoBehaviour
         roomCleared = true;
         doorsLocked = false;
     }
-
-
-    private void OnTriggerEnter(Collider other)
-    {
-        // Sometimes doors overlap. This shouldn't happen if the spawnSensor script is
-        // properly working, but for now the quick fix is just deleting the second room.
-
-        if(other.gameObject.GetComponent<Room>())
-        {
-            Room otherRoom = other.gameObject.GetComponent<Room>();
-            if(otherRoom.justCreated && !justCreated)
-            {
-                otherRoom.destroyThisRoom();
-                Debug.Log("delete other Room");
-            }
-
-        }
-    }
-
-    public void destroyThisRoom()
-    {
-        levelGenMan.removeRoomFromScene(this.gameObject);
-
-        foreach(RoomSpawnPoint spawn in GetComponentsInChildren<RoomSpawnPoint>())
-        {
-            levelGenMan.removeFromSpawnList(spawn.gameObject);
-        }
-        Destroy(this.gameObject);
-    }
-
 }

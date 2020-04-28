@@ -17,9 +17,11 @@ public class EnemySpawnManager : MonoBehaviour
     private int numberOfEnemies;
     private int numberOfPathPositions;
 
-    private int maxEnemies = 3;
+    [SerializeField]
+    private int maxEnemies = 5;
     private int minEnemies = 1;
-    private int maxPaths = 10;
+    [SerializeField]
+    private int maxPaths = 15;
     private int minPaths = 2;
 
     private Vector3 startPos;

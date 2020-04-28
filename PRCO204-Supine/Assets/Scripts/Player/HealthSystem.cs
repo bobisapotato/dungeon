@@ -28,7 +28,7 @@ public class HealthSystem : MonoBehaviour
         {
             health = minHealth;
         }
-        else 
+        else
         {
             health -= damage;
         }
@@ -42,7 +42,7 @@ public class HealthSystem : MonoBehaviour
         }
         else
         {
-            health -= heal;
+            health += heal;
         }
     }
 }
