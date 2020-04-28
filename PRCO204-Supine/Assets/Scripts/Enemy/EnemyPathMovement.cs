@@ -47,7 +47,9 @@ public class EnemyPathMovement : MonoBehaviour
     private RaycastHit hit;
 
     [SerializeField]
-    private bool isTouchingWall = false;
+    private bool isRanged = false;
+
+
 
     void Start()
     {
@@ -67,6 +69,9 @@ public class EnemyPathMovement : MonoBehaviour
         // If inside the radius.
         if (movementDistance <= playerRadius)
         {
+            // Rotate towards the player.
+            StartCoroutine(FaceTarget(player.gameObject));
+
             enemyMove.UnPause();
 
             isFollowing = true;
@@ -74,11 +79,8 @@ public class EnemyPathMovement : MonoBehaviour
             // Increase the speed.
             step = followingSpeed * Time.deltaTime;
 
-            // Rotate towards the player.
-            StartCoroutine(FaceTarget(player.gameObject));
-
             // Only move once you've finished rotating.
-            if (!isRotating)
+            if (!isRotating && !isRanged)
             {
                 transform.position = Vector3.MoveTowards(transform.position, 
                     player.transform.position, step);
@@ -101,12 +103,6 @@ public class EnemyPathMovement : MonoBehaviour
                 MoveTowardsNextPoint();
             }
         }
-
-        // Check they aren't running into a wall.
-        float distance = Vector3.Distance(transform.position,
-        pathPositions[currentPos].transform.position);
-
-        distance++;
 
         Debug.DrawLine(transform.position, pathPositions[currentPos].transform.position);
     }

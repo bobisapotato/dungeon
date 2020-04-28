@@ -2,25 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class EnemyProjectile : MonoBehaviour
 {
-    
-    //Variables
+    // Variables
     [SerializeField] 
     private float velocity;
     [SerializeField] 
     private int damage;
 
     [SerializeField]
-    private GameObject debrisPrefab;
-    [SerializeField]
-    private GameObject arrow;
+    private AudioSource playerHurt;
 
     [SerializeField]
-    private AudioSource arrowHit;
-    [SerializeField]
-    private AudioSource arrowExplode;
+    private GameObject fireBall;
 
+    private float shakeHitAmount = 1f;
 
     // Start is called before the first frame update
     // Adds a force the the projectile.
@@ -44,11 +40,15 @@ public class Projectile : MonoBehaviour
     // method. It then kills itself.
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Player"))
         {
-            other.gameObject.SendMessage("TakeDamage", damage);
-            arrowExplode.Play();
-            FireDebris();
+            if (CameraShake.shake <= shakeHitAmount)
+            {
+                CameraShake.shake = shakeHitAmount;
+            }
+
+            playerHurt.Play();
+            HealthManager.playerHealth.TakeDamage(damage);
         }
         else 
         {
@@ -69,10 +69,7 @@ public class Projectile : MonoBehaviour
         rb.constraints = RigidbodyConstraints.FreezeAll;
         cc.enabled = false;
 
-        debrisPrefab.SetActive(true);
-        arrow.SetActive(false);
-
-        arrowHit.Play();
+        fireBall.SetActive(false);
 
         Invoke("Die", 4f);
     }
