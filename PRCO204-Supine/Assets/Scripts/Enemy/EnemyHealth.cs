@@ -89,7 +89,7 @@ public class EnemyHealth : MonoBehaviour
             CameraShake.shake = shakeHitAmount;
         }
 
-        gameObject.GetComponent<Rigidbody>().AddForce(-transform.forward * knockback,ForceMode.Impulse);
+        gameObject.GetComponent<Rigidbody>().AddForce(-transform.forward * knockback, ForceMode.Impulse);
     }
     
 
