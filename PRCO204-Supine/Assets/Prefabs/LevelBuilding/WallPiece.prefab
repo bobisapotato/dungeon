@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 1293631289012550785}
   - component: {fileID: 7552892838270275697}
   - component: {fileID: 2097857573734387863}
+  - component: {fileID: 6346088691703511476}
   m_Layer: 0
   m_Name: default
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94,6 +95,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2432090755550338912, guid: 37dacff34ad86d943ae6e14b99a20587, type: 3}
+--- !u!65 &6346088691703511476
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1552311404823112932}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.7000002, y: 3.4, z: 6.4599996}
+  m_Center: {x: -1.0200001, y: 5.1000004, z: -3.3999999}
 --- !u!1 &5009867901784295801
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,7 +119,7 @@ GameObject:
   - component: {fileID: 8349103650465577834}
   m_Layer: 0
   m_Name: WallPiece
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -117,9 +131,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5009867901784295801}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -12, z: -10.6}
-  m_LocalScale: {x: 1, y: 2, z: 1}
+  m_LocalScale: {x: 0.57016116, y: 2, z: 0.5816625}
   m_Children:
   - {fileID: 1995981143226755154}
   m_Father: {fileID: 0}

@@ -6,6 +6,7 @@ public class EnemyAttack : MonoBehaviour
 {
     private GameObject player;
 
+    [SerializeField]
     private int damage = 10;
 
     private float attackCoolDown = 0f;
@@ -17,9 +18,20 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField]
     private AudioSource playerHurt;
 
+    [SerializeField]
+    private bool isRanged = false;
+
+    [SerializeField]
+    private GameObject fireBallPrefab;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+
+        if (isRanged)
+        {
+            attackRadius = 10f;
+        }
     }
 
     // Update is called once per frame
@@ -38,15 +50,26 @@ public class EnemyAttack : MonoBehaviour
         // If inside the radius & attack isn't on cooldown attack.
         if (movementDistance <= attackRadius && attackCoolDown > attackCoolDownTime)
         {
-            attackCoolDown = 0f;
-
-            if (CameraShake.shake <= shakeHitAmount)
+            if (isRanged)
             {
-                CameraShake.shake = shakeHitAmount;
-            }
+                attackCoolDown = 0f;
+                Vector3 newPos = transform.position + (transform.forward * 2f);
+                // Instantiates the projectile to be shot.
+                Instantiate(fireBallPrefab, newPos, transform.rotation);
 
-            playerHurt.Play();
-            HealthManager.playerHealth.TakeDamage(damage);
+            }
+            else
+            {
+                attackCoolDown = 0f;
+
+                if (CameraShake.shake <= shakeHitAmount)
+                {
+                    CameraShake.shake = shakeHitAmount;
+                }
+
+                playerHurt.Play();
+                HealthManager.playerHealth.TakeDamage(damage);
+            }
         }
     }
 }

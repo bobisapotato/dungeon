@@ -2,25 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class EnemyProjectile : MonoBehaviour
 {
-    
-    //Variables
+    // Variables
     [SerializeField] 
     private float velocity;
     [SerializeField] 
     private int damage;
 
     [SerializeField]
-    private GameObject debrisPrefab;
-    [SerializeField]
-    private GameObject arrow;
+    private AudioSource playerHurt;
 
     [SerializeField]
-    private AudioSource arrowHit;
+    private GameObject fireBall;
     [SerializeField]
-    private AudioSource arrowExplode;
+    private GameObject explosionPrefab;
+    [SerializeField]
+    private GameObject debris;
 
+    private float shakeHitAmount = 1.5f;
 
     // Start is called before the first frame update
     // Adds a force the the projectile.
@@ -39,20 +39,26 @@ public class Projectile : MonoBehaviour
         
     }
 
-    // If the bullet collides with a gameobject with the tag, "enemy" it 
-    // sends a message to the enemy's health script to run the take damage
+    // If the bullet collides with a gameobject with the tag, "player" it 
+    // sends a message to the player's health script to run the take damage
     // method. It then kills itself.
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Player"))
         {
-            other.gameObject.SendMessage("TakeDamage", damage);
-            arrowExplode.Play();
+            if (CameraShake.shake <= shakeHitAmount)
+            {
+                CameraShake.shake = shakeHitAmount;
+            }
+
             FireDebris();
+            playerHurt.Play();
+            HealthManager.playerHealth.TakeDamage(damage);
+            Instantiate(explosionPrefab, transform.position, transform.rotation);
         }
         else 
         {
-            List<string> excludedTags = new List<string>() { "Weapon", "Key", "Trap Door", "RoomSpawn", "RoomTrigger", "RoomSpawnSensor", "Damage"};
+            List<string> excludedTags = new List<string>() { "Weapon", "Key", "Trap Door", "RoomSpawn", "RoomTrigger", "RoomSpawnSensor", "Damage", "Enemy"};
             if (excludedTags.TrueForAll(tag => !other.gameObject.CompareTag(tag))) {
                 FireDebris();
             }
@@ -69,10 +75,8 @@ public class Projectile : MonoBehaviour
         rb.constraints = RigidbodyConstraints.FreezeAll;
         cc.enabled = false;
 
-        debrisPrefab.SetActive(true);
-        arrow.SetActive(false);
-
-        arrowHit.Play();
+        debris.SetActive(true);
+        fireBall.SetActive(false);
 
         Invoke("Die", 4f);
     }

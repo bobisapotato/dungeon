@@ -20,8 +20,9 @@ public class EnemyPathMovement : MonoBehaviour
     [SerializeField]
     private float rotationSpeed = 7.5f;
 
-    private float playerRadius = 5f;
-    private float pointRadius = 0.5f;
+    private float playerRadius = 10f;
+    private float smallSlimeRadius = 25f;
+    private float pointRadius = 5f;
 
     private float step;
 
@@ -41,6 +42,12 @@ public class EnemyPathMovement : MonoBehaviour
     [SerializeField]
     private AudioSource enemyMove;
 
+    [SerializeField]
+    private bool isRanged = false;
+    [SerializeField]
+    private bool isSmallSlime = false;
+
+
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
@@ -57,8 +64,11 @@ public class EnemyPathMovement : MonoBehaviour
             transform.position);
 
         // If inside the radius.
-        if (movementDistance <= playerRadius)
+        if (movementDistance <= playerRadius && !isSmallSlime)
         {
+            // Rotate towards the player.
+            StartCoroutine(FaceTarget(player.gameObject));
+
             enemyMove.UnPause();
 
             isFollowing = true;
@@ -66,13 +76,30 @@ public class EnemyPathMovement : MonoBehaviour
             // Increase the speed.
             step = followingSpeed * Time.deltaTime;
 
+            // Only move once you've finished rotating.
+            if (!isRotating && !isRanged)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, 
+                    player.transform.position, step);
+            }
+        }
+        // Increased distance for small slimes.
+        else if (movementDistance <= smallSlimeRadius && isSmallSlime)
+        {
             // Rotate towards the player.
             StartCoroutine(FaceTarget(player.gameObject));
 
+            enemyMove.UnPause();
+
+            isFollowing = true;
+
+            // Increase the speed.
+            step = followingSpeed * Time.deltaTime;
+
             // Only move once you've finished rotating.
-            if (!isRotating)
+            if (!isRotating && !isRanged)
             {
-                transform.position = Vector3.MoveTowards(transform.position, 
+                transform.position = Vector3.MoveTowards(transform.position,
                     player.transform.position, step);
             }
         }
@@ -89,8 +116,11 @@ public class EnemyPathMovement : MonoBehaviour
             }
             else
             {
-                // Move to next target.
-                MoveTowardsNextPoint();
+                if (pathPositions != null)
+                {
+                    // Move to next target.
+                    MoveTowardsNextPoint();
+                }
             }
         }
     }
@@ -109,8 +139,8 @@ public class EnemyPathMovement : MonoBehaviour
             // Move once finished rotating.
             if (!isRotating)
             {
-                transform.position = Vector3.MoveTowards(transform.position, 
-                    pathPositions[currentPos].transform.position, step);
+                transform.position = Vector3.MoveTowards(transform.position,
+                pathPositions[currentPos].transform.position, step);
             }
 
             // Get the distance to the point.
@@ -228,18 +258,36 @@ public class EnemyPathMovement : MonoBehaviour
     // Sets the next destination point to a random element in the array.
     void NextPoint()
     {
+        int nextPoint = PickRandomPoint(currentPos);
+
+        currentPos = nextPoint;
+    }
+
+    int PickRandomPoint(int currentPos)
+    {
         int oldPos = currentPos;
+        int nextPoint;
 
-        currentPos = UnityEngine.Random.Range(0, pathPositions.Length);
+        nextPoint = UnityEngine.Random.Range(0, pathPositions.Length);
 
-        if (currentPos == oldPos)
+        if (nextPoint == oldPos)
         {
-            currentPos++;
+            nextPoint++;
 
-            if (currentPos >= pathPositions.Length)
+            if (nextPoint >= pathPositions.Length)
             {
-                currentPos = 0;
+                nextPoint = 0;
             }
+        }
+
+        return nextPoint;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Wall")
+        {
+            NextPoint();
         }
     }
 }

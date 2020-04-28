@@ -24,6 +24,7 @@ public class HealOverTime : MonoBehaviour
     {
         timer += Time.deltaTime;
 
+        // Heal the player after the cooldown is over.
         if (timer >= coolDown && HealthManager.playerHealth.GetHealth() <= maxHealth)
         {
             playerAudio.Play();

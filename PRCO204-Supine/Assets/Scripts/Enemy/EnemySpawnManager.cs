@@ -5,7 +5,9 @@ using UnityEngine;
 public class EnemySpawnManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject enemyPrefab;
+    private GameObject rangedEnemyPrefab;
+    [SerializeField]
+    private GameObject meleeEnemyPrefab;
     [SerializeField]
     private GameObject pathPosPrefab;
 
@@ -17,12 +19,10 @@ public class EnemySpawnManager : MonoBehaviour
     private int numberOfEnemies;
     private int numberOfPathPositions;
 
-    [SerializeField]
     private int maxEnemies = 5;
-    private int minEnemies = 1;
-    [SerializeField]
-    private int maxPaths = 15;
-    private int minPaths = 2;
+    private int minEnemies = 2;
+    private int maxPaths = 100;
+    private int minPaths = 50;
 
     private Vector3 startPos;
     private Quaternion startRot;
@@ -37,23 +37,36 @@ public class EnemySpawnManager : MonoBehaviour
         // Set the number of enemies for the room.
         numberOfEnemies = GetNumberOfEnemiesInRoom();
 
+        paths = new GameObject[numberOfPathPositions = GetNumberOfPathPositions()];
+
+        // All the enemies in a room share the same path.
+        for (int j = 0; j < numberOfPathPositions; j++)
+        {
+            paths[j] = Instantiate(pathPosPrefab, transform, false);
+            paths[j].transform.localPosition = GetPathPos();
+        }
+
         // For each enemy, instantiate a number of paths.
         for (int i = 0; i < numberOfEnemies; i++)
         {
-            paths = new GameObject[numberOfPathPositions = GetNumbeOfPathPositions()];
-
-            for (int j = 0; j < numberOfPathPositions; j++)
-            {
-                paths[j] = Instantiate(pathPosPrefab, transform, false);
-                paths[j].transform.localPosition = GetPathPos();
-            }
-
             // Set the start position and rotation for the enemy.
             startPos = GetStartPos();
             startRot = GetStartRot(startPos);
 
+            float rnd = Random.Range(0f, 1f);
+
+            // 50/50 chance of spawning each type of enemy.
+            if (rnd >= 0.5f)
+            {
+                enemyInstance = Instantiate(meleeEnemyPrefab, transform, false);
+                enemyInstance.transform.localPosition = new Vector3(startPos.x, 0f, startPos.z);
+            }
+            else
+            {
+                enemyInstance = Instantiate(rangedEnemyPrefab, transform, false);
+            }
+
             // Instantiate the enemy, not in world space.
-            enemyInstance = Instantiate(enemyPrefab, transform, false);
             enemyInstance.transform.localPosition = startPos;
             enemyInstance.transform.localRotation = startRot;
 
@@ -76,7 +89,7 @@ public class EnemySpawnManager : MonoBehaviour
 
     // Returns a random number within a specified range.
     // This value is the number of paths for 1 enemy.
-    int GetNumbeOfPathPositions()
+    int GetNumberOfPathPositions()
     {
         int num = Random.Range(minPaths, maxPaths);
 
@@ -89,7 +102,7 @@ public class EnemySpawnManager : MonoBehaviour
         Vector3 pos;
 
         pos.x = Random.Range(-5f, 5f);
-        pos.y = 0f;
+        pos.y = 1f;
         pos.z = Random.Range(-5f, 5f);
 
         return pos;
@@ -112,7 +125,7 @@ public class EnemySpawnManager : MonoBehaviour
         Vector3 pos;
 
         pos.x = Random.Range(-7.5f, 7.5f);
-        pos.y = 0f;
+        pos.y = 1f;
         pos.z = Random.Range(-7.5f, 7.5f);
 
         return pos;
