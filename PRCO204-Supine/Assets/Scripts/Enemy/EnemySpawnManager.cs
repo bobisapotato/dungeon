@@ -5,7 +5,9 @@ using UnityEngine;
 public class EnemySpawnManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject enemyPrefab;
+    private GameObject rangedEnemyPrefab;
+    [SerializeField]
+    private GameObject meleeEnemyPrefab;
     [SerializeField]
     private GameObject pathPosPrefab;
 
@@ -50,8 +52,19 @@ public class EnemySpawnManager : MonoBehaviour
             startPos = GetStartPos();
             startRot = GetStartRot(startPos);
 
+            float rnd = Random.Range(0f, 1f);
+
+            if (rnd >= 0.25f)
+            {
+                enemyInstance = Instantiate(meleeEnemyPrefab, transform, false);
+                enemyInstance.transform.localPosition = new Vector3(startPos.x, 0f, startPos.z);
+            }
+            else
+            {
+                enemyInstance = Instantiate(rangedEnemyPrefab, transform, false);
+            }
+
             // Instantiate the enemy, not in world space.
-            enemyInstance = Instantiate(enemyPrefab, transform, false);
             enemyInstance.transform.localPosition = startPos;
             enemyInstance.transform.localRotation = startRot;
 
@@ -87,7 +100,7 @@ public class EnemySpawnManager : MonoBehaviour
         Vector3 pos;
 
         pos.x = Random.Range(-5f, 5f);
-        pos.y = 0f;
+        pos.y = 1f;
         pos.z = Random.Range(-5f, 5f);
 
         return pos;
@@ -110,7 +123,7 @@ public class EnemySpawnManager : MonoBehaviour
         Vector3 pos;
 
         pos.x = Random.Range(-7.5f, 7.5f);
-        pos.y = 0f;
+        pos.y = 1f;
         pos.z = Random.Range(-7.5f, 7.5f);
 
         return pos;

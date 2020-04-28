@@ -105,7 +105,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 991880140303609067}
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 1.14}
+  m_LocalPosition: {x: 0, y: 0, z: 0.765}
   m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_Children: []
   m_Father: {fileID: 382362042036667243}
@@ -9645,7 +9645,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2966715695710134562}
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 1.19}
+  m_LocalPosition: {x: 0, y: 0, z: 0.81500006}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 382362042036667243}
@@ -28688,7 +28688,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 4
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!136 &-42017190631009911
 CapsuleCollider:
@@ -28912,6 +28912,8 @@ MonoBehaviour:
   damage: 20
   playerHurt: {fileID: 4841519670437803745}
   fireBall: {fileID: 6590990062679274552}
+  explosionPrefab: {fileID: 6497228388801024741}
+  debris: {fileID: 2430245829303501794}
 --- !u!1 &4256093556563385531
 GameObject:
   m_ObjectHideFlags: 0

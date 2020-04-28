@@ -15,8 +15,12 @@ public class EnemyProjectile : MonoBehaviour
 
     [SerializeField]
     private GameObject fireBall;
+    [SerializeField]
+    private GameObject explosionPrefab;
+    [SerializeField]
+    private GameObject debris;
 
-    private float shakeHitAmount = 1f;
+    private float shakeHitAmount = 1.5f;
 
     // Start is called before the first frame update
     // Adds a force the the projectile.
@@ -47,12 +51,14 @@ public class EnemyProjectile : MonoBehaviour
                 CameraShake.shake = shakeHitAmount;
             }
 
+            FireDebris();
             playerHurt.Play();
             HealthManager.playerHealth.TakeDamage(damage);
+            Instantiate(explosionPrefab, transform.position, transform.rotation);
         }
         else 
         {
-            List<string> excludedTags = new List<string>() { "Weapon", "Key", "Trap Door", "RoomSpawn", "RoomTrigger", "RoomSpawnSensor", "Damage"};
+            List<string> excludedTags = new List<string>() { "Weapon", "Key", "Trap Door", "RoomSpawn", "RoomTrigger", "RoomSpawnSensor", "Damage", "Enemy"};
             if (excludedTags.TrueForAll(tag => !other.gameObject.CompareTag(tag))) {
                 FireDebris();
             }
@@ -69,6 +75,7 @@ public class EnemyProjectile : MonoBehaviour
         rb.constraints = RigidbodyConstraints.FreezeAll;
         cc.enabled = false;
 
+        debris.SetActive(true);
         fireBall.SetActive(false);
 
         Invoke("Die", 4f);
