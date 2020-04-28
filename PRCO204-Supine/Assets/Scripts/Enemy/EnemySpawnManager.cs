@@ -39,6 +39,7 @@ public class EnemySpawnManager : MonoBehaviour
 
         paths = new GameObject[numberOfPathPositions = GetNumberOfPathPositions()];
 
+        // All the enemies in a room share the same path.
         for (int j = 0; j < numberOfPathPositions; j++)
         {
             paths[j] = Instantiate(pathPosPrefab, transform, false);
@@ -54,6 +55,7 @@ public class EnemySpawnManager : MonoBehaviour
 
             float rnd = Random.Range(0f, 1f);
 
+            // 50/50 chance of spawning each type of enemy.
             if (rnd >= 0.5f)
             {
                 enemyInstance = Instantiate(meleeEnemyPrefab, transform, false);

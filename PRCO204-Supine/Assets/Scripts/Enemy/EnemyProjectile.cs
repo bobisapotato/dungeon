@@ -39,8 +39,8 @@ public class EnemyProjectile : MonoBehaviour
         
     }
 
-    // If the bullet collides with a gameobject with the tag, "enemy" it 
-    // sends a message to the enemy's health script to run the take damage
+    // If the bullet collides with a gameobject with the tag, "player" it 
+    // sends a message to the player's health script to run the take damage
     // method. It then kills itself.
     private void OnTriggerEnter(Collider other)
     {

@@ -54,10 +54,12 @@ public class EnemyHealth : MonoBehaviour
         {
             hasDied = true;
 
+            // Skulls/small slimes should just explode.
             if (!isSlime)
             {
                 Instantiate(explosionPrefab, transform.position, transform.rotation);
             }
+            // Big slimes spawn two smaller slimes.
             else
             {
                 parentRoom.enemyCountManager.enemyCount += 3;

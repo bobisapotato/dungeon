@@ -83,6 +83,7 @@ public class EnemyPathMovement : MonoBehaviour
                     player.transform.position, step);
             }
         }
+        // Increased distance for small slimes.
         else if (movementDistance <= smallSlimeRadius && isSmallSlime)
         {
             // Rotate towards the player.
