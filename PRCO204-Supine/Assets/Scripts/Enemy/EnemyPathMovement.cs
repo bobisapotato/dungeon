@@ -20,8 +20,8 @@ public class EnemyPathMovement : MonoBehaviour
     [SerializeField]
     private float rotationSpeed = 7.5f;
 
-    private float playerRadius = 5f;
-    private float pointRadius = 0.5f;
+    private float playerRadius = 10f;
+    private float pointRadius = 5f;
 
     private float step;
 
@@ -40,6 +40,14 @@ public class EnemyPathMovement : MonoBehaviour
 
     [SerializeField]
     private AudioSource enemyMove;
+
+    [SerializeField]
+    private LayerMask walls;
+
+    private RaycastHit hit;
+
+    [SerializeField]
+    private bool isTouchingWall = false;
 
     void Start()
     {
@@ -93,6 +101,14 @@ public class EnemyPathMovement : MonoBehaviour
                 MoveTowardsNextPoint();
             }
         }
+
+        // Check they aren't running into a wall.
+        float distance = Vector3.Distance(transform.position,
+        pathPositions[currentPos].transform.position);
+
+        distance++;
+
+        Debug.DrawLine(transform.position, pathPositions[currentPos].transform.position);
     }
 
     void MoveTowardsNextPoint()
@@ -109,8 +125,8 @@ public class EnemyPathMovement : MonoBehaviour
             // Move once finished rotating.
             if (!isRotating)
             {
-                transform.position = Vector3.MoveTowards(transform.position, 
-                    pathPositions[currentPos].transform.position, step);
+                transform.position = Vector3.MoveTowards(transform.position,
+                pathPositions[currentPos].transform.position, step);
             }
 
             // Get the distance to the point.
@@ -228,18 +244,36 @@ public class EnemyPathMovement : MonoBehaviour
     // Sets the next destination point to a random element in the array.
     void NextPoint()
     {
+        int nextPoint = PickRandomPoint(currentPos);
+
+        currentPos = nextPoint;
+    }
+
+    int PickRandomPoint(int currentPos)
+    {
         int oldPos = currentPos;
+        int nextPoint;
 
-        currentPos = UnityEngine.Random.Range(0, pathPositions.Length);
+        nextPoint = UnityEngine.Random.Range(0, pathPositions.Length);
 
-        if (currentPos == oldPos)
+        if (nextPoint == oldPos)
         {
-            currentPos++;
+            nextPoint++;
 
-            if (currentPos >= pathPositions.Length)
+            if (nextPoint >= pathPositions.Length)
             {
-                currentPos = 0;
+                nextPoint = 0;
             }
+        }
+
+        return nextPoint;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Wall")
+        {
+            NextPoint();
         }
     }
 }

@@ -688,8 +688,8 @@ MonoBehaviour:
   pathPosPrefab: {fileID: 6280594384002987792, guid: e9b3dbc898a6b8f499dcd964376d5eb7,
     type: 3}
   player: {fileID: 0}
-  maxEnemies: 3
-  maxPaths: 15
+  maxEnemies: 5
+  maxPaths: 20
 --- !u!1 &3877793726283529198
 GameObject:
   m_ObjectHideFlags: 0
@@ -2270,10 +2270,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5656721078764799039}
     m_Modifications:
+    - target: {fileID: 1552311404823112932, guid: 9756cea0763ae794fbe4ebb7486f6312,
+        type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 1552311404823112932, guid: 9756cea0763ae794fbe4ebb7486f6312,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 5009867901784295801, guid: 9756cea0763ae794fbe4ebb7486f6312,
         type: 3}
       propertyPath: m_Name
       value: WallPiece
+      objectReference: {fileID: 0}
+    - target: {fileID: 5009867901784295801, guid: 9756cea0763ae794fbe4ebb7486f6312,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 8349103650465577834, guid: 9756cea0763ae794fbe4ebb7486f6312,
         type: 3}
@@ -2414,16 +2429,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8349103650465577834, guid: 9756cea0763ae794fbe4ebb7486f6312,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.57016116
-      objectReference: {fileID: 0}
-    - target: {fileID: 8349103650465577834, guid: 9756cea0763ae794fbe4ebb7486f6312,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.5816625
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9756cea0763ae794fbe4ebb7486f6312, type: 3}

@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 9077560038453621645}
   - component: {fileID: 8025170566555895966}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: Hurt :(
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5624515174502555109}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &8025170566555895966
 AudioSource:
@@ -136,9 +136,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2466316156399484711}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Floaty Particle
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -168,9 +168,9 @@ GameObject:
   - component: {fileID: 1491043164543058398}
   - component: {fileID: 3640840867777026221}
   - component: {fileID: 3657386221011538196}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Particle System (1)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4928,7 +4928,7 @@ GameObject:
   - component: {fileID: -7997543730408191998}
   - component: {fileID: 6927609197750494420}
   - component: {fileID: 9164730992795243741}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Enemy 2.0
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -4950,6 +4950,7 @@ Transform:
   - {fileID: 3956911053686710118}
   - {fileID: 1491043164543058398}
   - {fileID: 2756237592106316043}
+  - {fileID: 3765129967793439451}
   - {fileID: 9077560038453621645}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -5038,6 +5039,10 @@ MonoBehaviour:
   direction: {x: 0, y: 0, z: 0}
   lookRotation: {x: 0, y: 0, z: 0, w: 0}
   enemyMove: {fileID: 9164730992795243741}
+  walls:
+    serializedVersion: 2
+    m_Bits: 8192
+  isTouchingWall: 0
 --- !u!54 &5624515174502555104
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5052,7 +5057,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!114 &-7997543730408191998
 MonoBehaviour:
@@ -5194,9 +5199,9 @@ GameObject:
   - component: {fileID: 2756237592106316043}
   - component: {fileID: 7162621048766686610}
   - component: {fileID: 3378860934012655520}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Particle System (2)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9948,9 +9953,9 @@ GameObject:
   - component: {fileID: 3956911053686710118}
   - component: {fileID: 6741245997837125930}
   - component: {fileID: 5487362126199528202}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Particle System
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14773,6 +14778,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Drop Shadow
       objectReference: {fileID: 0}
+    - target: {fileID: 5848055664086421843, guid: 9331338cc73a82343ac6391732dc5383,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 5848055664086421843, guid: 9331338cc73a82343ac6391732dc5383,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9331338cc73a82343ac6391732dc5383, type: 3}
 --- !u!4 &3765129967793439451 stripped
@@ -14867,6 +14882,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: skellyBoi 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 27c6171fc663f7a4f91d4ddca78b9250,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 27c6171fc663f7a4f91d4ddca78b9250,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534866581884222612, guid: 27c6171fc663f7a4f91d4ddca78b9250,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534866581884222612, guid: 27c6171fc663f7a4f91d4ddca78b9250,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27c6171fc663f7a4f91d4ddca78b9250, type: 3}

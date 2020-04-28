@@ -17,12 +17,10 @@ public class EnemySpawnManager : MonoBehaviour
     private int numberOfEnemies;
     private int numberOfPathPositions;
 
-    [SerializeField]
     private int maxEnemies = 5;
-    private int minEnemies = 1;
-    [SerializeField]
-    private int maxPaths = 15;
-    private int minPaths = 2;
+    private int minEnemies = 2;
+    private int maxPaths = 100;
+    private int minPaths = 50;
 
     private Vector3 startPos;
     private Quaternion startRot;
@@ -37,17 +35,17 @@ public class EnemySpawnManager : MonoBehaviour
         // Set the number of enemies for the room.
         numberOfEnemies = GetNumberOfEnemiesInRoom();
 
+        paths = new GameObject[numberOfPathPositions = GetNumberOfPathPositions()];
+
+        for (int j = 0; j < numberOfPathPositions; j++)
+        {
+            paths[j] = Instantiate(pathPosPrefab, transform, false);
+            paths[j].transform.localPosition = GetPathPos();
+        }
+
         // For each enemy, instantiate a number of paths.
         for (int i = 0; i < numberOfEnemies; i++)
         {
-            paths = new GameObject[numberOfPathPositions = GetNumbeOfPathPositions()];
-
-            for (int j = 0; j < numberOfPathPositions; j++)
-            {
-                paths[j] = Instantiate(pathPosPrefab, transform, false);
-                paths[j].transform.localPosition = GetPathPos();
-            }
-
             // Set the start position and rotation for the enemy.
             startPos = GetStartPos();
             startRot = GetStartRot(startPos);
@@ -76,7 +74,7 @@ public class EnemySpawnManager : MonoBehaviour
 
     // Returns a random number within a specified range.
     // This value is the number of paths for 1 enemy.
-    int GetNumbeOfPathPositions()
+    int GetNumberOfPathPositions()
     {
         int num = Random.Range(minPaths, maxPaths);
 

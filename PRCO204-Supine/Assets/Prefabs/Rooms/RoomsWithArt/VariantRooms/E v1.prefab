@@ -934,8 +934,6 @@ MonoBehaviour:
   pathPosPrefab: {fileID: 6280594384002987792, guid: e9b3dbc898a6b8f499dcd964376d5eb7,
     type: 3}
   player: {fileID: 0}
-  maxEnemies: 3
-  maxPaths: 15
 --- !u!1 &6143647047406005105
 GameObject:
   m_ObjectHideFlags: 0
@@ -1387,6 +1385,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WallPiece - chonky
       objectReference: {fileID: 0}
+    - target: {fileID: 2426933477096895332, guid: 91c7e08c799003648a0ff94520fc2217,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91c7e08c799003648a0ff94520fc2217, type: 3}
 --- !u!4 &7113763075497860463 stripped
@@ -1457,20 +1460,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1726403660521128311, guid: 91c7e08c799003648a0ff94520fc2217,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.580973
-      objectReference: {fileID: 0}
-    - target: {fileID: 1726403660521128311, guid: 91c7e08c799003648a0ff94520fc2217,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.57806134
-      objectReference: {fileID: 0}
     - target: {fileID: 2426933477096895332, guid: 91c7e08c799003648a0ff94520fc2217,
         type: 3}
       propertyPath: m_Name
       value: WallPiece - chonky (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8188240715451848441, guid: 91c7e08c799003648a0ff94520fc2217,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91c7e08c799003648a0ff94520fc2217, type: 3}

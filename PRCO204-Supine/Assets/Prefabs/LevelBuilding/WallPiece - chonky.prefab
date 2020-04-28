@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1726403660521128311}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: WallPiece - chonky
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23,9 +23,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2426933477096895332}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: -11.2, z: -3.2}
-  m_LocalScale: {x: 1, y: 2, z: 1}
+  m_LocalScale: {x: 0.580973, y: 2, z: 0.57806134}
   m_Children:
   - {fileID: 9195142307451081295}
   m_Father: {fileID: 0}
@@ -43,9 +43,10 @@ GameObject:
   - component: {fileID: 8492510981397497500}
   - component: {fileID: 935015305251400300}
   - component: {fileID: 4837790352498609698}
-  m_Layer: 0
+  - component: {fileID: 3052564223414286683}
+  m_Layer: 13
   m_Name: default
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -125,3 +126,16 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2432090755550338912, guid: 7d3c3caa96c921941a7366dd46435cc8, type: 3}
+--- !u!65 &3052564223414286683
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8188240715451848441}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.7400005, y: 3.4, z: 13.6}
+  m_Center: {x: -2.0400002, y: 5.1000004, z: -6.8}
