@@ -2264,7 +2264,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2960426866711754979}
   - component: {fileID: 6253221168901492623}
-  - component: {fileID: 7560075386039125802}
   - component: {fileID: 3352310165897330694}
   m_Layer: 0
   m_Name: N_S_W v1
@@ -2321,19 +2320,6 @@ MonoBehaviour:
   enemiesInRoom: []
   enemyCountManager: {fileID: 0}
   justCreated: 1
---- !u!135 &7560075386039125802
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5858457839302811980}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &3352310165897330694
 Rigidbody:
   m_ObjectHideFlags: 0

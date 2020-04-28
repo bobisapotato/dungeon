@@ -28,6 +28,9 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]
     ParticleSystem swordSwing;
 
+    [SerializeField]
+    private AudioSource swordAudio;
+
     void Awake()
     {
         controls = new PlayerControls();
@@ -61,12 +64,16 @@ public class PlayerAttack : MonoBehaviour
             //if (!isHoldingRangedWeapon && (Input.GetKeyDown(KeyCode.Mouse0) == true || rightTriggerDown != 0))
             if (!isHoldingRangedWeapon && (Input.GetKeyDown(KeyCode.Mouse0) == true || rightTriggerDown != 0))
             {
+                swordAudio.Pause();
+
                 Attack1();
                 timer = 0f;
 
                 // Play "swinging a sword" animation:
                 animator.Play("SwingSword2");
                 swordSwing.Play();
+
+                swordAudio.Play();
 
                 shouldLastOneMoreFrame = true;
             }

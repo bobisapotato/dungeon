@@ -1046,7 +1046,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7938207169876867568}
   - component: {fileID: 6253339743697598512}
-  - component: {fileID: 4025831045791542875}
   - component: {fileID: 2729101378538624925}
   m_Layer: 0
   m_Name: N_E_W
@@ -1103,19 +1102,6 @@ MonoBehaviour:
   enemiesInRoom: []
   enemyCountManager: {fileID: 0}
   justCreated: 1
---- !u!135 &4025831045791542875
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7635439082691612081}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &2729101378538624925
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1700,15 +1686,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: adb9b894e23be8e4f99888dca2deefbd, type: 3}
---- !u!4 &5019138161445232078 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: adb9b894e23be8e4f99888dca2deefbd,
-    type: 3}
-  m_PrefabInstance: {fileID: 62271245673395924}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2589742305449790016 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2534866581884222612, guid: adb9b894e23be8e4f99888dca2deefbd,
+    type: 3}
+  m_PrefabInstance: {fileID: 62271245673395924}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5019138161445232078 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: adb9b894e23be8e4f99888dca2deefbd,
     type: 3}
   m_PrefabInstance: {fileID: 62271245673395924}
   m_PrefabAsset: {fileID: 0}

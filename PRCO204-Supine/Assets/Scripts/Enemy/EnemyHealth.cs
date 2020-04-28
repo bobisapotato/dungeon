@@ -12,6 +12,10 @@ public class EnemyHealth : MonoBehaviour
     private int health = 100;
     [SerializeField] 
     private int knockback;
+
+    private float shakeHitAmount = 0.5f;
+    private float shakeDieAmount = 0.5f;
+
     private Room parentRoom;
 
     private EnemyCountManager enemyCountManager;
@@ -40,8 +44,14 @@ public class EnemyHealth : MonoBehaviour
     void Update()
     {
         if (health <= 0)
-        { 
+        {
             Instantiate(explosionPrefab, transform.position, transform.rotation);
+
+            if (CameraShake.shake <= shakeDieAmount)
+            {
+                CameraShake.shake = shakeDieAmount;
+            }
+
             Debug.Log("Enem die");
             triggerCrossbowCheck();
 
@@ -56,6 +66,11 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage(int amount)
     {
         health -= amount;
+
+        if (CameraShake.shake <= shakeHitAmount)
+        {
+            CameraShake.shake = shakeHitAmount;
+        }
 
         gameObject.GetComponent<Rigidbody>().AddForce(-transform.forward * knockback);
     }
