@@ -5039,9 +5039,6 @@ MonoBehaviour:
   direction: {x: 0, y: 0, z: 0}
   lookRotation: {x: 0, y: 0, z: 0, w: 0}
   enemyMove: {fileID: 9164730992795243741}
-  walls:
-    serializedVersion: 2
-    m_Bits: 8192
   isRanged: 1
 --- !u!54 &5624515174502555104
 Rigidbody:
@@ -5073,12 +5070,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyPrefab: {fileID: 6952706734048968266, guid: b86520ad59263f94fb8f1ef2243ba9f8,
     type: 3}
-  health: 20
-  knockback: 20
+  health: 30
+  knockback: 5
   crossbowPrefab: {fileID: 3870336255925155164, guid: bcab3a7c5d2559045b00d474e67a0011,
     type: 3}
   explosionPrefab: {fileID: 2342390634737777179, guid: b4ee68e29b15c2b4a9c343d11ecfbe93,
     type: 3}
+  smallSlime: {fileID: 5624515174502555135, guid: af9c510ce2d51b847bda2bba1acbb5bf,
+    type: 3}
+  isSlime: 0
 --- !u!114 &6927609197750494420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5091,6 +5091,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58ade40deb6ad7498f22c727db382db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
   playerHurt: {fileID: 8025170566555895966}
   isRanged: 1
   fireBallPrefab: {fileID: 3512073738943388613, guid: 7d2ac3909b9903246b53b5f5174e993e,

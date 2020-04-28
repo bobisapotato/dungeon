@@ -54,7 +54,7 @@ public class EnemySpawnManager : MonoBehaviour
 
             float rnd = Random.Range(0f, 1f);
 
-            if (rnd >= 0.25f)
+            if (rnd >= 0.5f)
             {
                 enemyInstance = Instantiate(meleeEnemyPrefab, transform, false);
                 enemyInstance.transform.localPosition = new Vector3(startPos.x, 0f, startPos.z);

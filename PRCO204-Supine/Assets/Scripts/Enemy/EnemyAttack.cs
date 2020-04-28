@@ -6,6 +6,7 @@ public class EnemyAttack : MonoBehaviour
 {
     private GameObject player;
 
+    [SerializeField]
     private int damage = 10;
 
     private float attackCoolDown = 0f;

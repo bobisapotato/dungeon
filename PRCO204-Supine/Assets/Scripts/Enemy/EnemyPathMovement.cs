@@ -21,6 +21,7 @@ public class EnemyPathMovement : MonoBehaviour
     private float rotationSpeed = 7.5f;
 
     private float playerRadius = 10f;
+    private float smallSlimeRadius = 25f;
     private float pointRadius = 5f;
 
     private float step;
@@ -42,13 +43,9 @@ public class EnemyPathMovement : MonoBehaviour
     private AudioSource enemyMove;
 
     [SerializeField]
-    private LayerMask walls;
-
-    private RaycastHit hit;
-
-    [SerializeField]
     private bool isRanged = false;
-
+    [SerializeField]
+    private bool isSmallSlime = false;
 
 
     void Start()
@@ -67,7 +64,7 @@ public class EnemyPathMovement : MonoBehaviour
             transform.position);
 
         // If inside the radius.
-        if (movementDistance <= playerRadius)
+        if (movementDistance <= playerRadius && !isSmallSlime)
         {
             // Rotate towards the player.
             StartCoroutine(FaceTarget(player.gameObject));
@@ -86,6 +83,25 @@ public class EnemyPathMovement : MonoBehaviour
                     player.transform.position, step);
             }
         }
+        else if (movementDistance <= smallSlimeRadius && isSmallSlime)
+        {
+            // Rotate towards the player.
+            StartCoroutine(FaceTarget(player.gameObject));
+
+            enemyMove.UnPause();
+
+            isFollowing = true;
+
+            // Increase the speed.
+            step = followingSpeed * Time.deltaTime;
+
+            // Only move once you've finished rotating.
+            if (!isRotating && !isRanged)
+            {
+                transform.position = Vector3.MoveTowards(transform.position,
+                    player.transform.position, step);
+            }
+        }
         else
         {
             // Decrease the speed.
@@ -99,12 +115,13 @@ public class EnemyPathMovement : MonoBehaviour
             }
             else
             {
-                // Move to next target.
-                MoveTowardsNextPoint();
+                if (pathPositions != null)
+                {
+                    // Move to next target.
+                    MoveTowardsNextPoint();
+                }
             }
         }
-
-        Debug.DrawLine(transform.position, pathPositions[currentPos].transform.position);
     }
 
     void MoveTowardsNextPoint()

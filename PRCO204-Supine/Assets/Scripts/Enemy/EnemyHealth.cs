@@ -23,6 +23,13 @@ public class EnemyHealth : MonoBehaviour
 
     [SerializeField]
     private GameObject explosionPrefab;
+    [SerializeField]
+    private GameObject smallSlime;
+
+    [SerializeField]
+    private bool isSlime = false;
+
+    private bool hasDied = false;
 
     // Start is called before the first frame update
     void Start()
@@ -43,21 +50,29 @@ public class EnemyHealth : MonoBehaviour
     // Checks to 
     void Update()
     {
-        if (health <= 0)
+        if (health <= 0 && !hasDied)
         {
-            Instantiate(explosionPrefab, transform.position, transform.rotation);
+            hasDied = true;
+
+            if (!isSlime)
+            {
+                Instantiate(explosionPrefab, transform.position, transform.rotation);
+            }
+            else
+            {
+                parentRoom.enemyCountManager.enemyCount += 3;
+
+                Instantiate(smallSlime, transform.position, transform.rotation, parentRoom.transform);
+                Instantiate(smallSlime, transform.position, transform.rotation, parentRoom.transform);
+            }
 
             if (CameraShake.shake <= shakeDieAmount)
             {
                 CameraShake.shake = shakeDieAmount;
             }
 
-            Debug.Log("Enem die");
-            triggerCrossbowCheck();
-
             Die();
         }
-
     }
 
 
@@ -72,7 +87,7 @@ public class EnemyHealth : MonoBehaviour
             CameraShake.shake = shakeHitAmount;
         }
 
-        gameObject.GetComponent<Rigidbody>().AddForce(-transform.forward * knockback);
+        gameObject.GetComponent<Rigidbody>().AddForce(-transform.forward * knockback,ForceMode.Impulse);
     }
     
 
@@ -89,6 +104,7 @@ public class EnemyHealth : MonoBehaviour
 
     void Die()
     {
+        triggerCrossbowCheck();
         DropItem();
 
         parentRoom.enemyKilled(this);
