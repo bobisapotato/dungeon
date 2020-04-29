@@ -5040,6 +5040,7 @@ MonoBehaviour:
   lookRotation: {x: 0, y: 0, z: 0, w: 0}
   enemyMove: {fileID: 9164730992795243741}
   isRanged: 1
+  isSmallSlime: 0
 --- !u!54 &5624515174502555104
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5108,7 +5109,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e8e8007a7f8b9334a96628994f3917e9, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.33
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
