@@ -59,5 +59,5 @@ public class EnemyCountManager : MonoBehaviour
         get => (int)Mathf.Ceil(startEnemyTotal / 2f); 
     }
 
-    
+   
 }
