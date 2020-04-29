@@ -33,7 +33,10 @@ public class EnemyCountManager : MonoBehaviour
     {
         foreach(GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
-            enemiesInLevel.Add(enemy.GetComponent<EnemyHealth>());
+            if (enemy.GetComponent<EnemyHealth>())
+            {
+                enemiesInLevel.Add(enemy.GetComponent<EnemyHealth>());
+            }
         }
 
         enemyCount = enemiesInLevel.Count;
