@@ -12,6 +12,11 @@ public class EnemyAttack : MonoBehaviour
     private float attackCoolDownTime = 1f;
     private float attackRadius = 2.5f;
 
+    private float shakeHitAmount = 1f;
+
+    [SerializeField]
+    private AudioSource playerHurt;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -35,7 +40,12 @@ public class EnemyAttack : MonoBehaviour
         {
             attackCoolDown = 0f;
 
-            CameraShake.shake = 0.2f;
+            if (CameraShake.shake <= shakeHitAmount)
+            {
+                CameraShake.shake = shakeHitAmount;
+            }
+
+            playerHurt.Play();
             HealthManager.playerHealth.TakeDamage(damage);
         }
     }

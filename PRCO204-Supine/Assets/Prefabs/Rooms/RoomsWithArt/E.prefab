@@ -88,7 +88,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5727687434469339431}
   - component: {fileID: 8644130059404509983}
-  - component: {fileID: 2552811249068327409}
   - component: {fileID: 1190382211949858016}
   m_Layer: 0
   m_Name: E
@@ -141,19 +140,6 @@ MonoBehaviour:
   enemiesInRoom: []
   enemyCountManager: {fileID: 0}
   justCreated: 1
---- !u!135 &2552811249068327409
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 703150522103214180}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1190382211949858016
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -827,6 +813,23 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2432090755550338912, guid: c349fa94ee3b0be4fb61910e0e3064bf, type: 3}
+--- !u!114 &7071587597010488587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9215509812247015907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 457e187782988d64ebf23baeeca3b7c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  opaqueMaterial: {fileID: 2100000, guid: 45c58bdc52dc4ce44a4061669378ea82, type: 2}
+  transparentmaterial: {fileID: 2100000, guid: c4636f45e4179f7498d92816c2d45261, type: 2}
+  cutoutMaterial: {fileID: 0}
+  cutoutOpaque: {r: 0, g: 0, b: 0, a: 0}
+  cutoutHide: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1001 &1743976219581075017
 PrefabInstance:
   m_ObjectHideFlags: 0

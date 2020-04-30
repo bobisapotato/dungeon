@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.Android;
 
 public class CameraHideObstacles : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class CameraHideObstacles : MonoBehaviour
     }
 
     // Update is called once per frame
-   
+
     private void FixedUpdate()
     {
         checkPlayerObscured();
@@ -84,7 +85,7 @@ public class CameraHideObstacles : MonoBehaviour
         // sets mesh renderer to inactive for given GO
         if (obstacle.GetComponent<MeshRenderer>())
         {
-            if (lastWall != obstacle) 
+            if (lastWall != obstacle)
             {
                 alpha = 1f;
 
@@ -93,7 +94,7 @@ public class CameraHideObstacles : MonoBehaviour
             else
             {
                 //obstacle.GetComponent<MeshRenderer>().enabled = false;
-                if (alpha > 0.5f) 
+                if (alpha > 0.5f)
                 {
                     alpha -= 0.1f;
                 }
@@ -130,6 +131,4 @@ public class CameraHideObstacles : MonoBehaviour
         resetObstacle();
         obstacle = newObstacle;
     }
-
-
 }

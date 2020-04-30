@@ -34,6 +34,8 @@ public class LevelGeneration : MonoBehaviour
 	public bool startedEnemyCounter = false;
 	private bool hasStoppedSpawning = false;
 
+	public CameraHideAllWalls cameraHideAllWalls;
+
 	public static bool hasTrapDoorSpawned = false;
 	[SerializeField]
 	private GameObject trapDoorPrefab;
@@ -47,11 +49,11 @@ public class LevelGeneration : MonoBehaviour
 		// to start, we just create the starter room at 0.0
 		startSpawn = new Vector3(0, 0, 0);
 		startRot = new Quaternion(0, 0, 0, 0);
-		Instantiate(startRoomPrefab, startSpawn, startRot);
+		GameObject newRoom = Instantiate(startRoomPrefab, startSpawn, startRot);
 		populateRoomDirectionLists();
 		openPaths = openSpawnPts.Count;
 
-		roomsInScene.Add(startRoomPrefab);
+		roomsInScene.Add(newRoom);
 
 		//BUILD LEVEL
 		InvokeRepeating("spawnNewRoom", 0.5f, 0.1f);
@@ -68,6 +70,7 @@ public class LevelGeneration : MonoBehaviour
 			{
 				enemyCountMan.startUpEnemyCounter();
 				startedEnemyCounter = true;
+				cameraHideAllWalls.populateHideableList();
 				
 			}
 		}
@@ -251,7 +254,7 @@ public class LevelGeneration : MonoBehaviour
 			// spawn said room at that pos
 			GameObject newRoom = Instantiate(room, tempTransform, startRot);
 
-			addNewRoomToScene(room.gameObject, spawn);
+			addNewRoomToScene(newRoom.gameObject, spawn);
 
 			// Spawn 1 trap door.
 			if (!hasTrapDoorSpawned)

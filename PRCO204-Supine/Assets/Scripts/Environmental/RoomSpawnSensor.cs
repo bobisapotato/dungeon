@@ -25,6 +25,7 @@ public class RoomSpawnSensor : MonoBehaviour
         // collider is off, toggled on to check relevant surroundings
         sensorCollider = gameObject.GetComponent<BoxCollider>();
         //sensorCollider.enabled = false;
+        gameObject.tag = "RoomSpawnSensor";
 
         //checkSensor();
     }
