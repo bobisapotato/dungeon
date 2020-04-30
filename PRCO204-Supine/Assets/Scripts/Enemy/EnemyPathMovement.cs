@@ -122,6 +122,9 @@ public class EnemyPathMovement : MonoBehaviour
                     MoveTowardsNextPoint();
                 }
             }
+
+
+            Debug.DrawLine(transform.position, pathPositions[currentPos].transform.position);
         }
     }
 
