@@ -9,6 +9,8 @@ public class CameraHideAllWalls : MonoBehaviour
 
     [SerializeField]
     private List<GameObject> enemies = new List<GameObject>();
+    [SerializeField]
+    private List<HideableObject> hideables = new List<HideableObject>();
     private GameObject player;
     private Camera mainCamera;
     private RaycastHit hit;
@@ -28,11 +30,19 @@ public class CameraHideAllWalls : MonoBehaviour
         
     }
 
+    private void FixedUpdate()
+    {
+        triggerTargetRay();
+    }
+
     public void triggerTargetRay()
     {
         // Sends a ray out to check if any of the targets are hidden.
 
         bool needToHideObjects = false;
+
+        Debug.DrawRay(mainCamera.transform.position,
+            (player.transform.position - mainCamera.transform.position), Color.magenta);
 
         // First, check if player is obscured. 
         // checks if ray cast hits anything
@@ -43,33 +53,40 @@ public class CameraHideAllWalls : MonoBehaviour
             {
                 // don't need to hide
             }
-            else 
+            else if(hit.collider.gameObject.GetComponent<MeshRenderer>())
             {
                 //hide
                 needToHideObjects = true;
+                
             }
         }
 
-        foreach(GameObject enemy in enemies)
-        {
-            if (Physics.Raycast(mainCamera.transform.position, (enemy.transform.position - mainCamera.transform.position),
-            out hit))
-            {
-                if (hit.collider.gameObject == enemy)
-                {
-                    // don't need to hide
-                }
-                else
-                {
-                    //hide
-                    needToHideObjects = true;
-                }
-            }
-        }
+        //foreach(GameObject enemy in enemies)
+        //{
+        //    if (Physics.Raycast(mainCamera.transform.position, (enemy.transform.position - mainCamera.transform.position),
+        //    out hit))
+        //    {
+        //        if (hit.collider.gameObject == enemy)
+        //        {
+        //            // don't need to hide
+        //        }
+        //        else
+        //        {
+        //            //hide
+        //            needToHideObjects = true;
+        //        }
+        //    }
+        //}
 
         if(needToHideObjects)
         {
             //run hide
+
+            hideAllObjects();
+        }
+        else
+        {
+            showAllObjects();
         }
 
     }
@@ -84,6 +101,33 @@ public class CameraHideAllWalls : MonoBehaviour
             {
                 enemies.Add(enemy.gameObject);
             }
+        }
+    }
+
+    public void populateHideableList()
+    {
+        // gets all the hideableObjects from the scene
+        foreach(GameObject hideableObj in GameObject.FindGameObjectsWithTag("Hideable"))
+        {
+            hideables.Add(hideableObj.GetComponent<HideableObject>());
+        }
+    }
+
+    private void hideAllObjects()
+    {
+        // hides all the hideable objects in the hideables list
+        foreach(HideableObject hide in hideables)
+        {
+            Debug.Log("Trying to hide!");
+            hide.hideObject();
+        }
+    }
+
+    private void showAllObjects()
+    {
+        foreach (HideableObject hide in hideables)
+        {
+            hide.showObject();
         }
     }
 }

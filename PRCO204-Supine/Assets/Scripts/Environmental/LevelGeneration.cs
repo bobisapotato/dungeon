@@ -34,6 +34,8 @@ public class LevelGeneration : MonoBehaviour
 	public bool startedEnemyCounter = false;
 	private bool hasStoppedSpawning = false;
 
+	public CameraHideAllWalls cameraHideAllWalls;
+
 	public static bool hasTrapDoorSpawned = false;
 	[SerializeField]
 	private GameObject trapDoorPrefab;
@@ -68,6 +70,7 @@ public class LevelGeneration : MonoBehaviour
 			{
 				enemyCountMan.startUpEnemyCounter();
 				startedEnemyCounter = true;
+				cameraHideAllWalls.populateHideableList();
 				
 			}
 		}

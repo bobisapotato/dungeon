@@ -739,6 +739,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CameraObject
       objectReference: {fileID: 0}
+    - target: {fileID: 6891481409815932295, guid: 42c7e7b9a75cbef48afb8c61124e87c8,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6891481409815932313, guid: 42c7e7b9a75cbef48afb8c61124e87c8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -808,6 +813,20 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1003380590}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1260946212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260946210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dbbeabd9e4dbf54a899579f716ba8b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemies: []
+  hideables: []
 --- !u!1 &1313816597
 GameObject:
   m_ObjectHideFlags: 0
@@ -1070,7 +1089,7 @@ MonoBehaviour:
   - {fileID: 75304838753923438, guid: b6ece2693d3f1f947806e7626f656968, type: 3}
   - {fileID: 1086034755087287058, guid: 9c7c9f9b6909559469d9573b18dcc0e0, type: 3}
   roomsInScene: []
-  maximumRooms: 10
+  maximumRooms: 4
   totalRoomsSoFar: 0
   openPaths: 0
   startRoomPrefab: {fileID: 1563283317461951637, guid: de3703968d7be5b47888bb1f97125276,
