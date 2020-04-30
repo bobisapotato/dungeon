@@ -24,7 +24,7 @@ public class CameraHideAllWalls : MonoBehaviour
         mainCamera = GetComponentInChildren<Camera>();
         levelGenerationManager = GameObject.FindGameObjectWithTag("LevelGenManager").GetComponent<LevelGeneration>();
 
-        InvokeRepeating("triggerTargetRay", 0.1f, 0.05f);
+        InvokeRepeating("triggerTargetRay", 0.1f, 0.2f);
     }
 
    
@@ -55,29 +55,29 @@ public class CameraHideAllWalls : MonoBehaviour
             }
         }
 
-        foreach (GameObject enemy in enemies)
-        {
-            int enemyCount = 0;
-            if (Vector3.Distance(enemy.transform.position, player.transform.position) <= 10)
-            {
-                enemyCount++;
+        //foreach (GameObject enemy in enemies)
+        //{
+        //    int enemyCount = 0;
+        //    if (Vector3.Distance(enemy.transform.position, player.transform.position) <= 10)
+        //    {
+        //        enemyCount++;
 
-                if (Physics.Raycast(mainCamera.transform.position, (enemy.transform.position - mainCamera.transform.position),
-                out hit))
-                {
-                    if (hit.collider.gameObject == enemy)
-                    {
-                        // don't need to hide
-                    }
-                    else
-                    {
-                        //hide
-                        needToHideObjects = true;
-                    }
-                }
-            }
-            Debug.Log("Checked enemies: " + enemyCount);
-        }
+        //        if (Physics.Raycast(mainCamera.transform.position, (enemy.transform.position - mainCamera.transform.position),
+        //        out hit))
+        //        {
+        //            if (hit.collider.gameObject == enemy)
+        //            {
+        //                // don't need to hide
+        //            }
+        //            else
+        //            {
+        //                //hide
+        //                needToHideObjects = true;
+        //            }
+        //        }
+        //    }
+        //    Debug.Log("Checked enemies: " + enemyCount);
+        //}
 
         if (needToHideObjects)
         {

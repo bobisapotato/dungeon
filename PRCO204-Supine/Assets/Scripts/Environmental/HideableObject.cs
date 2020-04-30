@@ -41,6 +41,7 @@ public class HideableObject : MonoBehaviour
 
     public void hideObject()
     {
+        Debug.Log("Hide alpha " + alpha);
         //hide the obj
         //fadeTransparency("out");
         //this.gameObject.GetComponent<MeshRenderer>().material.color = cutoutHide;
