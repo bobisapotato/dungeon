@@ -621,6 +621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d00c79ca4c6bff40970ec699f9a8c49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerAudio: {fileID: 798065053}
 --- !u!1 &692685168
 GameObject:
   m_ObjectHideFlags: 0
@@ -730,6 +731,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 785161347}
   m_CullTransparentMesh: 0
+--- !u!82 &798065053 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4240114695891529167, guid: 3393b251d2d9ed44aa7916c50142f1ac,
+    type: 3}
+  m_PrefabInstance: {fileID: 1894750565}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &891945794
 GameObject:
   m_ObjectHideFlags: 0
@@ -1559,6 +1566,7 @@ MonoBehaviour:
   all4: {fileID: 8695458223904327872, guid: 10c83b249875db646b4cb2cb7325d627, type: 3}
   enemyCountMan: {fileID: 367908375}
   startedEnemyCounter: 0
+  cameraHideAllWalls: {fileID: 0}
   trapDoorPrefab: {fileID: 6264978274770045171, guid: c439f403abe416f4fb28da8984d80f7c,
     type: 3}
   spawnTrapDoorChance: 75
