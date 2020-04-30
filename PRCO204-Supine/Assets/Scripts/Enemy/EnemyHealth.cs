@@ -52,7 +52,7 @@ public class EnemyHealth : MonoBehaviour
                 CameraShake.shake = shakeDieAmount;
             }
 
-            Debug.Log("Enem die");
+
             triggerCrossbowCheck();
 
             Die();

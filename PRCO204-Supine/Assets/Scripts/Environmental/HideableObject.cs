@@ -14,7 +14,8 @@ public class HideableObject : MonoBehaviour
     public Material transparentmaterial;
     public Material cutoutMaterial;
 
-
+    private float alpha = 1f;
+   
     public Color cutoutOpaque;
     public Color cutoutHide;
     // Start is called before the first frame update
@@ -41,14 +42,35 @@ public class HideableObject : MonoBehaviour
     public void hideObject()
     {
         //hide the obj
-        Debug.Log("changing col");
+        //fadeTransparency("out");
         //this.gameObject.GetComponent<MeshRenderer>().material.color = cutoutHide;
+        if (alpha > 0.5f)
+        {
+            alpha -= 0.1f;
+            transparentmaterial.color = new Color(transparentmaterial.color.r, transparentmaterial.color.g, transparentmaterial.color.b, alpha);
+        }
         this.gameObject.GetComponent<MeshRenderer>().material = transparentmaterial;
     }
 
     public void showObject()
     {
+        //fadeTransparency("in");
         //this.gameObject.GetComponent<MeshRenderer>().material.color = cutoutOpaque;
-        this.gameObject.GetComponent<MeshRenderer>().material = opaqueMaterial;
+        //Debug.Log("transparency going up " + alpha);
+        if (alpha < 1f)
+        {
+            alpha += 0.1f;
+            transparentmaterial.color = new Color(transparentmaterial.color.r, transparentmaterial.color.g, transparentmaterial.color.b, alpha);
+        }
+        if (alpha == 1)
+        {
+            this.gameObject.GetComponent<MeshRenderer>().material = opaqueMaterial;
+        }
+        else if (alpha < 1)
+        {
+            this.gameObject.GetComponent<MeshRenderer>().material = transparentmaterial;
+        }
     }
+
+    
 }

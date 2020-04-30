@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 public class CameraHideAllWalls : MonoBehaviour
@@ -15,25 +16,18 @@ public class CameraHideAllWalls : MonoBehaviour
     private Camera mainCamera;
     private RaycastHit hit;
     private LevelGeneration levelGenerationManager;
-
+    private float alpha = 1f;
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         mainCamera = GetComponentInChildren<Camera>();
-        levelGenerationManager = GameObject.FindGameObjectWithTag("LevelGenerationManager").GetComponent<LevelGeneration>();
+        levelGenerationManager = GameObject.FindGameObjectWithTag("LevelGenManager").GetComponent<LevelGeneration>();
+
+        InvokeRepeating("triggerTargetRay", 0.1f, 0.05f);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void FixedUpdate()
-    {
-        triggerTargetRay();
-    }
+   
 
     public void triggerTargetRay()
     {
@@ -61,24 +55,31 @@ public class CameraHideAllWalls : MonoBehaviour
             }
         }
 
-        //foreach(GameObject enemy in enemies)
-        //{
-        //    if (Physics.Raycast(mainCamera.transform.position, (enemy.transform.position - mainCamera.transform.position),
-        //    out hit))
-        //    {
-        //        if (hit.collider.gameObject == enemy)
-        //        {
-        //            // don't need to hide
-        //        }
-        //        else
-        //        {
-        //            //hide
-        //            needToHideObjects = true;
-        //        }
-        //    }
-        //}
+        foreach (GameObject enemy in enemies)
+        {
+            int enemyCount = 0;
+            if (Vector3.Distance(enemy.transform.position, player.transform.position) <= 10)
+            {
+                enemyCount++;
 
-        if(needToHideObjects)
+                if (Physics.Raycast(mainCamera.transform.position, (enemy.transform.position - mainCamera.transform.position),
+                out hit))
+                {
+                    if (hit.collider.gameObject == enemy)
+                    {
+                        // don't need to hide
+                    }
+                    else
+                    {
+                        //hide
+                        needToHideObjects = true;
+                    }
+                }
+            }
+            Debug.Log("Checked enemies: " + enemyCount);
+        }
+
+        if (needToHideObjects)
         {
             //run hide
 
@@ -94,9 +95,11 @@ public class CameraHideAllWalls : MonoBehaviour
     private void getAllEnemies()
     {
         // get a list of all the enemies in the level when the game starts. 
-
-        foreach(GameObject room in levelGenerationManager.getRoomsInScene())
+        
+        foreach (GameObject room in levelGenerationManager.getRoomsInScene())
         {
+            
+
             foreach(EnemyHealth enemy in room.GetComponent<Room>().getEnemiesInRoom())
             {
                 enemies.Add(enemy.gameObject);
@@ -106,11 +109,14 @@ public class CameraHideAllWalls : MonoBehaviour
 
     public void populateHideableList()
     {
+        getAllEnemies();
         // gets all the hideableObjects from the scene
-        foreach(GameObject hideableObj in GameObject.FindGameObjectsWithTag("Hideable"))
+        foreach (GameObject hideableObj in GameObject.FindGameObjectsWithTag("Hideable"))
         {
             hideables.Add(hideableObj.GetComponent<HideableObject>());
         }
+
+        //getAllEnemies();
     }
 
     private void hideAllObjects()
@@ -118,7 +124,7 @@ public class CameraHideAllWalls : MonoBehaviour
         // hides all the hideable objects in the hideables list
         foreach(HideableObject hide in hideables)
         {
-            Debug.Log("Trying to hide!");
+
             hide.hideObject();
         }
     }
@@ -130,4 +136,6 @@ public class CameraHideAllWalls : MonoBehaviour
             hide.showObject();
         }
     }
+
+    
 }
