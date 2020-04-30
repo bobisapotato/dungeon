@@ -63,6 +63,9 @@ public class Room : MonoBehaviour
     // Update is called once per frame.
     void Update()
     {
+        //TESTING
+        
+
         if(playerInRoom & !roomCleared & !doorsLocked)
         {
             lockAllDoors();
@@ -159,5 +162,10 @@ public class Room : MonoBehaviour
 
         roomCleared = true;
         doorsLocked = false;
+    }
+
+    public bool getPlayerInRoom()
+    {
+        return playerInRoom;
     }
 }

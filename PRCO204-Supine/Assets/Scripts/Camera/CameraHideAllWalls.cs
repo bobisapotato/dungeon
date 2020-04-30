@@ -55,29 +55,25 @@ public class CameraHideAllWalls : MonoBehaviour
             }
         }
 
-        //foreach (GameObject enemy in enemies)
-        //{
-        //    int enemyCount = 0;
-        //    if (Vector3.Distance(enemy.transform.position, player.transform.position) <= 10)
-        //    {
-        //        enemyCount++;
-
-        //        if (Physics.Raycast(mainCamera.transform.position, (enemy.transform.position - mainCamera.transform.position),
-        //        out hit))
-        //        {
-        //            if (hit.collider.gameObject == enemy)
-        //            {
-        //                // don't need to hide
-        //            }
-        //            else
-        //            {
-        //                //hide
-        //                needToHideObjects = true;
-        //            }
-        //        }
-        //    }
-        //    Debug.Log("Checked enemies: " + enemyCount);
-        //}
+        foreach (GameObject enemy in getEnemiesInCurrentRoom())
+        {
+            
+                if (Physics.Raycast(mainCamera.transform.position, (enemy.transform.position - mainCamera.transform.position),
+                out hit))
+                {
+                    if (hit.collider.gameObject == enemy)
+                    {
+                        // don't need to hide
+                    }
+                    else
+                    {
+                        //hide
+                        needToHideObjects = true;
+                    }
+                }
+            
+            
+        }
 
         if (needToHideObjects)
         {
@@ -105,6 +101,28 @@ public class CameraHideAllWalls : MonoBehaviour
                 enemies.Add(enemy.gameObject);
             }
         }
+    }
+
+    private List<GameObject> getEnemiesInCurrentRoom()
+    {
+        // returns list of enemies in current room. 
+        List<GameObject> enemiesInCurrentRoom = new List<GameObject>();
+
+        foreach (GameObject room in levelGenerationManager.getRoomsInScene())
+        {
+            Room script = room.GetComponent<Room>();
+            
+            if (room.GetComponent<Room>().playerInRoom)
+            {
+                foreach (EnemyHealth enemy in room.GetComponent<Room>().getEnemiesInRoom())
+                {
+                    enemiesInCurrentRoom.Add(enemy.gameObject);
+                }
+            }
+        }
+
+        //Debug.Log("enemiesInCurrentRoom = " + enemiesInCurrentRoom.Count);
+        return enemiesInCurrentRoom;
     }
 
     public void populateHideableList()
