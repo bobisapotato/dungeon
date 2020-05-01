@@ -12,20 +12,15 @@ public class HideableObject : MonoBehaviour
 
     public Material opaqueMaterial;
     public Material transparentmaterial;
-    public Material cutoutMaterial;
+    
 
     private float alpha = 1f;
    
-    public Color cutoutOpaque;
-    public Color cutoutHide;
+   
     // Start is called before the first frame update
     void Start()
     {
-        // Setup for full cutout mode
-        cutoutMaterial = this.gameObject.GetComponent<MeshRenderer>().material;
-        cutoutOpaque = cutoutMaterial.color;
-        cutoutHide = new Color(cutoutOpaque.r, cutoutOpaque.g, cutoutOpaque.g, 0.5f);
-
+        
         this.gameObject.tag = "Hideable";
 
         transparentmaterial.color = new Color(transparentmaterial.color.r, transparentmaterial.color.g, transparentmaterial.color.b, 0.5f);
