@@ -44,9 +44,17 @@ public class EnemyPathMovement : MonoBehaviour
 
     [SerializeField]
     private bool isRanged = false;
-    [SerializeField]
-    private bool isSmallSlime = false;
 
+    private RaycastHit hit;
+
+    private float distanceToCheckForObstacle = 2f;
+
+    private bool isObstacleInTheWay = false;
+
+    [SerializeField]
+    private GameObject leftCorner;
+    [SerializeField]
+    private GameObject rightCorner;
 
     void Start()
     {
@@ -59,54 +67,48 @@ public class EnemyPathMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CheckForObstacle(transform.forward);
+
         // Get the distance to the player.
         float movementDistance = Vector3.Distance(player.transform.position, 
             transform.position);
 
         // If inside the radius.
-        if (movementDistance <= playerRadius && !isSmallSlime)
+        if (movementDistance <= playerRadius)
         {
-            // Rotate towards the player.
-            StartCoroutine(FaceTarget(player.gameObject));
-
-            enemyMove.UnPause();
-
-            isFollowing = true;
-
-            // Increase the speed.
-            step = followingSpeed * Time.deltaTime;
-
-            // Only move once you've finished rotating.
-            if (!isRotating && !isRanged)
+            if (isObstacleInTheWay)
             {
-                transform.position = Vector3.MoveTowards(transform.position, 
-                    player.transform.position, step);
+                isFollowing = false;
             }
-        }
-        // Increased distance for small slimes.
-        else if (movementDistance <= smallSlimeRadius && isSmallSlime)
-        {
-            // Rotate towards the player.
-            StartCoroutine(FaceTarget(player.gameObject));
-
-            enemyMove.UnPause();
-
-            isFollowing = true;
-
-            // Increase the speed.
-            step = followingSpeed * Time.deltaTime;
-
-            // Only move once you've finished rotating.
-            if (!isRotating && !isRanged)
+            else
             {
-                transform.position = Vector3.MoveTowards(transform.position,
-                    player.transform.position, step);
+                // Rotate towards the player.
+                StartCoroutine(FaceTarget(player.gameObject));
+
+                enemyMove.UnPause();
+
+                isFollowing = true;
+
+                // Increase the speed.
+                step = followingSpeed * Time.deltaTime;
+
+                // Only move once you've finished rotating.
+                if (!isRotating && !isRanged)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position,
+                        player.transform.position, step);
+                }
             }
         }
         else
         {
             // Decrease the speed.
             step = wanderingSpeed * Time.deltaTime;
+
+            if (isObstacleInTheWay)
+            {
+                NextPoint();
+            }
 
             if (isFollowing)
             {
@@ -122,9 +124,6 @@ public class EnemyPathMovement : MonoBehaviour
                     MoveTowardsNextPoint();
                 }
             }
-
-
-            Debug.DrawLine(transform.position, pathPositions[currentPos].transform.position);
         }
     }
 
@@ -183,7 +182,7 @@ public class EnemyPathMovement : MonoBehaviour
         , Mathf.Sqrt(Mathf.Pow(lookRotation.z, 2f)), Mathf.Sqrt(Mathf.Pow(lookRotation.w, 2f)));
 
         // A new quaternion with the same vector3 and scalar values, except all negative.
-        Quaternion lookRotationNegative = new Quaternion(lookRotationPositive.x * -1f, 
+        Quaternion lookRotationNegative = new Quaternion(lookRotationPositive.x * -1f,
             lookRotationPositive.y * -1f, lookRotationPositive.z * -1f, lookRotationPositive.w * -1f);
 
         // Rotate the player towards the original quaternion.
@@ -191,13 +190,13 @@ public class EnemyPathMovement : MonoBehaviour
                      lookRotation, Time.deltaTime * rotationSpeed);
 
         // Round up each value of the positive to 1 decimal place.
-        lookRotationPositive = new Quaternion((float)Math.Round((double)lookRotationPositive.x, 1), 
-            (float)Math.Round((double)lookRotationPositive.y, 1), (float)Math.Round((double)lookRotationPositive.z, 1), 
+        lookRotationPositive = new Quaternion((float)Math.Round((double)lookRotationPositive.x, 1),
+            (float)Math.Round((double)lookRotationPositive.y, 1), (float)Math.Round((double)lookRotationPositive.z, 1),
             (float)Math.Round((double)lookRotationPositive.w, 1));
 
         // Round up each value of the negative to 1 decimal place.
-        lookRotationNegative = new Quaternion((float)Math.Round((double)lookRotationNegative.x, 1), 
-            (float)Math.Round((double)lookRotationNegative.y, 1), (float)Math.Round((double)lookRotationNegative.z, 1), 
+        lookRotationNegative = new Quaternion((float)Math.Round((double)lookRotationNegative.x, 1),
+            (float)Math.Round((double)lookRotationNegative.y, 1), (float)Math.Round((double)lookRotationNegative.z, 1),
             (float)Math.Round((double)lookRotationNegative.w, 1));
 
         // Create a temp copy of the transform.rotate and round each value up to
@@ -216,12 +215,13 @@ public class EnemyPathMovement : MonoBehaviour
                 isRotating = false;
             }
         }
-        
+
         // This is an extra step check to make sure it definitely works.
         if (transform.rotation == lookRotation || transform.rotation == lookRotationPositive || transform.rotation == lookRotationNegative)
         {
             isRotating = false;
         }
+
     }
 
     // Pauses movement for x number of seconds.
@@ -263,7 +263,17 @@ public class EnemyPathMovement : MonoBehaviour
     {
         int nextPoint = PickRandomPoint(currentPos);
 
-        currentPos = nextPoint;
+        Vector3 direction = pathPositions[nextPoint].transform.position - pathPositions[currentPos].transform.position;
+        CheckForObstacle(direction);
+
+        if (isObstacleInTheWay)
+        {
+            NextPoint();
+        }
+        else
+        {
+            currentPos = nextPoint;
+        }
     }
 
     int PickRandomPoint(int currentPos)
@@ -286,11 +296,24 @@ public class EnemyPathMovement : MonoBehaviour
         return nextPoint;
     }
 
-    void OnTriggerEnter(Collider other)
+    void CheckForObstacle(Vector3 direction)
     {
-        if (other.gameObject.tag == "Wall")
+        if (Physics.Raycast(transform.position, direction, out hit, distanceToCheckForObstacle)
+            || Physics.Raycast(leftCorner.transform.position, direction, out hit, distanceToCheckForObstacle)
+            || Physics.Raycast(rightCorner.transform.position, direction, out hit, distanceToCheckForObstacle))
         {
-            NextPoint();
+            if (hit.collider.gameObject.tag != "Player")
+            {
+                isObstacleInTheWay = true;
+            }
+            else
+            {
+                isObstacleInTheWay = false;
+            }
+        }
+        else
+        {
+            isObstacleInTheWay = false;
         }
     }
 }

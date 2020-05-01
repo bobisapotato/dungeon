@@ -11,7 +11,8 @@ public class EnemyAttack : MonoBehaviour
 
     private float attackCoolDown = 0f;
     private float attackCoolDownTime = 1f;
-    private float attackRadius = 2.5f;
+    private float meleeAttackRadius = 2.5f;
+    private float rangedAttackRadius = 20f;
 
     private float shakeHitAmount = 1f;
 
@@ -30,7 +31,7 @@ public class EnemyAttack : MonoBehaviour
 
         if (isRanged)
         {
-            attackRadius = 10f;
+            meleeAttackRadius = 10f;
         }
     }
 
@@ -48,17 +49,9 @@ public class EnemyAttack : MonoBehaviour
             transform.position);
 
         // If inside the radius & attack isn't on cooldown attack.
-        if (movementDistance <= attackRadius && attackCoolDown > attackCoolDownTime)
+        if (movementDistance <= meleeAttackRadius && attackCoolDown > attackCoolDownTime)
         {
-            if (isRanged)
-            {
-                attackCoolDown = 0f;
-                Vector3 newPos = transform.position + (transform.forward * 2f);
-                // Instantiates the projectile to be shot.
-                Instantiate(fireBallPrefab, newPos, transform.rotation);
-
-            }
-            else
+            if (!isRanged)
             {
                 attackCoolDown = 0f;
 
@@ -70,6 +63,16 @@ public class EnemyAttack : MonoBehaviour
                 playerHurt.Play();
                 HealthManager.playerHealth.TakeDamage(damage);
             }
+        }
+
+        if (isRanged && movementDistance <= rangedAttackRadius && attackCoolDown > attackCoolDownTime)
+        {
+            attackCoolDown = 0f;
+
+            Vector3 newPos = transform.position + (transform.forward * 2f);
+
+            // Instantiates the projectile to be shot.
+            Instantiate(fireBallPrefab, newPos, transform.rotation);
         }
     }
 }

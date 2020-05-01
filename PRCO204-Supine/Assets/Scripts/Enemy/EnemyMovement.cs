@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using System;
 
 // Makes enemies follow and attack the player.
 // Uses the animator window in Unity to simulate a FSM.
@@ -9,8 +10,7 @@ using System.Collections;
 // enough.
 public class EnemyMovement : MonoBehaviour
 {
-	public Transform target;
-	public Transform eyes;
+	private Transform target;
 
 	private Animator anim;
 
@@ -23,9 +23,7 @@ public class EnemyMovement : MonoBehaviour
 	[SerializeField]
 	private float rotSpeed = 100f;
 	[SerializeField]
-	private float lookRadius = 2.5f;
-	[SerializeField]
-	private float stoppingDistance = 3f;
+	private float lookRadius = 20f;
 
 	private int rotTime;
 	private int rotateWait;
@@ -33,12 +31,22 @@ public class EnemyMovement : MonoBehaviour
 	private int walkTime;
 	private int walkWait;
 
-	private int damage = 10;
-	private float attackCoolDown = 0f;
-	private float attackCoolDownTime = 1f;
-	private float attackRadius = 5f;
+	private RaycastHit hit;
 
-	void Start()
+	private bool isObstacleInTheWay = false;
+
+	private float distanceToCheckForObstacle = 5f;
+
+	[SerializeField]
+	private Transform leftCorner;
+	[SerializeField]
+	private Transform rightCorner;
+
+	[HideInInspector]
+	public Room parentRoom;
+
+
+	void Awake()
 	{
 		anim = GetComponent<Animator>();
 
@@ -46,92 +54,31 @@ public class EnemyMovement : MonoBehaviour
 		target = GameObject.FindGameObjectWithTag("Player").transform;
 	}
 
-	void Update() 
+	void Update()
 	{
-		// Get the distance to the player.
-		float attackDistance = Vector3.Distance(target.position, transform.position);
-
-		if (attackCoolDown <= attackCoolDownTime)
-		{
-			attackCoolDown += Time.deltaTime;
-		}
-
-		if (!anim.GetBool("isWandering") && !anim.GetBool("isFollowing")) 
-		{
-			StartCoroutine(Wander());
-		}
-		if (isRotatingRight) 
-		{
-			transform.Rotate(transform.up * Time.deltaTime * rotSpeed);
-		}
-		if (isRotatingLeft)
-		{
-			transform.Rotate(transform.up * Time.deltaTime * -rotSpeed);
-		}
-		if (isWalking) 
-		{
-			transform.position += transform.forward * moveSpeed * Time.deltaTime;
-		}
-
-		// If inside the radius, attack.
-		if (attackDistance <= attackRadius && attackCoolDown > attackCoolDownTime)
-		{
-			attackCoolDown = 0f;
-			HealthManager.playerHealth.TakeDamage(damage);
-		}
+		PickAMovement();
 	}
 
 	void FixedUpdate()
 	{
-		// Get the distance to the player.
-		float movementDistance = Vector3.Distance(target.position, eyes.position);
-
-		// If inside the radius.
-		if (movementDistance <= lookRadius)
-		{
-			FaceTarget();
-
-			// Move towards the player.
-			anim.SetBool("isFollowing", true);
-			anim.SetBool("isWandering", false);
-
-			if (movementDistance <= stoppingDistance)
-			{
-				// Attack here.
-				FaceTarget();
-			}
-		}
-		else
-		{
-			anim.SetBool("isFollowing", false);
-		}
-	}
-
-	// Point towards the player.
-	void FaceTarget()
-	{
-		Vector3 direction = (target.position - transform.position).normalized;
-		Quaternion lookRotation = Quaternion.LookRotation
-			(new Vector3(direction.x, 0, direction.z));
-		transform.rotation = Quaternion.Slerp(transform.rotation, 
-			lookRotation, Time.deltaTime * 5f);
-	}
+		CheckDistanceToTarget();
+		CheckForObstacle();
+	} 
 
 	void OnDrawGizmosSelected()
 	{
 		Gizmos.color = Color.red;
-		Gizmos.DrawWireSphere(eyes.position, lookRadius);
-		Gizmos.DrawWireSphere(transform.position, attackRadius);
+		Gizmos.DrawWireSphere(transform.position, lookRadius);
 	}
 
 	// Selects random values to simulate wandering around.
 	IEnumerator Wander() 
 	{
-		rotTime = Random.Range(1, 2);
-		rotateWait = Random.Range(1, 2);
-		rotateLorR = Random.Range(0, 2);
-		walkWait = Random.Range(1, 2);
-		walkTime = Random.Range(1, 2);
+		rotTime = UnityEngine.Random.Range(0, 3);
+		rotateWait = UnityEngine.Random.Range(1, 2);
+		rotateLorR = UnityEngine.Random.Range(0, 2);
+		walkWait = UnityEngine.Random.Range(0, 2);
+		walkTime = UnityEngine.Random.Range(1, 3);
 
 		anim.SetBool("isWandering", true);
 		anim.SetBool("isFollowing", false);
@@ -157,5 +104,68 @@ public class EnemyMovement : MonoBehaviour
 		}
 
 		anim.SetBool("isWandering", false);
+	}
+
+	void PickAMovement()
+	{
+		if (!anim.GetBool("isWandering") && !anim.GetBool("isFollowing") && !isObstacleInTheWay)
+		{
+			StartCoroutine(Wander());
+		}
+		if (isObstacleInTheWay) 
+		{
+			transform.Rotate(transform.up * Time.deltaTime * (rotSpeed * 2));
+		}
+		if (isRotatingRight)
+		{
+			transform.Rotate(transform.up * Time.deltaTime * rotSpeed);
+		}
+		if (isRotatingLeft)
+		{
+			transform.Rotate(transform.up * Time.deltaTime * -rotSpeed);
+		}
+		if (isWalking)
+		{
+			transform.position += transform.forward * moveSpeed * Time.deltaTime;
+		}
+	}
+
+	void CheckForObstacle()
+	{
+		if (Physics.Raycast(transform.position, transform.forward, out hit, distanceToCheckForObstacle)
+			|| Physics.Raycast(leftCorner.position, transform.forward, out hit, distanceToCheckForObstacle)
+			|| Physics.Raycast(rightCorner.position, transform.forward, out hit, distanceToCheckForObstacle))
+		{
+			if (hit.collider.gameObject.tag != "Player")
+			{
+				isObstacleInTheWay = true;
+			}
+			else
+			{
+				isObstacleInTheWay = false;
+			}
+		}
+		else
+		{
+			isObstacleInTheWay = false;
+		}
+	}
+
+	void CheckDistanceToTarget()
+	{
+		// Get the distance to the player.
+		float movementDistance = Vector3.Distance(target.position, transform.position);
+
+		// If inside the radius.
+		if (movementDistance <= lookRadius && parentRoom.playerInRoom)
+		{
+			// Move towards the player.
+			anim.SetBool("isFollowing", true);
+			anim.SetBool("isWandering", false);
+		}
+		else
+		{
+			anim.SetBool("isFollowing", false);
+		}
 	}
 }

@@ -19,10 +19,10 @@ public class EnemySpawnManager : MonoBehaviour
     private int numberOfEnemies;
     private int numberOfPathPositions;
 
-    private int maxEnemies = 5;
+    private int maxEnemies = 3;
     private int minEnemies = 2;
-    private int maxPaths = 100;
-    private int minPaths = 50;
+    private int maxPaths = 30;
+    private int minPaths = 20;
 
     private Vector3 startPos;
     private Quaternion startRot;
@@ -59,7 +59,7 @@ public class EnemySpawnManager : MonoBehaviour
             if (rnd >= 0.5f)
             {
                 enemyInstance = Instantiate(meleeEnemyPrefab, transform, false);
-                enemyInstance.transform.localPosition = new Vector3(startPos.x, 0f, startPos.z);
+                enemyInstance.transform.localPosition = new Vector3(startPos.x, 0.1f, startPos.z);
             }
             else
             {
@@ -70,11 +70,13 @@ public class EnemySpawnManager : MonoBehaviour
             enemyInstance.transform.localPosition = startPos;
             enemyInstance.transform.localRotation = startRot;
 
-            // Set the paths and the target for the enemy.
-            enemyMovementScript = enemyInstance.GetComponent<EnemyPathMovement>();
+            enemyInstance.GetComponent<EnemyMovement>().parentRoom = GetComponentInParent<Room>();
 
-            enemyMovementScript.pathPositions = paths;
-            enemyMovementScript.player = player;
+            // Set the paths and the target for the enemy.
+            //enemyMovementScript = enemyInstance.GetComponent<EnemyPathMovement>();
+
+            //enemyMovementScript.pathPositions = paths;
+            //enemyMovementScript.player = player;
         }
     }
 

@@ -9,10 +9,10 @@ public class HealthManager : MonoBehaviour
 {
     public Slider healthbar;
 
-    public static HealthSystem playerHealth;
-
     private int startPlayerHealth = 100;
     private int oldHealth;
+
+    public static HealthSystem playerHealth = new HealthSystem();
 
     private GameManager gameMan;
 

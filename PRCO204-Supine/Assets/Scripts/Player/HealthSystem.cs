@@ -10,7 +10,12 @@ public class HealthSystem : MonoBehaviour
     private int minHealth = 0;
     private int maxHealth = 100;
 
-    // Constructor.
+    // Constructors.
+    public HealthSystem()
+    {
+        this.health = maxHealth;
+    }
+
     public HealthSystem(int health)
     {
         this.health = health;

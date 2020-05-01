@@ -13,6 +13,10 @@ public class BombExplode : MonoBehaviour
     [SerializeField]
     private GameObject bombModel;
 
+    [SerializeField]
+    private GameObject dropShadow;
+    private GameObject aoeIndicator;
+
     [SerializeField] 
     private int damage;
 
@@ -20,6 +24,11 @@ public class BombExplode : MonoBehaviour
 
     [SerializeField]
     private float bombRadius = 5f;
+
+    void Awake()
+    {
+        aoeIndicator = Instantiate(dropShadow, new Vector3(transform.position.x, -4f, transform.position.z), dropShadow.transform.rotation);
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -75,6 +84,8 @@ public class BombExplode : MonoBehaviour
 
         explosion.SetActive(true);
         bombModel.SetActive(false);
+
+        Destroy(aoeIndicator);
 
         Invoke("Die", 3f);
     }

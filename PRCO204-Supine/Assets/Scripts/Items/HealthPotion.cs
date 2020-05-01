@@ -7,11 +7,12 @@ public class HealthPotion : MonoBehaviour
     private Collider hitbox;
 
     [SerializeField]
-    private GameObject potionRadius;
-    [SerializeField]
     private GameObject splashEffect;
     [SerializeField]
     private GameObject potionModel;
+    [SerializeField]
+    private GameObject dropShadow;
+    private GameObject aoeIndicator;
 
     [SerializeField]
     private int heal;
@@ -21,10 +22,16 @@ public class HealthPotion : MonoBehaviour
     [SerializeField]
     private float healRadius = 5f;
 
+
+    void Awake()
+    {
+        aoeIndicator = Instantiate(dropShadow, new Vector3(transform.position.x, -4f, transform.position.z), dropShadow.transform.rotation);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        hitbox = potionRadius.GetComponent<SphereCollider>();
+        hitbox = GetComponent<SphereCollider>();
         hitbox.enabled = false;
         StartCoroutine(DisableCollider());
     }
@@ -62,9 +69,11 @@ public class HealthPotion : MonoBehaviour
             }
         }
 
-        potionModel.SetActive(false);
-        splashEffect.SetActive(true);
+        potionModel.GetComponent<MeshRenderer>().enabled = false;
 
+        splashEffect.SetActive(true);
+        Destroy(aoeIndicator);
+        
         Invoke("Die", 3f);
     }
 
