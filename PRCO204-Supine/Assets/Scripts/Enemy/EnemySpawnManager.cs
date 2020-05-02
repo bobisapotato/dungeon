@@ -37,21 +37,21 @@ public class EnemySpawnManager : MonoBehaviour
         // Set the number of enemies for the room.
         numberOfEnemies = GetNumberOfEnemiesInRoom();
 
-        paths = new GameObject[numberOfPathPositions = GetNumberOfPathPositions()];
+        //paths = new GameObject[numberOfPathPositions = GetNumberOfPathPositions()];
 
         // All the enemies in a room share the same path.
-        for (int j = 0; j < numberOfPathPositions; j++)
-        {
-            paths[j] = Instantiate(pathPosPrefab, transform, false);
-            paths[j].transform.localPosition = GetPathPos();
-        }
+        //for (int j = 0; j < numberOfPathPositions; j++)
+        //{
+        //    paths[j] = Instantiate(pathPosPrefab, transform, false);
+        //    paths[j].transform.localPosition = GetPathPos();
+        //}
 
         // For each enemy, instantiate a number of paths.
         for (int i = 0; i < numberOfEnemies; i++)
         {
             // Set the start position and rotation for the enemy.
             startPos = GetStartPos();
-            startRot = GetStartRot(startPos);
+            //startRot = GetStartRot(startPos);
 
             float rnd = Random.Range(0f, 1f);
 
@@ -68,7 +68,7 @@ public class EnemySpawnManager : MonoBehaviour
 
             // Instantiate the enemy, not in world space.
             enemyInstance.transform.localPosition = startPos;
-            enemyInstance.transform.localRotation = startRot;
+            enemyInstance.transform.localRotation = enemyInstance.transform.rotation;
 
             enemyInstance.GetComponent<EnemyMovement>().parentRoom = GetComponentInParent<Room>();
 

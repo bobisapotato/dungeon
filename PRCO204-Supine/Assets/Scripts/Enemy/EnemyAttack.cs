@@ -25,6 +25,9 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField]
     private GameObject fireBallPrefab;
 
+    [SerializeField]
+    private EnemyMovement moveScript;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -33,6 +36,8 @@ public class EnemyAttack : MonoBehaviour
         {
             meleeAttackRadius = 10f;
         }
+
+        moveScript = GetComponent<EnemyMovement>();
     }
 
     // Update is called once per frame
@@ -49,7 +54,7 @@ public class EnemyAttack : MonoBehaviour
             transform.position);
 
         // If inside the radius & attack isn't on cooldown attack.
-        if (movementDistance <= meleeAttackRadius && attackCoolDown > attackCoolDownTime)
+        if (movementDistance <= meleeAttackRadius && attackCoolDown > attackCoolDownTime && moveScript.parentRoom.playerInRoom)
         {
             if (!isRanged)
             {
@@ -65,7 +70,7 @@ public class EnemyAttack : MonoBehaviour
             }
         }
 
-        if (isRanged && movementDistance <= rangedAttackRadius && attackCoolDown > attackCoolDownTime)
+        if (isRanged && movementDistance <= rangedAttackRadius && attackCoolDown > attackCoolDownTime && moveScript.parentRoom.playerInRoom)
         {
             attackCoolDown = 0f;
 
