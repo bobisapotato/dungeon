@@ -5,7 +5,7 @@ using UnityEngine;
 public class HealOverTime : MonoBehaviour
 {
     private float timer = 0f;
-    private float coolDown = 2f;
+    private float coolDown = 2.5f;
 
     private int hpBoost = 2;
 
@@ -16,7 +16,7 @@ public class HealOverTime : MonoBehaviour
 
     void Start()
     {
-        maxHealth = HealthManager.playerHealth.GetMaxHealth();
+        maxHealth = GetComponentInChildren<HealthSystem>().GetMaxHealth();
     }
 
     // Update is called once per frame
@@ -25,10 +25,10 @@ public class HealOverTime : MonoBehaviour
         timer += Time.deltaTime;
 
         // Heal the player after the cooldown is over.
-        if (timer >= coolDown && HealthManager.playerHealth.GetHealth() <= maxHealth)
+        if (timer >= coolDown && GetComponentInChildren<HealthSystem>().GetHealth() <= maxHealth)
         {
             playerAudio.Play();
-            HealthManager.playerHealth.Heal(hpBoost);
+            GetComponentInChildren<HealthSystem>().Heal(hpBoost);
             timer = 0f;
         }
     }

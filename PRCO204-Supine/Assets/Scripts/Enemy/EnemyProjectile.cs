@@ -20,8 +20,6 @@ public class EnemyProjectile : MonoBehaviour
     [SerializeField]
     private GameObject debris;
 
-    private float shakeHitAmount = 1.5f;
-
     // Start is called before the first frame update
     // Adds a force the the projectile.
     void Start()
@@ -46,14 +44,11 @@ public class EnemyProjectile : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            if (CameraShake.shake <= shakeHitAmount)
-            {
-                CameraShake.shake = shakeHitAmount;
-            }
-
             FireDebris();
+
             playerHurt.Play();
-            HealthManager.playerHealth.TakeDamage(damage);
+            other.gameObject.GetComponentInChildren<HealthSystem>().gameObject.SendMessage("TakeDamage", damage);
+
             Instantiate(explosionPrefab, transform.position, transform.rotation);
         }
         else 

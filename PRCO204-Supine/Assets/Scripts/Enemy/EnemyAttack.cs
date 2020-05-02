@@ -11,10 +11,8 @@ public class EnemyAttack : MonoBehaviour
 
     private float attackCoolDown = 0f;
     private float attackCoolDownTime = 1f;
-    private float meleeAttackRadius = 2.5f;
+    private float meleeAttackRadius = 3f;
     private float rangedAttackRadius = 20f;
-
-    private float shakeHitAmount = 1f;
 
     [SerializeField]
     private AudioSource playerHurt;
@@ -25,7 +23,6 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField]
     private GameObject fireBallPrefab;
 
-    [SerializeField]
     private EnemyMovement moveScript;
 
     void Start()
@@ -54,23 +51,20 @@ public class EnemyAttack : MonoBehaviour
             transform.position);
 
         // If inside the radius & attack isn't on cooldown attack.
-        if (movementDistance <= meleeAttackRadius && attackCoolDown > attackCoolDownTime && moveScript.parentRoom.playerInRoom)
+        if (movementDistance <= meleeAttackRadius && attackCoolDown > attackCoolDownTime 
+            && moveScript.parentRoom.playerInRoom)
         {
             if (!isRanged)
             {
                 attackCoolDown = 0f;
 
-                if (CameraShake.shake <= shakeHitAmount)
-                {
-                    CameraShake.shake = shakeHitAmount;
-                }
-
                 playerHurt.Play();
-                HealthManager.playerHealth.TakeDamage(damage);
+                player.GetComponentInChildren<HealthSystem>().gameObject.SendMessage("TakeDamage", damage);
             }
         }
 
-        if (isRanged && movementDistance <= rangedAttackRadius && attackCoolDown > attackCoolDownTime && moveScript.parentRoom.playerInRoom)
+        if (isRanged && movementDistance <= rangedAttackRadius && attackCoolDown > attackCoolDownTime 
+            && moveScript.parentRoom.playerInRoom)
         {
             attackCoolDown = 0f;
 

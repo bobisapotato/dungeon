@@ -62,11 +62,12 @@ public class EnemyHealth : MonoBehaviour
             // Big slimes spawn smaller slimes.
             else
             {
-                int i = Random.Range(1, 3);
+                int i = Random.Range(2, 4);
 
                 for (int j = 0; j < i; j++)
                 {
-                    GameObject go = Instantiate(smallSlime, transform.position, transform.rotation, parentRoom.transform);
+                    Vector3 newPos = new Vector3(transform.position.x, -3.8f, transform.position.z);
+                    GameObject go = Instantiate(smallSlime, newPos, transform.rotation, parentRoom.transform);
                     go.GetComponent<EnemyMovement>().parentRoom = GetComponent<EnemyMovement>().parentRoom;
                     parentRoom.enemyCountManager.enemyCount++;
                 }
