@@ -18,6 +18,9 @@ public class Door : MonoBehaviour
     public GameObject lockedBars;
 
     public string direction; // Allocated in the prefab instance, either N E S or W
+
+    [HideInInspector]
+    public AudioSource doorManager;
     
     private void Start()
     {
@@ -60,6 +63,8 @@ public class Door : MonoBehaviour
         {
             animator.SetBool("Open", true);
             open = true;
+
+            doorManager.Play();
         }
     }
 
@@ -69,6 +74,8 @@ public class Door : MonoBehaviour
         {
             animator.SetBool("Open", true);
             open = true;
+
+            doorManager.Play();
         }
     }
 
