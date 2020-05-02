@@ -135,6 +135,90 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""978ed63d-88a6-41a9-9e61-cc96b7cb2314"",
+            ""actions"": [
+                {
+                    ""name"": ""MoveDown"",
+                    ""type"": ""Value"",
+                    ""id"": ""3eee323e-abfb-4394-8bac-84f7bcf566b2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""MoveAcross"",
+                    ""type"": ""Value"",
+                    ""id"": ""0660e1be-6d82-42d7-8bed-f844c28ad421"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Select"",
+                    ""type"": ""Button"",
+                    ""id"": ""98121fd4-a9e1-4ead-932d-10cc5a66f877"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Back"",
+                    ""type"": ""Button"",
+                    ""id"": ""04799e02-a9de-4f93-8809-3f01c513e24a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""4d02551c-0b59-4b7a-972d-c38a0ebda362"",
+                    ""path"": ""<Gamepad>/leftStick/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveAcross"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dd8e1147-09fa-49f6-a7cd-24e9c4414f2c"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4804ff47-2ae2-42fd-8299-5b8bffa89ab1"",
+                    ""path"": ""<Gamepad>/leftStick/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d7bceaac-f85b-44e6-aa38-501613fcf649"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -147,6 +231,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Gameplay_PlayerRotY = m_Gameplay.FindAction("PlayerRotY", throwIfNotFound: true);
         m_Gameplay_PlayerAttack = m_Gameplay.FindAction("PlayerAttack", throwIfNotFound: true);
         m_Gameplay_PlayerPickUpWeapon = m_Gameplay.FindAction("PlayerPickUpWeapon", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_MoveDown = m_UI.FindAction("MoveDown", throwIfNotFound: true);
+        m_UI_MoveAcross = m_UI.FindAction("MoveAcross", throwIfNotFound: true);
+        m_UI_Select = m_UI.FindAction("Select", throwIfNotFound: true);
+        m_UI_Back = m_UI.FindAction("Back", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -265,6 +355,63 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         }
     }
     public GameplayActions @Gameplay => new GameplayActions(this);
+
+    // UI
+    private readonly InputActionMap m_UI;
+    private IUIActions m_UIActionsCallbackInterface;
+    private readonly InputAction m_UI_MoveDown;
+    private readonly InputAction m_UI_MoveAcross;
+    private readonly InputAction m_UI_Select;
+    private readonly InputAction m_UI_Back;
+    public struct UIActions
+    {
+        private @PlayerControls m_Wrapper;
+        public UIActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MoveDown => m_Wrapper.m_UI_MoveDown;
+        public InputAction @MoveAcross => m_Wrapper.m_UI_MoveAcross;
+        public InputAction @Select => m_Wrapper.m_UI_Select;
+        public InputAction @Back => m_Wrapper.m_UI_Back;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void SetCallbacks(IUIActions instance)
+        {
+            if (m_Wrapper.m_UIActionsCallbackInterface != null)
+            {
+                @MoveDown.started -= m_Wrapper.m_UIActionsCallbackInterface.OnMoveDown;
+                @MoveDown.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnMoveDown;
+                @MoveDown.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnMoveDown;
+                @MoveAcross.started -= m_Wrapper.m_UIActionsCallbackInterface.OnMoveAcross;
+                @MoveAcross.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnMoveAcross;
+                @MoveAcross.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnMoveAcross;
+                @Select.started -= m_Wrapper.m_UIActionsCallbackInterface.OnSelect;
+                @Select.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnSelect;
+                @Select.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnSelect;
+                @Back.started -= m_Wrapper.m_UIActionsCallbackInterface.OnBack;
+                @Back.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnBack;
+                @Back.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnBack;
+            }
+            m_Wrapper.m_UIActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @MoveDown.started += instance.OnMoveDown;
+                @MoveDown.performed += instance.OnMoveDown;
+                @MoveDown.canceled += instance.OnMoveDown;
+                @MoveAcross.started += instance.OnMoveAcross;
+                @MoveAcross.performed += instance.OnMoveAcross;
+                @MoveAcross.canceled += instance.OnMoveAcross;
+                @Select.started += instance.OnSelect;
+                @Select.performed += instance.OnSelect;
+                @Select.canceled += instance.OnSelect;
+                @Back.started += instance.OnBack;
+                @Back.performed += instance.OnBack;
+                @Back.canceled += instance.OnBack;
+            }
+        }
+    }
+    public UIActions @UI => new UIActions(this);
     public interface IGameplayActions
     {
         void OnPlayerMoveX(InputAction.CallbackContext context);
@@ -273,5 +420,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnPlayerRotY(InputAction.CallbackContext context);
         void OnPlayerAttack(InputAction.CallbackContext context);
         void OnPlayerPickUpWeapon(InputAction.CallbackContext context);
+    }
+    public interface IUIActions
+    {
+        void OnMoveDown(InputAction.CallbackContext context);
+        void OnMoveAcross(InputAction.CallbackContext context);
+        void OnSelect(InputAction.CallbackContext context);
+        void OnBack(InputAction.CallbackContext context);
     }
 }
