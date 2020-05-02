@@ -58,6 +58,11 @@ public class Room : MonoBehaviour
         playerPickUp = GameObject.FindGameObjectWithTag("Player").GetComponent<PickUpWeapon>();
 
         populateEnemiesInRoom();
+
+        foreach (Door d in doors)
+        {
+            d.doorManager = levelGenMan.GetComponent<AudioSource>();
+        }
     }
 
     // Update is called once per frame.
