@@ -21,8 +21,6 @@ public class Menu : MonoBehaviour
     float timer;
     float coolDown = 0.1f;
 
-    float tiny = 0.0001f;
-
     AudioSource mainMenuAudio;
 
     [SerializeField]
@@ -127,13 +125,13 @@ public class Menu : MonoBehaviour
         switch (selectedOption)
         {
             case 0:
-                Invoke(events[selectedOption], tiny);
+                Invoke(events[selectedOption], Mathf.Epsilon);
                 break;
             case 1:
-                Invoke(events[selectedOption], tiny);
+                Invoke(events[selectedOption], Mathf.Epsilon);
                 break;
             case 2:
-                Invoke(events[selectedOption], tiny);
+                Invoke(events[selectedOption], Mathf.Epsilon);
                 break;
         }
     }
