@@ -129,7 +129,11 @@ public class EnemyHealth : MonoBehaviour
         // if half the enemies have been killed, spawn a crossbow
         if (enemyCountManager.halfEnemyCount == enemyCountManager.enemyCount)
         {
-            Instantiate(crossbowPrefab, parentRoom.transform, false);
+            if(!enemyCountManager.checkDroppedCrossbow())
+            {
+                Instantiate(crossbowPrefab, this.gameObject.transform, false);
+                enemyCountManager.dropCrossbow();
+            }
         }
     }
 }

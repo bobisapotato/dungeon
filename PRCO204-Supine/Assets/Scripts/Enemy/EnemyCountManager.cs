@@ -17,8 +17,9 @@ public class EnemyCountManager : MonoBehaviour
     public int enemyCount = 0;
     public GameManager gameManager;
     public TextMeshProUGUI enemyCountLabel;
-   // public int halfEnemyCount { get => (int)Mathf.Ceil(startEnemyTotal / 2); }
+   
     public int startEnemyTotal;
+    private bool droppedCrossbow = false;
 
 
     public void startUpEnemyCounter()
@@ -62,5 +63,14 @@ public class EnemyCountManager : MonoBehaviour
         get => (int)Mathf.Ceil(startEnemyTotal / 2f); 
     }
 
-   
+   public bool checkDroppedCrossbow()
+   {
+        return droppedCrossbow;
+   }
+
+    public void dropCrossbow()
+    {
+        // called when crossbow is spawned to set bool to true.
+        droppedCrossbow = true;
+    }
 }
