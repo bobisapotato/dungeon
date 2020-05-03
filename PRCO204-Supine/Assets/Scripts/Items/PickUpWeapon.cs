@@ -204,7 +204,6 @@ public class PickUpWeapon : MonoBehaviour
     void NextLevel()
     {
         // Reset static values for next level.
-        LevelGeneration.hasTrapDoorSpawned = false;
         PlayerAttack.isHoldingRangedWeapon = false;
         PlayerAttack.isHoldingWeapon = false;
         isHoldingKey = false;
