@@ -31,9 +31,15 @@ public class EnemyHealth : MonoBehaviour
 
     private bool hasDied = false;
 
+    private Color original;
+    [SerializeField]
+    private Color tempColor;
+
     // Start is called before the first frame update
     void Start()
     {
+        original = GetComponentInChildren<MeshRenderer>().material.color;
+
         if (GetComponentInParent<Room>())
         {
             parentRoom = GetComponentInParent<Room>();
@@ -94,6 +100,9 @@ public class EnemyHealth : MonoBehaviour
             CameraShake.shake = shakeHitAmount;
         }
 
+        gameObject.GetComponent<MeshRenderer>().material.color = tempColor;
+        Invoke("ResetColour", 0.1f);
+
         gameObject.GetComponent<Rigidbody>().AddForce(-transform.forward * knockback, ForceMode.Impulse);
     }
     
@@ -131,5 +140,10 @@ public class EnemyHealth : MonoBehaviour
         {
             Instantiate(crossbowPrefab, parentRoom.transform, false);
         }
+    }
+
+    void ResetColour()
+    {
+        gameObject.GetComponent<MeshRenderer>().material.color = original;
     }
 }
