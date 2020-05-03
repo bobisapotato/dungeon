@@ -36,14 +36,6 @@ public class LevelGeneration : MonoBehaviour
 
 	public CameraHideAllWalls cameraHideAllWalls;
 
-	public static bool hasTrapDoorSpawned = false;
-	[SerializeField]
-	private GameObject trapDoorPrefab;
-	[SerializeField]
-	private int spawnTrapDoorChance = 75;
-
-	
-
 	private void Start()
 	{
 		// to start, we just create the starter room at 0.0
@@ -255,24 +247,6 @@ public class LevelGeneration : MonoBehaviour
 			GameObject newRoom = Instantiate(room, tempTransform, startRot);
 
 			addNewRoomToScene(newRoom.gameObject, spawn);
-
-			// Spawn 1 trap door.
-			if (!hasTrapDoorSpawned)
-			{
-				if (totalRoomsSoFar < maximumRooms)
-				{
-					int rnd = Random.Range(0, 100);
-
-					if (rnd >= spawnTrapDoorChance)
-					{
-						SpawnTrapDoor(newRoom);
-					}
-				}
-				else
-				{
-					SpawnTrapDoor(newRoom);
-				}
-			}
 		}
 	}
 
@@ -489,14 +463,4 @@ public class LevelGeneration : MonoBehaviour
 		return perfectRoom;
 		
 	}
-
-	// Spawns the trap door prefab. 1 per level.
-	void SpawnTrapDoor(GameObject room)
-	{
-		GameObject trapDoor = Instantiate(trapDoorPrefab, room.transform, false);
-
-		hasTrapDoorSpawned = true;
-	}
-
-	
 }

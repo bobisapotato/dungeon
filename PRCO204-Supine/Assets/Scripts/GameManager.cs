@@ -37,7 +37,6 @@ public class GameManager : MonoBehaviour
     public void openDemoScene2()
     {
         // Reset static values for next level.
-        LevelGeneration.hasTrapDoorSpawned = false;
         PlayerAttack.isHoldingRangedWeapon = false;
         PlayerAttack.isHoldingWeapon = false;
 
@@ -47,7 +46,6 @@ public class GameManager : MonoBehaviour
     public void openDemoWin2()
     {
         // Reset static values for next level.
-        LevelGeneration.hasTrapDoorSpawned = false;
         PlayerAttack.isHoldingRangedWeapon = false;
         PlayerAttack.isHoldingWeapon = false;
 
@@ -56,7 +54,6 @@ public class GameManager : MonoBehaviour
     public void openDemoLose2()
     {
         // Reset static values for next level.
-        LevelGeneration.hasTrapDoorSpawned = false;
         PlayerAttack.isHoldingRangedWeapon = false;
         PlayerAttack.isHoldingWeapon = false;
 
@@ -67,7 +64,6 @@ public class GameManager : MonoBehaviour
     public void openDemoMenu2()
     {
         // Reset static values for next level.
-        LevelGeneration.hasTrapDoorSpawned = false;
         PlayerAttack.isHoldingRangedWeapon = false;
         PlayerAttack.isHoldingWeapon = false;
 
@@ -77,7 +73,6 @@ public class GameManager : MonoBehaviour
     public void openDemoInstructions2()
     {
         // Reset static values for next level.
-        LevelGeneration.hasTrapDoorSpawned = false;
         PlayerAttack.isHoldingRangedWeapon = false;
         PlayerAttack.isHoldingWeapon = false;
 
