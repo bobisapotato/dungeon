@@ -172,8 +172,8 @@ GameObject:
   - component: {fileID: -7997543730408191998}
   - component: {fileID: 6927609197750494420}
   - component: {fileID: 9164730992795243741}
-  - component: {fileID: 8869072431353315513}
   - component: {fileID: 1029057275954284285}
+  - component: {fileID: -6965850686079621123}
   m_Layer: 12
   m_Name: Enemy Melee - Small
   m_TagString: Enemy
@@ -374,24 +374,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8869072431353315513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5624515174502555135}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b75c933403da6c459ccf05a44ac5a30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 5
-  rotSpeed: 100
-  lookRadius: 10
-  leftCorner: {fileID: 6317378939448920532}
-  rightCorner: {fileID: 1344427222581492691}
-  parentRoom: {fileID: 0}
 --- !u!95 &1029057275954284285
 Animator:
   serializedVersion: 3
@@ -411,6 +393,24 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-6965850686079621123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5624515174502555135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c33ec67ba77055847964f6da3b79f778, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 10
+  rotSpeed: 100
+  lookRadius: 10
+  leftCorner: {fileID: 6317378939448920532}
+  rightCorner: {fileID: 1344427222581492691}
+  parentRoom: {fileID: 0}
 --- !u!1 &8327553758846028589
 GameObject:
   m_ObjectHideFlags: 0

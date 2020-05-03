@@ -59,19 +59,6 @@ public class EnemyHealth : MonoBehaviour
     // Checks to 
     void Update()
     {
-        if (changeColor)
-        {
-            if (gameObject.GetComponentInChildren<MeshRenderer>().material.color == original)
-            {
-                gameObject.GetComponentInChildren<MeshRenderer>().material.color = tempColor;
-            }
-            else
-            {
-                gameObject.GetComponentInChildren<MeshRenderer>().material.color = original;
-
-            }
-        }
-
         if (health <= 0 && !hasDied)
         {
             hasDied = true;
@@ -102,6 +89,18 @@ public class EnemyHealth : MonoBehaviour
 
             Die();
         }
+
+        if (changeColor)
+        {
+            if (gameObject.GetComponentInChildren<MeshRenderer>().material.color == original)
+            {
+                gameObject.GetComponentInChildren<MeshRenderer>().material.color = tempColor;
+            }
+            else
+            {
+                gameObject.GetComponentInChildren<MeshRenderer>().material.color = original;
+            }
+        }
     }
 
 
@@ -123,7 +122,7 @@ public class EnemyHealth : MonoBehaviour
             Invoke("ResetColour", coolDown);
         }
 
-        gameObject.GetComponent<Rigidbody>().AddForce(-transform.forward * knockback, ForceMode.Impulse);
+        //gameObject.GetComponent<Rigidbody>().AddForce(-transform.forward * knockback, ForceMode.Impulse);
     }
     
 
@@ -168,7 +167,7 @@ public class EnemyHealth : MonoBehaviour
 
     void ResetColour()
     {
-        changeColor = false;
-        gameObject.GetComponent<MeshRenderer>().material.color = original;
+            changeColor = false;
+            gameObject.GetComponent<MeshRenderer>().material.color = original;
     }
 }
