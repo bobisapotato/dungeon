@@ -51,7 +51,7 @@ public class Rat : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		CheckForObstacle();
+		//CheckForObstacle();
 	}
 
 	void CheckForObstacle()
