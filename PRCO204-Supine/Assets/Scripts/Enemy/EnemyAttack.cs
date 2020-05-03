@@ -25,6 +25,8 @@ public class EnemyAttack : MonoBehaviour
 
     private EnemyMovement moveScript;
 
+    private Animator animator;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -35,6 +37,8 @@ public class EnemyAttack : MonoBehaviour
         }
 
         moveScript = GetComponent<EnemyMovement>();
+
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -72,6 +76,7 @@ public class EnemyAttack : MonoBehaviour
 
             // Instantiates the projectile to be shot.
             Instantiate(fireBallPrefab, newPos, transform.rotation);
+            animator.Play("ShootProjectile");
         }
     }
 }
