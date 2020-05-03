@@ -31,6 +31,8 @@ public class EnemyHealth : MonoBehaviour
 
     private bool hasDied = false;
 
+    private Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -87,6 +89,11 @@ public class EnemyHealth : MonoBehaviour
     // then applies a knockback affect to the enemy.
     public void TakeDamage(int amount)
     {
+        if (isSlime)
+        {
+            animator.Play("SlimeHurt");
+        }
+
         health -= amount;
 
         if (CameraShake.shake <= shakeHitAmount)

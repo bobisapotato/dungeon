@@ -13,6 +13,8 @@ public class EnemyMovement : MonoBehaviour
 	private Transform target;
 
 	private Animator anim;
+	[SerializeField]
+	private Animator childAnimator;
 
 	private bool isRotatingLeft = false;
 	private bool isRotatingRight = false;
@@ -82,6 +84,8 @@ public class EnemyMovement : MonoBehaviour
 
 		anim.SetBool("isWandering", true);
 		anim.SetBool("isFollowing", false);
+
+		childAnimator.SetBool("isAngry", false);
 
 		yield return new WaitForSeconds(walkWait);
 		isWalking = true;
@@ -154,18 +158,23 @@ public class EnemyMovement : MonoBehaviour
 	void CheckDistanceToTarget()
 	{
 		// Get the distance to the player.
-		float movementDistance = Vector3.Distance(target.position, transform.position);
-
+		float movementDistance = Vector3.Distance(target.position, this.gameObject.transform.position);
+		
 		// If inside the radius.
-		if (movementDistance <= lookRadius && parentRoom.playerInRoom)
+		if (movementDistance 
+			<= lookRadius && 
+			parentRoom.playerInRoom)
 		{
 			// Move towards the player.
 			anim.SetBool("isFollowing", true);
 			anim.SetBool("isWandering", false);
+
+			childAnimator.SetBool("isAngry", true);
 		}
 		else
 		{
 			anim.SetBool("isFollowing", false);
+			childAnimator.SetBool("isAngry", false);
 		}
 	}
 }

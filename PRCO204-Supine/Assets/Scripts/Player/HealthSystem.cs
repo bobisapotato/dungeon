@@ -23,6 +23,8 @@ public class HealthSystem : MonoBehaviour
 
     private GameManager gameMan;
 
+    private Animator playerAnimator;
+
     private Color original;
     [SerializeField]
     private Color tempColor;
@@ -33,6 +35,12 @@ public class HealthSystem : MonoBehaviour
     private GameObject swordArm;
     [SerializeField]
     private GameObject crossbowArm;
+    [SerializeField]
+    private GameObject leg1;
+    [SerializeField]
+    private GameObject leg2;
+    [SerializeField]
+    private GameObject body;
 
     // Start is called before the first frame update
     void Start()
@@ -43,27 +51,32 @@ public class HealthSystem : MonoBehaviour
         oldHealth = GetHealth();
 
         gameMan = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        playerAnimator = GetComponent<Animator>();
     }
 
     void Update()
     {
         if (invulnerable)
         {
-            if (gameObject.GetComponent<MeshRenderer>().material.color == original)
+            if (body.GetComponent<MeshRenderer>().material.color == original)
             {
-                gameObject.GetComponent<MeshRenderer>().material.color = tempColor;
+                body.GetComponent<MeshRenderer>().material.color = tempColor;
 
                 arm.GetComponent<MeshRenderer>().material.color = tempColor;
                 swordArm.GetComponent<MeshRenderer>().material.color = tempColor;
                 crossbowArm.GetComponent<MeshRenderer>().material.color = tempColor;
+                leg1.GetComponent<MeshRenderer>().material.color = tempColor;
+                leg2.GetComponent<MeshRenderer>().material.color = tempColor;
             }
             else
             {
-                gameObject.GetComponent<MeshRenderer>().material.color = original;
+                body.GetComponent<MeshRenderer>().material.color = original;
 
                 arm.GetComponent<MeshRenderer>().material.color = original;
                 swordArm.GetComponent<MeshRenderer>().material.color = original;
                 crossbowArm.GetComponent<MeshRenderer>().material.color = original;
+                leg1.GetComponent<MeshRenderer>().material.color = original;
+                leg2.GetComponent<MeshRenderer>().material.color = original;
             }
 
             Invoke("ResetVulnerability", coolDown);
@@ -79,8 +92,14 @@ public class HealthSystem : MonoBehaviour
 
         if (oldHealth <= 0)
         {
-            gameMan.openDemoLose2();
+            playerAnimator.Play("PlayerDie");
+            Invoke("playerDie", 1f);
         }
+    }
+
+    private void playerDie()
+    {
+        gameMan.openDemoLose2();
     }
 
     // Getters and Setters.
@@ -137,5 +156,10 @@ public class HealthSystem : MonoBehaviour
         arm.GetComponent<MeshRenderer>().material.color = original;
         swordArm.GetComponent<MeshRenderer>().material.color = original;
         crossbowArm.GetComponent<MeshRenderer>().material.color = original;
+        leg1.GetComponent<MeshRenderer>().material.color = original;
+        leg2.GetComponent<MeshRenderer>().material.color = original;
+        body.GetComponent<MeshRenderer>().material.color = original;
+
+
     }
 }
