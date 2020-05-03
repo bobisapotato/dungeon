@@ -33,7 +33,7 @@ public class EnemyMovement : MonoBehaviour
 
 	private RaycastHit hit;
 
-	private bool isObstacleInTheWay = false;
+	private bool isObstacleInTheWay;
 
 	private float distanceToCheckForObstacle = 5f;
 

@@ -15,6 +15,7 @@ public class EnemyHealth : MonoBehaviour
 
     private float shakeHitAmount = 0.5f;
     private float shakeDieAmount = 0.5f;
+    float coolDown = 1f;
 
     private Room parentRoom;
 
@@ -34,6 +35,8 @@ public class EnemyHealth : MonoBehaviour
     private Color original;
     [SerializeField]
     private Color tempColor;
+
+    bool changeColor;
 
     // Start is called before the first frame update
     void Start()
@@ -56,6 +59,19 @@ public class EnemyHealth : MonoBehaviour
     // Checks to 
     void Update()
     {
+        if (changeColor)
+        {
+            if (gameObject.GetComponentInChildren<MeshRenderer>().material.color == original)
+            {
+                gameObject.GetComponentInChildren<MeshRenderer>().material.color = tempColor;
+            }
+            else
+            {
+                gameObject.GetComponentInChildren<MeshRenderer>().material.color = original;
+
+            }
+        }
+
         if (health <= 0 && !hasDied)
         {
             hasDied = true;
@@ -72,7 +88,7 @@ public class EnemyHealth : MonoBehaviour
 
                 for (int j = 0; j < i; j++)
                 {
-                    //parentRoom.enemyCountManager.enemyCount++;
+                    parentRoom.enemyCountManager.enemyCount++;
                     Vector3 newPos = new Vector3(transform.position.x, -3.8f, transform.position.z);
                     GameObject go = Instantiate(smallSlime, newPos, transform.rotation, parentRoom.transform);
                     go.GetComponent<EnemyMovement>().parentRoom = GetComponent<EnemyMovement>().parentRoom;
@@ -100,8 +116,12 @@ public class EnemyHealth : MonoBehaviour
             CameraShake.shake = shakeHitAmount;
         }
 
-        gameObject.GetComponent<MeshRenderer>().material.color = tempColor;
-        Invoke("ResetColour", 0.1f);
+        if (!changeColor)
+        {
+            changeColor = true;
+
+            Invoke("ResetColour", coolDown);
+        }
 
         gameObject.GetComponent<Rigidbody>().AddForce(-transform.forward * knockback, ForceMode.Impulse);
     }
@@ -148,6 +168,7 @@ public class EnemyHealth : MonoBehaviour
 
     void ResetColour()
     {
+        changeColor = false;
         gameObject.GetComponent<MeshRenderer>().material.color = original;
     }
 }
