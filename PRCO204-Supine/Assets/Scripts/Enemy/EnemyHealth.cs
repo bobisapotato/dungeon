@@ -76,9 +76,8 @@ public class EnemyHealth : MonoBehaviour
                 for (int j = 0; j < i; j++)
                 {
                     parentRoom.enemyCountManager.enemyCount++;
-                    Vector3 newPos = new Vector3(transform.position.x, -3.8f, transform.position.z);
+                    Vector3 newPos = new Vector3(transform.position.x - (j * 0.5f), -3.8f, transform.position.z - (j * 0.5f));
                     GameObject go = Instantiate(smallSlime, newPos, transform.rotation, parentRoom.transform);
-                    go.GetComponent<EnemyMovement>().parentRoom = GetComponent<EnemyMovement>().parentRoom;
                 }
             }
 

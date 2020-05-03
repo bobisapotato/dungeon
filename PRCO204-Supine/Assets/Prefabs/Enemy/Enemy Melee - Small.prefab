@@ -170,10 +170,10 @@ GameObject:
   - component: {fileID: 5624515174502555106}
   - component: {fileID: 5624515174502555104}
   - component: {fileID: -7997543730408191998}
-  - component: {fileID: 6927609197750494420}
   - component: {fileID: 9164730992795243741}
   - component: {fileID: 1029057275954284285}
   - component: {fileID: -6965850686079621123}
+  - component: {fileID: 1904242778044820577}
   m_Layer: 12
   m_Name: Enemy Melee - Small
   m_TagString: Enemy
@@ -261,23 +261,6 @@ MonoBehaviour:
   smallSlime: {fileID: 5624515174502555135}
   isSlime: 0
   tempColor: {r: 0, g: 0, b: 0, a: 0}
---- !u!114 &6927609197750494420
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5624515174502555135}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b58ade40deb6ad7498f22c727db382db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 5
-  playerHurt: {fileID: 8025170566555895966}
-  isRanged: 0
-  fireBallPrefab: {fileID: 3512073738943388613, guid: 7d2ac3909b9903246b53b5f5174e993e,
-    type: 3}
 --- !u!82 &9164730992795243741
 AudioSource:
   m_ObjectHideFlags: 0
@@ -411,6 +394,20 @@ MonoBehaviour:
   leftCorner: {fileID: 6317378939448920532}
   rightCorner: {fileID: 1344427222581492691}
   parentRoom: {fileID: 0}
+--- !u!114 &1904242778044820577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5624515174502555135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3f6c90bbcd65124194271ef1e34c44c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
+  playerHurt: {fileID: 8025170566555895966}
 --- !u!1 &8327553758846028589
 GameObject:
   m_ObjectHideFlags: 0
