@@ -26,6 +26,10 @@ public class EnemyHealth : MonoBehaviour
     private GameObject explosionPrefab;
     [SerializeField]
     private GameObject smallSlime;
+    [SerializeField]
+    private GameObject squidgePrefab;
+    [SerializeField]
+    private GameObject squidgePrefabSmall;
 
     [SerializeField]
     private bool isSlime = false;
@@ -66,11 +70,20 @@ public class EnemyHealth : MonoBehaviour
             // Skulls/small slimes should just explode.
             if (!isSlime)
             {
-                Instantiate(explosionPrefab, transform.position, transform.rotation);
+                if (gameObject.name.Contains("Ranged"))
+                {
+                    Instantiate(explosionPrefab, transform.position, transform.rotation);
+                }
+                else
+                {
+                    Instantiate(squidgePrefabSmall, transform.position, transform.rotation);
+                }
             }
             // Big slimes spawn smaller slimes.
             else
             {
+                Instantiate(squidgePrefab, transform.position, transform.rotation);
+
                 int i = Random.Range(2, 4);
 
                 for (int j = 0; j < i; j++)
