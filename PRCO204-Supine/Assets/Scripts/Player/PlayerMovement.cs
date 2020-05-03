@@ -113,6 +113,11 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             playerAudio.Pause();
+            
+        }
+
+        if(move == Vector3.zero)
+        {
             playerAnimator.SetBool("Walking", false);
         }
 
