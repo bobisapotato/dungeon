@@ -4953,7 +4953,6 @@ GameObject:
   - component: {fileID: 5624515174502555108}
   - component: {fileID: 5624515174502555107}
   - component: {fileID: 5624515174502555106}
-  - component: {fileID: 5624515174502555105}
   - component: {fileID: 5624515174502555104}
   - component: {fileID: -7997543730408191998}
   - component: {fileID: 6927609197750494420}
@@ -5050,32 +5049,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5624515174502555105
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5624515174502555135}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d8365875b77bf9438f4a33ab1accf03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 369289203208910561, guid: d1d4990080d8f3e469cc1cada7e269eb, type: 3}
-  pathPositions: []
-  wanderingSpeed: 5
-  followingSpeed: 6.66
-  rotationSpeed: 7.5
-  isFollowing: 0
-  isMoving: 1
-  isRotating: 0
-  direction: {x: 0, y: 0, z: 0}
-  lookRotation: {x: 0, y: 0, z: 0, w: 0}
-  enemyMove: {fileID: 9164730992795243741}
-  isRanged: 1
-  leftCorner: {fileID: 7110634054629597771}
-  rightCorner: {fileID: 1417329827956471444}
 --- !u!54 &5624515174502555104
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5245,7 +5218,7 @@ MonoBehaviour:
   lookRadius: 20
   leftCorner: {fileID: 236047161894945650}
   rightCorner: {fileID: 8389626332358702042}
-  isRangedAndShouldAttack: 0
+  parentRoom: {fileID: 0}
 --- !u!95 &6750983086970087258
 Animator:
   serializedVersion: 3
