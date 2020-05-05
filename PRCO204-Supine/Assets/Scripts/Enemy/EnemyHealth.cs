@@ -15,6 +15,7 @@ public class EnemyHealth : MonoBehaviour
 
     private float shakeHitAmount = 0.5f;
     private float shakeDieAmount = 0.5f;
+    float coolDown = 1f;
 
     private Room parentRoom;
 
@@ -25,6 +26,10 @@ public class EnemyHealth : MonoBehaviour
     private GameObject explosionPrefab;
     [SerializeField]
     private GameObject smallSlime;
+    [SerializeField]
+    private GameObject squidgePrefab;
+    [SerializeField]
+    private GameObject squidgePrefabSmall;
 
     [SerializeField]
     private bool isSlime = false;
@@ -34,6 +39,8 @@ public class EnemyHealth : MonoBehaviour
     private Color original;
     [SerializeField]
     private Color tempColor;
+
+    bool changeColor;
 
     // Start is called before the first frame update
     void Start()
@@ -63,19 +70,27 @@ public class EnemyHealth : MonoBehaviour
             // Skulls/small slimes should just explode.
             if (!isSlime)
             {
-                Instantiate(explosionPrefab, transform.position, transform.rotation);
+                if (gameObject.name.Contains("Ranged"))
+                {
+                    Instantiate(explosionPrefab, transform.position, transform.rotation);
+                }
+                else
+                {
+                    Instantiate(squidgePrefabSmall, transform.position, transform.rotation);
+                }
             }
             // Big slimes spawn smaller slimes.
             else
             {
+                Instantiate(squidgePrefab, transform.position, transform.rotation);
+
                 int i = Random.Range(2, 4);
 
                 for (int j = 0; j < i; j++)
                 {
-                    //parentRoom.enemyCountManager.enemyCount++;
-                    Vector3 newPos = new Vector3(transform.position.x, -3.8f, transform.position.z);
+                    parentRoom.enemyCountManager.enemyCount++;
+                    Vector3 newPos = new Vector3(transform.position.x - (j * 0.5f), -3.8f, transform.position.z - (j * 0.5f));
                     GameObject go = Instantiate(smallSlime, newPos, transform.rotation, parentRoom.transform);
-                    go.GetComponent<EnemyMovement>().parentRoom = GetComponent<EnemyMovement>().parentRoom;
                 }
             }
 
@@ -85,6 +100,18 @@ public class EnemyHealth : MonoBehaviour
             }
 
             Die();
+        }
+
+        if (changeColor)
+        {
+            if (gameObject.GetComponentInChildren<MeshRenderer>().material.color == original)
+            {
+                gameObject.GetComponentInChildren<MeshRenderer>().material.color = tempColor;
+            }
+            else
+            {
+                gameObject.GetComponentInChildren<MeshRenderer>().material.color = original;
+            }
         }
     }
 
@@ -100,10 +127,14 @@ public class EnemyHealth : MonoBehaviour
             CameraShake.shake = shakeHitAmount;
         }
 
-        gameObject.GetComponent<MeshRenderer>().material.color = tempColor;
-        Invoke("ResetColour", 0.1f);
+        if (!changeColor)
+        {
+            changeColor = true;
 
-        gameObject.GetComponent<Rigidbody>().AddForce(-transform.forward * knockback, ForceMode.Impulse);
+            Invoke("ResetColour", coolDown);
+        }
+
+        //gameObject.GetComponent<Rigidbody>().AddForce(-transform.forward * knockback, ForceMode.Impulse);
     }
     
 
@@ -148,6 +179,7 @@ public class EnemyHealth : MonoBehaviour
 
     void ResetColour()
     {
-        gameObject.GetComponent<MeshRenderer>().material.color = original;
+            changeColor = false;
+            gameObject.GetComponent<MeshRenderer>().material.color = original;
     }
 }
