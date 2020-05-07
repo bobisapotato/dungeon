@@ -9,7 +9,7 @@ public class HealthSystem : MonoBehaviour
     public int health;
 
     private int minHealth = 0;
-    private int maxHealth = 100;
+    private int maxHealth = 10;
 
     bool invulnerable = false;
 
@@ -18,7 +18,7 @@ public class HealthSystem : MonoBehaviour
 
     public Slider healthbar;
 
-    private int startPlayerHealth = 100;
+    private int startPlayerHealth = 10;
     private int oldHealth;
 
     private GameManager gameMan;
@@ -69,10 +69,10 @@ public class HealthSystem : MonoBehaviour
             Invoke("ResetVulnerability", coolDown);
         }
 
-        if (GetHealth() != oldHealth)
-        {
-            healthbar.value = ((float)GetHealth() / 100);
-        }
+        //if (GetHealth() != oldHealth)
+        //{
+        //    healthbar.value = ((float)GetHealth() / 100);
+        //}
 
         oldHealth = GetHealth();
 
