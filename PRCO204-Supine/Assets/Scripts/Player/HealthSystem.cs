@@ -23,6 +23,9 @@ public class HealthSystem : MonoBehaviour
 
     private GameManager gameMan;
 
+    [SerializeField]
+    private Animator heartsUIAnim;
+
     private Color original;
     [SerializeField]
     private Color tempColor;
@@ -114,6 +117,7 @@ public class HealthSystem : MonoBehaviour
                 health -= damage;
             }
         }
+        updateHeartAnim();
     }
 
     public void Heal(int heal)
@@ -126,6 +130,8 @@ public class HealthSystem : MonoBehaviour
         {
             health += heal;
         }
+
+        updateHeartAnim();
     }
 
     void ResetVulnerability()
@@ -137,5 +143,10 @@ public class HealthSystem : MonoBehaviour
         arm.GetComponent<MeshRenderer>().material.color = original;
         swordArm.GetComponent<MeshRenderer>().material.color = original;
         crossbowArm.GetComponent<MeshRenderer>().material.color = original;
+    }
+
+    private void updateHeartAnim()
+    {
+        heartsUIAnim.SetInteger("health", health);
     }
 }
