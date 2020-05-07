@@ -40,8 +40,7 @@ public class LevelGeneration : MonoBehaviour
 	public Room currentRoom;
 	public Animator padlockAnimator;
 
-	// Loading Panel
-	public GameObject loadingPanel;
+	
 
 	private void Start()
 	{
