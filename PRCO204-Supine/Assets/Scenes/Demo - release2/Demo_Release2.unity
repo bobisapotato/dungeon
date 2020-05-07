@@ -1177,7 +1177,7 @@ MonoBehaviour:
     spaceCount: 0
     wordCount: 1
     linkCount: 0
-    lineCount: 1
+    lineCount: 4
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -1524,6 +1524,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4742781350052062985, guid: f3c4061d213260d429edea91feb5cabc,
         type: 3}
+    - target: {fileID: 1814722806, guid: 3393b251d2d9ed44aa7916c50142f1ac, type: 3}
+      propertyPath: models
+      value: 
+      objectReference: {fileID: 1894750566}
     - target: {fileID: 1573434437141123358, guid: 3393b251d2d9ed44aa7916c50142f1ac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1601,6 +1605,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3393b251d2d9ed44aa7916c50142f1ac, type: 3}
+--- !u!114 &1894750566 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7872398961900613289, guid: 3393b251d2d9ed44aa7916c50142f1ac,
+    type: 3}
+  m_PrefabInstance: {fileID: 1894750565}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fda4e417086495f40b53406cd8e7ae5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1984874246
 GameObject:
   m_ObjectHideFlags: 0

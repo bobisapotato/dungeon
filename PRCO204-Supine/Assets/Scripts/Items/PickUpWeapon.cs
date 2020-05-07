@@ -27,8 +27,10 @@ public class PickUpWeapon : MonoBehaviour
     [SerializeField]
     private Mesh openTrapDoorMesh;
 
+    [HideInInspector]
     public GameManager gameManager;
 
+    [HideInInspector]
     public Models models;
 
     [SerializeField]

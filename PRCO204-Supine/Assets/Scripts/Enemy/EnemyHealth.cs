@@ -171,7 +171,7 @@ public class EnemyHealth : MonoBehaviour
         {
             if(!enemyCountManager.checkDroppedCrossbow())
             {
-                Instantiate(crossbowPrefab, this.gameObject.transform, false);
+                Instantiate(crossbowPrefab, transform.position, transform.rotation);
                 enemyCountManager.dropCrossbow();
             }
         }
@@ -179,7 +179,7 @@ public class EnemyHealth : MonoBehaviour
 
     void ResetColour()
     {
-            changeColor = false;
-            gameObject.GetComponent<MeshRenderer>().material.color = original;
+        changeColor = false;
+        gameObject.GetComponent<MeshRenderer>().material.color = original;
     }
 }
