@@ -5,6 +5,8 @@ using UnityEngine;
 public class EnemySpawnManager : MonoBehaviour
 {
     [SerializeField]
+    private GameObject trap;
+    [SerializeField]
     private GameObject rangedEnemyPrefab;
     [SerializeField]
     private GameObject meleeEnemyPrefab;
@@ -37,6 +39,10 @@ public class EnemySpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        startPos = GetStartPos();
+        enemyInstance = Instantiate(trap, transform, false);
+        enemyInstance.transform.localPosition = new Vector3(startPos.x, -4f, startPos.z);
+
         // Set the number of enemies for the room.
         numberOfEnemies = GetNumberOfEnemiesInRoom();
 
