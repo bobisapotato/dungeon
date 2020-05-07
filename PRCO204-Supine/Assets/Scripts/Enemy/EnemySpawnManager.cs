@@ -31,6 +31,9 @@ public class EnemySpawnManager : MonoBehaviour
 
     private GameObject enemyInstance;
 
+    public static bool isJustSlimes;
+    public static bool isJustSkeletons;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -53,18 +56,19 @@ public class EnemySpawnManager : MonoBehaviour
             startPos = GetStartPos();
             //startRot = GetStartRot(startPos);
 
-            float rnd = Random.Range(0f, 1f);
-
-            // 50/50 chance of spawning each type of enemy.
-            if (rnd >= 0.5f)
+            if (isJustSlimes)
             {
-                enemyInstance = Instantiate(meleeEnemyPrefab, transform, false);
-                enemyInstance.transform.localPosition = new Vector3(startPos.x, 0.1f, startPos.z);
+                SpawnSlime();
+            }
+            else if (isJustSkeletons)
+            {
+                SpawnSkeleton();
             }
             else
             {
-                enemyInstance = Instantiate(rangedEnemyPrefab, transform, false);
+                SpawnBoth();
             }
+            
 
             // Instantiate the enemy, not in world space.
             enemyInstance.transform.localPosition = startPos;
@@ -131,5 +135,32 @@ public class EnemySpawnManager : MonoBehaviour
         pos.z = Random.Range(-7.5f, 7.5f);
 
         return pos;
+    }
+
+    void SpawnSlime()
+    {
+        enemyInstance = Instantiate(meleeEnemyPrefab, transform, false);
+        enemyInstance.transform.localPosition = new Vector3(startPos.x, 0.1f, startPos.z);
+    }
+
+    void SpawnBoth()
+    {
+        float rnd = Random.Range(0f, 1f);
+
+        // 50/50 chance of spawning each type of enemy.
+        if (rnd >= 0.5f)
+        {
+            enemyInstance = Instantiate(meleeEnemyPrefab, transform, false);
+            enemyInstance.transform.localPosition = new Vector3(startPos.x, 0.1f, startPos.z);
+        }
+        else
+        {
+            enemyInstance = Instantiate(rangedEnemyPrefab, transform, false);
+        }
+    }
+
+    void SpawnSkeleton()
+    {
+        enemyInstance = Instantiate(rangedEnemyPrefab, transform, false);
     }
 }

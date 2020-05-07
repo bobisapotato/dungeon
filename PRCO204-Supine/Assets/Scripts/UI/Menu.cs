@@ -28,6 +28,7 @@ public class Menu : MonoBehaviour
     [SerializeField]
     AudioClip selectButtonPressClip;
 
+    LevelManager levelGen;
     GameManager gameMan;
 
     void Awake()
@@ -46,6 +47,7 @@ public class Menu : MonoBehaviour
         controls.UI.Select.performed += ctx => Select();
 
         mainMenuAudio = GetComponent<AudioSource>();
+        levelGen = GameObject.FindGameObjectWithTag("GameManager").GetComponent<LevelManager>();
         gameMan = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
 
         Cursor.visible = false;
@@ -138,7 +140,7 @@ public class Menu : MonoBehaviour
 
     public void LoadGame()
     {
-        gameMan.openDemoScene2();
+        levelGen.LoadLevel();
     }
 
     public void LoadInstructions()

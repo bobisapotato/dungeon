@@ -29,12 +29,15 @@ public class PickUpWeapon : MonoBehaviour
 
     [HideInInspector]
     public GameManager gameManager;
+    [HideInInspector]
+    public LevelManager levelManager;
 
     [HideInInspector]
     public Models models;
 
     [SerializeField]
     private AudioSource pickUpAudio;
+
 
     void Awake()
     {
@@ -44,6 +47,7 @@ public class PickUpWeapon : MonoBehaviour
         controls.Gameplay.PlayerPickUpWeapon.performed += ctx => PickUp();
         models = GetComponentInChildren<Models>();
         gameManager = FindObjectOfType<GameManager>();
+        levelManager = FindObjectOfType<LevelManager>();
         newPlayerWeapon();
     }
 
@@ -210,7 +214,7 @@ public class PickUpWeapon : MonoBehaviour
         PlayerAttack.isHoldingWeapon = false;
         isHoldingKey = false;
 
-        gameManager.openDemoWin2();
+        levelManager.LoadLevel();
     }
 
     // Required for the input system.

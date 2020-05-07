@@ -131,6 +131,7 @@ GameObject:
   m_Component:
   - component: {fileID: 44796321}
   - component: {fileID: 44796320}
+  - component: {fileID: 44796322}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -164,6 +165,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &44796322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44796319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86cc76ccf9d20f748bc7ecb94e4ab73a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &127889847
 GameObject:
   m_ObjectHideFlags: 0
@@ -1177,7 +1190,7 @@ MonoBehaviour:
     spaceCount: 0
     wordCount: 1
     linkCount: 0
-    lineCount: 4
+    lineCount: 1
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -1597,6 +1610,11 @@ PrefabInstance:
         type: 3}
       propertyPath: isUsingMouse
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1573434437141123359, guid: 3393b251d2d9ed44aa7916c50142f1ac,
+        type: 3}
+      propertyPath: playerSpeed
+      value: 12.5
       objectReference: {fileID: 0}
     - target: {fileID: 1573434437141123362, guid: 3393b251d2d9ed44aa7916c50142f1ac,
         type: 3}
