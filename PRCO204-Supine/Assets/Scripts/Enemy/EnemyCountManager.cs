@@ -21,6 +21,9 @@ public class EnemyCountManager : MonoBehaviour
     public int startEnemyTotal;
     private bool droppedCrossbow = false;
 
+    // Loading Panel
+    public GameObject loadingPanel;
+    
 
     public void startUpEnemyCounter()
     {
@@ -43,6 +46,8 @@ public class EnemyCountManager : MonoBehaviour
         enemyCount = enemiesInLevel.Count;
         startEnemyTotal = enemyCount;
         updateLabel();
+        loadingPanel.GetComponent<Animator>().Play("HideLoadingPanel");
+        //loadingPanel.SetActive(false);
     }
 
     public void enemyKilled(EnemyHealth enemyKilled)

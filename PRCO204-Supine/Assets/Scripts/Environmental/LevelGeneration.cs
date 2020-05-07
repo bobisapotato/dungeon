@@ -40,6 +40,9 @@ public class LevelGeneration : MonoBehaviour
 	public Room currentRoom;
 	public Animator padlockAnimator;
 
+	// Loading Panel
+	public GameObject loadingPanel;
+
 	private void Start()
 	{
 		// to start, we just create the starter room at 0.0
