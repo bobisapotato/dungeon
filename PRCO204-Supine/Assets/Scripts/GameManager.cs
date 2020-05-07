@@ -9,10 +9,10 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown("escape"))
-        {
-            openDemoMenu2();
-        }
+        //if(Input.GetKeyDown("escape"))
+        //{
+        //    openDemoMenu2();
+        //}
     }
     
 	public void closeGame()

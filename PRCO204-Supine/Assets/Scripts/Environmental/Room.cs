@@ -32,6 +32,8 @@ public class Room : MonoBehaviour
     private PickUpWeapon playerPickUp;
 
     public bool justCreated = true;
+
+    public static EnemySpawnManager allSpawnManagers;
     #endregion
 
     // Start is called before the first frame update.
@@ -63,6 +65,8 @@ public class Room : MonoBehaviour
         {
             d.doorManager = levelGenMan.GetComponent<AudioSource>();
         }
+
+        allSpawnManagers = GetComponentInChildren<EnemySpawnManager>();
     }
 
     // Update is called once per frame.

@@ -70,10 +70,10 @@ public class Rat : MonoBehaviour
 	{
 		isWandering = true;
 
-		rotTime = UnityEngine.Random.Range(0, 1);
-		rotateWait = UnityEngine.Random.Range(0, 0);
+		rotTime = UnityEngine.Random.Range(1, 2);
+		rotateWait = UnityEngine.Random.Range(1, 2);
 		rotateLorR = UnityEngine.Random.Range(0, 2);
-		walkWait = UnityEngine.Random.Range(0, 0);
+		walkWait = UnityEngine.Random.Range(1, 2);
 		walkTime = UnityEngine.Random.Range(1, 3);
 
 		yield return new WaitForSeconds(walkWait);

@@ -131,6 +131,7 @@ GameObject:
   m_Component:
   - component: {fileID: 44796321}
   - component: {fileID: 44796320}
+  - component: {fileID: 44796322}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -164,6 +165,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &44796322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44796319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86cc76ccf9d20f748bc7ecb94e4ab73a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &127889847
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,6 +543,24 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &680883731 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1573434437141123362, guid: 3393b251d2d9ed44aa7916c50142f1ac,
+    type: 3}
+  m_PrefabInstance: {fileID: 1894750565}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &680883742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680883731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8c5b7cfe086bc643981705fccd289a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &692685168
 GameObject:
   m_ObjectHideFlags: 0
@@ -1524,6 +1555,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4742781350052062985, guid: f3c4061d213260d429edea91feb5cabc,
         type: 3}
+    - target: {fileID: 1814722806, guid: 3393b251d2d9ed44aa7916c50142f1ac, type: 3}
+      propertyPath: models
+      value: 
+      objectReference: {fileID: 1894750566}
     - target: {fileID: 1573434437141123358, guid: 3393b251d2d9ed44aa7916c50142f1ac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1594,6 +1629,11 @@ PrefabInstance:
       propertyPath: isUsingMouse
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1573434437141123359, guid: 3393b251d2d9ed44aa7916c50142f1ac,
+        type: 3}
+      propertyPath: playerSpeed
+      value: 12.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1573434437141123362, guid: 3393b251d2d9ed44aa7916c50142f1ac,
         type: 3}
       propertyPath: m_Name
@@ -1601,6 +1641,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3393b251d2d9ed44aa7916c50142f1ac, type: 3}
+--- !u!114 &1894750566 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7872398961900613289, guid: 3393b251d2d9ed44aa7916c50142f1ac,
+    type: 3}
+  m_PrefabInstance: {fileID: 1894750565}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fda4e417086495f40b53406cd8e7ae5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1984874246
 GameObject:
   m_ObjectHideFlags: 0
