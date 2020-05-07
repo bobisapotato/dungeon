@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1714180376414181910}
-  - component: {fileID: 1714180376414181909}
+  - component: {fileID: 637710098}
   m_Layer: 0
   m_Name: Spike Trap
   m_TagString: Trap
@@ -32,19 +32,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &1714180376414181909
-SphereCollider:
+--- !u!65 &637710098
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1714180376414181911}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.0292459
-  m_Center: {x: -1.6999998, y: -3.397283, z: -1.5999998}
+  m_Size: {x: 3, y: 3, z: 3}
+  m_Center: {x: -1.6, y: -2.22, z: -1.61}
 --- !u!1001 &1714180375996686054
 PrefabInstance:
   m_ObjectHideFlags: 0
