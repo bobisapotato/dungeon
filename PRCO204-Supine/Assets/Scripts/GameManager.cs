@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
         PlayerAttack.isHoldingRangedWeapon = false;
         PlayerAttack.isHoldingWeapon = false;
 
-        SceneManager.LoadScene("DemoInstructions2");
+        SceneManager.LoadScene("Objectives");
     }
 
 
