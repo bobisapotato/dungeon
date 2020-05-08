@@ -171,6 +171,22 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""PressAnyButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""f919131f-0abf-47bf-a90a-ca6387f1ab0b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""PressAnyValue"",
+                    ""type"": ""Value"",
+                    ""id"": ""22acba2b-af68-4aff-8f05-a4e190e6321b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -217,6 +233,182 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Back"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""adff8e87-7fa3-4115-91b9-c65c90f40a1d"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PressAnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2bb4f672-678e-480f-b10e-24b336e247f6"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PressAnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""15c26bcc-1fa5-4912-8199-4e5afefac25b"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PressAnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5f62db9b-c2a3-4115-b16a-3ad7ae7dcb45"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PressAnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1d535791-d968-42be-8cbd-07e6949e8173"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PressAnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5dba3f32-7da9-4cb4-89d6-cab0e8789d28"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PressAnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""447d71db-601c-41b6-85c4-df3bdd1024eb"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PressAnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7a45b25e-2225-41bc-af02-2b6ec98eb16c"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PressAnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b38e80eb-d9bc-410e-b24d-f0e141aa75b7"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PressAnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""378cec99-b959-41e8-8af6-a5e96cb8984b"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PressAnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6fc6334b-e46a-4cdc-b9fe-3d70205a8754"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PressAnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1e3cc270-31ca-41ac-a7b9-c65a7973b77b"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PressAnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""79472db7-c352-4a49-b821-99fcad54e4c8"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PressAnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""34771873-83b6-42a1-b202-2ac66fdf40f2"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PressAnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bf69c9ff-9f47-44d8-a7b3-407feb7380bd"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PressAnyValue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d9d28802-cf44-45d0-b476-a21594dde23a"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PressAnyValue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -237,6 +429,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_UI_MoveAcross = m_UI.FindAction("MoveAcross", throwIfNotFound: true);
         m_UI_Select = m_UI.FindAction("Select", throwIfNotFound: true);
         m_UI_Back = m_UI.FindAction("Back", throwIfNotFound: true);
+        m_UI_PressAnyButton = m_UI.FindAction("PressAnyButton", throwIfNotFound: true);
+        m_UI_PressAnyValue = m_UI.FindAction("PressAnyValue", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -363,6 +557,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_UI_MoveAcross;
     private readonly InputAction m_UI_Select;
     private readonly InputAction m_UI_Back;
+    private readonly InputAction m_UI_PressAnyButton;
+    private readonly InputAction m_UI_PressAnyValue;
     public struct UIActions
     {
         private @PlayerControls m_Wrapper;
@@ -371,6 +567,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @MoveAcross => m_Wrapper.m_UI_MoveAcross;
         public InputAction @Select => m_Wrapper.m_UI_Select;
         public InputAction @Back => m_Wrapper.m_UI_Back;
+        public InputAction @PressAnyButton => m_Wrapper.m_UI_PressAnyButton;
+        public InputAction @PressAnyValue => m_Wrapper.m_UI_PressAnyValue;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -392,6 +590,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Back.started -= m_Wrapper.m_UIActionsCallbackInterface.OnBack;
                 @Back.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnBack;
                 @Back.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnBack;
+                @PressAnyButton.started -= m_Wrapper.m_UIActionsCallbackInterface.OnPressAnyButton;
+                @PressAnyButton.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnPressAnyButton;
+                @PressAnyButton.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnPressAnyButton;
+                @PressAnyValue.started -= m_Wrapper.m_UIActionsCallbackInterface.OnPressAnyValue;
+                @PressAnyValue.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnPressAnyValue;
+                @PressAnyValue.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnPressAnyValue;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -408,6 +612,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Back.started += instance.OnBack;
                 @Back.performed += instance.OnBack;
                 @Back.canceled += instance.OnBack;
+                @PressAnyButton.started += instance.OnPressAnyButton;
+                @PressAnyButton.performed += instance.OnPressAnyButton;
+                @PressAnyButton.canceled += instance.OnPressAnyButton;
+                @PressAnyValue.started += instance.OnPressAnyValue;
+                @PressAnyValue.performed += instance.OnPressAnyValue;
+                @PressAnyValue.canceled += instance.OnPressAnyValue;
             }
         }
     }
@@ -427,5 +637,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnMoveAcross(InputAction.CallbackContext context);
         void OnSelect(InputAction.CallbackContext context);
         void OnBack(InputAction.CallbackContext context);
+        void OnPressAnyButton(InputAction.CallbackContext context);
+        void OnPressAnyValue(InputAction.CallbackContext context);
     }
 }
