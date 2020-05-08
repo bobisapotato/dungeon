@@ -2,34 +2,76 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
-
 public class EnemyAttack : MonoBehaviour
 {
-    //Variables
-    Collider hitbox;
+    private GameObject player;
 
-    [SerializeField] int damage;
+    [SerializeField]
+    private int damage = 10;
 
+    private float attackCoolDown = 0f;
+    private float attackCoolDownTime = 1f;
+    private float meleeAttackRadius = 3f;
+    private float rangedAttackRadius = 20f;
 
-    // Start is called before the first frame update
+    [SerializeField]
+    private AudioSource playerHurt;
+
+    [SerializeField]
+    private bool isRanged = false;
+
+    [SerializeField]
+    private GameObject fireBallPrefab;
+
+    private EnemyMovement moveScript;
+
     void Start()
     {
-        hitbox = gameObject.GetComponent<CapsuleCollider>();
+        player = GameObject.FindGameObjectWithTag("Player");
+
+        if (isRanged)
+        {
+            meleeAttackRadius = 10f;
+        }
+
+        moveScript = GetComponent<EnemyMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Player")
+        // Add to attack cooldown.
+        if (attackCoolDown <= attackCoolDownTime)
         {
-            collision.gameObject.SendMessage("TakeDamage", damage);
+            attackCoolDown += Time.deltaTime;
+        }
+
+        // Get the distance to the player.
+        float movementDistance = Vector3.Distance(player.transform.position,
+            transform.position);
+
+        // If inside the radius & attack isn't on cooldown attack.
+        if (movementDistance <= meleeAttackRadius && attackCoolDown > attackCoolDownTime 
+            && moveScript.parentRoom.playerInRoom)
+        {
+            if (!isRanged)
+            {
+                attackCoolDown = 0f;
+
+                playerHurt.Play();
+                player.GetComponentInChildren<HealthSystem>().gameObject.SendMessage("TakeDamage", damage);
+            }
+        }
+
+        if (isRanged && movementDistance <= rangedAttackRadius && attackCoolDown > attackCoolDownTime 
+            && moveScript.parentRoom.playerInRoom)
+        {
+            attackCoolDown = 0f;
+
+            Vector3 newPos = transform.position + (transform.forward * 2f);
+
+            // Instantiates the projectile to be shot.
+            Instantiate(fireBallPrefab, newPos, transform.rotation);
         }
     }
 }

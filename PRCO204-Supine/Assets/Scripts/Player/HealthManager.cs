@@ -9,17 +9,17 @@ public class HealthManager : MonoBehaviour
 {
     public Slider healthbar;
 
-    public static HealthSystem playerHealth;
-
     private int startPlayerHealth = 100;
     private int oldHealth;
+
+    public static HealthSystem playerHealth;
 
     private GameManager gameMan;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerHealth = new HealthSystem(startPlayerHealth);
+        //playerHealth = new HealthSystem(startPlayerHealth);
         
         oldHealth = playerHealth.GetHealth();
 
@@ -33,8 +33,6 @@ public class HealthManager : MonoBehaviour
         if (playerHealth.GetHealth() != oldHealth) 
         {
             healthbar.value = ((float)playerHealth.GetHealth() / 100);
-            Debug.Log(oldHealth);
-
         }
 
         oldHealth = playerHealth.GetHealth();

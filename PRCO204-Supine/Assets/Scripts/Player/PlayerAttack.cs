@@ -4,14 +4,46 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-
     // Variables
     Collider hitbox;
-    [SerializeField] GameObject meleeObject;
+    [SerializeField] 
+    GameObject meleeObject;
 
-    
-    [SerializeField] GameObject projectile;
+    [SerializeField]
+    GameObject projectile;
 
+    private PlayerControls controls;
+    private float rightTriggerDown;
+
+    private float timer = 0f;
+    private float reloadTime = 0.2f;
+
+    public static bool isHoldingWeapon;
+    public static bool isHoldingRangedWeapon;
+
+    private bool shouldLastOneMoreFrame = false;
+
+    public Animator animator;
+
+    [SerializeField]
+    ParticleSystem swordSwing;
+
+    [SerializeField]
+    private AudioSource swordAudio;
+
+    void Awake()
+    {
+        controls = new PlayerControls();
+
+        // Controller input.
+        controls.Gameplay.PlayerAttack.performed += ctx => rightTriggerDown
+        = ctx.ReadValue<float>();
+        controls.Gameplay.PlayerAttack.canceled += ctx => rightTriggerDown
+        = ctx.ReadValue<float>();
+
+
+        animator = this.gameObject.GetComponent<Animator>();
+    }
 
     // Start is called before the first frame update
     // Gets the collider of the gameobject and stores it 
@@ -25,16 +57,42 @@ public class PlayerAttack : MonoBehaviour
     // Executes the corrisponding attack.
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0) == true)
+        timer += Time.deltaTime;
+
+        if (timer >= reloadTime && isHoldingWeapon)
         {
-            Attack1();
+            //if (!isHoldingRangedWeapon && (Input.GetKeyDown(KeyCode.Mouse0) == true || rightTriggerDown != 0))
+            if (!isHoldingRangedWeapon && (Input.GetKeyDown(KeyCode.Mouse0) == true || rightTriggerDown != 0))
+            {
+                swordAudio.Pause();
+
+                Attack1();
+                timer = 0f;
+
+                // Play "swinging a sword" animation:
+                animator.Play("SwingSword2");
+                swordSwing.Play();
+
+                swordAudio.Play();
+
+                shouldLastOneMoreFrame = true;
+            }
+            
+            else if (isHoldingRangedWeapon && (Input.GetKeyDown(KeyCode.Mouse0) == true || rightTriggerDown != 0))
+            {
+                Attack2();
+                timer = 0f;
+
+                // Play "pulling back the crossbow" animation:
+                animator.Play("ShootCrossbow");
+            }
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse1) == true)
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") && shouldLastOneMoreFrame)
         {
-            Attack2();
+            swordSwing.Clear();
+            shouldLastOneMoreFrame = false;
         }
-
     }
 
     // Enables the hitbox to attack.
@@ -47,21 +105,7 @@ public class PlayerAttack : MonoBehaviour
     // Instantiates the projectile to be shot.
     private void Attack2()
     {
-
         Instantiate(projectile, meleeObject.transform.position, meleeObject.transform.rotation);
-
-        //   RaycastHit hit;
-        //   Ray ray = new Ray(transform.position, transform.TransformDirection(Vector3.forward));
-
-
-        //if (Physics.Raycast(ray, out hit, hitRange))
-        //   {
-        //       if (hit.transform.gameObject.tag == "Enemy")
-        //       {
-        //           Debug.Log("hit");
-        //           hit.transform.gameObject.SendMessage("TakeDamage", ranged);
-        //       }
-        //   }
     }
 
     // After 1 second, if nothing with the enemy tag
@@ -71,5 +115,16 @@ public class PlayerAttack : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
 
         hitbox.enabled = false;
+    }
+
+    // Required for the input system.
+    void OnEnable()
+    {
+        controls.Gameplay.Enable();
+    }
+
+    void OnDisable()
+    {
+        controls.Gameplay.Disable();
     }
 }

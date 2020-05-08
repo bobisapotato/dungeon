@@ -6,8 +6,21 @@ public class Projectile : MonoBehaviour
 {
     
     //Variables
-    [SerializeField] float velocity;
-    [SerializeField] int damage;
+    [SerializeField] 
+    private float velocity;
+    [SerializeField] 
+    private int damage;
+
+    [SerializeField]
+    private GameObject debrisPrefab;
+    [SerializeField]
+    private GameObject arrow;
+
+    [SerializeField]
+    private AudioSource arrowHit;
+    [SerializeField]
+    private AudioSource arrowExplode;
+
 
     // Start is called before the first frame update
     // Adds a force the the projectile.
@@ -22,13 +35,7 @@ public class Projectile : MonoBehaviour
     private IEnumerator Despawn()
     {
         yield return new WaitForSeconds(5.0f);
-        Die();
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        FireDebris();
         
     }
 
@@ -37,21 +44,46 @@ public class Projectile : MonoBehaviour
     // method. It then kills itself.
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Enemy")
+        if (other.gameObject.CompareTag("Enemy"))
         {
             other.gameObject.SendMessage("TakeDamage", damage);
-            Die();
+            arrowExplode.Play();
+            FireDebris();
         }
-        else
+        else 
         {
-            Die();
+            List<string> excludedTags = new List<string>() { "Weapon", "Key", "Trap Door", "RoomSpawn", "RoomTrigger", "RoomSpawnSensor", "Damage"};
+            if (excludedTags.TrueForAll(tag => !other.gameObject.CompareTag(tag))) {
+                FireDebris();
+            }
         }
     }
 
 
     // Destroys the gameobject this is attached to.
-    private void Die()
+    private void FireDebris()
+    {
+        CapsuleCollider cc = GetComponent<CapsuleCollider>();
+        Rigidbody rb = GetComponent<Rigidbody>();
+
+        rb.constraints = RigidbodyConstraints.FreezeAll;
+        cc.enabled = false;
+
+        debrisPrefab.SetActive(true);
+        arrow.SetActive(false);
+
+        arrowHit.Play();
+
+        Invoke("Die", 4f);
+    }
+
+    void Die()
     {
         Destroy(gameObject);
+    }
+
+    Vector3 GetBehindPosition(Transform target)
+    {
+        return target.position - target.forward;
     }
 }

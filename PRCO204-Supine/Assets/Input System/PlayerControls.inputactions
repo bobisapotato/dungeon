@@ -22,30 +22,6 @@
                     "interactions": ""
                 },
                 {
-                    "name": "PlayerJump",
-                    "type": "Button",
-                    "id": "eb3829af-1966-4c7a-b8b6-78621a82de41",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "PlayerRun",
-                    "type": "Button",
-                    "id": "32cc8910-2525-4b4f-8ef1-a0d44c69b32f",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "PlayerCrouch",
-                    "type": "Button",
-                    "id": "61cfd98d-3873-4337-9dd2-130f385c88c8",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "CameraRotate",
                     "type": "Value",
                     "id": "f6ba4a6e-7970-44ea-9484-c5d8d78789a9",
@@ -58,6 +34,22 @@
                     "type": "Value",
                     "id": "09a099f2-9125-4502-965d-47ebaf48057d",
                     "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "PlayerAttack",
+                    "type": "Value",
+                    "id": "7abd3f0c-015b-41cc-bad8-b461b23d84a8",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "PlayerPickUpWeapon",
+                    "type": "Button",
+                    "id": "8964473c-a5c1-46c2-9a40-f461ef3692b5",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 }
@@ -87,39 +79,6 @@
                 },
                 {
                     "name": "",
-                    "id": "0d13bc84-1328-4f63-befe-4ff9a3c623ac",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "PlayerJump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "ea16a623-7621-4a86-b611-3604b7c36080",
-                    "path": "<Gamepad>/leftStickPress",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "PlayerRun",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "20044d31-98ac-42ad-a6d4-61c0f2bf9d44",
-                    "path": "<Gamepad>/rightStickPress",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "PlayerCrouch",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "20be2de1-9d4d-4bff-93d1-d24ce19a4c01",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
@@ -137,6 +96,112 @@
                     "processors": "",
                     "groups": "",
                     "action": "PlayerRotY",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "97d5451b-1225-4637-930b-4254e5effc6c",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PlayerAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9c976105-abd6-49b0-ade7-309a3057e681",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PlayerPickUpWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "978ed63d-88a6-41a9-9e61-cc96b7cb2314",
+            "actions": [
+                {
+                    "name": "MoveDown",
+                    "type": "Value",
+                    "id": "3eee323e-abfb-4394-8bac-84f7bcf566b2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MoveAcross",
+                    "type": "Value",
+                    "id": "0660e1be-6d82-42d7-8bed-f844c28ad421",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Select",
+                    "type": "Button",
+                    "id": "98121fd4-a9e1-4ead-932d-10cc5a66f877",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Back",
+                    "type": "Button",
+                    "id": "04799e02-a9de-4f93-8809-3f01c513e24a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4d02551c-0b59-4b7a-972d-c38a0ebda362",
+                    "path": "<Gamepad>/leftStick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveAcross",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dd8e1147-09fa-49f6-a7cd-24e9c4414f2c",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4804ff47-2ae2-42fd-8299-5b8bffa89ab1",
+                    "path": "<Gamepad>/leftStick/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d7bceaac-f85b-44e6-aa38-501613fcf649",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Back",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.Android;
 
 public class CameraHideObstacles : MonoBehaviour
 {
@@ -9,10 +10,10 @@ public class CameraHideObstacles : MonoBehaviour
 
     // VARS
     #region
-    private float maxRayRange = 15f;
+    private float maxRayRange = 30f;
     private RaycastHit hit;
-    private GameObject player;
-    private Camera mainCamera;
+    [SerializeField] private GameObject player;
+    [SerializeField] private Camera mainCamera;
     [SerializeField] GameObject obstacle;
 
     //[SerializeField] GameObject[] obstacles;
@@ -27,10 +28,9 @@ public class CameraHideObstacles : MonoBehaviour
     }
 
     // Update is called once per frame
-   
+
     private void FixedUpdate()
     {
-        //Debug.Log("player is hidden = " + checkPlayerObscured());
         checkPlayerObscured();
 
         if (obstacle)
@@ -47,14 +47,15 @@ public class CameraHideObstacles : MonoBehaviour
         Debug.DrawRay(mainCamera.transform.position,
             (player.transform.position - mainCamera.transform.position), Color.magenta);
 
+
+
         // checks if ray cast hits anything
         if (Physics.Raycast(mainCamera.transform.position, (player.transform.position - mainCamera.transform.position),
-            out hit, maxRayRange))
+            out hit))
         {
-            
             // sets bool based on what raycast hits
 
-            if(hit.transform == player.transform)
+            if (hit.transform == player.transform)
             {
                 resetObstacle();
                 return false;
@@ -84,7 +85,7 @@ public class CameraHideObstacles : MonoBehaviour
         // sets mesh renderer to inactive for given GO
         if (obstacle.GetComponent<MeshRenderer>())
         {
-            if (lastWall != obstacle) 
+            if (lastWall != obstacle)
             {
                 alpha = 1f;
 
@@ -93,7 +94,7 @@ public class CameraHideObstacles : MonoBehaviour
             else
             {
                 //obstacle.GetComponent<MeshRenderer>().enabled = false;
-                if (alpha > 0.5f) 
+                if (alpha > 0.5f)
                 {
                     alpha -= 0.1f;
                 }
@@ -130,6 +131,4 @@ public class CameraHideObstacles : MonoBehaviour
         resetObstacle();
         obstacle = newObstacle;
     }
-
-
 }

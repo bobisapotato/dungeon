@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 public class Room : MonoBehaviour
@@ -30,10 +29,11 @@ public class Room : MonoBehaviour
     public EnemyCountManager enemyCountManager;
 
     private LevelGeneration levelGenMan;
-
-    private NetworkRoomRelay _networkRoomRelay;
+    private PickUpWeapon playerPickUp;
 
     public bool justCreated = true;
+
+    public static EnemySpawnManager allSpawnManagers;
     #endregion
 
     // Start is called before the first frame update.
@@ -44,28 +44,37 @@ public class Room : MonoBehaviour
             Debug.LogError("No doors are attached to this room. Each room requires at least one door child");
         }
 
-        // Add a NetworkRoomRelay to this Room
-        _networkRoomRelay = gameObject.AddComponent<NetworkRoomRelay>();
-
         doors = this.GetComponentsInChildren<Door>();
         setUpDoorDirections();
 
         // get the roomTrigger
         inRoomTrigger = GetComponentInChildren<EnterRoomTrigger>().gameObject.GetComponent<BoxCollider>();
 
-        StartCoroutine("updatebabyBool");
+        
         // get enemyCountManager
         enemyCountManager = GameObject.FindGameObjectWithTag("EnemyCountMan").GetComponent<EnemyCountManager>();
 
         // get LevelGen from parent.
         levelGenMan = GameObject.FindGameObjectWithTag("LevelGenManager").GetComponent<LevelGeneration>();
 
+        playerPickUp = GameObject.FindGameObjectWithTag("Player").GetComponent<PickUpWeapon>();
+
         populateEnemiesInRoom();
+
+        foreach (Door d in doors)
+        {
+            d.doorManager = levelGenMan.GetComponent<AudioSource>();
+        }
+
+        allSpawnManagers = GetComponentInChildren<EnemySpawnManager>();
     }
 
     // Update is called once per frame.
     void Update()
     {
+        //TESTING
+        
+
         if(playerInRoom & !roomCleared & !doorsLocked)
         {
             lockAllDoors();
@@ -74,13 +83,17 @@ public class Room : MonoBehaviour
         {
             unlockAllDoors();
         }
+
+        // If this is the start room, unlock doors when they have the sword
+        if(this.gameObject.name.Contains("start") && doorsLocked)
+        {
+            if(playerPickUp.isHoldingWeapon())
+            {
+                unlockAllDoors();
+            }
+        }
     }
 
-    public IEnumerator updatebabyBool()
-    {
-        yield return new WaitForSeconds(0.1f);
-        justCreated = false;
-    }
 
     public void populateEnemiesInRoom()
     {
@@ -137,8 +150,6 @@ public class Room : MonoBehaviour
     public void setPlayerInRoom(bool playerInRoomInput)
     {
         playerInRoom = playerInRoomInput;
-        
-        if (playerInRoomInput) _networkRoomRelay.EnteredRoom();
     }
 
     public void lockAllDoors()
@@ -162,62 +173,8 @@ public class Room : MonoBehaviour
         doorsLocked = false;
     }
 
-
-    private void OnTriggerEnter(Collider other)
+    public bool getPlayerInRoom()
     {
-        // Sometimes doors overlap. This shouldn't happen if the spawnSensor script is
-        // properly working, but for now the quick fix is just deleting the second room.
-
-        if(other.gameObject.GetComponent<Room>())
-        {
-            Room otherRoom = other.gameObject.GetComponent<Room>();
-            if(otherRoom.justCreated && !justCreated)
-            {
-                otherRoom.destroyThisRoom();
-                Debug.Log("delete other Room");
-            }
-
-        }
+        return playerInRoom;
     }
-
-    public void destroyThisRoom()
-    {
-        levelGenMan.removeRoomFromScene(this.gameObject);
-
-        foreach(RoomSpawnPoint spawn in GetComponentsInChildren<RoomSpawnPoint>())
-        {
-            levelGenMan.removeFromSpawnList(spawn.gameObject);
-        }
-        Destroy(this.gameObject);
-    }
-
-    /// <summary>
-    /// Gets the color used in the room, to be sent to the network.
-    /// Not super heavy but probably avoid doing it each frame.
-    /// Tree:
-    ///   gameObject (Room)
-    ///   ┗ Model
-    ///     ┗ Floor
-    ///       ┗ MeshRenderer
-    ///         ┗ Materials
-    ///           ┗ material.Color
-    /// </summary>
-    public Color GetColor() {
-        try {
-            var model = gameObject.transform.Find("Model");
-            var floor = model.gameObject.transform.Find("Floor");
-            var meshRenderer = floor.GetComponent<MeshRenderer>();
-            var color = meshRenderer.material.color;
-            return color;
-        }
-        catch (Exception e) {
-            Debug.LogError($"Unable to traverse the tree of this Room object to get its color: {e.Message}");
-            return Color.black;
-        }
-    }
-
-    public Array GetDoors() {
-        return new[] {nDoor, eDoor, wDoor, sDoor};
-    }
-
 }

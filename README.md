@@ -11,7 +11,8 @@ Josie Wood|`10509521`|josie@supine.dev|**Scrum master**, lead designer, QA teste
 # Team meeting schedules
 Due|Action|By
 ---|---|---
-Friday Evening | **Sprint review**: Discuss how the week's sprint went, and decide on tasks for the following weeks' sprint.|Everyone
+Saturday Afternoon (2pm start) | **Sprint review**: Discuss how the week's sprint went, and decide on tasks for the following weeks' sprint.|Everyone
+Monday Afternoon (2pm start)|**Client meeting**: Discussing the project with the client, making sure we are staying on track and within scope. This is not every monday. |Everyone & Client
 Tuesday Morning (12pm start)|**Live coding**: Working together in a discord call to develop the project, sharing screens if necessary.|Everyone
 Wednesday Morning (12pm start)|**Live coding**: Working together in a discord call to develop the project, sharing screens if necessary.|Everyone
 Thursday Evening (7pm start)|**Live coding**: Working together in a discord call to develop the project, sharing screens if necessary|Everyone

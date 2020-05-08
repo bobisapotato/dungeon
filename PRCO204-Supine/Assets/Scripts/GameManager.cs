@@ -9,10 +9,10 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown("escape"))
-        {
-            openDemoMenu();
-        }
+        //if(Input.GetKeyDown("escape"))
+        //{
+        //    openDemoMenu2();
+        //}
     }
     
 	public void closeGame()
@@ -36,26 +36,47 @@ public class GameManager : MonoBehaviour
     #region
     public void openDemoScene2()
     {
+        // Reset static values for next level.
+        PlayerAttack.isHoldingRangedWeapon = false;
+        PlayerAttack.isHoldingWeapon = false;
+
         SceneManager.LoadScene("Demo_Release2");
     }
 
     public void openDemoWin2()
     {
+        // Reset static values for next level.
+        PlayerAttack.isHoldingRangedWeapon = false;
+        PlayerAttack.isHoldingWeapon = false;
+
         SceneManager.LoadScene("DemoWin2");
     }
     public void openDemoLose2()
     {
-        Invoke("loadLose2", 1f);
-    }
+        // Reset static values for next level.
+        PlayerAttack.isHoldingRangedWeapon = false;
+        PlayerAttack.isHoldingWeapon = false;
 
-    public void loadLose2()
-    {
         SceneManager.LoadScene("DemoLose2");
     }
 
+
     public void openDemoMenu2()
     {
+        // Reset static values for next level.
+        PlayerAttack.isHoldingRangedWeapon = false;
+        PlayerAttack.isHoldingWeapon = false;
+
         SceneManager.LoadScene("DemoMenu2");
+    }
+
+    public void openDemoInstructions2()
+    {
+        // Reset static values for next level.
+        PlayerAttack.isHoldingRangedWeapon = false;
+        PlayerAttack.isHoldingWeapon = false;
+
+        SceneManager.LoadScene("DemoInstructions2");
     }
 
 
