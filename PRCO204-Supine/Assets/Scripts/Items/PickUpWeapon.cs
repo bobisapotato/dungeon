@@ -34,6 +34,7 @@ public class PickUpWeapon : MonoBehaviour
     [SerializeField]
     private AudioSource pickUpAudio;
 
+
     void Awake()
     {
         controls = new PlayerControls();
@@ -116,11 +117,11 @@ public class PickUpWeapon : MonoBehaviour
 
         if (heldWeapon.name.Contains("Sword"))
         {
-            Instantiate(swordPrefab, transform.position, transform.rotation);
+            Instantiate(swordPrefab, transform.position, Quaternion.identity);
         }
         else if (heldWeapon.name.Contains("Crossbow"))
         {
-            Instantiate(crossbowPrefab, transform.position, transform.rotation);
+            Instantiate(crossbowPrefab, transform.position, Quaternion.identity);
         }
 
         timer = 0f;
