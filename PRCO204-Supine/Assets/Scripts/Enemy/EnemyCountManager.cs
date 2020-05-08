@@ -23,14 +23,19 @@ public class EnemyCountManager : MonoBehaviour
 
     // Loading Panel
     public GameObject loadingPanel;
-    
+    public GameObject[] UItoHide;
 
+    private void Start()
+    {
+        setUIVisibility(false);
+    }
     public void startUpEnemyCounter()
     {
         // save list of rooms
 
         rooms = levelManager.getRoomsInScene();
         Invoke("populateEnemyList", 1f);
+        
     }
 
     private void populateEnemyList()
@@ -47,6 +52,7 @@ public class EnemyCountManager : MonoBehaviour
         startEnemyTotal = enemyCount;
         updateLabel();
         loadingPanel.GetComponent<Animator>().Play("HideLoadingPanel");
+        setUIVisibility(true);
         //loadingPanel.SetActive(false);
     }
 
@@ -77,5 +83,13 @@ public class EnemyCountManager : MonoBehaviour
     {
         // called when crossbow is spawned to set bool to true.
         droppedCrossbow = true;
+    }
+
+    public void setUIVisibility(bool newSetting)
+    {
+        foreach(GameObject UI in UItoHide)
+        {
+            UI.SetActive(newSetting);
+        }
     }
 }
