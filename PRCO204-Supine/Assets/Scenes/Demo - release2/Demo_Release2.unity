@@ -264,9 +264,9 @@ MonoBehaviour:
   enemiesInLevel: []
   enemyCount: 0
   gameManager: {fileID: 44796320}
-  enemyCountLabel: {fileID: 0}
+  enemyCountLabel: {fileID: 1224975000}
   startEnemyTotal: 0
-  loadingPanel: {fileID: 0}
+  loadingPanel: {fileID: 1373416624}
 --- !u!4 &367908376
 Transform:
   m_ObjectHideFlags: 0
@@ -581,6 +581,18 @@ MonoBehaviour:
   camTransform: {fileID: 0}
   shakeAmount: 0.1
   decreaseFactor: 1
+--- !u!114 &1224975000 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4793984603651157554, guid: 5fec608b07488c4448c1d33b918df143,
+    type: 3}
+  m_PrefabInstance: {fileID: 1397939641}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1260946210 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6891481409815932294, guid: 42c7e7b9a75cbef48afb8c61124e87c8,
@@ -693,6 +705,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 50, y: 160, z: 0}
+--- !u!1 &1373416624 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4793984602291260925, guid: 5fec608b07488c4448c1d33b918df143,
+    type: 3}
+  m_PrefabInstance: {fileID: 1397939641}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1397939641
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -852,6 +870,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5fec608b07488c4448c1d33b918df143, type: 3}
+--- !u!95 &1397939642 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4793984603330213016, guid: 5fec608b07488c4448c1d33b918df143,
+    type: 3}
+  m_PrefabInstance: {fileID: 1397939641}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1721095108 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4793984603356428680, guid: 5fec608b07488c4448c1d33b918df143,
+    type: 3}
+  m_PrefabInstance: {fileID: 1397939641}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1847538783
 GameObject:
   m_ObjectHideFlags: 0
@@ -921,7 +951,7 @@ MonoBehaviour:
   startedEnemyCounter: 0
   cameraHideAllWalls: {fileID: 1260946213}
   currentRoom: {fileID: 0}
-  padlockAnimator: {fileID: 0}
+  padlockAnimator: {fileID: 1721095108}
 --- !u!4 &1847538785
 Transform:
   m_ObjectHideFlags: 0
@@ -1151,7 +1181,7 @@ PrefabInstance:
     - target: {fileID: 789526676, guid: 3393b251d2d9ed44aa7916c50142f1ac, type: 3}
       propertyPath: heartsUIAnim
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1397939642}
     - target: {fileID: 1573434437141123358, guid: 3393b251d2d9ed44aa7916c50142f1ac,
         type: 3}
       propertyPath: m_LocalPosition.x
