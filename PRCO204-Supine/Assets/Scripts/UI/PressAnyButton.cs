@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PressAnyButtonPanel : MonoBehaviour
+public class PressAnyButton : MonoBehaviour
 {
-    // Press any button panel shows at the start of the Game
-    // Once player input is recieved, it animated to become transparent
+    // Start screen shows game name and credits.
+    // This is set up so as soon as any input is recieved, the menu screen is loaded. 
 
-    private Animator animator;
+    private GameManager gameManager;
     // Start is called before the first frame update
     void Start()
     {
-        animator = this.gameObject.GetComponent<Animator>();
+        gameManager = this.gameObject.GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -21,7 +21,7 @@ public class PressAnyButtonPanel : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            animator.Play("FadingPanel");
+            gameManager.openDemoMenu2();
         }
     }
 
