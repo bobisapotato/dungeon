@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -10,20 +9,6 @@ public class UIManager : MonoBehaviour
     private TextMeshProUGUI roomCodeUI;
 
     // Start is called before the first frame update
-    void Awake()
-    {
-        Invoke("FindRoomCode", 0.25f);
-    }
-
-    void FindRoomCode() 
-    {
-        if (WSConnection.roomCode != null)
-        {
-            roomCodeUI.text = WSConnection.roomCode;
-        }
-        else
-        {
-            roomCodeUI.text = "----";
-        }
-    }
+ 
+    public void SetText(string text) => roomCodeUI.text = $"Code: {text}";
 }

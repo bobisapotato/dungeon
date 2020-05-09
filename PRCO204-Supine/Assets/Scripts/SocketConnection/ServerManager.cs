@@ -58,6 +58,15 @@ public class ServerManager : MonoBehaviour {
         }
     }
 
+    private string _roomCode;
+    public string RoomCode {
+        get { return _roomCode; }
+        set {
+            _roomCode = value;
+            UpdateRoomCodeUI(_roomCode);
+        }
+    }
+
     public void DecodeMessage(float recievedX, float recievedZ, string itemName) {
         Debug.Log("Spawning " + itemName);
         GameObject room = _room;
@@ -138,14 +147,9 @@ public class ServerManager : MonoBehaviour {
     public void RemoveFromRelaySet(NetworkEntityRelay relay) => NetworkEntityRelays.Remove(relay);
 
     // Run creation events (eg send spawn player event)
-    public void CreateRelay(NetworkRelay relay) {
-        Debug.Log(relay);
-        Debug.Log("Base data relay created: " + relay.RelayData.identifier);
-    }
+    public void CreateRelay(NetworkRelay relay) {}
     // Destroy events (eg destroy player event)
-    public void DestroyRelay(NetworkRelay relay) {
-        Debug.Log("Base data relay destroying: " + relay.RelayData.identifier);
-    }
+    public void DestroyRelay(NetworkRelay relay) { }
 
     public void CreateRelay(NetworkEntityRelay relay) => connection.SendMessage("entity:create", relay.RelayData);
     public void Destroy(NetworkEntityRelay relay) => connection.SendMessage("entity:destroy", relay.RelayData);
@@ -189,7 +193,7 @@ public class ServerManager : MonoBehaviour {
         if (action == "rooms:joined") {
             // Joined a room :D
             string roomCode = (string) data[0];
-            UpdateRoomCodeUI(roomCode);
+            RoomCode = roomCode;
             //string roomCode = data;
         }
         if (action == "rooms:backfill") {
