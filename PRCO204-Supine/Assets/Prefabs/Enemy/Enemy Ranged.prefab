@@ -4959,6 +4959,7 @@ GameObject:
   - component: {fileID: 9164730992795243741}
   - component: {fileID: 8137336376992123722}
   - component: {fileID: 6750983086970087258}
+  - component: {fileID: 2988488991825541540}
   m_Layer: 12
   m_Name: Enemy Ranged
   m_TagString: Enemy
@@ -5089,6 +5090,7 @@ MonoBehaviour:
     type: 3}
   squidgePrefab: {fileID: 4649592228126888193, guid: cec0fb10d4c3c70429b37a9cdc5379ff,
     type: 3}
+  squidgePrefabSmall: {fileID: 0}
   isSlime: 0
   tempColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &6927609197750494420
@@ -5241,6 +5243,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2988488991825541540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5624515174502555135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60d51801a85942d4bd276f48dc24fb2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  identifier: 
+  className: enemy-skeleton
 --- !u!1 &7110634054629597771
 GameObject:
   m_ObjectHideFlags: 0
