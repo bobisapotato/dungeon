@@ -9,7 +9,7 @@ public class HealthSystem : MonoBehaviour
     public int health;
 
     private int minHealth = 0;
-    private int maxHealth = 100;
+    private int maxHealth = 10;
 
     bool invulnerable = false;
 
@@ -18,10 +18,13 @@ public class HealthSystem : MonoBehaviour
 
     public Slider healthbar;
 
-    private int startPlayerHealth = 100;
+    private int startPlayerHealth = 10;
     private int oldHealth;
 
     private GameManager gameMan;
+
+    [SerializeField]
+    private Animator heartsUIAnim;
 
     private Color original;
     [SerializeField]
@@ -69,10 +72,10 @@ public class HealthSystem : MonoBehaviour
             Invoke("ResetVulnerability", coolDown);
         }
 
-        if (GetHealth() != oldHealth)
-        {
-            healthbar.value = ((float)GetHealth() / 100);
-        }
+        //if (GetHealth() != oldHealth)
+        //{
+        //    healthbar.value = ((float)GetHealth() / 100);
+        //}
 
         oldHealth = GetHealth();
 
@@ -114,6 +117,7 @@ public class HealthSystem : MonoBehaviour
                 health -= damage;
             }
         }
+        updateHeartAnim();
     }
 
     public void Heal(int heal)
@@ -126,6 +130,8 @@ public class HealthSystem : MonoBehaviour
         {
             health += heal;
         }
+
+        updateHeartAnim();
     }
 
     void ResetVulnerability()
@@ -137,5 +143,10 @@ public class HealthSystem : MonoBehaviour
         arm.GetComponent<MeshRenderer>().material.color = original;
         swordArm.GetComponent<MeshRenderer>().material.color = original;
         crossbowArm.GetComponent<MeshRenderer>().material.color = original;
+    }
+
+    private void updateHeartAnim()
+    {
+        heartsUIAnim.SetInteger("health", health);
     }
 }

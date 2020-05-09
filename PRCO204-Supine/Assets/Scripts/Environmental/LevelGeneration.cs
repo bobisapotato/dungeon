@@ -36,6 +36,12 @@ public class LevelGeneration : MonoBehaviour
 
 	public CameraHideAllWalls cameraHideAllWalls;
 
+	// Padlock Management
+	public Room currentRoom;
+	public Animator padlockAnimator;
+
+	
+
 	private void Start()
 	{
 		// to start, we just create the starter room at 0.0
@@ -72,6 +78,7 @@ public class LevelGeneration : MonoBehaviour
 			InvokeRepeating("spawnNewRoom", 0.5f, 0.1f);
 		}
 
+		updatePadlockAnimator();
 	}
 
 	public void spawnNewRoom()
@@ -462,5 +469,47 @@ public class LevelGeneration : MonoBehaviour
 		}
 		return perfectRoom;
 		
+	}
+
+
+	public void updatePadlockAnimator()
+	{
+		if (currentRoom)
+		{
+			// When called, it checks which room has player in and updates padlock animator to say whether it's locked or not.
+			if (currentRoom.playerInRoom)
+			{
+				// if player is still in the given room
+				if (currentRoom.doorsLocked != padlockAnimator.GetBool("Locked"))
+				{
+					// if anim and rooms values for locked don't match
+					padlockAnimator.SetBool("Locked", currentRoom.doorsLocked);
+				}
+			}
+			else
+			{
+				// player has changed room, refind which room they're in
+				foreach (GameObject roomGO in roomsInScene)
+				{
+					if (roomGO.GetComponent<Room>().playerInRoom)
+					{
+						currentRoom = roomGO.GetComponent<Room>();
+						padlockAnimator.SetBool("Locked", currentRoom.doorsLocked);
+					}
+				}
+			}
+		}
+		else
+		{
+			foreach (GameObject roomGO in roomsInScene)
+			{
+				if (roomGO.GetComponent<Room>().playerInRoom)
+				{
+					currentRoom = roomGO.GetComponent<Room>();
+					padlockAnimator.SetBool("Locked", currentRoom.doorsLocked);
+				}
+			}
+		}
+
 	}
 }
