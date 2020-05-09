@@ -77,8 +77,11 @@ public class PlayerAttack : MonoBehaviour
 
                 shouldLastOneMoreFrame = true;
             }
-            
-            else if (isHoldingRangedWeapon && (Input.GetKeyDown(KeyCode.Mouse0) == true || rightTriggerDown != 0))
+        }
+
+        if (timer >= reloadTime + 0.25f && isHoldingWeapon)
+        {
+            if (isHoldingRangedWeapon && (Input.GetKeyDown(KeyCode.Mouse0) == true || rightTriggerDown != 0))
             {
                 Attack2();
                 timer = 0f;
@@ -87,7 +90,7 @@ public class PlayerAttack : MonoBehaviour
                 animator.Play("ShootCrossbow");
             }
         }
-
+   
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") && shouldLastOneMoreFrame)
         {
             swordSwing.Clear();

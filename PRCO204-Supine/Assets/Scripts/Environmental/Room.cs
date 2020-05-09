@@ -37,11 +37,14 @@ public class Room : MonoBehaviour
     public static EnemySpawnManager allSpawnManagers;
 
     private NetworkRoomRelay _networkRoomRelay;
+    private AudioSource audio;
     #endregion
 
     // Start is called before the first frame update.
     void Start()
     {
+        audio = GetComponent<AudioSource>();
+
         if(!this.GetComponentInChildren<Door>())
         {
             Debug.LogError("No doors are attached to this room. Each room requires at least one door child");
@@ -168,6 +171,7 @@ public class Room : MonoBehaviour
         }
 
         doorsLocked = true;
+        audio.Play();
     }
 
     public void unlockAllDoors()
