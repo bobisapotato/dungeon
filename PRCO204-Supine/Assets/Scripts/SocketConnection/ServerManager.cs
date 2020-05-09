@@ -44,6 +44,14 @@ public class ServerManager : MonoBehaviour {
 
     public Bomb bomb;
 
+    [System.Serializable]
+    public class HealthPotion : Item
+    {
+        public new GameObject Prefab;
+    }
+
+    public HealthPotion healthPotion;
+
     public class SpawnQueueItem {
         float x;
         float z;
@@ -74,11 +82,16 @@ public class ServerManager : MonoBehaviour {
         if (itemName == "bomb") {
             SpawnItem(recievedX, recievedZ, new Bomb(), room);
         }
+        else if (itemName == "healthPotion")
+        {
+            SpawnItem(recievedX, recievedZ, new HealthPotion(), room);
+        }
     }
 
 
     public void SpawnItem(float recievedX, float recievedZ, Item item, GameObject room) {
         float x, z;
+        float y = 10f;
 
         // DecodeMessage(0.5f, 0.5f, "bomb");
         // maths 0..1 -> -5..5
@@ -88,7 +101,7 @@ public class ServerManager : MonoBehaviour {
         Vector3 roomSize = room.GetComponent<Collider>().bounds.size;
         Vector3 roomScale = room.GetComponent<Collider>().bounds.size / 2;
 
-        Vector3 newPos = new Vector3((recievedX * roomSize.x) - roomScale.x, 0,
+        Vector3 newPos = new Vector3((recievedX * roomSize.x) - roomScale.x, y,
             (recievedZ * roomSize.z) - roomScale.z);
 
         //Debug.Log("Pos: " + x + ", 10, " + z + " Item: " + item);

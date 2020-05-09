@@ -11,16 +11,18 @@ public class NetworkEntityRelay : NetworkRelay
     public class NetworkEntityData : NetworkData {
         // need to be public for conversion
         public float[] position;
+        public float rotation;
         public string identifier;
         public string className;
-        public NetworkEntityData(string identifier, string className, Vector3 position) {
+        public NetworkEntityData(string identifier, string className, Vector3 position, Quaternion rotation) {
             this.position = new float[] { position.x, position.z};
+            this.rotation = rotation.y;
             this.identifier = identifier;
             this.className = className;
         }
     }
         
-    [Header("For objects with position, health, class")]
+    [Header("For objects with position, rotation, health, class")]
     public string identifier;
     public string className;
 
@@ -30,7 +32,7 @@ public class NetworkEntityRelay : NetworkRelay
     
     
 
-    public new NetworkEntityData RelayData => new NetworkEntityData(identifier, className, gameObject.transform.position);
+    public new NetworkEntityData RelayData => new NetworkEntityData(identifier, className, gameObject.transform.position, gameObject.transform.localRotation);
 
     
     /// <summary>
