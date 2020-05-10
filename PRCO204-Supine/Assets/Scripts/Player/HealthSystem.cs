@@ -99,6 +99,11 @@ public class HealthSystem : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if(damage > 5)
+        {
+            damage = 1;
+        }
+
         if (!invulnerable)
         {
             invulnerable = true;
