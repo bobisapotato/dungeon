@@ -187,6 +187,6 @@ public class EnemyHealth : MonoBehaviour
     void ResetColour()
     {
         changeColor = false;
-        gameObject.GetComponent<MeshRenderer>().material.color = original;
+        gameObject.GetComponentInChildren<MeshRenderer>().material.color = original;
     }
 }
