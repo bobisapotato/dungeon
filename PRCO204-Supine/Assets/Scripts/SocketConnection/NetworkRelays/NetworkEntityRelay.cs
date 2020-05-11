@@ -14,9 +14,9 @@ public class NetworkEntityRelay : NetworkRelay
         public float rotation;
         public string identifier;
         public string className;
-        public NetworkEntityData(string identifier, string className, Vector3 position, Quaternion rotation) {
+        public NetworkEntityData(string identifier, string className, Vector3 position, Transform transform) {
             this.position = new float[] { position.x, position.z};
-            this.rotation = rotation.y;
+            this.rotation = transform.eulerAngles.y;
             this.identifier = identifier;
             this.className = className;
         }
@@ -32,7 +32,7 @@ public class NetworkEntityRelay : NetworkRelay
     
     
 
-    public new NetworkEntityData RelayData => new NetworkEntityData(identifier, className, gameObject.transform.position, gameObject.transform.localRotation);
+    public new NetworkEntityData RelayData => new NetworkEntityData(identifier, className, gameObject.transform.position, gameObject.transform);
 
     
     /// <summary>

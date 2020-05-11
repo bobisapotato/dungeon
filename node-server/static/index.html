@@ -78,18 +78,61 @@
         }
         .blob {
             position: absolute;
-            transition: all 40ms linear;
+            opacity: 1;
+            transform-origin: 100% 100%;
+            transition: all 40ms linear, opacity 2s linear;
         }
         .blob--player .blob-content { background: dodgerblue; }
         .blob--enemy .blob-content { background: darkred; }
         .blob-content {
-            width: 20px;
-            height: 20px;
+            --size: 36px;
+            width: var(--size);
+            height: var(--size);
             background: gray;
             border-radius: 50%;
             position: relative;
-            bottom: -10px;
-            left: -10px;            
+            /*bottom: calc(var(--size) / 2);
+            left: calc(var(--size) / -2);*/
+        }
+
+
+        .blob--player .blob-content {
+            background-image: url("/media/sprites/Player 1/P-Arrow.png");
+            border-radius: 0;
+            background-position: center;
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-color: transparent;
+        }
+
+
+
+        .blob.kill {
+            opacity: 0;
+        }
+
+        #map {
+            --offset: -135deg;
+            transform: rotate(var(--offset));
+            margin-top: 200px;
+            overflow: hidden;
+        }
+
+        #map {
+            border: 4px solid #3a3a3a;
+            --accept: #d1d1d1;
+        }
+        #map[data-room-n="true"] {
+            border-bottom-color: var(--accept);
+        }
+        #map[data-room-e="true"] {
+            border-left-color: var(--accept);
+        }
+        #map[data-room-w="true"] {
+            border-right-color: var(--accept);
+        }
+        #map[data-room-s="true"] {
+            border-top-color: var(--accept);
         }
     </style>
 </head>
@@ -103,12 +146,10 @@
 <div class="container hide" id="play">
     <div id="code-name"></div>
 
-    <button class="btn action-button" data-action="beep">Beep</button>
-    <button class="btn action-button" data-action="boop">Boop</button>
 
     <div id="map">
-        <div id="player"  class="blob blob--player"><div class="blob-content"></div></div>
-        <div id="enemy-1" class="blob blob--enemy"><div class="blob-content"></div></div>
+        <!--<div id="player"  class="blob blob--player"><div class="blob-content"></div></div>
+        <div id="enemy-1" class="blob blob--enemy"><div class="blob-content"></div></div>-->
     </div>
 </div>
 
@@ -134,7 +175,8 @@
     socket.on('message', console.log);
 
     socket.on('player:position', function(/* array [x,z] */ pos) {
-        console.log(`Changing player position to`, pos);
+        console.warn("player:position is deprecated.");
+        //console.log(`Changing player position to`, pos);
 
         [x,z] = checkPos(pos);
 
@@ -142,14 +184,46 @@
         document.querySelector('#player').style.bottom = `${z * 100}%`
 
     });
-    
+
+    const els = {
+        "player": document.querySelector('#player')
+    };
+
+
+    let offsets = {};
+
     socket.on('object:position', function(blob) {
-        console.log('object:position', blob);
-        
+        //console.log('object:position', blob);
+        let el = els[blob.identifier];
+        if (!el) return;
+
         [x,z] = checkPos(blob.position);
 
-        document.querySelector(`#${blob.identifier}`).style.left = `${x * 100}%`
-        document.querySelector(`#${blob.identifier}`).style.bottom = `${z * 100}%`
+        /*document.querySelector(`#${blob.identifier}`)
+        document.querySelector(`#${blob.identifier}`)*/
+
+        el.style.left = `${x * 100}%`;
+        el.style.bottom = `${z * 100}%`;
+
+        if (blob.rotation) {
+            if (!offsets[blob.identifier]) offsets[blob.identifier] = 360;
+
+            // Check to see if we're going past 360/0 etc
+            const finder = /(.[^\s]*)\((.*?)\)/g;
+            let transforms = [...(el.style.transform).matchAll(finder)];
+            let rotation = transforms.find(t => t[1].trim() === "rotate");
+            if (rotation) {
+                console.log(Math.floor(Math.abs((parseFloat(rotation[2].replace('deg','')) / 360))), (Math.floor(Math.abs(((blob.rotation - offsets[blob.identifier]) / 360)))));
+                console.log(Math.floor(parseFloat(rotation[2]) / 360) ,((Math.floor(blob.rotation) - offsets[blob.identifier]) / 360))
+
+                if (Math.floor(parseFloat(rotation[2]) / 360) !== ((Math.floor(blob.rotation) - offsets[blob.identifier]) / 360)) {
+//                    console.log(`flip`);
+                }
+            }
+
+            el.style.transform = `rotate(${ blob.rotation - offsets[blob.identifier] }deg) translate(50%, 50%)`;
+        }
+
     });
 
     (function() {
@@ -168,17 +242,21 @@
         });
     })();
 
+
+    let remoteMap = [-15, 15];
+    let remoteCenter = [0, 0];
+    function updatePositioning(roomPosition) {
+        remoteCenter = roomPosition;
+    }
     function checkPos(pos) {
 
-        console.log(`Changing player position to`, pos);
-
-        const remoteMap = [-5, 5];
+        //console.log(`Changing player position to`, pos);
 
 
-        pos = pos.map(p => p += (0 - remoteMap[0]));
-        console.log(pos, `(/${(0 - remoteMap[0]) + remoteMap[1]})`);
+        pos = pos.map((p,i) => p += ((0 - remoteMap[0]) - remoteCenter[i]));
+        //console.log(pos, `(/${(0 - remoteMap[0]) + remoteMap[1]})`);
         pos = pos.map(p => p / ((0 - remoteMap[0]) + remoteMap[1]));
-        console.log(pos);
+        //console.log(pos);
 
         return pos;
     }
@@ -191,17 +269,58 @@
             document.querySelector('#submit-room').setAttribute('disabled', 'true');
         }
     });
-    document.querySelector('#submit-room').addEventListener('click', function() {
+    document.querySelector('#code').addEventListener('keydown', function(e) {
+        if (e.keyCode === 13) {
+            submitRoom();
+        }
+    });
+    function submitRoom() {
         let code = document.querySelector('#code').value;
 
 
         console.log(`Joining room ${code}`);
         socket.emit('rooms:join', code);
-    })
+    }
+    document.querySelector('#submit-room').addEventListener('click', submitRoom)
 
     Array.from(document.querySelectorAll('.action-button')).forEach(el => {
         el.addEventListener('click', function() {
             socket.emit('game:action', el.dataset.action);
+        })
+    });
+
+    function createEntity(identifier, className) {
+        document.querySelector('#map').insertAdjacentHTML('beforeend', `<div class="blob blob--${className}" id="${identifier}"><div class="blob-content"></div></div>`);
+        return document.querySelector('#map').lastChild;
+    }
+
+    socket.on('entity:create', blob => {
+        console.log("create", blob);
+        if (!els[blob.identifier]) {
+            els[blob.identifier] = createEntity(blob.identifier, blob.className);
+        }
+    })
+    socket.on('entity:destroy', blob => {
+        console.log("destroy", blob);
+        els[blob.identifier].classList.add('kill');
+        setTimeout(function() {
+            els[blob.identifier].remove();
+        }, 2000);
+    })
+    socket.on('room:update', blob => console.log("room", blob));
+
+    function getColorStr(color) {
+        return `rgb(${color.map(c => `${c * 100}%`).join(',')})`;
+    }
+    socket.on('room:update', room => {
+        let rgb = getColorStr(room.color);
+        document.querySelector('#map').style.backgroundColor = rgb;
+        updatePositioning(room.position);
+
+        const doorLetters = ["N", "E", "W", "S"];
+        room.doors.forEach((bool,i) => {
+            document.querySelector('#map').dataset[`room${doorLetters[i]}`] = bool;
+            // outputs as [data-room-N="true"] etc
         })
     })
 </script>

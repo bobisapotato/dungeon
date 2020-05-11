@@ -235,6 +235,7 @@ public class WSConnection : MonoBehaviour {
             }
             catch (Exception e) {
                 Debug.LogError(e.Message);
+                Debug.LogError(e.StackTrace);
             }
         }
     }
