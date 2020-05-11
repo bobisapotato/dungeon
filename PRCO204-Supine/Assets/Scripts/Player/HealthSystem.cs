@@ -27,10 +27,13 @@ public class HealthSystem : MonoBehaviour
     [SerializeField]
     private Animator heartsUIAnim;
 
+    [SerializeField]
     private Color original;
     [SerializeField]
     private Color tempColor;
 
+    [SerializeField]
+    private GameObject body;
     [SerializeField]
     private GameObject arm;
     [SerializeField]
@@ -41,13 +44,12 @@ public class HealthSystem : MonoBehaviour
     private GameObject leg1;
     [SerializeField]
     private GameObject leg2;
-    [SerializeField]
-    private GameObject body;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        original = body.GetComponentInChildren<MeshRenderer>().material.color;
+        //original = gameObject.GetComponentInChildren<MeshRenderer>().material.color;
 
         health = startPlayerHealth;
         oldHealth = GetHealth();
@@ -60,28 +62,51 @@ public class HealthSystem : MonoBehaviour
     {
         if (invulnerable)
         {
-            if (body.GetComponentInChildren<MeshRenderer>().material.color == original)
+
+            if (body.GetComponent<MeshRenderer>().material.color == original)
             {
+                body.GetComponent<MeshRenderer>().material.color = tempColor;
 
-                
-                body.GetComponentInChildren<MeshRenderer>().material.color = tempColor;
+                arm.GetComponent<MeshRenderer>().material.color = tempColor;
+                swordArm.GetComponent<MeshRenderer>().material.color = tempColor;
+                crossbowArm.GetComponent<MeshRenderer>().material.color = tempColor;
+                leg1.GetComponent<MeshRenderer>().material.color = tempColor;
+                leg2.GetComponent<MeshRenderer>().material.color = tempColor;
 
-                arm.GetComponentInChildren<MeshRenderer>().material.color = tempColor;
-                swordArm.GetComponentInChildren<MeshRenderer>().material.color = tempColor;
-                crossbowArm.GetComponentInChildren<MeshRenderer>().material.color = tempColor;
-                leg1.GetComponentInChildren<MeshRenderer>().material.color = tempColor;
-                leg2.GetComponentInChildren<MeshRenderer>().material.color = tempColor;
             }
             else
             {
-                body.GetComponentInChildren<MeshRenderer>().material.color = original;
+                body.GetComponent<MeshRenderer>().material.color = original;
 
-                arm.GetComponentInChildren<MeshRenderer>().material.color = original;
-                swordArm.GetComponentInChildren<MeshRenderer>().material.color = original;
-                crossbowArm.GetComponentInChildren<MeshRenderer>().material.color = original;
-                leg1.GetComponentInChildren<MeshRenderer>().material.color = original;
-                leg2.GetComponentInChildren<MeshRenderer>().material.color = original;
+                arm.GetComponent<MeshRenderer>().material.color = original;
+                swordArm.GetComponent<MeshRenderer>().material.color = original;
+                crossbowArm.GetComponent<MeshRenderer>().material.color = original;
+                leg1.GetComponent<MeshRenderer>().material.color = original;
+                leg2.GetComponent<MeshRenderer>().material.color = original;
             }
+
+            //if (body.GetComponentInChildren<MeshRenderer>().material.color == original)
+            //{
+
+                
+            //    body.GetComponentInChildren<MeshRenderer>().material.color = tempColor;
+
+            //    arm.GetComponentInChildren<MeshRenderer>().material.color = tempColor;
+            //    swordArm.GetComponentInChildren<MeshRenderer>().material.color = tempColor;
+            //    crossbowArm.GetComponentInChildren<MeshRenderer>().material.color = tempColor;
+            //    leg1.GetComponentInChildren<MeshRenderer>().material.color = tempColor;
+            //    leg2.GetComponentInChildren<MeshRenderer>().material.color = tempColor;
+            //}
+            //else
+            //{
+            //    body.GetComponentInChildren<MeshRenderer>().material.color = original;
+
+            //    arm.GetComponentInChildren<MeshRenderer>().material.color = original;
+            //    swordArm.GetComponentInChildren<MeshRenderer>().material.color = original;
+            //    crossbowArm.GetComponentInChildren<MeshRenderer>().material.color = original;
+            //    leg1.GetComponentInChildren<MeshRenderer>().material.color = original;
+            //    leg2.GetComponentInChildren<MeshRenderer>().material.color = original;
+            //}
 
             Invoke("ResetVulnerability", coolDown);
         }
@@ -163,16 +188,13 @@ public class HealthSystem : MonoBehaviour
     {
         invulnerable = false;
 
-        body.GetComponentInChildren<MeshRenderer>().material.color = original;
+        body.GetComponent<MeshRenderer>().material.color = original;
 
-        arm.GetComponentInChildren<MeshRenderer>().material.color = original;
-        swordArm.GetComponentInChildren<MeshRenderer>().material.color = original;
-        crossbowArm.GetComponentInChildren<MeshRenderer>().material.color = original;
-        leg1.GetComponentInChildren<MeshRenderer>().material.color = original;
-        leg2.GetComponentInChildren<MeshRenderer>().material.color = original;
-        body.GetComponentInChildren<MeshRenderer>().material.color = original;
-
-
+        arm.GetComponent<MeshRenderer>().material.color = original;
+        swordArm.GetComponent<MeshRenderer>().material.color = original;
+        crossbowArm.GetComponent<MeshRenderer>().material.color = original;
+        leg1.GetComponent<MeshRenderer>().material.color = original;
+        leg2.GetComponent<MeshRenderer>().material.color = original;
     }
 
     private void updateHeartAnim()
