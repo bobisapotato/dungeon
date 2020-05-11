@@ -36,11 +36,9 @@ public class LevelGeneration : MonoBehaviour
 
 	public CameraHideAllWalls cameraHideAllWalls;
 
-	public static bool hasTrapDoorSpawned = false;
-	[SerializeField]
-	private GameObject trapDoorPrefab;
-	[SerializeField]
-	private int spawnTrapDoorChance = 75;
+	// Padlock Management
+	public Room currentRoom;
+	public Animator padlockAnimator;
 
 	
 
@@ -80,6 +78,7 @@ public class LevelGeneration : MonoBehaviour
 			InvokeRepeating("spawnNewRoom", 0.5f, 0.1f);
 		}
 
+		updatePadlockAnimator();
 	}
 
 	public void spawnNewRoom()
@@ -255,24 +254,6 @@ public class LevelGeneration : MonoBehaviour
 			GameObject newRoom = Instantiate(room, tempTransform, startRot);
 
 			addNewRoomToScene(newRoom.gameObject, spawn);
-
-			// Spawn 1 trap door.
-			if (!hasTrapDoorSpawned)
-			{
-				if (totalRoomsSoFar < maximumRooms)
-				{
-					int rnd = Random.Range(0, 100);
-
-					if (rnd >= spawnTrapDoorChance)
-					{
-						SpawnTrapDoor(newRoom);
-					}
-				}
-				else
-				{
-					SpawnTrapDoor(newRoom);
-				}
-			}
 		}
 	}
 
@@ -490,13 +471,45 @@ public class LevelGeneration : MonoBehaviour
 		
 	}
 
-	// Spawns the trap door prefab. 1 per level.
-	void SpawnTrapDoor(GameObject room)
+
+	public void updatePadlockAnimator()
 	{
-		GameObject trapDoor = Instantiate(trapDoorPrefab, room.transform, false);
+		if (currentRoom)
+		{
+			// When called, it checks which room has player in and updates padlock animator to say whether it's locked or not.
+			if (currentRoom.playerInRoom)
+			{
+				// if player is still in the given room
+				if (currentRoom.doorsLocked != padlockAnimator.GetBool("Locked"))
+				{
+					// if anim and rooms values for locked don't match
+					padlockAnimator.SetBool("Locked", currentRoom.doorsLocked);
+				}
+			}
+			else
+			{
+				// player has changed room, refind which room they're in
+				foreach (GameObject roomGO in roomsInScene)
+				{
+					if (roomGO.GetComponent<Room>().playerInRoom)
+					{
+						currentRoom = roomGO.GetComponent<Room>();
+						padlockAnimator.SetBool("Locked", currentRoom.doorsLocked);
+					}
+				}
+			}
+		}
+		else
+		{
+			foreach (GameObject roomGO in roomsInScene)
+			{
+				if (roomGO.GetComponent<Room>().playerInRoom)
+				{
+					currentRoom = roomGO.GetComponent<Room>();
+					padlockAnimator.SetBool("Locked", currentRoom.doorsLocked);
+				}
+			}
+		}
 
-		hasTrapDoorSpawned = true;
 	}
-
-	
 }

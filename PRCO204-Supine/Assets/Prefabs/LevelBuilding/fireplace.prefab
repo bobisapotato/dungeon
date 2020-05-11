@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 405499763873235368}
   - component: {fileID: 1144019209419724155}
   - component: {fileID: 8557681112874416523}
-  - component: {fileID: 39835881400286767}
   m_Layer: 0
   m_Name: default
   m_TagString: Untagged
@@ -80,20 +79,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &39835881400286767
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 835790855138116894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 457e187782988d64ebf23baeeca3b7c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  opaqueMaterial: {fileID: 2100000, guid: cbe26208b08f9b547afe6388981e5797, type: 2}
-  transparentmaterial: {fileID: 2100000, guid: 1a319384d47d17547912bf9781ca2db4, type: 2}
 --- !u!1 &1974623940900180001
 GameObject:
   m_ObjectHideFlags: 0
@@ -195,6 +180,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7912332159848354448}
+  - component: {fileID: 231759403758699059}
   m_Layer: 0
   m_Name: fireplace
   m_TagString: Untagged
@@ -218,3 +204,16 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!65 &231759403758699059
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6599209371106795651}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.2128754, y: 6.6711864, z: 1.6484015}
+  m_Center: {x: -1.677128, y: 6.697071, z: -0.93414503}

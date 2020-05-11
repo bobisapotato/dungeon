@@ -9,10 +9,10 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown("escape"))
-        {
-            openDemoMenu2();
-        }
+        //if(Input.GetKeyDown("escape"))
+        //{
+        //    openDemoMenu2();
+        //}
     }
     
 	public void closeGame()
@@ -37,7 +37,6 @@ public class GameManager : MonoBehaviour
     public void openDemoScene2()
     {
         // Reset static values for next level.
-        LevelGeneration.hasTrapDoorSpawned = false;
         PlayerAttack.isHoldingRangedWeapon = false;
         PlayerAttack.isHoldingWeapon = false;
 
@@ -47,7 +46,6 @@ public class GameManager : MonoBehaviour
     public void openDemoWin2()
     {
         // Reset static values for next level.
-        LevelGeneration.hasTrapDoorSpawned = false;
         PlayerAttack.isHoldingRangedWeapon = false;
         PlayerAttack.isHoldingWeapon = false;
 
@@ -56,7 +54,6 @@ public class GameManager : MonoBehaviour
     public void openDemoLose2()
     {
         // Reset static values for next level.
-        LevelGeneration.hasTrapDoorSpawned = false;
         PlayerAttack.isHoldingRangedWeapon = false;
         PlayerAttack.isHoldingWeapon = false;
 
@@ -67,7 +64,6 @@ public class GameManager : MonoBehaviour
     public void openDemoMenu2()
     {
         // Reset static values for next level.
-        LevelGeneration.hasTrapDoorSpawned = false;
         PlayerAttack.isHoldingRangedWeapon = false;
         PlayerAttack.isHoldingWeapon = false;
 
@@ -77,11 +73,10 @@ public class GameManager : MonoBehaviour
     public void openDemoInstructions2()
     {
         // Reset static values for next level.
-        LevelGeneration.hasTrapDoorSpawned = false;
         PlayerAttack.isHoldingRangedWeapon = false;
         PlayerAttack.isHoldingWeapon = false;
 
-        SceneManager.LoadScene("DemoInstructions2");
+        SceneManager.LoadScene("Objectives");
     }
 
 

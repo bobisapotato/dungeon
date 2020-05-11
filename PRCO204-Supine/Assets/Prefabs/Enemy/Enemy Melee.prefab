@@ -415,9 +415,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 2.3217857
-  m_Height: 4.2876406
+  m_Height: 4.048827
   m_Direction: 1
-  m_Center: {x: -0.17385745, y: -0.1424197, z: -0.09534407}
+  m_Center: {x: -0.17385745, y: -0.023011366, z: -0.09534407}
 --- !u!54 &5624515174502555104
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -446,17 +446,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593b3f44b523cdc4eb1967ec4748d844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyPrefab: {fileID: 6952706734048968266, guid: b86520ad59263f94fb8f1ef2243ba9f8,
+  keyPrefab: {fileID: 6343107064255945810, guid: b86520ad59263f94fb8f1ef2243ba9f8,
     type: 3}
   health: 50
   knockback: 0
-  crossbowPrefab: {fileID: 3870336255925155164, guid: bcab3a7c5d2559045b00d474e67a0011,
+  crossbowPrefab: {fileID: 8026487623909881812, guid: bcab3a7c5d2559045b00d474e67a0011,
     type: 3}
   explosionPrefab: {fileID: 2342390634737777179, guid: b4ee68e29b15c2b4a9c343d11ecfbe93,
     type: 3}
   smallSlime: {fileID: 5624515174502555135, guid: af9c510ce2d51b847bda2bba1acbb5bf,
     type: 3}
+  squidgePrefab: {fileID: 4649592228126888193, guid: cec0fb10d4c3c70429b37a9cdc5379ff,
+    type: 3}
+  squidgePrefabSmall: {fileID: 0}
   isSlime: 1
+  tempColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &6927609197750494420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -469,7 +473,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58ade40deb6ad7498f22c727db382db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 1
   playerHurt: {fileID: 8025170566555895966}
   isRanged: 0
   fireBallPrefab: {fileID: 3512073738943388613, guid: 7d2ac3909b9903246b53b5f5174e993e,
@@ -608,19 +612,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!65 &3930964009620213631
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5624515174502555135}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 4.6332417, y: 0.7763151, z: 1}
-  m_Center: {x: -0.17210007, y: -1.9271866, z: 0}
 --- !u!1 &6520136800684539835
 GameObject:
   m_ObjectHideFlags: 0
