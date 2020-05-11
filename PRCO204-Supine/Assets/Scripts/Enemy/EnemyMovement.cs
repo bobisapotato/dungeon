@@ -85,7 +85,11 @@ public class EnemyMovement : MonoBehaviour
 		anim.SetBool("isWandering", true);
 		anim.SetBool("isFollowing", false);
 
-		childAnimator.SetBool("isAngry", false);
+		if(childAnimator)
+		{
+			childAnimator.SetBool("isAngry", false);
+		}
+		
 
 		yield return new WaitForSeconds(walkWait);
 		isWalking = true;
@@ -168,13 +172,18 @@ public class EnemyMovement : MonoBehaviour
 			// Move towards the player.
 			anim.SetBool("isFollowing", true);
 			anim.SetBool("isWandering", false);
-
-			childAnimator.SetBool("isAngry", true);
+			if (childAnimator)
+			{
+				childAnimator.SetBool("isAngry", true);
+			}
 		}
 		else
 		{
 			anim.SetBool("isFollowing", false);
-			childAnimator.SetBool("isAngry", false);
+			if (childAnimator)
+			{
+				childAnimator?.SetBool("isAngry", false);
+			}
 		}
 	}
 }
