@@ -43,6 +43,9 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     private AudioSource playerAudio;
+
+    Animator playerAnimator;
+    
     void Awake()
     {
         controls = new PlayerControls();
@@ -61,6 +64,8 @@ public class PlayerMovement : MonoBehaviour
         controls.Gameplay.PlayerRotY.performed += ctx => rotY
         = ctx.ReadValue<Vector2>();
         controls.Gameplay.PlayerRotY.canceled += ctx => rotY = Vector3.zero;
+
+        playerAnimator = this.gameObject.GetComponent<Animator>();
     }
 
     void Update()
@@ -103,10 +108,17 @@ public class PlayerMovement : MonoBehaviour
         if (move != Vector3.zero && !playerAudio.isPlaying)
         {
             playerAudio.Play();
+            playerAnimator.SetBool("Walking", true);
         }
         else
         {
             playerAudio.Pause();
+            
+        }
+
+        if(move == Vector3.zero)
+        {
+            playerAnimator.SetBool("Walking", false);
         }
 
         // Move the player.

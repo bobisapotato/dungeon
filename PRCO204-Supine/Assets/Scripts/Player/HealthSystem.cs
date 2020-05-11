@@ -16,74 +16,52 @@ public class HealthSystem : MonoBehaviour
     float coolDown = 1f;
     float shakeHitAmount = 1.5f;
 
-    public Slider healthbar;
-
+   
     private int startPlayerHealth = 10;
     private int oldHealth;
 
     private GameManager gameMan;
 
+    private Animator playerAnimator;
+
     [SerializeField]
     private Animator heartsUIAnim;
 
-    private Color original;
-    [SerializeField]
-    private Color tempColor;
-
-    [SerializeField]
-    private GameObject arm;
-    [SerializeField]
-    private GameObject swordArm;
-    [SerializeField]
-    private GameObject crossbowArm;
+    
 
     // Start is called before the first frame update
     void Start()
     {
-        original = GetComponent<MeshRenderer>().material.color;
+        //original = gameObject.GetComponentInChildren<MeshRenderer>().material.color;
 
         health = startPlayerHealth;
         oldHealth = GetHealth();
 
         gameMan = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        playerAnimator = GetComponent<Animator>();
     }
 
     void Update()
     {
         if (invulnerable)
         {
-            if (gameObject.GetComponent<MeshRenderer>().material.color == original)
-            {
-                gameObject.GetComponent<MeshRenderer>().material.color = tempColor;
-
-                arm.GetComponent<MeshRenderer>().material.color = tempColor;
-                swordArm.GetComponent<MeshRenderer>().material.color = tempColor;
-                crossbowArm.GetComponent<MeshRenderer>().material.color = tempColor;
-            }
-            else
-            {
-                gameObject.GetComponent<MeshRenderer>().material.color = original;
-
-                arm.GetComponent<MeshRenderer>().material.color = original;
-                swordArm.GetComponent<MeshRenderer>().material.color = original;
-                crossbowArm.GetComponent<MeshRenderer>().material.color = original;
-            }
-
             Invoke("ResetVulnerability", coolDown);
         }
 
-        //if (GetHealth() != oldHealth)
-        //{
-        //    healthbar.value = ((float)GetHealth() / 100);
-        //}
 
         oldHealth = GetHealth();
 
 
         if (oldHealth <= 0)
         {
-            gameMan.openDemoLose2();
+            playerAnimator.Play("PlayerDie");
+            Invoke("playerDie", 1f);
         }
+    }
+
+    private void playerDie()
+    {
+        gameMan.openDemoLose2();
     }
 
     // Getters and Setters.
@@ -107,6 +85,7 @@ public class HealthSystem : MonoBehaviour
         if (!invulnerable)
         {
             invulnerable = true;
+            playerAnimator.SetBool("invulnerable", true);
 
             if (CameraShake.shake <= shakeHitAmount)
             {
@@ -142,12 +121,7 @@ public class HealthSystem : MonoBehaviour
     void ResetVulnerability()
     {
         invulnerable = false;
-
-        gameObject.GetComponent<MeshRenderer>().material.color = original;
-
-        arm.GetComponent<MeshRenderer>().material.color = original;
-        swordArm.GetComponent<MeshRenderer>().material.color = original;
-        crossbowArm.GetComponent<MeshRenderer>().material.color = original;
+        playerAnimator.SetBool("invulnerable", false);
     }
 
     private void updateHeartAnim()

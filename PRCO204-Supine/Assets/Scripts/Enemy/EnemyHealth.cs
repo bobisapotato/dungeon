@@ -36,6 +36,8 @@ public class EnemyHealth : MonoBehaviour
 
     private bool hasDied = false;
 
+    private Animator animator;
+
     private Color original;
     [SerializeField]
     private Color tempColor;
@@ -120,6 +122,11 @@ public class EnemyHealth : MonoBehaviour
     // then applies a knockback affect to the enemy.
     public void TakeDamage(int amount)
     {
+        //if (isSlime)
+        //{
+        //    animator.Play("SlimeHurt");
+        //}
+
         health -= amount;
 
         if (CameraShake.shake <= shakeHitAmount)
@@ -180,6 +187,6 @@ public class EnemyHealth : MonoBehaviour
     void ResetColour()
     {
         changeColor = false;
-        gameObject.GetComponent<MeshRenderer>().material.color = original;
+        gameObject.GetComponentInChildren<MeshRenderer>().material.color = original;
     }
 }
