@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using SocketConnection.NetworkRelays;
@@ -27,7 +27,6 @@ public class ServerManager : MonoBehaviour {
     }
 
 
-    public GameObject _room;
 
     private WSConnection connection;
     public string server = "research.supine.dev:3018";
@@ -77,14 +76,14 @@ public class ServerManager : MonoBehaviour {
 
     public void DecodeMessage(float recievedX, float recievedZ, string itemName) {
         Debug.Log("Spawning " + itemName);
-        GameObject room = _room;
+        
 
         if (itemName == "bomb") {
-            SpawnItem(recievedX, recievedZ, new Bomb(), room);
+            SpawnItem(recievedX, recievedZ, new Bomb(), previousRoom.gameObject);
         }
         else if (itemName == "healthPotion")
         {
-            SpawnItem(recievedX, recievedZ, new HealthPotion(), room);
+            SpawnItem(recievedX, recievedZ, new HealthPotion(), previousRoom.gameObject);
         }
     }
 
@@ -97,9 +96,13 @@ public class ServerManager : MonoBehaviour {
         // maths 0..1 -> -5..5
 
         Debug.Log("Spawning item");
+        Debug.Log(item);
+        Debug.Log(item.ToString());
+        Debug.Log(item.Prefab);
 
-        Vector3 roomSize = room.GetComponent<Collider>().bounds.size;
-        Vector3 roomScale = room.GetComponent<Collider>().bounds.size / 2;
+        Vector3 bounds = new Vector3(15, 0, 15);
+        Vector3 roomSize = bounds/*room.GetComponent<Collider>().bounds.size*/;
+        Vector3 roomScale = bounds/*room.GetComponent<Collider>().bounds.size*/ / 2;
 
         Vector3 newPos = new Vector3((recievedX * roomSize.x) - roomScale.x, y,
             (recievedZ * roomSize.z) - roomScale.z);
@@ -167,9 +170,11 @@ public class ServerManager : MonoBehaviour {
     public void CreateRelay(NetworkEntityRelay relay) => connection.SendMessage("entity:create", relay.RelayData);
     public void DestroyRelay(NetworkEntityRelay relay) => connection.SendMessage("entity:destroy", relay.RelayData);
 
-    private NetworkRoomRelay.NetworkRoomData previousRoom;
-    public void EnteredRoom(NetworkRoomRelay.NetworkRoomData data) {
-        previousRoom = data;
+    private Room previousRoom;
+    private NetworkRoomRelay.NetworkRoomData previousRoomData;
+    public void EnteredRoom(NetworkRoomRelay.NetworkRoomData data, Room room) {
+        previousRoomData = data;
+        previousRoom = room;
         connection.SendMessage("room:update", data);
     }
 
@@ -187,7 +192,7 @@ public class ServerManager : MonoBehaviour {
         NetworkRelays.ForEach(CreateRelay);
         NetworkEntityRelays.ForEach(CreateRelay);
         // Cache the last room update
-        connection.SendMessage("room:update", previousRoom);
+        connection.SendMessage("room:update", previousRoomData);
     }
 
     void NetworkTick() {
@@ -212,6 +217,18 @@ public class ServerManager : MonoBehaviour {
         if (action == "rooms:backfill") {
             // a web client has connected successfully to this room
             ClientConnectionResponse();
+        }
+
+        if (action == "game:action") {
+            
+            Debug.Log(new Bomb().Prefab);
+            
+            Debug.Log(action);
+            Debug.Log(data);
+            // (arrlist shift)
+            string actionType = (string) data[0];
+            data.RemoveAt(0);
+            DecodeMessage((float) ((double) data[0]), (float) ((double) data[1]), actionType);
         }
     }
     

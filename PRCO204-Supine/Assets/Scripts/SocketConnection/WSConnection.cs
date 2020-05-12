@@ -113,7 +113,7 @@ public class WSConnection : MonoBehaviour {
 
         socket.OnError += (sender, e) => {
             OnSocketError?.Invoke(e.ToString());
-            //StopNetworkTick();
+            StopNetworkTick();
             throw e.Exception;
         };
 

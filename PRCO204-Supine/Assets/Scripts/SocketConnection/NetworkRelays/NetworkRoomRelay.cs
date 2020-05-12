@@ -58,7 +58,7 @@ public class NetworkRoomRelay : NetworkRelay
 
 
     public void EnteredRoom() {
-        ServerManager.Instance.EnteredRoom(RelayData);   
+        ServerManager.Instance.EnteredRoom(RelayData, room);   
     }
     
     
