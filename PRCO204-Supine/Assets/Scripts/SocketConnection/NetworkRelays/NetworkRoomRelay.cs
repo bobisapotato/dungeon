@@ -18,14 +18,18 @@ public class NetworkRoomRelay : NetworkRelay
         public string className;
         public float[] color;
         public float[] position;
-        public Array doors;
+        public ArrayList doors;
+        public string prefabName;
+        public bool isLocked;
         
-        public NetworkRoomData(string identifier, string className, Color color, Transform transform, Array doors) {
+        public NetworkRoomData(string identifier, string className, Color color, Transform transform, ArrayList doorData, string name, bool isLocked) {
             this.identifier = identifier;
             this.className = className;
             this.color = new []{ color.r, color.g, color.b };
             this.position = new[] {transform.position.x, transform.position.z};
-            this.doors = doors;
+            this.doors = doorData;
+            this.prefabName = name.Replace("(Clone)", "");
+            this.isLocked = isLocked;
         }
     }
 
@@ -38,7 +42,7 @@ public class NetworkRoomRelay : NetworkRelay
     private string generateIdentifier() {
         return $"{className}-{Guid.NewGuid()}";
     }
-    public new NetworkRoomData RelayData => new NetworkRoomData(identifier, className, room.GetColor(), room.transform, room.GetDoors());
+    public new NetworkRoomData RelayData => new NetworkRoomData(identifier, className, room.GetColor(), room.transform, room.GetDoors(), gameObject.name, room.doorsLocked);
 
 
 

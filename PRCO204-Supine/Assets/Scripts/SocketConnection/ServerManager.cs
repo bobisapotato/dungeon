@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using SocketConnection.NetworkRelays;
@@ -165,7 +165,7 @@ public class ServerManager : MonoBehaviour {
     public void DestroyRelay(NetworkRelay relay) { }
 
     public void CreateRelay(NetworkEntityRelay relay) => connection.SendMessage("entity:create", relay.RelayData);
-    public void Destroy(NetworkEntityRelay relay) => connection.SendMessage("entity:destroy", relay.RelayData);
+    public void DestroyRelay(NetworkEntityRelay relay) => connection.SendMessage("entity:destroy", relay.RelayData);
 
     private NetworkRoomRelay.NetworkRoomData previousRoom;
     public void EnteredRoom(NetworkRoomRelay.NetworkRoomData data) {

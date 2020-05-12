@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
+using UnityEditor;
 using UnityEngine;
 public class Room : MonoBehaviour
 {
@@ -172,6 +174,7 @@ public class Room : MonoBehaviour
 
         doorsLocked = true;
         audio.Play();
+        _networkRoomRelay.EnteredRoom();
     }
 
     public void unlockAllDoors()
@@ -183,6 +186,7 @@ public class Room : MonoBehaviour
 
         roomCleared = true;
         doorsLocked = false;
+        _networkRoomRelay.EnteredRoom();
     }
 
     public bool getPlayerInRoom()
@@ -216,7 +220,44 @@ public class Room : MonoBehaviour
         }
     }
 
-    public Array GetDoors() {
-        return new[] {nDoor, eDoor, wDoor, sDoor};
+
+    public class PartialDoorData {
+        public bool exists; 
+        public string direction;
+        public bool? locked = null;
+        public bool? open = null;
+        public PartialDoorData(bool[] doorStatus, [CanBeNull] Door door) {
+            // Get which door is attached
+        
+            Debug.Log(this.direction);
+
+            // See if it exists
+            
+            if (door) {
+                // Add more info
+                this.direction = door.name.Substring(0, 1);
+                this.locked = door.locked;
+                this.open = door.open;
+                
+                if (this.direction == "N") this.exists = doorStatus[0];
+                if (this.direction == "E") this.exists = doorStatus[1];
+                if (this.direction == "W") this.exists = doorStatus[2];
+                if (this.direction == "S") this.exists = doorStatus[3];
+            }
+            else {
+                this.exists = false;
+            }
+        }
+    }
+
+    public ArrayList GetDoors() {
+        ArrayList data = new ArrayList();
+        
+        for (int i = 0; i < 4; i++) {
+            Debug.Log(i);
+            Debug.Log(doors.Length);
+            data.Add(new PartialDoorData(new[] {nDoor, eDoor, wDoor, sDoor}, (doors.Length -1 >= i ? doors[i] : null)));
+        }
+        return data;
     }
 }
