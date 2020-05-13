@@ -64,7 +64,7 @@ public class HealthPotion : MonoBehaviour
             //else 
             if (go.tag == "Player")
             {
-                HealthManager.playerHealth.Heal(heal);
+                go.GetComponentInChildren<HealthSystem>().gameObject.SendMessage("Heal", heal);
                 hitbox.enabled = false;
             }
         }
