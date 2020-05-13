@@ -212,6 +212,7 @@ public class WSConnection : MonoBehaviour {
         }
         catch (Exception e) {
             Debug.LogError($"Error whilst queueing a new send message event: {e.Message}");
+            queuedEvents = new List<NetworkEvent>();
         }
     }
 
@@ -224,19 +225,22 @@ public class WSConnection : MonoBehaviour {
     private void Update() {
         if (queuedEvents.Count > 0) {
             List<NetworkEvent> items = queuedEvents.ToList();
-            lock (items) ;
-            queuedEvents = new List<NetworkEvent>();
-            
-            //Debug.Log($"Event count: {items.Count}");
-            try {
-                foreach (NetworkEvent item in items) {
-                    item.Dispatch();
+            lock (items) {
+                queuedEvents = new List<NetworkEvent>();
+                //Debug.Log($"Event count: {items.Count}");
+                try {
+                    foreach (NetworkEvent item in items) {
+                        item.Dispatch();
+                    }
+                }
+                catch (Exception e) {
+                    Debug.LogError(e.Message);
+                    Debug.LogError(e.StackTrace);
+                    // Dump erroneous events
+                    queuedEvents = new List<NetworkEvent>();
                 }
             }
-            catch (Exception e) {
-                Debug.LogError(e.Message);
-                Debug.LogError(e.StackTrace);
-            }
+            
         }
     }
 }

@@ -31,39 +31,10 @@ public class ServerManager : MonoBehaviour {
     private WSConnection connection;
     public string server = "research.supine.dev:3018";
 
-    public abstract class Item {
-        public readonly GameObject Prefab;
-    }
+    // Old item system broke, no idea when
+    public GameObject itemBomb;
+    public GameObject itemHealthPotion;
 
-
-    [System.Serializable]
-    public class Bomb : Item {
-        public new GameObject Prefab;
-    }
-
-    public Bomb bomb;
-
-    [System.Serializable]
-    public class HealthPotion : Item
-    {
-        public new GameObject Prefab;
-    }
-
-    public HealthPotion healthPotion;
-
-    public class SpawnQueueItem {
-        float x;
-        float z;
-        Item item;
-        GameObject room;
-
-        public SpawnQueueItem(float recievedX, float recievedZ, Item item, GameObject room) {
-            this.x = recievedX;
-            this.z = recievedZ;
-            this.item = item;
-            this.room = room;
-        }
-    }
 
     private string _roomCode;
     public string RoomCode {
@@ -79,16 +50,16 @@ public class ServerManager : MonoBehaviour {
         
 
         if (itemName == "bomb") {
-            SpawnItem(recievedX, recievedZ, new Bomb(), previousRoom.gameObject);
+            SpawnItem(recievedX, recievedZ, itemBomb, previousRoom.gameObject);
         }
         else if (itemName == "healthPotion")
         {
-            SpawnItem(recievedX, recievedZ, new HealthPotion(), previousRoom.gameObject);
+            SpawnItem(recievedX, recievedZ, itemHealthPotion, previousRoom.gameObject);
         }
     }
 
 
-    public void SpawnItem(float recievedX, float recievedZ, Item item, GameObject room) {
+    public void SpawnItem(float recievedX, float recievedZ, GameObject prefab, GameObject room) {
         float x, z;
         float y = 10f;
 
@@ -96,9 +67,6 @@ public class ServerManager : MonoBehaviour {
         // maths 0..1 -> -5..5
 
         Debug.Log("Spawning item");
-        Debug.Log(item);
-        Debug.Log(item.ToString());
-        Debug.Log(item.Prefab);
 
         Vector3 bounds = new Vector3(15, 0, 15);
         Vector3 roomSize = bounds/*room.GetComponent<Collider>().bounds.size*/;
@@ -109,7 +77,7 @@ public class ServerManager : MonoBehaviour {
 
         //Debug.Log("Pos: " + x + ", 10, " + z + " Item: " + item);
 
-        Instantiate(item.Prefab, newPos, Quaternion.identity /*, room.transform*/);
+        Instantiate(prefab, newPos, Quaternion.identity /*, room.transform*/);
     }
 
     void Start() {
@@ -220,11 +188,6 @@ public class ServerManager : MonoBehaviour {
         }
 
         if (action == "game:action") {
-            
-            Debug.Log(new Bomb().Prefab);
-            
-            Debug.Log(action);
-            Debug.Log(data);
             // (arrlist shift)
             string actionType = (string) data[0];
             data.RemoveAt(0);
