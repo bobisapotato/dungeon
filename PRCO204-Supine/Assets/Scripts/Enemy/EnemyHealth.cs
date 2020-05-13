@@ -178,7 +178,7 @@ public class EnemyHealth : MonoBehaviour
         {
             if(!enemyCountManager.checkDroppedCrossbow())
             {
-                Instantiate(crossbowPrefab, transform.position, transform.rotation);
+                Instantiate(crossbowPrefab, transform.position, crossbowPrefab.transform.rotation);
                 enemyCountManager.dropCrossbow();
             }
         }
