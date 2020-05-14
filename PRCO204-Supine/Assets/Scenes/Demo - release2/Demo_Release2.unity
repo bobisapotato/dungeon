@@ -263,6 +263,11 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4793984602291260925, guid: 5fec608b07488c4448c1d33b918df143,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4793984602915948981, guid: 5fec608b07488c4448c1d33b918df143,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -1079,7 +1084,7 @@ MonoBehaviour:
   - {fileID: 333997511202886417, guid: 73a20a13bd0ffae47a29653d529ed52c, type: 3}
   - {fileID: 3133643465266965524, guid: 150467fa253f30e4cb44587281d18939, type: 3}
   roomsInScene: []
-  maximumRooms: 8
+  maximumRooms: 100
   totalRoomsSoFar: 0
   openPaths: 0
   startRoomPrefab: {fileID: 1563283317461951637, guid: de3703968d7be5b47888bb1f97125276,

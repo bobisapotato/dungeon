@@ -80,6 +80,8 @@ public class EnemySpawnManager : MonoBehaviour
             enemyInstance.transform.localPosition = startPos;
             enemyInstance.transform.localRotation = enemyInstance.transform.rotation;
 
+            CheckIfInsideWall();
+
             enemyInstance.GetComponent<EnemyMovement>().parentRoom = GetComponentInParent<Room>();
 
             // Set the paths and the target for the enemy.
@@ -168,5 +170,19 @@ public class EnemySpawnManager : MonoBehaviour
     void SpawnSkeleton()
     {
         enemyInstance = Instantiate(rangedEnemyPrefab, transform, false);
+    }
+
+    void CheckIfInsideWall()
+    {
+        RaycastHit hit;
+
+        if (Physics.SphereCast(enemyInstance.transform.localPosition, 5f, transform.forward, out hit))
+        {
+            if (hit.collider.gameObject.tag == "Hideable")
+            {
+                enemyInstance.transform.localPosition = GetStartPos();
+                CheckIfInsideWall();
+            }
+        }
     }
 }

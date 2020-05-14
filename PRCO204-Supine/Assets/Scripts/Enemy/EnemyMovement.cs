@@ -58,6 +58,11 @@ public class EnemyMovement : MonoBehaviour
 
 	void Update()
 	{
+		if (transform.rotation.x != 0f|| transform.rotation.z != 0f)
+		{
+			transform.rotation = new Quaternion(0f, transform.rotation.y, 0f, transform.rotation.w);
+		}
+
 		PickAMovement();
 	}
 
