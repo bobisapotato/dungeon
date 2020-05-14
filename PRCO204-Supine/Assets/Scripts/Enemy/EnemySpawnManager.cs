@@ -41,7 +41,7 @@ public class EnemySpawnManager : MonoBehaviour
     {
         startPos = GetStartPos();
         enemyInstance = Instantiate(trap, transform, false);
-        enemyInstance.transform.localPosition = new Vector3(startPos.x, -1f, startPos.z);
+        enemyInstance.transform.localPosition = new Vector3(startPos.x, -1.5f, startPos.z);
 
         // Set the number of enemies for the room.
         numberOfEnemies = GetNumberOfEnemiesInRoom();
