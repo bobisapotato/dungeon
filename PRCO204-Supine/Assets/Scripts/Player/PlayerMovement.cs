@@ -63,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
 
         controls.Gameplay.PlayerRotY.performed += ctx => rotY
         = ctx.ReadValue<Vector2>();
-        controls.Gameplay.PlayerRotY.canceled += ctx => rotY = Vector3.zero;
+        controls.Gameplay.PlayerRotY.canceled += ctx => rotY = Vector2.zero;
 
         playerAnimator = this.gameObject.GetComponent<Animator>();
     }

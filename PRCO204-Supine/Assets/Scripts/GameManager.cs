@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour
         // Reset static values for next level.
         PlayerAttack.isHoldingRangedWeapon = false;
         PlayerAttack.isHoldingWeapon = false;
+        LevelManager.level = 0;
 
         SceneManager.LoadScene("DemoWin2");
     }
@@ -56,6 +57,7 @@ public class GameManager : MonoBehaviour
         // Reset static values for next level.
         PlayerAttack.isHoldingRangedWeapon = false;
         PlayerAttack.isHoldingWeapon = false;
+        LevelManager.level = 0;
 
         SceneManager.LoadScene("DemoLose2");
     }

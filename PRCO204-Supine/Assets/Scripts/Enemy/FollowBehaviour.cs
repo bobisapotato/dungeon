@@ -13,6 +13,8 @@ public class FollowBehaviour : StateMachineBehaviour
 	private Vector3 direction;
 	private Quaternion lookRotation;
 
+	public bool isSkeleton;
+
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks.
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -20,7 +22,7 @@ public class FollowBehaviour : StateMachineBehaviour
 
 		FaceTarget(PlayerMovement.playerPos, animator);
 
-		if (!isRotating)
+		if (!isRotating && !isSkeleton)
 		{
 			animator.transform.position = Vector3.MoveTowards(animator.transform.position, newPos, speed * Time.deltaTime);
 		}

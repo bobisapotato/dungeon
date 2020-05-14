@@ -86,7 +86,7 @@ public class EnemyHealth : MonoBehaviour
             {
                 Instantiate(squidgePrefab, transform.position, transform.rotation);
 
-                int i = Random.Range(2, 4);
+                int i = Random.Range(2, 3);
 
                 for (int j = 0; j < i; j++)
                 {
@@ -170,7 +170,7 @@ public class EnemyHealth : MonoBehaviour
         {
             if(!enemyCountManager.checkDroppedCrossbow())
             {
-                Instantiate(crossbowPrefab, transform.position, transform.rotation);
+                Instantiate(crossbowPrefab, transform.position, crossbowPrefab.transform.rotation);
                 enemyCountManager.dropCrossbow();
             }
         }

@@ -288,6 +288,31 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4793984603094010533, guid: 5fec608b07488c4448c1d33b918df143,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -107.59985
+      objectReference: {fileID: 0}
+    - target: {fileID: 4793984603094010533, guid: 5fec608b07488c4448c1d33b918df143,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -53.399902
+      objectReference: {fileID: 0}
+    - target: {fileID: 4793984603575449791, guid: 5fec608b07488c4448c1d33b918df143,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -74.6001
+      objectReference: {fileID: 0}
+    - target: {fileID: 4793984603651157552, guid: 5fec608b07488c4448c1d33b918df143,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -105.30884
+      objectReference: {fileID: 0}
+    - target: {fileID: 4793984603651157552, guid: 5fec608b07488c4448c1d33b918df143,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -63.80005
+      objectReference: {fileID: 0}
     - target: {fileID: 4793984603651157554, guid: 5fec608b07488c4448c1d33b918df143,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -625,6 +650,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1260946214, guid: 42c7e7b9a75cbef48afb8c61124e87c8, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6891481409585975846, guid: 42c7e7b9a75cbef48afb8c61124e87c8,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -1107,6 +1136,7 @@ MonoBehaviour:
   cameraHideAllWalls: {fileID: 1260946213}
   currentRoom: {fileID: 0}
   padlockAnimator: {fileID: 1979810486}
+  startRoomGen: 0
 --- !u!4 &1847538785
 Transform:
   m_ObjectHideFlags: 0
@@ -1318,7 +1348,7 @@ PrefabInstance:
     - target: {fileID: 1573434437141123359, guid: 3393b251d2d9ed44aa7916c50142f1ac,
         type: 3}
       propertyPath: isUsingMouse
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1573434437141123359, guid: 3393b251d2d9ed44aa7916c50142f1ac,
         type: 3}
@@ -1358,7 +1388,7 @@ PrefabInstance:
     - target: {fileID: 8904604790673770177, guid: 3393b251d2d9ed44aa7916c50142f1ac,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3393b251d2d9ed44aa7916c50142f1ac, type: 3}

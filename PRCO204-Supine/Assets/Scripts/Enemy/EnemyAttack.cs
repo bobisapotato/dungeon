@@ -68,7 +68,7 @@ public class EnemyAttack : MonoBehaviour
         }
 
         if (isRanged && movementDistance <= rangedAttackRadius && attackCoolDown > attackCoolDownTime 
-            && moveScript.parentRoom.playerInRoom)
+            && moveScript.parentRoom.playerInRoom && GetComponent<Animator>().GetBool("isFollowing"))
         {
             attackCoolDown = 0f;
 
