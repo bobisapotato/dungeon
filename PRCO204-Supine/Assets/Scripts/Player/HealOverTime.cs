@@ -5,11 +5,14 @@ using UnityEngine;
 public class HealOverTime : MonoBehaviour
 {
     private float timer = 0f;
-    private float coolDown = 5f;
+    private float coolDown = 2.5f;
 
-    private int hpBoost = 1;
+    private int hpBoost = 2;
 
     private int maxHealth = 100;
+
+    [SerializeField]
+    private AudioSource playerAudio;
 
     void Start()
     {
@@ -24,6 +27,7 @@ public class HealOverTime : MonoBehaviour
         // Heal the player after the cooldown is over.
         if (timer >= coolDown && GetComponentInChildren<HealthSystem>().GetHealth() <= maxHealth)
         {
+            playerAudio.Play();
             GetComponentInChildren<HealthSystem>().Heal(hpBoost);
             timer = 0f;
         }

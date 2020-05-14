@@ -109,6 +109,10 @@ public class Room : MonoBehaviour
         }
     }
 
+    public void addEnemiesToRoom(EnemyHealth newEnemy)
+    {
+        enemiesInRoom.Add(newEnemy);
+    }
     public void enemyKilled(EnemyHealth enemyKilled)
     {
         enemiesInRoom.Remove(enemyKilled);

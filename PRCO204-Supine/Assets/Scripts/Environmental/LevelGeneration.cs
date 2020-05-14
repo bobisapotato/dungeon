@@ -83,17 +83,32 @@ public class LevelGeneration : MonoBehaviour
 
 	public void spawnNewRoom()
 	{
-		int index = Random.Range(0, openSpawnPts.Count - 1);
-		
-		if (openSpawnPts[index].GetComponent<RoomSpawnPoint>().open)
+		if (openSpawnPts.Count > 0)
 		{
-			pickHowToSpawnRoom(openSpawnPts[index].GetComponent<RoomSpawnPoint>());
+			int index = Random.Range(0, openSpawnPts.Count - 1);
+			Debug.Log(index + openSpawnPts.Count);
+			if (openSpawnPts[index].GetComponent<RoomSpawnPoint>().open)
+			{
+				pickHowToSpawnRoom(openSpawnPts[index].GetComponent<RoomSpawnPoint>());
+			}
+			else
+			{
+				openSpawnPts.Remove(openSpawnPts[index].GetComponent<RoomSpawnPoint>().gameObject);
+			}
 		}
 		else
 		{
-			openSpawnPts.Remove(openSpawnPts[index].GetComponent<RoomSpawnPoint>().gameObject);
+			CancelInvoke("spawnNewRoom");
+			hasStoppedSpawning = true;
+
+			if (!startedEnemyCounter)
+			{
+				enemyCountMan.startUpEnemyCounter();
+				startedEnemyCounter = true;
+				cameraHideAllWalls.populateHideableList();
+
+			}
 		}
-		
 	}
 	
 

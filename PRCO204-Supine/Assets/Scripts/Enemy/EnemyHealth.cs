@@ -93,6 +93,7 @@ public class EnemyHealth : MonoBehaviour
                     parentRoom.enemyCountManager.enemyCount++;
                     Vector3 newPos = new Vector3(transform.position.x - (j * 0.5f), -3.8f, transform.position.z - (j * 0.5f));
                     GameObject go = Instantiate(smallSlime, newPos, transform.rotation, parentRoom.transform);
+                    parentRoom.addEnemiesToRoom(go.GetComponent<EnemyHealth>());
                 }
             }
 
@@ -145,21 +146,12 @@ public class EnemyHealth : MonoBehaviour
     }
     
 
-    public void DropItem()
-    {
-        System.Random rand = new System.Random();
-        int drop = rand.Next(1, 10);
-
-        if (drop == 10)
-        {
-            //Spawn dropped item here.
-        }
-    }
+   
 
     void Die()
     {
         triggerCrossbowCheck();
-        DropItem();
+        
 
         parentRoom.enemyKilled(this);
 
@@ -178,7 +170,7 @@ public class EnemyHealth : MonoBehaviour
         {
             if(!enemyCountManager.checkDroppedCrossbow())
             {
-                Instantiate(crossbowPrefab, transform.position, crossbowPrefab.transform.rotation);
+                Instantiate(crossbowPrefab, transform.position, transform.rotation);
                 enemyCountManager.dropCrossbow();
             }
         }
