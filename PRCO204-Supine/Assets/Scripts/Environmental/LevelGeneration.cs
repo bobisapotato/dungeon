@@ -40,7 +40,7 @@ public class LevelGeneration : MonoBehaviour
 	public Room currentRoom;
 	public Animator padlockAnimator;
 
-	
+	public bool startRoomGen = false;
 
 	private void Start()
 	{
@@ -57,9 +57,9 @@ public class LevelGeneration : MonoBehaviour
 		InvokeRepeating("spawnNewRoom", 0.5f, 0.1f);
 	}
 
-	private void Update()
+	private void FixedUpdate()
 	{
-		if (openSpawnPts.Count() == 0 && roomsInScene.Count != 0)
+		if (openSpawnPts.Count() == 0 && startRoomGen)
 		{
 			CancelInvoke("spawnNewRoom");
 			hasStoppedSpawning = true;
@@ -69,8 +69,6 @@ public class LevelGeneration : MonoBehaviour
 				cameraHideAllWalls.populateHideableList();
 				enemyCountMan.startUpEnemyCounter();
 				startedEnemyCounter = true;
-				
-				
 			}
 		}
 
@@ -86,8 +84,9 @@ public class LevelGeneration : MonoBehaviour
 	{
 		if (openSpawnPts.Count > 0)
 		{
+			startRoomGen = true;
 			int index = Random.Range(0, openSpawnPts.Count - 1);
-			Debug.Log(index + openSpawnPts.Count);
+			//Debug.Log(index + openSpawnPts.Count);
 			if (openSpawnPts[index].GetComponent<RoomSpawnPoint>().open)
 			{
 				pickHowToSpawnRoom(openSpawnPts[index].GetComponent<RoomSpawnPoint>());
@@ -97,20 +96,7 @@ public class LevelGeneration : MonoBehaviour
 				openSpawnPts.Remove(openSpawnPts[index].GetComponent<RoomSpawnPoint>().gameObject);
 			}
 		}
-		else
-		{
-			CancelInvoke("spawnNewRoom");
-			hasStoppedSpawning = true;
-
-			if (!startedEnemyCounter)
-			{
-				cameraHideAllWalls.populateHideableList();
-				enemyCountMan.startUpEnemyCounter();
-				startedEnemyCounter = true;
-				
-
-			}
-		}
+		
 	}
 	
 
