@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TrapDamage : MonoBehaviour
 {
-    private int damage = 20;
+    private int damage = 3;
 
     bool isDamaged = false;
 
