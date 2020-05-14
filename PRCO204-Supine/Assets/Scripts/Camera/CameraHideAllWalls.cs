@@ -127,6 +127,8 @@ public class CameraHideAllWalls : MonoBehaviour
 
     public void populateHideableList()
     {
+        Debug.Log("trying to pop list");
+
         getAllEnemies();
         // gets all the hideableObjects from the scene
         foreach (GameObject hideableObj in GameObject.FindGameObjectsWithTag("Hideable"))

@@ -59,16 +59,17 @@ public class LevelGeneration : MonoBehaviour
 
 	private void Update()
 	{
-		if (openSpawnPts.Count() == 0)
+		if (openSpawnPts.Count() == 0 && roomsInScene.Count != 0)
 		{
 			CancelInvoke("spawnNewRoom");
 			hasStoppedSpawning = true;
 
 			if (!startedEnemyCounter)
 			{
+				cameraHideAllWalls.populateHideableList();
 				enemyCountMan.startUpEnemyCounter();
 				startedEnemyCounter = true;
-				cameraHideAllWalls.populateHideableList();
+				
 				
 			}
 		}
@@ -103,9 +104,10 @@ public class LevelGeneration : MonoBehaviour
 
 			if (!startedEnemyCounter)
 			{
+				cameraHideAllWalls.populateHideableList();
 				enemyCountMan.startUpEnemyCounter();
 				startedEnemyCounter = true;
-				cameraHideAllWalls.populateHideableList();
+				
 
 			}
 		}
