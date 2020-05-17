@@ -829,9 +829,10 @@ GameObject:
   - component: {fileID: 4793984603094010533}
   - component: {fileID: 4793984603094010523}
   - component: {fileID: 4793984603094010532}
+  - component: {fileID: 1871538432124202091}
   m_Layer: 5
-  m_Name: SkullyIcon
-  m_TagString: Untagged
+  m_Name: EnemyCounter Icon
+  m_TagString: EnemyIcon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -891,6 +892,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &1871538432124202091
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4793984603094010534}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d092a21866342004e88da4c6e4d3eb73, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4793984603145142480
 GameObject:
   m_ObjectHideFlags: 0

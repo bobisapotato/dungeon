@@ -38,13 +38,7 @@ public class EnemySpawnManager : MonoBehaviour
     public static bool isJustSkeletons;
 
     [SerializeField]
-    private Image enemyCounterIcon;
-    [SerializeField]
-    private Sprite slimeIcon;
-    [SerializeField]
-    private Sprite skullIcon;
-    [SerializeField]
-    private Sprite slimeAndSkullIcon;
+    private Animator enemyIconAnimator;
 
     // Start is called before the first frame update
     void Awake()
@@ -65,7 +59,7 @@ public class EnemySpawnManager : MonoBehaviour
         //    paths[j].transform.localPosition = GetPathPos();
         //}
 
-        setEnemyCounterIcon();
+        
 
         // For each enemy, instantiate a number of paths.
         for (int i = 0; i < numberOfEnemies; i++)
@@ -102,6 +96,10 @@ public class EnemySpawnManager : MonoBehaviour
             //enemyMovementScript.pathPositions = paths;
             //enemyMovementScript.player = player;
         }
+
+        enemyIconAnimator = GameObject.FindGameObjectWithTag("EnemyIcon").GetComponent<Animator>();
+
+        setEnemyCounterIcon();
     }
 
     // Returns a random number within a specified range.
@@ -201,17 +199,19 @@ public class EnemySpawnManager : MonoBehaviour
     private void setEnemyCounterIcon()
     {
         // Sets the icon used in the enemy counter UI based on enemy types in scene. 
+        // Uses the animator attached to icon, playing appropriate anim based on enemies. 
+
         if(isJustSlimes)
         {
-            enemyCounterIcon.sprite = slimeIcon;
+            enemyIconAnimator.Play("SlimeIcon");
         }
         else if (isJustSkeletons)
         {
-            enemyCounterIcon.sprite = skullIcon;
+            enemyIconAnimator.Play("SkullIcon");
         }
         else
         {
-            enemyCounterIcon.sprite = slimeAndSkullIcon;
+            enemyIconAnimator.Play("SkullAndSlimeIcon");
         }
     }
 }
