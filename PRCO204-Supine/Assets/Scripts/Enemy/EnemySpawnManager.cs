@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemySpawnManager : MonoBehaviour
 {
@@ -36,6 +37,15 @@ public class EnemySpawnManager : MonoBehaviour
     public static bool isJustSlimes;
     public static bool isJustSkeletons;
 
+    [SerializeField]
+    private Image enemyCounterIcon;
+    [SerializeField]
+    private Sprite slimeIcon;
+    [SerializeField]
+    private Sprite skullIcon;
+    [SerializeField]
+    private Sprite slimeAndSkullIcon;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -54,6 +64,8 @@ public class EnemySpawnManager : MonoBehaviour
         //    paths[j] = Instantiate(pathPosPrefab, transform, false);
         //    paths[j].transform.localPosition = GetPathPos();
         //}
+
+        setEnemyCounterIcon();
 
         // For each enemy, instantiate a number of paths.
         for (int i = 0; i < numberOfEnemies; i++)
@@ -183,6 +195,23 @@ public class EnemySpawnManager : MonoBehaviour
                 enemyInstance.transform.localPosition = GetStartPos();
                 CheckIfInsideWall();
             }
+        }
+    }
+
+    private void setEnemyCounterIcon()
+    {
+        // Sets the icon used in the enemy counter UI based on enemy types in scene. 
+        if(isJustSlimes)
+        {
+            enemyCounterIcon.sprite = slimeIcon;
+        }
+        else if (isJustSkeletons)
+        {
+            enemyCounterIcon.sprite = skullIcon;
+        }
+        else
+        {
+            enemyCounterIcon.sprite = slimeAndSkullIcon;
         }
     }
 }

@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class CameraHideAllWalls : MonoBehaviour
 {
-    // Stand in script as we've had raycast issues in CameraHideObstacles. 
+    // Controls walls fading in and out.
     // This will see if a player or enemy is obscured, and if so, turn all walls transparent. 
+    // Walls need the 'HideableObject' Script filled out in the inspector with two materials, one opaque one transparent, for this to work. 
 
     [SerializeField]
     private List<GameObject> enemies = new List<GameObject>();
@@ -56,7 +57,6 @@ public class CameraHideAllWalls : MonoBehaviour
 
         foreach (GameObject enemy in getEnemiesInCurrentRoom())
         {
-            
                 if (Physics.Raycast(mainCamera.transform.position, (enemy.transform.position - mainCamera.transform.position),
                 out hit))
                 {
@@ -70,14 +70,10 @@ public class CameraHideAllWalls : MonoBehaviour
                         needToHideObjects = true;
                     }
                 }
-            
-            
         }
 
         if (needToHideObjects)
         {
-            //run hide
-
             hideAllObjects();
         }
         else
@@ -93,8 +89,6 @@ public class CameraHideAllWalls : MonoBehaviour
         
         foreach (GameObject room in levelGenerationManager.getRoomsInScene())
         {
-            
-
             foreach(EnemyHealth enemy in room.GetComponent<Room>().getEnemiesInRoom())
             {
                 enemies.Add(enemy.gameObject);
@@ -120,7 +114,6 @@ public class CameraHideAllWalls : MonoBehaviour
             }
         }
 
-        //Debug.Log("enemiesInCurrentRoom = " + enemiesInCurrentRoom.Count);
         return enemiesInCurrentRoom;
     }
 
@@ -135,7 +128,6 @@ public class CameraHideAllWalls : MonoBehaviour
             hideables.Add(hideableObj.GetComponent<HideableObject>());
         }
 
-        //getAllEnemies();
     }
 
     private void hideAllObjects()

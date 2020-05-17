@@ -25,28 +25,7 @@ public class EnemysUnlockRoom : MonoBehaviour
         {
             Debug.LogError("EnemyUnlockRoom script found without an associated Room script.");
         }
-
-        //// populate list from GOs with enemy tag in children 
-        //GameObject[] tempArray = this.GetComponentsInChildren<GameObject>();
-        //foreach(GameObject g in tempArray)
-        //{
-        //    // loop through all GameObject Children
-
-        //    if(g.tag == "Enemy")
-        //    {
-        //        // Add to list if it is tagged
-        //        activeEnemyList.Add(g);
-        //    }
-        //}
     }
-
-    private void Update()
-    {
-        // for testing
-
-       
-    }
-
 
 
     public void enemyKilled(GameObject enemy)

@@ -7,9 +7,9 @@ using System.Linq;
 
 public class EnemyCountManager : MonoBehaviour
 {
-    // handles the grand total of enemies to kill.
-    // sets the counter in top of screen 
-    // ends game when counter hits 0
+    // Handles the grand total of enemies to kill.
+    // Sets the counter in top of screen.
+    // When all UI is formed, this script removes the laoding panel.
 
     public LevelGeneration levelManager;
     [SerializeField] private List<GameObject> rooms = new List<GameObject>();
@@ -53,7 +53,6 @@ public class EnemyCountManager : MonoBehaviour
         updateLabel();
         loadingPanel.GetComponent<Animator>().Play("HideLoadingPanel");
         setUIVisibility(true);
-        //loadingPanel.SetActive(false);
     }
 
     public void enemyKilled(EnemyHealth enemyKilled)

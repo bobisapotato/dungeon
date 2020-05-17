@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class LevelGeneration : MonoBehaviour
 {
-	// one LevelManager object in the scene, containing this script
-	// controls spawning of rooms from prefabs to create a level 
+	// One LevelManager object in the scene, containing this script.
+	// This Controls spawning of rooms from prefabs to create a level.
+
 
 	// VARS
 	public GameObject[] roomPrefabs;
@@ -59,6 +60,7 @@ public class LevelGeneration : MonoBehaviour
 
 	private void FixedUpdate()
 	{
+		// If there's no more free spawn points and room generation is finished rather than just started, stop making new rooms.
 		if (openSpawnPts.Count() == 0 && startRoomGen)
 		{
 			CancelInvoke("spawnNewRoom");
@@ -66,6 +68,7 @@ public class LevelGeneration : MonoBehaviour
 
 			if (!startedEnemyCounter)
 			{
+				// Now whole level has been built we can count all the enemies, find all of the hideable objects.
 				cameraHideAllWalls.populateHideableList();
 				enemyCountMan.startUpEnemyCounter();
 				startedEnemyCounter = true;
@@ -82,11 +85,11 @@ public class LevelGeneration : MonoBehaviour
 
 	public void spawnNewRoom()
 	{
+		// Checks there aren't more open spawn points, get spawn point from list, and decide how to spawn a room.
 		if (openSpawnPts.Count > 0)
 		{
 			startRoomGen = true;
 			int index = Random.Range(0, openSpawnPts.Count - 1);
-			//Debug.Log(index + openSpawnPts.Count);
 			if (openSpawnPts[index].GetComponent<RoomSpawnPoint>().open)
 			{
 				pickHowToSpawnRoom(openSpawnPts[index].GetComponent<RoomSpawnPoint>());
@@ -150,7 +153,7 @@ public class LevelGeneration : MonoBehaviour
 
 	public void removeRoomFromScene(GameObject g)
 	{
-		// adds Gamoebject to roomsInScene list
+		// adds Gameobject to roomsInScene list
 		roomsInScene.Remove(g);
 		totalRoomsSoFar--;
 	}
@@ -249,6 +252,7 @@ public class LevelGeneration : MonoBehaviour
 
 	public void instantiateRoom(GameObject room, RoomSpawnPoint spawn)
 	{
+		// Instantiates room at spawn position, and adds to roomList
 		if (room && spawn)
 		{
 			Vector3 tempTransform = spawn.transform.position;
@@ -262,6 +266,8 @@ public class LevelGeneration : MonoBehaviour
 
 	public List<GameObject> populateTempRoomList(List<string> requiredDirs, List<string> avoidedDirs)
 	{
+		// Returns a list of room prefabs that have doors in required directions and no doors in avoided directions. 
+
 		List<GameObject> tempRoomList = new List<GameObject>();
 		List<GameObject> secondTempRoomList = new List<GameObject>();
 
@@ -397,6 +403,7 @@ public class LevelGeneration : MonoBehaviour
 
 	public GameObject findDeadEnd(List<string> requiredDirs, List<string> avoidedDirs)
 	{
+		// Finds appropriate room to close off a route without creating any more open paths, based on doors needed and their directions. 
 		GameObject perfectRoom = null;
 
 		// only one door needed
@@ -477,6 +484,7 @@ public class LevelGeneration : MonoBehaviour
 
 	public void updatePadlockAnimator()
 	{
+		// Updates padlock animator in the UI to show if current room is locked or not.
 		if (currentRoom)
 		{
 			// When called, it checks which room has player in and updates padlock animator to say whether it's locked or not.

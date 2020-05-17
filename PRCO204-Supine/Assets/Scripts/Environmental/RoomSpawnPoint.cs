@@ -33,9 +33,7 @@ public class RoomSpawnPoint : MonoBehaviour
 
         levelGenManager.addNewSpawnPt(this.gameObject);
 
-        //InvokeRepeating("constantSpawnCheck", 0.1f, 3f);
         checkSpawnCollider.enabled = true;
-
     }
 
    
@@ -45,26 +43,12 @@ public class RoomSpawnPoint : MonoBehaviour
         open = false;
     }
 
-    public IEnumerator toggleSpawnCollider()
-    {
-        wasTriggered = false;
-        checkSpawnCollider.enabled = true;
-        yield return new WaitForSeconds(1f);
-        checkSpawnCollider.enabled = false;
-        if(!wasTriggered && !open)
-        {
-            open = true;
-            levelGenManager.addNewSpawnPt(this.gameObject);
-        }
-
-        checkSpawnCollider.enabled = true;
-    }
-
   
     private void OnTriggerEnter(Collider other)
     {
-        // this is only triggered when turned on on checkSpawnIsOpen and if something is already in that spot
-        // if this runs, the associated spawnPt should be closed
+        // This is only triggered when turned on on checkSpawnIsOpen and if something is already in that spot.
+        // If this runs, the associated spawnPt should be closed.
+        // This should never need to run, as rooms should never spawn on top of one another anyway; this is just a backup.
 
         if (other.gameObject.GetComponent<Room>() || other.GetComponentInParent<Room>() && other.tag!= "RoomSpawn")
         {

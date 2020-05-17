@@ -8,10 +8,11 @@ public class Door : MonoBehaviour
     // Starts closed, opens when player walks in.
     // public methods can be accessed from other scripts to lock and unlock it again based on objectives.
 
-    public Animator animator;
+    
     // Door always starts closed, opens when player collides for the first time.
     public bool open = false;  
     public bool locked = false;
+    public Animator animator;
     public Material unlockedMaterial;
     public Material lockedMaterial;
 

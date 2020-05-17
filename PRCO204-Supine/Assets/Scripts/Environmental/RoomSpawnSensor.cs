@@ -17,24 +17,16 @@ public class RoomSpawnSensor : MonoBehaviour
     [SerializeField] private bool mustNotHaveDoor = false;
     [SerializeField] private string foundRoomName;
 
-    bool secondRoomFound = false;
 
     // Start is called before the first frame update
     void Start()
     {
         // collider is off, toggled on to check relevant surroundings
         sensorCollider = gameObject.GetComponent<BoxCollider>();
-        //sensorCollider.enabled = false;
-        gameObject.tag = "RoomSpawnSensor";
-
-        //checkSensor();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
         
+        gameObject.tag = "RoomSpawnSensor";
     }
+
 
     public bool checkMustHave()
     {
@@ -65,34 +57,12 @@ public class RoomSpawnSensor : MonoBehaviour
         }
     }
 
-    //public void checkSensor()
-    //{
-    //    StartCoroutine("toggleSensorCollider");
-    //}
-
-    //public IEnumerator toggleSensorCollider()
-    //{
-    //    yield return new WaitForSeconds(0.3f);
-    //    sensorCollider.enabled = true;
-    //    yield return new WaitForSeconds(0.5f);
-        
-    //}
+   
 
     private void OnTriggerStay(Collider other)
     {
         // when something alerts the sensor, it checks the associated room and 
         // updates the 'need related room' bool
-
-        if (foundRoom && foundRoom != other.gameObject.GetComponentInParent<Room>() && !secondRoomFound && other.CompareTag("Floor"))
-        {
-            Debug.Log("Found 2 rooms at spot for spawn sensor in position " + direction);
-            Debug.Log("Room 1 = " + foundRoom.gameObject.name);
-            Debug.Log("Room 2 = " + other.gameObject.GetComponentInParent<Room>().gameObject.name);
-            Debug.Log("We found a sensor at rm 1? " + other.CompareTag("sensor"));
-            Debug.Log("--------------------------------------------------------------------");
-
-            secondRoomFound = true;
-        }
 
         if (foundRoom == null)
         {
@@ -158,7 +128,7 @@ public class RoomSpawnSensor : MonoBehaviour
                             mustHaveDoor = false;
                         }
                     }
-                    //sensorCollider.enabled = false;
+                   
                 }
             }
         }
