@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 
 public class WSConnection : MonoBehaviour
 {
+    // Variables.
     private WebSocket socket;
 
     public GameObject serverManagerObj;
@@ -23,34 +24,31 @@ public class WSConnection : MonoBehaviour
             DecodeMessage(e.Data);
         };
         
-            //socket.Send("hi");
+        socket.OnOpen += (sender, e) => {
+            Debug.Log("Opened");
+            InvokeRepeating("SendHeartbeat", 25, 25);
 
-            socket.OnOpen += (sender, e) => {
-                Debug.Log("Opened");
-                InvokeRepeating("SendHeartbeat", 25, 25);
+            socket.Send(EncodeMessage("rooms:create"));
+            // "42[\"rooms:create\"]"
 
-                socket.Send(EncodeMessage("rooms:create"));
-                // "42[\"rooms:create\"]"
+            StartCoroutine("NetworkTick");
+        };
 
-                StartCoroutine("NetworkTick");
-            };
-            socket.OnClose += (sender, e) => {
-                Debug.Log("Closed");
-                Debug.LogError(e.ToString());
-            };
-            socket.OnError += (sender, e) => {
-                Debug.LogError(e.ToString());
-            };
+        socket.OnClose += (sender, e) => {
+            Debug.Log("Closed");
+            Debug.LogError(e.ToString());
+        };
+
+        socket.OnError += (sender, e) => {
+            Debug.LogError(e.ToString());
+        };
 
         socket.Connect();
-
-
     }
 
-
+    // Creates a network tick, sending information 30 times a second.
     IEnumerator NetworkTick() {
         for (;;) {
-            // network tick
             float[] pos = { gameObject.transform.position.x, gameObject.transform.position.z };
             socket.Send(EncodeMessage("player:position", pos));
             yield return new WaitForSeconds((1 / 30f));
@@ -124,7 +122,7 @@ public class WSConnection : MonoBehaviour
                             Debug.LogError(e.Message);
                         }
                         
-                        // do stuff here
+                        // Do stuff here:
                         break;
 
                     default:
@@ -137,15 +135,6 @@ public class WSConnection : MonoBehaviour
                 Debug.LogWarning("Unknown engine packet type: " + enginePacketType.ToString());
                 break;
         }
-        
-    }
-
-
-
-
-    // Update is called once per frame
-    void Update()
-    {
         
     }
 }

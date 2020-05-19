@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ServerManager : MonoBehaviour
 {
-
+    // Variables
     public GameObject _room;
 
     public class Item { }
@@ -21,13 +21,11 @@ public class ServerManager : MonoBehaviour
         }
     }
 
-
-
     public void SpawnItem(float recievedX, float recievedZ, Item item, GameObject room) 
     {
         float x, z;
 
-        // maths 0..1 -> -5..5
+        // Maths 0..1 -> -5..5
 
         Debug.Log("Spawning item");
         Debug.Log(room.GetComponent<Collider>().bounds.size);
@@ -37,10 +35,4 @@ public class ServerManager : MonoBehaviour
 
         Debug.Log("Pos: " + x + ", 10, " + z + " Item: " + item);
     }
-
-    void Start()
-    {
-        //DecodeMessage(0.5f, 0.5f, "bomb");
-    }
-
 }
