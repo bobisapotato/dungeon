@@ -84,7 +84,6 @@ public class PlayerMovement : MonoBehaviour
 
         // If there's not input from the input system, 
         // check for alternative input.
-        // This is temporary, for Zack.
         if (move == Vector3.zero) 
         {
             move = KeyboardMovement(move);
