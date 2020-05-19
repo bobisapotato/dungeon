@@ -22,12 +22,14 @@ public class FollowBehaviour : StateMachineBehaviour
 
 		FaceTarget(PlayerMovement.playerPos, animator);
 
+		// Move towards the player's position.
 		if (!isRotating && !isSkeleton)
 		{
 			animator.transform.position = Vector3.MoveTowards(animator.transform.position, newPos, speed * Time.deltaTime);
 		}
     }
 
+	// Rotates the gameobject the animator is attached to, to face a point in 3D space.
 	void FaceTarget(Vector3 target, Animator anim)
 	{
 		isRotating = true;

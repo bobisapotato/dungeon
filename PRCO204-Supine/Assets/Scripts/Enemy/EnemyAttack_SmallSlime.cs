@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyAttack_SmallSlime : MonoBehaviour
 {
+    // Variables.
     private GameObject player;
 
     [SerializeField]

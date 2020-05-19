@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class EnemySpawnManager : MonoBehaviour
 {
+    // Variables.
     [SerializeField]
     private GameObject trap;
     [SerializeField]
@@ -67,6 +68,7 @@ public class EnemySpawnManager : MonoBehaviour
             enemyInstance.transform.localPosition = startPos;
             enemyInstance.transform.localRotation = enemyInstance.transform.rotation;
 
+            // Repositions enemies if they spawn inside a wall.
             CheckIfInsideWall();
 
             enemyInstance.GetComponent<EnemyMovement>().parentRoom = GetComponentInParent<Room>();
@@ -159,11 +161,10 @@ public class EnemySpawnManager : MonoBehaviour
         }
     }
 
+    // Sets the icon used in the enemy counter UI based on enemy types in scene. 
+    // Uses the animator attached to icon, playing appropriate anim based on enemies. 
     private void setEnemyCounterIcon()
     {
-        // Sets the icon used in the enemy counter UI based on enemy types in scene. 
-        // Uses the animator attached to icon, playing appropriate anim based on enemies. 
-
         if(isJustSlimes)
         {
             enemyIconAnimator.Play("SlimeIcon");

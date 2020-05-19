@@ -34,7 +34,6 @@ public class EnemyProjectile : MonoBehaviour
     {
         yield return new WaitForSeconds(5.0f);
         FireDebris();
-        
     }
 
     // If the bullet collides with a gameobject with the tag, "player" it 
@@ -61,7 +60,8 @@ public class EnemyProjectile : MonoBehaviour
     }
 
 
-    // Destroys the gameobject this is attached to.
+    // Destroys the gameobject this is attached to
+    // and enables particle systems.
     private void FireDebris()
     {
         CapsuleCollider cc = GetComponent<CapsuleCollider>();

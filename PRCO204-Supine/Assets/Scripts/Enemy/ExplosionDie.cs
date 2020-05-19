@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Kills the gameobject after 4 seconds.
+// Designed for explosion prefabs, but
+// can be used elsewhere.
 public class ExplosionDie : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Awake()
     {
         Invoke("Die", 4f);

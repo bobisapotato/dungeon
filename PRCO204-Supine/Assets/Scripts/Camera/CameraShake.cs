@@ -24,11 +24,15 @@ public class CameraShake : MonoBehaviour
 		}
 	}
 
+	// Get the camera's local position.
 	void OnEnable()
 	{
 		originalPos = camTransform.localPosition;
 	}
 
+	// If the shake varaible is changed by another script,
+	// move the camera to a random position within a sphere.
+	// Return to it's original local position afterwards.
 	void Update()
 	{
 		if (shake > 0)

@@ -10,6 +10,7 @@ using System;
 // enough.
 public class EnemyMovement : MonoBehaviour
 {
+	// Variables.
 	private Transform target;
 
 	private Animator anim;
@@ -46,7 +47,6 @@ public class EnemyMovement : MonoBehaviour
 
 	[HideInInspector]
 	public Room parentRoom;
-
 
 	void Awake()
 	{
@@ -143,6 +143,8 @@ public class EnemyMovement : MonoBehaviour
 		}
 	}
 
+	// Checks for walls/other enemies and rotates to face a different direction if
+	// there's one in the way.
 	void CheckForObstacle()
 	{
 		if (Physics.Raycast(transform.position, transform.forward, out hit, distanceToCheckForObstacle)
@@ -164,6 +166,8 @@ public class EnemyMovement : MonoBehaviour
 		}
 	}
 
+	// If the target gets close enough, they switch from
+	// wandering state to following state.
 	void CheckDistanceToTarget()
 	{
 		// Get the distance to the player.
