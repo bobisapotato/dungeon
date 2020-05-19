@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Each room spawn point has 4 sensors.
+// These identify any rooms surrounding the spawn point, to dictate what requirements
+// the new room should meet to avoid doors to nowhere.
 public class RoomSpawnSensor : MonoBehaviour
 {
-
-    // Each room spawn point has 4 sensors.
-    // These identify any rooms surrounding the spawn point, to dictate what requirements
-    // the new room should meet to avoid doors to nowhere.
-
-    // VARS
+    // Variables.
     public string direction;
     private BoxCollider sensorCollider;
     private Room foundRoom;
@@ -21,7 +19,7 @@ public class RoomSpawnSensor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // collider is off, toggled on to check relevant surroundings
+        // Collider is off, toggled on to check relevant surroundings.
         sensorCollider = gameObject.GetComponent<BoxCollider>();
         
         gameObject.tag = "RoomSpawnSensor";
@@ -61,9 +59,8 @@ public class RoomSpawnSensor : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        // when something alerts the sensor, it checks the associated room and 
-        // updates the 'need related room' bool
-
+        // When something alerts the sensor, it checks the associated room and 
+        // updates the 'need related room' bool.
         if (foundRoom == null)
         {
             if (other.CompareTag("Floor"))

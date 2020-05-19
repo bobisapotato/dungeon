@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Each room has at least one door which can be locked and unlocked.
+// Starts closed, opens when player walks in.
+// Public methods can be accessed from other scripts to lock and unlock it again based on objectives.
 public class Door : MonoBehaviour
-{
-    // Each room has at least one door which can be locked and unlocked.
-    // Starts closed, opens when player walks in.
-    // public methods can be accessed from other scripts to lock and unlock it again based on objectives.
-
-    
+{   
+    // Variables.
     // Door always starts closed, opens when player collides for the first time.
     public bool open = false;  
     public bool locked = false;
@@ -18,7 +17,8 @@ public class Door : MonoBehaviour
 
     public GameObject lockedBars;
 
-    public string direction; // Allocated in the prefab instance, either N E S or W
+    // Allocated in the prefab instance, either N E S or W.
+    public string direction;
 
     [HideInInspector]
     public AudioSource doorManager;
@@ -26,10 +26,12 @@ public class Door : MonoBehaviour
     private void Start()
     {
         animator = this.gameObject.GetComponent<Animator>();
+
         if (!this.GetComponentInParent<Room>())
         {
             Debug.LogError("No parent room found. A door should always be a child of a room");
         }
+
         lockedBars.SetActive(false);
     }
 
@@ -85,7 +87,6 @@ public class Door : MonoBehaviour
         // Door can be locked from other scripts - doors close and player can't pass through doorway.
         animator.SetBool("Locked", true);
         locked = true;
-        //this.gameObject.GetComponentInChildren<MeshRenderer>().material = lockedMaterial;
         lockedBars.SetActive(true);
     }
 
@@ -94,7 +95,6 @@ public class Door : MonoBehaviour
         // Door unlocks, opens, can be passed through.
         animator.SetBool("Locked", false);
         locked = false;
-        //this.gameObject.GetComponentInChildren<MeshRenderer>().material = unlockedMaterial;
         lockedBars.SetActive(false);
     }
 }

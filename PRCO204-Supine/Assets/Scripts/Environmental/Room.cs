@@ -51,14 +51,14 @@ public class Room : MonoBehaviour
         doors = this.GetComponentsInChildren<Door>();
         setUpDoorDirections();
 
-        // get the roomTrigger
+        // Get the roomTrigger.
         inRoomTrigger = GetComponentInChildren<EnterRoomTrigger>().gameObject.GetComponent<BoxCollider>();
 
         
-        // get enemyCountManager
+        // Get enemyCountManager.
         enemyCountManager = GameObject.FindGameObjectWithTag("EnemyCountMan").GetComponent<EnemyCountManager>();
 
-        // get LevelGen from parent.
+        // Get LevelGen from parent.
         levelGenMan = GameObject.FindGameObjectWithTag("LevelGenManager").GetComponent<LevelGeneration>();
 
         playerPickUp = GameObject.FindGameObjectWithTag("Player").GetComponent<PickUpWeapon>();
@@ -76,9 +76,6 @@ public class Room : MonoBehaviour
     // Update is called once per frame.
     void Update()
     {
-        //TESTING
-        
-
         if(playerInRoom & !roomCleared & !doorsLocked)
         {
             lockAllDoors();
@@ -98,7 +95,7 @@ public class Room : MonoBehaviour
         }
     }
 
-
+    // Get a list of enemies.
     public void populateEnemiesInRoom()
     {
         EnemyHealth[] tempArray = GetComponentsInChildren<EnemyHealth>();
@@ -109,17 +106,20 @@ public class Room : MonoBehaviour
         }
     }
 
+    // Get the enemies in this room.
     public void addEnemiesToRoom(EnemyHealth newEnemy)
     {
         enemiesInRoom.Add(newEnemy);
     }
+    
+    // Called when an enemy is killed, removes that enemy.
     public void enemyKilled(EnemyHealth enemyKilled)
     {
         enemiesInRoom.Remove(enemyKilled);
 
         if(enemiesInRoom.Count == 0)
         {
-            // all enemies killed
+            // All enemies killed.
             unlockAllDoors();
         }
 
@@ -130,9 +130,10 @@ public class Room : MonoBehaviour
     {
         return enemiesInRoom;
     }
+
     private void setUpDoorDirections()
     {
-        // sets bools for each door dir based on the spawn pts in the children
+        // Sets bools for each door dir based on the spawn pts in the children.
         foreach(Door d in doors)
         {
             if(d.direction == "N")

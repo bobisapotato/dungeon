@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+// One LevelManager object in the scene, containing this script.
+// This Controls spawning of rooms from prefabs to create a level.
 public class LevelGeneration : MonoBehaviour
 {
-	// One LevelManager object in the scene, containing this script.
-	// This Controls spawning of rooms from prefabs to create a level.
-
-
-	// VARS
+	// Varaibles.
 	public GameObject[] roomPrefabs;
 	[SerializeField] public List<GameObject> roomsInScene = new List<GameObject>();
 	public int maximumRooms;
@@ -45,7 +43,7 @@ public class LevelGeneration : MonoBehaviour
 
 	private void Start()
 	{
-		// to start, we just create the starter room at 0.0
+		// To start, we just create the starter room at 0.0.
 		startSpawn = new Vector3(0, 0, 0);
 		startRot = new Quaternion(0, 0, 0, 0);
 		GameObject newRoom = Instantiate(startRoomPrefab, startSpawn, startRot);
@@ -54,7 +52,7 @@ public class LevelGeneration : MonoBehaviour
 
 		roomsInScene.Add(newRoom);
 
-		//BUILD LEVEL
+		// BUILD LEVEL.
 		InvokeRepeating("spawnNewRoom", 0.5f, 0.1f);
 	}
 
@@ -161,8 +159,7 @@ public class LevelGeneration : MonoBehaviour
 	// Populate lists of room prefabs based on door directions
 	private void populateRoomDirectionLists()
 	{
-		// populate the lists with every room that has a door in a given direction
-
+		// Populate the lists with every room that has a door in a given direction.
 		foreach(GameObject g in roomPrefabs)
 		{
 			Room tempRoom = g.GetComponent<Room>();
@@ -186,11 +183,10 @@ public class LevelGeneration : MonoBehaviour
 		}
 	}
 
-	// Spawning of rooms
-
+	// Spawning of rooms.
 	public void pickHowToSpawnRoom(RoomSpawnPoint spawnPoint)
 	{
-		// selects whether room should be selected from list or be a dead end
+		// Selects whether room should be selected from list or be a dead end.
 
 		List<string> doorsRequired = new List<string>();
 		List<string> doorsAvoided = new List<string>();
@@ -198,7 +194,7 @@ public class LevelGeneration : MonoBehaviour
 		string direction = spawnPoint.spawnDirection;
 
 
-		// check sensors to see if any doors are needed 
+		// Check sensors to see if any doors are needed.
 		foreach (RoomSpawnSensor sensor in spawnPoint.GetComponentsInChildren<RoomSpawnSensor>())
 		{
 
@@ -212,7 +208,6 @@ public class LevelGeneration : MonoBehaviour
 			}
 		}
 
-
 		if (totalRoomsSoFar + openPaths >= maximumRooms)
 		{
 			spawnDeadEnd(spawnPoint, doorsRequired, doorsAvoided);
@@ -222,12 +217,11 @@ public class LevelGeneration : MonoBehaviour
 			spawnRoomFromList(spawnPoint, doorsRequired, doorsAvoided);
 		}
 	}
-	
+
+	// Spawns in a random room at the given point.
+	// Room must be selected from correct list so doors align.
 	public void spawnRoomFromList(RoomSpawnPoint spawnPoint, List<string> requiredDirs, List<string> avoidedDirs)
 	{
-		// spawns in a random room at the given point
-		// room must be selected from correct list so doors align
-
 		GameObject roomToSpawn = null;
 
 		List<GameObject> roomsToChooseFrom = populateTempRoomList(requiredDirs, avoidedDirs);
@@ -241,7 +235,6 @@ public class LevelGeneration : MonoBehaviour
 
 	public void spawnDeadEnd(RoomSpawnPoint spawnPoint, List<string> requiredDirs, List<string> avoidedDirs)
 	{
-
 		if (requiredDirs.Count() != 0)
 		{
 			GameObject roomToSpawn = findDeadEnd(requiredDirs, avoidedDirs);
@@ -250,24 +243,23 @@ public class LevelGeneration : MonoBehaviour
 		}
 	}
 
+	// Instantiates room at spawn position, and adds to roomList.
 	public void instantiateRoom(GameObject room, RoomSpawnPoint spawn)
 	{
-		// Instantiates room at spawn position, and adds to roomList
 		if (room && spawn)
 		{
 			Vector3 tempTransform = spawn.transform.position;
 
-			// spawn said room at that pos
+			// Spawn said room at that pos.
 			GameObject newRoom = Instantiate(room, tempTransform, startRot);
 
 			addNewRoomToScene(newRoom.gameObject, spawn);
 		}
 	}
 
+	// Returns a list of room prefabs that have doors in required directions and no doors in avoided directions. 
 	public List<GameObject> populateTempRoomList(List<string> requiredDirs, List<string> avoidedDirs)
 	{
-		// Returns a list of room prefabs that have doors in required directions and no doors in avoided directions. 
-
 		List<GameObject> tempRoomList = new List<GameObject>();
 		List<GameObject> secondTempRoomList = new List<GameObject>();
 
@@ -276,7 +268,7 @@ public class LevelGeneration : MonoBehaviour
 			GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().closeGame();
 		}
 
-		// add all the doors with required directions to temp List
+		// Add all the doors with required directions to temp List.
 		if (requiredDirs.Contains("N"))
 		{
 			foreach(GameObject g in rooms_northDoor)
@@ -306,7 +298,7 @@ public class LevelGeneration : MonoBehaviour
 			}
 		}
 
-		//remove any rooms that only have one/some of the needed directions
+		// Remove any rooms that only have one/some of the needed directions.
 		if (requiredDirs.Contains("N"))
 		{
 			foreach (GameObject g in tempRoomList)
@@ -348,8 +340,7 @@ public class LevelGeneration : MonoBehaviour
 			}
 		}
 
-		// remove any rooms with doors in the mustAvoid list
-
+		// Remove any rooms with doors in the mustAvoid list.
 		if (avoidedDirs.Contains("N"))
 		{
 			foreach (GameObject g in tempRoomList)
@@ -360,7 +351,6 @@ public class LevelGeneration : MonoBehaviour
 				}
 			}
 		}
-
 
 		if (avoidedDirs.Contains("E"))
 		{
@@ -403,11 +393,11 @@ public class LevelGeneration : MonoBehaviour
 
 	public GameObject findDeadEnd(List<string> requiredDirs, List<string> avoidedDirs)
 	{
-		// Finds appropriate room to close off a route without creating any more open paths, based on doors needed and their directions. 
+		// Finds appropriate room to close off a route without creating any more open paths, 
+		// based on doors needed and their directions. 
 		GameObject perfectRoom = null;
 
-		// only one door needed
-
+		// Only one door needed.
 		if(requiredDirs.Count() == 1)
 		{
 			if(requiredDirs[0] == "N")
@@ -428,8 +418,7 @@ public class LevelGeneration : MonoBehaviour
 			}
 		}
 
-		// if two doors needed
-
+		// If two doors needed.
 		if (requiredDirs.Count() == 2)
 		{
 			foreach (GameObject g in roomPrefabs)
@@ -446,7 +435,7 @@ public class LevelGeneration : MonoBehaviour
 			}
 		}
 
-		// if 3 doors needed
+		// If 3 doors needed.
 		if (requiredDirs.Count() == 3)
 		{
 			foreach (GameObject g in roomPrefabs)
@@ -463,43 +452,43 @@ public class LevelGeneration : MonoBehaviour
 			}
 		}
 
+		// If all 4 doors needed.
 		if (requiredDirs.Count() == 4)
 		{
 			perfectRoom = all4;
 		}
 
+		// Error handling.
 		if(!perfectRoom )
 		{
-			Debug.Log("no dead end found. required dirs: " + requiredDirs.Count());
+			Debug.Log("No dead end found. Required dirs: " + requiredDirs.Count());
 			if(requiredDirs.Count() == 2)
 			{
-				Debug.Log("dirs needed: " + requiredDirs[0] + requiredDirs[1]);
+				Debug.Log("Dirs needed: " + requiredDirs[0] + requiredDirs[1]);
 			}
-
 		}
+
 		return perfectRoom;
-		
 	}
 
-
+	// Updates padlock animator in the UI to show if current room is locked or not.
 	public void updatePadlockAnimator()
 	{
-		// Updates padlock animator in the UI to show if current room is locked or not.
 		if (currentRoom)
 		{
 			// When called, it checks which room has player in and updates padlock animator to say whether it's locked or not.
 			if (currentRoom.playerInRoom)
 			{
-				// if player is still in the given room
+				// If player is still in the given room.
 				if (currentRoom.doorsLocked != padlockAnimator.GetBool("Locked"))
 				{
-					// if anim and rooms values for locked don't match
+					// If anim and rooms values for locked don't match.
 					padlockAnimator.SetBool("Locked", currentRoom.doorsLocked);
 				}
 			}
 			else
 			{
-				// player has changed room, refind which room they're in
+				// Player has changed room, refind which room they're in.
 				foreach (GameObject roomGO in roomsInScene)
 				{
 					if (roomGO.GetComponent<Room>().playerInRoom)
