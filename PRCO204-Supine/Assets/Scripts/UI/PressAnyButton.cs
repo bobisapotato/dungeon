@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Start screen shows game name and credits.
+// This is set up so as soon as any input is recieved, the menu screen is loaded. 
 public class PressAnyButton : MonoBehaviour
 {
-    // Start screen shows game name and credits.
-    // This is set up so as soon as any input is recieved, the menu screen is loaded. 
-
+    // Variables.
     private GameManager gameManager;
 
     private PlayerControls controls;
@@ -34,8 +34,7 @@ public class PressAnyButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // NEEDS TO BE LINKED UP WITH UNITY INPUT SYSTEM COS IDK 
-
+        // Works for controller triggers as well.
         if(x >= 0.5)
         {
             LoadGame();
@@ -46,7 +45,6 @@ public class PressAnyButton : MonoBehaviour
     {
         gameManager.openDemoMenu2();
     }
-
 
     // Required for the input system.
     void OnEnable()
