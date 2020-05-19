@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAttack2 : MonoBehaviour
+public class EnemyAttack_SmallSlime : MonoBehaviour
 {
     private GameObject player;
 
