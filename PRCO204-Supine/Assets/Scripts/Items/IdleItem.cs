@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Attach this script to items to make them
+// float up and down. Procedural Animation?
 public class IdleItem : MonoBehaviour
 {
+    // Variables
     public bool isIdle;
 
     private bool isUp = false;
