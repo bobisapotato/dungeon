@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 // Uses Unity's preview input system.
 public class PlayerMovement : MonoBehaviour
 {
+    // Variables.
     public static Vector3 playerPos;
 
     [SerializeField]
@@ -95,6 +96,8 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            // Used for debugging in the editor.
+            // It is recommended that this is set to FALSE in builds.
             if (isUsingMouse)
             {
                 FaceMouse();
@@ -148,6 +151,7 @@ public class PlayerMovement : MonoBehaviour
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     // Temporary alternative movement.
+    // Used for debugging.
     Vector3 KeyboardMovement(Vector3 move)
     {
         float keyboardX = Input.GetAxis("Horizontal");

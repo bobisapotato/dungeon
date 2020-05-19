@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    
     //Variables
     [SerializeField] 
     private float velocity;
@@ -36,7 +35,6 @@ public class Projectile : MonoBehaviour
     {
         yield return new WaitForSeconds(5.0f);
         FireDebris();
-        
     }
 
     // If the bullet collides with a gameobject with the tag, "enemy" it 
@@ -58,7 +56,6 @@ public class Projectile : MonoBehaviour
             }
         }
     }
-
 
     // Destroys the gameobject this is attached to.
     private void FireDebris()
