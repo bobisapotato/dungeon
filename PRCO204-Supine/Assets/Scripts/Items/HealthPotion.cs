@@ -64,6 +64,7 @@ public class HealthPotion : MonoBehaviour
             //else 
             if (go.tag == "Player")
             {
+                // TODO: playerHealth is null
                 HealthManager.playerHealth.Heal(heal);
                 hitbox.enabled = false;
             }

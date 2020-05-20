@@ -29,7 +29,7 @@ public class ServerManager : MonoBehaviour {
 
 
     private WSConnection connection;
-    public string server = "research.supine.dev:3018";
+    public string server = "play.supine.dev";
 
     // Old item system broke, no idea when
     public GameObject itemBomb;

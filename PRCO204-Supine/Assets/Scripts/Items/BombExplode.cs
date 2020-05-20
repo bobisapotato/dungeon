@@ -75,8 +75,8 @@ public class BombExplode : MonoBehaviour
                 go.SendMessage("TakeDamage", damage);
                 hitbox.enabled = false;
             }
-            else if (go.tag == "Player")
-            {
+            else if (go.tag == "Player") {
+                // TODO: playerHealth is null
                 HealthManager.playerHealth.TakeDamage(damage / 2);
                 hitbox.enabled = false;
             }
