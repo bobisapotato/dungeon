@@ -147,7 +147,7 @@ public class Menu : MonoBehaviour
 
     public void LoadInstructions()
     {
-        gameMan.openDemoInstructions2();
+        gameMan.openInstructions();
     }
 
     public void CloseGame()
@@ -157,7 +157,7 @@ public class Menu : MonoBehaviour
 
     public void LoadMenu()
     {
-        gameMan.openDemoMenu2();
+        gameMan.openMenu();
     }
 
     // Required for the input system.

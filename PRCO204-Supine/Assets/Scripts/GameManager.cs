@@ -19,60 +19,46 @@ public class GameManager : MonoBehaviour
     {
         Application.Quit();
     }
-    // Demo 1 
-    #region
-    public void openDemo()
-    {
-        SceneManager.LoadScene("DemoScene");
-    }
-
-    public void openDemoMenu()
-    {
-        SceneManager.LoadScene("DemoMenu");
-    }
-    #endregion
-
-    // Demo 2
-    #region
-    public void openDemoScene2()
+   
+    public void openGame()
     {
         // Reset static values for next level.
         PlayerAttack.isHoldingRangedWeapon = false;
         PlayerAttack.isHoldingWeapon = false;
 
-        SceneManager.LoadScene("Demo_Release2");
+        SceneManager.LoadScene("Game");
     }
 
-    public void openDemoWin2()
+    public void openWin()
     {
         // Reset static values for next level.
         PlayerAttack.isHoldingRangedWeapon = false;
         PlayerAttack.isHoldingWeapon = false;
         LevelManager.level = 0;
 
-        SceneManager.LoadScene("DemoWin2");
+        SceneManager.LoadScene("WinScreen");
     }
-    public void openDemoLose2()
+    public void openLose()
     {
         // Reset static values for next level.
         PlayerAttack.isHoldingRangedWeapon = false;
         PlayerAttack.isHoldingWeapon = false;
         LevelManager.level = 0;
 
-        SceneManager.LoadScene("DemoLose2");
+        SceneManager.LoadScene("LoseScreen");
     }
 
 
-    public void openDemoMenu2()
+    public void openMenu()
     {
         // Reset static values for next level.
         PlayerAttack.isHoldingRangedWeapon = false;
         PlayerAttack.isHoldingWeapon = false;
 
-        SceneManager.LoadScene("DemoMenu2");
+        SceneManager.LoadScene("MainMenu");
     }
 
-    public void openDemoInstructions2()
+    public void openInstructions()
     {
         // Reset static values for next level.
         PlayerAttack.isHoldingRangedWeapon = false;
@@ -82,6 +68,6 @@ public class GameManager : MonoBehaviour
     }
 
 
-	#endregion
+    
 
 }

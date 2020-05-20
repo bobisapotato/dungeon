@@ -43,7 +43,7 @@ public class PressAnyButton : MonoBehaviour
 
     public void LoadGame()
     {
-        gameManager.openDemoMenu2();
+        gameManager.openMenu();
     }
 
     // Required for the input system.

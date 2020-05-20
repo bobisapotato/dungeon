@@ -56,7 +56,7 @@ public class HealthSystem : MonoBehaviour
 
     private void playerDie()
     {
-        gameMan.openDemoLose2();
+        gameMan.openLose();
     }
 
     // Getters and Setters.
