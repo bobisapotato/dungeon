@@ -65,7 +65,13 @@ public class Door : MonoBehaviour
         if (collision.gameObject.tag == "Player" && !open && !locked)
         {
             animator.SetBool("Open", true);
+            Debug.Log(this.GetComponentInParent<NetworkRoomRelay>());
+            if (!open) {
+                open = true;
+                this.GetComponentInParent<NetworkRoomRelay>().EnteredRoom();
+            }
             open = true;
+            
 
             doorManager.Play();
         }
@@ -76,6 +82,11 @@ public class Door : MonoBehaviour
         if (other.gameObject.tag == "Player" && !open && !locked)
         {
             animator.SetBool("Open", true);
+            Debug.Log(this.GetComponentInParent<NetworkRoomRelay>());
+            if (!open) {
+                open = true;
+                this.GetComponentInParent<NetworkRoomRelay>().EnteredRoom();
+            }
             open = true;
 
             doorManager.Play();
@@ -86,6 +97,10 @@ public class Door : MonoBehaviour
     {
         // Door can be locked from other scripts - doors close and player can't pass through doorway.
         animator.SetBool("Locked", true);
+        if (!locked) {
+            locked = true;
+            this.GetComponentInParent<NetworkRoomRelay>().EnteredRoom();
+        }
         locked = true;
         lockedBars.SetActive(true);
     }
@@ -94,6 +109,10 @@ public class Door : MonoBehaviour
     {
         // Door unlocks, opens, can be passed through.
         animator.SetBool("Locked", false);
+        if (locked) {
+            locked = false;
+            this.GetComponentInParent<NetworkRoomRelay>().EnteredRoom();
+        }
         locked = false;
         lockedBars.SetActive(false);
     }

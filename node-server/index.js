@@ -2,6 +2,7 @@ const app = require('express')();
 const http = require('http').Server(app);
 const https = require('https');
 const fs = require('fs');
+const tls = require('tls');
 
 const certRoot = `/etc/letsencrypt/live/research.supine.dev`;
 const port = 3018;
@@ -10,8 +11,9 @@ const server = https.createServer({
     cert: fs.readFileSync(`${certRoot}/cert.pem`)
 }, app).listen(port, function () {
     console.log(`[HTTPS] Listening on port ${port}`)
-})
+});
 const io = require('socket.io')(server);
+
 
 let count = 0;
 io.on('connection', function(socket) {
@@ -68,11 +70,17 @@ io.on('connection', function(socket) {
     socket.on('disconnect', function() {
         console.log(`Disconnected [${--count} users]`)
     });
-    socket.on('game:action', function(action) {
-        console.log(`Game action ${action}`);
+    
+    socket.on('game:action', function(action, ...args) {
+        console.log(`Game action ${action}`, args);
         let room = (Object.keys(socket.rooms)).filter(r => r.length === 4)[0];
-        io.sockets.to(room).emit('game:action', action);
+        io.sockets.to(room).emit('game:action', action, ...args);
     });
+    
+    socket.on('object:position', function(blob) {
+        let room = (Object.keys(socket.rooms)).filter(r => r.length === 4)[0];
+        io.sockets.to(room).emit('object:position', blob[0]);        
+    })
 });
 
 function generateCode(length) {

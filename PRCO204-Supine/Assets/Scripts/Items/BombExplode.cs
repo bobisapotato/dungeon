@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BombExplode : MonoBehaviour
 {
-    // Variables.
     private Collider hitbox;
 
     [SerializeField] 

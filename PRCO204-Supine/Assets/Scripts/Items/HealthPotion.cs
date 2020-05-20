@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class HealthPotion : MonoBehaviour
 {
-    // Variables.
     private Collider hitbox;
 
     [SerializeField]
