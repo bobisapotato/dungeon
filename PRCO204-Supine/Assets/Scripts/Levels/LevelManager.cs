@@ -5,13 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
+    // Variables
     public static int level = 0;
     public static int numberOfRooms = 5;
 
     // Scene names.
-    private string mainMenu = "DemoMenu2";
-    private string winScreen = "DemoWin2";
-    private string levelName = "Demo_Release2";
+    private string winScreen = "WinScreen";
+    private string levelName = "Game";
 
     private LevelGeneration levelGen;
 
@@ -31,6 +31,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    // Manages the scene to be loaded next.
     public void LoadLevel()
     {
         level++;

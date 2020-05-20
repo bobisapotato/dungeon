@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    // Variables
+    // Variables.
     Collider hitbox;
+
     [SerializeField] 
     GameObject meleeObject;
-
     [SerializeField]
     GameObject projectile;
 
     private PlayerControls controls;
-    private float rightTriggerDown;
 
+    private float rightTriggerDown;
     private float timer = 0f;
     private float reloadTime = 0.2f;
 

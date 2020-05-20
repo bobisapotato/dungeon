@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HealthPotion : MonoBehaviour
 {
+    // Variables.
     private Collider hitbox;
 
     [SerializeField]
@@ -22,13 +23,11 @@ public class HealthPotion : MonoBehaviour
     [SerializeField]
     private float healRadius = 5f;
 
-
     void Awake()
     {
         aoeIndicator = Instantiate(dropShadow, new Vector3(transform.position.x, -4f, transform.position.z), dropShadow.transform.rotation);
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         hitbox = GetComponent<SphereCollider>();
@@ -48,6 +47,7 @@ public class HealthPotion : MonoBehaviour
         Heal();
     }
 
+    // Heals the player if they are within a certain radius.
     private void Heal()
     {
         hitColliders = Physics.OverlapSphere(transform.position, healRadius);
@@ -56,12 +56,6 @@ public class HealthPotion : MonoBehaviour
         {
             GameObject go = hit.gameObject;
 
-            //if (go.tag == "Enemey")
-            //{
-            //    go.SendMessage("TakeDamage", heal);
-            //    hitbox.enabled = false;
-            //}
-            //else 
             if (go.tag == "Player")
             {
                 go.GetComponentInChildren<HealthSystem>().gameObject.SendMessage("Heal", heal);

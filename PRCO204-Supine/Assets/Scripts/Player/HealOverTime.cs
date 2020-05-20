@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HealOverTime : MonoBehaviour
 {
+    // Variables.
     private float timer = 0f;
     private float coolDown = 4f;
 

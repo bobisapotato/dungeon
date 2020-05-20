@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MeleeHitbox : MonoBehaviour
 {
-
+    // Variables.
     Collider hitbox;
 
     [SerializeField] 
@@ -17,12 +17,6 @@ public class MeleeHitbox : MonoBehaviour
     void Start()
     {
         hitbox = gameObject.GetComponent<CapsuleCollider>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     // If anything with an enemy tag is inside the trigger hitbox when

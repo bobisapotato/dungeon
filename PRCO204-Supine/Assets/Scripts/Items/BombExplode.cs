@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BombExplode : MonoBehaviour
 {
+    // Variables.
     private Collider hitbox;
 
     [SerializeField] 
@@ -47,21 +48,7 @@ public class BombExplode : MonoBehaviour
         hitbox.enabled = true;
     }
 
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    if (other.gameObject.tag == "Enemy")
-    //    {
-    //        other.gameObject.SendMessage("TakeDamage", damage);
-    //        hitbox.enabled = false;
-    //    }
-
-    //    if (other.gameObject.tag == "Player")
-    //    {
-    //        HealthManager.playerHealth.TakeDamage(damage / 2);
-    //        hitbox.enabled = false;
-    //    }
-    //}
-
+    // Deals damage to enemies and the player if they are within a certain radius.
     private void Explode()
     {
         hitColliders = Physics.OverlapSphere(transform.position, bombRadius);

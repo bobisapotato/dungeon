@@ -16,7 +16,6 @@ public class HealthSystem : MonoBehaviour
     float coolDown = 1f;
     float shakeHitAmount = 1.5f;
 
-   
     private int startPlayerHealth = 10;
     private int oldHealth;
 
@@ -27,13 +26,9 @@ public class HealthSystem : MonoBehaviour
     [SerializeField]
     private Animator heartsUIAnim;
 
-    
-
     // Start is called before the first frame update
     void Start()
     {
-        //original = gameObject.GetComponentInChildren<MeshRenderer>().material.color;
-
         health = startPlayerHealth;
         oldHealth = GetHealth();
 
@@ -77,9 +72,9 @@ public class HealthSystem : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        // Error handling.
         if(damage != 1)
         {
-            // need to figure out why this happens before release
             damage = 1;
         }
 
@@ -102,6 +97,7 @@ public class HealthSystem : MonoBehaviour
                 health -= damage;
             }
         }
+
         updateHeartAnim();
     }
 

@@ -10,8 +10,6 @@ public class EnemyHealth : MonoBehaviour
 
     [SerializeField] 
     private int health = 100;
-    [SerializeField] 
-    private int knockback;
 
     private float shakeHitAmount = 0.5f;
     private float shakeDieAmount = 0.5f;
@@ -62,7 +60,6 @@ public class EnemyHealth : MonoBehaviour
     }
 
     // Update is called once per frame
-    // Checks to 
     void Update()
     {
         if (health <= 0 && !hasDied)
@@ -141,13 +138,8 @@ public class EnemyHealth : MonoBehaviour
 
             Invoke("ResetColour", coolDown);
         }
-
-        //gameObject.GetComponent<Rigidbody>().AddForce(-transform.forward * knockback, ForceMode.Impulse);
     }
     
-
-   
-
     void Die()
     {
         triggerCrossbowCheck();
@@ -165,7 +157,7 @@ public class EnemyHealth : MonoBehaviour
     
     public void triggerCrossbowCheck()
     {
-        // if half the enemies have been killed, spawn a crossbow
+        // If half the enemies have been killed, spawn a crossbow
         if (enemyCountManager.halfEnemyCount == enemyCountManager.enemyCount)
         {
             if(!enemyCountManager.checkDroppedCrossbow())

@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Easter egg.
 public class Rat : MonoBehaviour
 {
+	// Variables.
 	float rotTime;
 	float rotateWait;
 	float rotateLorR;
@@ -13,16 +15,12 @@ public class Rat : MonoBehaviour
 	float moveSpeed = 10f;
 	float rotSpeed = 100f;
 
-	float distanceToCheckForObstacle = 4f;
-
 	bool isWalking;
 	bool isRotatingRight;
 	bool isRotatingLeft;
 
 	bool isWandering;
 	bool isObstacleInTheWay;
-
-	RaycastHit hit;
 
     // Update is called once per frame
     void Update()
@@ -46,23 +44,6 @@ public class Rat : MonoBehaviour
 		if (isWalking)
 		{
 			transform.position += transform.forward * moveSpeed * Time.deltaTime;
-		}
-	}
-
-	void FixedUpdate()
-	{
-		//CheckForObstacle();
-	}
-
-	void CheckForObstacle()
-	{
-		if (Physics.Raycast(transform.position, transform.forward, out hit, distanceToCheckForObstacle))
-		{
-			isObstacleInTheWay = true;
-		}
-		else
-		{
-			isObstacleInTheWay = false;
 		}
 	}
 

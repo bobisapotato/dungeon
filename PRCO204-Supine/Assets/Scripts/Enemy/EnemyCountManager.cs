@@ -29,15 +29,16 @@ public class EnemyCountManager : MonoBehaviour
     {
         setUIVisibility(false);
     }
+
     public void startUpEnemyCounter()
     {
-        // save list of rooms
-
+        // Save a list of all the rooms
         rooms = levelManager.getRoomsInScene();
         Invoke("populateEnemyList", 1f);
         
     }
 
+    // Gets all the enemies in the scene.
     private void populateEnemyList()
     {
         foreach(GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
@@ -55,6 +56,7 @@ public class EnemyCountManager : MonoBehaviour
         setUIVisibility(true);
     }
 
+    // Is called when an enemy is killed. 
     public void enemyKilled(EnemyHealth enemyKilled)
     {
         // when enemy is killed it sends message here to remove it from list
@@ -63,27 +65,31 @@ public class EnemyCountManager : MonoBehaviour
         updateLabel();
     }
 
+    // Updates the UI.
     public void updateLabel()
     {
         enemyCountLabel.text = ("x" + enemyCount.ToString());
     }
 
+    // Returns half the number of total enemies.
     public int halfEnemyCount
     {
         get => (int)Mathf.Ceil(startEnemyTotal / 2f); 
     }
 
+   // Used to only drop the crossbow once per level.
    public bool checkDroppedCrossbow()
    {
         return droppedCrossbow;
    }
 
+    // Called when crossbow is spawned to set bool to true.
     public void dropCrossbow()
     {
-        // called when crossbow is spawned to set bool to true.
         droppedCrossbow = true;
     }
 
+    // Set whether the UI is active or not.
     public void setUIVisibility(bool newSetting)
     {
         foreach(GameObject UI in UItoHide)

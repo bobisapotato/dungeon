@@ -5,6 +5,7 @@ using System;
 
 public class EnemyRunAway : MonoBehaviour
 {
+	// Variables.
 	private Transform target;
 
 	private bool isRotatingLeft = false;
@@ -44,7 +45,6 @@ public class EnemyRunAway : MonoBehaviour
 
 	void Awake()
 	{
-		// Josie's code, check through
 		target = GameObject.FindGameObjectWithTag("Player").transform;
 	}
 
@@ -127,6 +127,7 @@ public class EnemyRunAway : MonoBehaviour
 		}
 	}
 
+	// Sends out a raycast to detect walls/obstacles.
 	void CheckForObstacle()
 	{
 		if (Physics.Raycast(transform.position, transform.forward, out hit, distanceToCheckForObstacle)
@@ -166,6 +167,7 @@ public class EnemyRunAway : MonoBehaviour
 		}
 	}
 
+	// Move away from the target.
 	void RunAway()
 	{
 		Vector3 direction = transform.position - target.position;

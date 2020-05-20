@@ -5,22 +5,17 @@ using UnityEngine.UI;
 
 public class EnemySpawnManager : MonoBehaviour
 {
+    // Variables.
     [SerializeField]
     private GameObject trap;
     [SerializeField]
     private GameObject rangedEnemyPrefab;
     [SerializeField]
     private GameObject meleeEnemyPrefab;
-    [SerializeField]
-    private GameObject pathPosPrefab;
-
-    [SerializeField]
-    private Transform player;
 
     private GameObject[] paths;
 
     private int numberOfEnemies;
-    private int numberOfPathPositions;
 
     private int maxEnemies = 3;
     private int minEnemies = 2;
@@ -29,8 +24,6 @@ public class EnemySpawnManager : MonoBehaviour
 
     private Vector3 startPos;
     private Quaternion startRot;
-
-    private EnemyPathMovement enemyMovementScript;
 
     private GameObject enemyInstance;
 
@@ -49,17 +42,6 @@ public class EnemySpawnManager : MonoBehaviour
 
         // Set the number of enemies for the room.
         numberOfEnemies = GetNumberOfEnemiesInRoom();
-
-        //paths = new GameObject[numberOfPathPositions = GetNumberOfPathPositions()];
-
-        // All the enemies in a room share the same path.
-        //for (int j = 0; j < numberOfPathPositions; j++)
-        //{
-        //    paths[j] = Instantiate(pathPosPrefab, transform, false);
-        //    paths[j].transform.localPosition = GetPathPos();
-        //}
-
-        
 
         // For each enemy, instantiate a number of paths.
         for (int i = 0; i < numberOfEnemies; i++)
@@ -86,15 +68,10 @@ public class EnemySpawnManager : MonoBehaviour
             enemyInstance.transform.localPosition = startPos;
             enemyInstance.transform.localRotation = enemyInstance.transform.rotation;
 
+            // Repositions enemies if they spawn inside a wall.
             CheckIfInsideWall();
 
             enemyInstance.GetComponent<EnemyMovement>().parentRoom = GetComponentInParent<Room>();
-
-            // Set the paths and the target for the enemy.
-            //enemyMovementScript = enemyInstance.GetComponent<EnemyPathMovement>();
-
-            //enemyMovementScript.pathPositions = paths;
-            //enemyMovementScript.player = player;
         }
 
         enemyIconAnimator = GameObject.FindGameObjectWithTag("EnemyIcon").GetComponent<Animator>();
@@ -143,18 +120,6 @@ public class EnemySpawnManager : MonoBehaviour
         return rot;
     }
 
-    // Gets a random point for a path.
-    Vector3 GetPathPos()
-    {
-        Vector3 pos;
-
-        pos.x = Random.Range(-7.5f, 7.5f);
-        pos.y = 1f;
-        pos.z = Random.Range(-7.5f, 7.5f);
-
-        return pos;
-    }
-
     void SpawnSlime()
     {
         enemyInstance = Instantiate(meleeEnemyPrefab, transform, false);
@@ -196,11 +161,10 @@ public class EnemySpawnManager : MonoBehaviour
         }
     }
 
+    // Sets the icon used in the enemy counter UI based on enemy types in scene. 
+    // Uses the animator attached to icon, playing appropriate anim based on enemies. 
     private void setEnemyCounterIcon()
     {
-        // Sets the icon used in the enemy counter UI based on enemy types in scene. 
-        // Uses the animator attached to icon, playing appropriate anim based on enemies. 
-
         if(isJustSlimes)
         {
             enemyIconAnimator.Play("SlimeIcon");

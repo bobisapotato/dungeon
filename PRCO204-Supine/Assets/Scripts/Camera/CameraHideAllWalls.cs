@@ -2,21 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Controls walls fading in and out.
+// This will see if a player or enemy is obscured, and if so, turn all walls transparent. 
+// Walls need the 'HideableObject' Script filled out in the inspector with two materials, 
+// one opaque one transparent, for this to work. 
 public class CameraHideAllWalls : MonoBehaviour
 {
-    // Controls walls fading in and out.
-    // This will see if a player or enemy is obscured, and if so, turn all walls transparent. 
-    // Walls need the 'HideableObject' Script filled out in the inspector with two materials, one opaque one transparent, for this to work. 
-
     [SerializeField]
     private List<GameObject> enemies = new List<GameObject>();
+
     [SerializeField]
     private List<HideableObject> hideables = new List<HideableObject>();
+
     private GameObject player;
+
     private Camera mainCamera;
+
     private RaycastHit hit;
+
     private LevelGeneration levelGenerationManager;
+
     private float alpha = 1f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,12 +34,9 @@ public class CameraHideAllWalls : MonoBehaviour
         InvokeRepeating("triggerTargetRay", 0.1f, 0.2f);
     }
 
-   
-
+    // Sends a ray out to check if any of the targets are hidden.
     public void triggerTargetRay()
     {
-        // Sends a ray out to check if any of the targets are hidden.
-
         bool needToHideObjects = false;
 
         Debug.DrawRay(mainCamera.transform.position,
@@ -45,11 +49,11 @@ public class CameraHideAllWalls : MonoBehaviour
         {
             if(hit.collider.gameObject == player)
             {
-                // don't need to hide
+                // Don't need to hide.
             }
             else if(hit.collider.gameObject.GetComponent<MeshRenderer>())
             {
-                //hide
+                // Hide.
                 needToHideObjects = true;
                 
             }
@@ -62,11 +66,11 @@ public class CameraHideAllWalls : MonoBehaviour
                 {
                     if (hit.collider.gameObject == enemy)
                     {
-                        // don't need to hide
+                        // Don't need to hide.
                     }
                     else
                     {
-                        //hide
+                        // Hide.
                         needToHideObjects = true;
                     }
                 }
@@ -83,10 +87,9 @@ public class CameraHideAllWalls : MonoBehaviour
 
     }
 
+    // Gets a list of all the enemies in the level when the game starts. 
     private void getAllEnemies()
-    {
-        // get a list of all the enemies in the level when the game starts. 
-        
+    {        
         foreach (GameObject room in levelGenerationManager.getRoomsInScene())
         {
             foreach(EnemyHealth enemy in room.GetComponent<Room>().getEnemiesInRoom())
@@ -96,9 +99,9 @@ public class CameraHideAllWalls : MonoBehaviour
         }
     }
 
+    // Returns list of enemies in current room. 
     private List<GameObject> getEnemiesInCurrentRoom()
     {
-        // returns list of enemies in current room. 
         List<GameObject> enemiesInCurrentRoom = new List<GameObject>();
 
         foreach (GameObject room in levelGenerationManager.getRoomsInScene())
@@ -122,24 +125,24 @@ public class CameraHideAllWalls : MonoBehaviour
         Debug.Log("trying to pop list");
 
         getAllEnemies();
-        // gets all the hideableObjects from the scene
+
+        // Gets all the hideableObjects from the scene.
         foreach (GameObject hideableObj in GameObject.FindGameObjectsWithTag("Hideable"))
         {
             hideables.Add(hideableObj.GetComponent<HideableObject>());
         }
-
     }
 
+    // Hides all the hideable objects in the hideables list.
     private void hideAllObjects()
     {
-        // hides all the hideable objects in the hideables list
         foreach(HideableObject hide in hideables)
         {
-
             hide.hideObject();
         }
     }
 
+    // Shows all the hideable objects in the hideables list.
     private void showAllObjects()
     {
         foreach (HideableObject hide in hideables)
@@ -147,6 +150,4 @@ public class CameraHideAllWalls : MonoBehaviour
             hide.showObject();
         }
     }
-
-    
 }

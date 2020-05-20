@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 
 public class Menu : MonoBehaviour
 {
+    // Variables.
     public TextMeshProUGUI[] textBoxes;
     public string[] events;
 
@@ -138,6 +139,7 @@ public class Menu : MonoBehaviour
         }
     }
 
+    // Menu actions.
     public void LoadGame()
     {
         levelGen.LoadLevel();

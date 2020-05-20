@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Sends message to unlock room when list of enemies have all been destroyed
+// Should only exist in a GO with the 'Room' script
 public class EnemysUnlockRoom : MonoBehaviour
 {
-    // Sends message to unlock room when list of enemies have all been destroyed
-    // Should only exist in a GO with the 'Room' script
-
-    // VARS
+    // Variables.
     #region
     [SerializeField] private List<GameObject> activeEnemyList = new List<GameObject>();
     private Room room;
@@ -16,7 +15,7 @@ public class EnemysUnlockRoom : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // get the associated room - through error i
+        // Get the associated room - through error i.
         if (this.GetComponent<Room>())
         {
             room = this.GetComponent<Room>();
@@ -30,13 +29,12 @@ public class EnemysUnlockRoom : MonoBehaviour
 
     public void enemyKilled(GameObject enemy)
     {
-        // when an enemy dies, it will send a message here so it is removed from the list of active enemies
+        // When an enemy dies, it will send a message here so it is removed from the list of active enemies.
         activeEnemyList.Remove(enemy);
 
         if (activeEnemyList.Count == 0)
         {
-            // no enemies left in room
-
+            // No enemies left in room.
             room.unlockAllDoors();
         }
     }
