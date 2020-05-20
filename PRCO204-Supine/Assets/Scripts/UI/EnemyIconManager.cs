@@ -25,15 +25,15 @@ public class EnemyIconManager : MonoBehaviour
     // Uses the animator attached to icon, playing appropriate anim based on enemies. 
     private void setEnemyCounterIcon()
     {
-        if (EnemySpawnManager.isJustSlimes)
+        if (EnemySpawnManager.isJustSlimes && !EnemySpawnManager.isJustSkeletons)
         {
             enemyIconAnimator.Play("SlimeIcon");
         }
-        else if (EnemySpawnManager.isJustSkeletons)
+        if (EnemySpawnManager.isJustSkeletons && !EnemySpawnManager.isJustSlimes)
         {
             enemyIconAnimator.Play("SkullIcon");
         }
-        else
+        if (!EnemySpawnManager.isJustSkeletons && !EnemySpawnManager.isJustSlimes)
         {
             enemyIconAnimator.Play("SkullAndSlimeIcon");
         }

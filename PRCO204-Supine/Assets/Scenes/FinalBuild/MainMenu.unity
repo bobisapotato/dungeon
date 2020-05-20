@@ -772,6 +772,7 @@ GameObject:
   - component: {fileID: 820947840}
   - component: {fileID: 820947842}
   - component: {fileID: 820947843}
+  - component: {fileID: 820947844}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -913,6 +914,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &820947844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 820947839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d04f8830a1e5a894199480eaae1156a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  server: play.supine.dev
+  itemBomb: {fileID: 931617099445915360, guid: 2484ce36cabf20b40a9f514376c3746c, type: 3}
+  itemHealthPotion: {fileID: 931617099445915360, guid: 94693efde254a5b4e9e6d219621b0e69,
+    type: 3}
 --- !u!1 &903752052
 GameObject:
   m_ObjectHideFlags: 0
