@@ -30,9 +30,6 @@ public class EnemySpawnManager : MonoBehaviour
     public static bool isJustSlimes;
     public static bool isJustSkeletons;
 
-    [SerializeField]
-    private Animator enemyIconAnimator;
-
     // Start is called before the first frame update
     void Awake()
     {
@@ -73,10 +70,6 @@ public class EnemySpawnManager : MonoBehaviour
 
             enemyInstance.GetComponent<EnemyMovement>().parentRoom = GetComponentInParent<Room>();
         }
-
-        enemyIconAnimator = GameObject.FindGameObjectWithTag("EnemyIcon").GetComponent<Animator>();
-
-        setEnemyCounterIcon();
     }
 
     // Returns a random number within a specified range.
@@ -158,24 +151,6 @@ public class EnemySpawnManager : MonoBehaviour
                 enemyInstance.transform.localPosition = GetStartPos();
                 CheckIfInsideWall();
             }
-        }
-    }
-
-    // Sets the icon used in the enemy counter UI based on enemy types in scene. 
-    // Uses the animator attached to icon, playing appropriate anim based on enemies. 
-    private void setEnemyCounterIcon()
-    {
-        if(isJustSlimes)
-        {
-            enemyIconAnimator.Play("SlimeIcon");
-        }
-        else if (isJustSkeletons)
-        {
-            enemyIconAnimator.Play("SkullIcon");
-        }
-        else
-        {
-            enemyIconAnimator.Play("SkullAndSlimeIcon");
         }
     }
 }

@@ -41,6 +41,8 @@ public class LevelGeneration : MonoBehaviour
 
 	public bool startRoomGen = false;
 
+	public static bool isFinished = false;
+
 	private void Start()
 	{
 		// To start, we just create the starter room at 0.0.
@@ -70,6 +72,8 @@ public class LevelGeneration : MonoBehaviour
 				cameraHideAllWalls.populateHideableList();
 				enemyCountMan.startUpEnemyCounter();
 				startedEnemyCounter = true;
+
+				isFinished = true;
 			}
 		}
 

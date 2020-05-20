@@ -830,8 +830,9 @@ GameObject:
   - component: {fileID: 4793984603094010523}
   - component: {fileID: 4793984603094010532}
   - component: {fileID: 1871538432124202091}
+  - component: {fileID: 4591840739380757168}
   m_Layer: 5
-  m_Name: EnemyCounter Icon
+  m_Name: EnemyCounterIcon
   m_TagString: EnemyIcon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -853,7 +854,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -107.59995, y: -53.399975}
+  m_AnchoredPosition: {x: -107.59985, y: -53.399902}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4793984603094010523
@@ -911,6 +912,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4591840739380757168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4793984603094010534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02fb3360088333144ae055bd521e0d57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4793984603145142480
 GameObject:
   m_ObjectHideFlags: 0
@@ -1319,7 +1332,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -74.600006, y: -54}
+  m_AnchoredPosition: {x: -74.6001, y: -54}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4793984603575449789
@@ -1392,7 +1405,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -105.30893, y: -63.799988}
+  m_AnchoredPosition: {x: -105.30884, y: -63.80005}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4793984603651157553
