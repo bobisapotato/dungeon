@@ -3,10 +3,10 @@ This repository is for the PRCO204 live client module for team Supine. We'll be 
 
 Name|ID|Email|Roles|
 ---|---|---|---
-Solomon Cammack|`10613265`|solomon@supine.dev|**Technical relations manager**, technical lead, repo manager, web manager
-Alex Pritchard|`10577259`|alex@supine.dev|**Codebase manager**, technical lead, QA tester, Unity manager
-Zack Hawkins|`10587295`|zack@supine.dev|**Client liason**, product owner, secondary designer
-Josie Wood|`10509521`|josie@supine.dev|**Scrum master**, lead designer, QA tester, project management lead
+Solomon Cammack|`10613265`|solomon@supine.dev|**Technical Lead**, technical relations manager, repo manager, web manager
+Alex Pritchard|`10577259`|alex@supine.dev|**Technical Lead**, codebase manager, QA tester, Unity manager
+Zack Hawkins|`10587295`|zack@supine.dev|**Product Owner**, client liason, secondary designer
+Josie Wood|`10509521`|josie@supine.dev|**Scrum Master**, lead designer, QA tester, project management lead
 
 # Team meeting schedules
 Due|Action|By
