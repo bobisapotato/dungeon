@@ -92,10 +92,10 @@ public class WSConnection : MonoBehaviour {
     private List<NetworkEvent> queuedEvents = new List<NetworkEvent>();
 
     public void Connect() {
-        socket = new WebSocket($"wss://{server}/socket.io/?EIO=3&transport=websocket");
+        socket = new WebSocket($"wss://{server}/socket.io/?EIO=3&transport=websocket") {
+            Log = {Level = LogLevel.Trace, File = @"C:\Users\solca\RiderProjects\prco204-supine\wslog.txt"}
+        };
 
-        socket.Log.Level = LogLevel.Trace;
-        socket.Log.File = @"C:\Users\solca\RiderProjects\prco204-supine\wslog.txt";
 
         socket.OnClose += (sender, args) => {
             OnSocketDisconnected?.Invoke(String.Format("[{0}] {1}", args.Code, args.Reason));
@@ -112,7 +112,7 @@ public class WSConnection : MonoBehaviour {
         };
 
         socket.OnError += (sender, e) => {
-            OnSocketError?.Invoke(e.ToString());
+            OnSocketError?.Invoke(e.Message + " - " + e.Exception.StackTrace);
             StopNetworkTick();
             throw e.Exception;
         };

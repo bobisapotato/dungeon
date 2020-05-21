@@ -52,27 +52,27 @@ public class GameManager : MonoBehaviour
 
         SceneManager.LoadScene("DemoWin2");
     }
-    public void openDemoLose2()
+    public void openLoseScreen()
     {
         // Reset static values for next level.
         PlayerAttack.isHoldingRangedWeapon = false;
         PlayerAttack.isHoldingWeapon = false;
         LevelManager.level = 0;
 
-        SceneManager.LoadScene("DemoLose2");
+        SceneManager.LoadScene("LoseScreen");
     }
 
 
-    public void openDemoMenu2()
+    public void openMenu()
     {
         // Reset static values for next level.
         PlayerAttack.isHoldingRangedWeapon = false;
         PlayerAttack.isHoldingWeapon = false;
 
-        SceneManager.LoadScene("DemoMenu2");
+        SceneManager.LoadScene("MainMenu");
     }
 
-    public void openDemoInstructions2()
+    public void openInstructions()
     {
         // Reset static values for next level.
         PlayerAttack.isHoldingRangedWeapon = false;
