@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 // Uses Unity's preview input system.
 public class PlayerMovement : MonoBehaviour
 {
+    // Variables.
     public static Vector3 playerPos;
 
     [SerializeField]
@@ -41,6 +42,11 @@ public class PlayerMovement : MonoBehaviour
     public bool isUsingMouse;
     public float adjustmentAngle;
 
+    [SerializeField]
+    private AudioSource playerAudio;
+
+    Animator playerAnimator;
+    
     void Awake()
     {
         controls = new PlayerControls();
@@ -58,7 +64,9 @@ public class PlayerMovement : MonoBehaviour
 
         controls.Gameplay.PlayerRotY.performed += ctx => rotY
         = ctx.ReadValue<Vector2>();
-        controls.Gameplay.PlayerRotY.canceled += ctx => rotY = Vector3.zero;
+        controls.Gameplay.PlayerRotY.canceled += ctx => rotY = Vector2.zero;
+
+        playerAnimator = this.gameObject.GetComponent<Animator>();
     }
 
     void Update()
@@ -76,7 +84,6 @@ public class PlayerMovement : MonoBehaviour
 
         // If there's not input from the input system, 
         // check for alternative input.
-        // This is temporary, for Zack.
         if (move == Vector3.zero) 
         {
             move = KeyboardMovement(move);
@@ -88,6 +95,8 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            // Used for debugging in the editor.
+            // It is recommended that this is set to FALSE in builds.
             if (isUsingMouse)
             {
                 FaceMouse();
@@ -98,6 +107,22 @@ public class PlayerMovement : MonoBehaviour
     // Physics.
     void FixedUpdate()
     {
+        if (move != Vector3.zero && !playerAudio.isPlaying)
+        {
+            playerAudio.Play();
+            playerAnimator.SetBool("Walking", true);
+        }
+        else
+        {
+            playerAudio.Pause();
+            
+        }
+
+        if(move == Vector3.zero)
+        {
+            playerAnimator.SetBool("Walking", false);
+        }
+
         // Move the player.
         rb.position += (move * playerSpeed * Time.deltaTime);
     }
@@ -125,6 +150,7 @@ public class PlayerMovement : MonoBehaviour
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     // Temporary alternative movement.
+    // Used for debugging.
     Vector3 KeyboardMovement(Vector3 move)
     {
         float keyboardX = Input.GetAxis("Horizontal");

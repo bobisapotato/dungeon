@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HealthSystem : MonoBehaviour
 {
@@ -8,12 +9,64 @@ public class HealthSystem : MonoBehaviour
     public int health;
 
     private int minHealth = 0;
-    private int maxHealth = 100;
+    private int maxHealth = 10;
 
-    // Constructor.
-    public HealthSystem(int health)
+    bool invulnerable = false;
+
+    float coolDown = 1f;
+    float shakeHitAmount = 1.5f;
+
+    private int startPlayerHealth = 10;
+    private int oldHealth;
+
+    private GameManager gameMan;
+
+    private Animator playerAnimator;
+
+    [SerializeField]
+    private Animator heartsUIAnim;
+
+    private Rigidbody rb;
+
+    // Start is called before the first frame update
+    void Start()
     {
-        this.health = health;
+        health = startPlayerHealth;
+        oldHealth = GetHealth();
+
+        rb = GetComponent<Rigidbody>();
+
+        gameMan = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        playerAnimator = GetComponent<Animator>();
+    }
+
+    void Update()
+    {
+        if (invulnerable)
+        {
+            Invoke("ResetVulnerability", coolDown);
+        }
+
+
+        oldHealth = GetHealth();
+
+
+        if (oldHealth <= 0)
+        {
+            Invoke("playerDieAnim", 0.5f);
+            Invoke("playerDie", 1f);
+        }
+    }
+
+    private void playerDieAnim()
+    {
+        playerAnimator.Play("PlayerDie");
+        rb.constraints = RigidbodyConstraints.FreezeAll;
+    }
+
+    private void playerDie()
+    {
+        gameMan.openLose();
     }
 
     // Getters and Setters.
@@ -22,16 +75,42 @@ public class HealthSystem : MonoBehaviour
         return health;
     }
 
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
     public void TakeDamage(int damage)
     {
-        if ((health - damage) <= minHealth)
+        // Error handling.
+        if(damage > 5)
         {
-            health = minHealth;
+            damage = 1;
         }
-        else
+
+        if (!invulnerable)
         {
-            health -= damage;
+            invulnerable = true;
+            playerAnimator.SetBool("invulnerable", true);
+
+            if (CameraShake.shake <= shakeHitAmount)
+            {
+                CameraShake.shake = shakeHitAmount;
+            }
+
+            if ((health - damage) <= minHealth)
+            {
+                health = minHealth;
+            }
+            else
+            {
+                health -= damage;
+            }
+
+            HealOverTime.timer = 0f;
         }
+
+        updateHeartAnim();
     }
 
     public void Heal(int heal)
@@ -44,5 +123,18 @@ public class HealthSystem : MonoBehaviour
         {
             health += heal;
         }
+
+        updateHeartAnim();
+    }
+
+    void ResetVulnerability()
+    {
+        invulnerable = false;
+        playerAnimator.SetBool("invulnerable", false);
+    }
+
+    private void updateHeartAnim()
+    {
+        heartsUIAnim.SetInteger("health", health);
     }
 }

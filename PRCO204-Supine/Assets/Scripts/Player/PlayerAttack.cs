@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    // Variables
+    // Variables.
     Collider hitbox;
+
     [SerializeField] 
     GameObject meleeObject;
-
     [SerializeField]
     GameObject projectile;
 
     private PlayerControls controls;
-    private float rightTriggerDown;
 
+    private float rightTriggerDown;
     private float timer = 0f;
     private float reloadTime = 0.2f;
 
@@ -27,6 +27,9 @@ public class PlayerAttack : MonoBehaviour
 
     [SerializeField]
     ParticleSystem swordSwing;
+
+    [SerializeField]
+    private AudioSource swordAudio;
 
     void Awake()
     {
@@ -61,6 +64,8 @@ public class PlayerAttack : MonoBehaviour
             //if (!isHoldingRangedWeapon && (Input.GetKeyDown(KeyCode.Mouse0) == true || rightTriggerDown != 0))
             if (!isHoldingRangedWeapon && (Input.GetKeyDown(KeyCode.Mouse0) == true || rightTriggerDown != 0))
             {
+                swordAudio.Pause();
+
                 Attack1();
                 timer = 0f;
 
@@ -68,10 +73,15 @@ public class PlayerAttack : MonoBehaviour
                 animator.Play("SwingSword2");
                 swordSwing.Play();
 
+                swordAudio.Play();
+
                 shouldLastOneMoreFrame = true;
             }
-            
-            else if (isHoldingRangedWeapon && (Input.GetKeyDown(KeyCode.Mouse0) == true || rightTriggerDown != 0))
+        }
+
+        if (timer >= reloadTime + 0.25f && isHoldingWeapon)
+        {
+            if (isHoldingRangedWeapon && (Input.GetKeyDown(KeyCode.Mouse0) == true || rightTriggerDown != 0))
             {
                 Attack2();
                 timer = 0f;
@@ -80,7 +90,7 @@ public class PlayerAttack : MonoBehaviour
                 animator.Play("ShootCrossbow");
             }
         }
-
+   
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") && shouldLastOneMoreFrame)
         {
             swordSwing.Clear();

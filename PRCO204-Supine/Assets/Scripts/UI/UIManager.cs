@@ -1,21 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
     [SerializeField]
-    private Text roomCodeUI;
+    private TextMeshProUGUI roomCodeUI;
+    
+    public void SetText(string text) => roomCodeUI.text = $"Code: {text}";
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        Invoke("FindRoomCode", 0.25f);
-    }
-
-    void FindRoomCode() 
-    {
-        roomCodeUI.text = WSConnection.roomCode;
+    void Awake() {
+        if (ServerManager.Instance) {
+            SetText(ServerManager.Instance.RoomCode);
+        }
+        else {
+            SetText("----");
+        }
     }
 }

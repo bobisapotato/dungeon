@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+
+<div id="container">
+    <div id="block"></div>
+</div>
+
+
+<style>
+    body {
+        margin: 0;
+        border: none;
+
+    }
+    #container, #block {
+        border: 3px solid red;
+    }
+    #container {
+        display: inline-block;
+        margin: 200px;
+    }
+
+    #block {
+        width: 100px;
+        height: 100px;
+        transform: rotate(45deg);
+        border-color: orange;
+        position: relative;
+    }
+    .click {
+        width: 2px;
+        height: 2px;
+        background: blue;
+        position: absolute;
+        animation: decay 30s forwards;
+    }
+    @keyframes decay {
+        0% { opacity: 1;}
+        100% { opacity: 0;}
+    }
+</style>
+
+<script>
+
+    function rotate(cx, cy, x, y, angle) {
+        console.log(`Rotating point ${[cx,cy]} ${angle}deg around ${[x,y]}`)
+        var radians = (Math.PI / 180) * angle,
+            cos = Math.cos(radians),
+            sin = Math.sin(radians),
+            nx = (cos * (x - cx)) + (sin * (y - cy)) + cx,
+            ny = (cos * (y - cy)) - (sin * (x - cx)) + cy;
+        return [nx, ny];
+    }
+
+    let el = document.querySelector('#block');
+    el.addEventListener('click', function(evt) {
+        el.insertAdjacentHTML('beforeend', `<div class="click"></div>`);
+        let _c = el.lastChild;
+        let rect = el.getBoundingClientRect();
+
+        let _r = rotate(evt.offsetX, evt.offsetY, 50, 50, 45);
+        console.log(_r);
+        _c.style.left = `${_r[0]}px`;
+        _c.style.top = `${_r[1]}px`;
+    })
+</script>
+</body>
+</html>

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    
     //Variables
     [SerializeField] 
     private float velocity;
@@ -15,6 +14,12 @@ public class Projectile : MonoBehaviour
     private GameObject debrisPrefab;
     [SerializeField]
     private GameObject arrow;
+
+    [SerializeField]
+    private AudioSource arrowHit;
+    [SerializeField]
+    private AudioSource arrowExplode;
+
 
     // Start is called before the first frame update
     // Adds a force the the projectile.
@@ -30,13 +35,6 @@ public class Projectile : MonoBehaviour
     {
         yield return new WaitForSeconds(5.0f);
         FireDebris();
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     // If the bullet collides with a gameobject with the tag, "enemy" it 
@@ -47,17 +45,17 @@ public class Projectile : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             other.gameObject.SendMessage("TakeDamage", damage);
+            arrowExplode.Play();
             FireDebris();
         }
         else 
         {
-            List<string> excludedTags = new List<string>() { "Weapon", "Key", "Trap Door", "RoomSpawn", "RoomTrigger"};
+            List<string> excludedTags = new List<string>() { "Weapon", "Key", "Trap Door", "RoomSpawn", "RoomTrigger", "RoomSpawnSensor", "Doorway", "Damage"};
             if (excludedTags.TrueForAll(tag => !other.gameObject.CompareTag(tag))) {
                 FireDebris();
             }
         }
     }
-
 
     // Destroys the gameobject this is attached to.
     private void FireDebris()
@@ -70,6 +68,8 @@ public class Projectile : MonoBehaviour
 
         debrisPrefab.SetActive(true);
         arrow.SetActive(false);
+
+        arrowHit.Play();
 
         Invoke("Die", 4f);
     }

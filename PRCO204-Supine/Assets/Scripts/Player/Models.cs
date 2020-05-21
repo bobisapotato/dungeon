@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Models : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // Variables.
     public GameObject noweapon;
     public GameObject crossbow;
     public GameObject sword;

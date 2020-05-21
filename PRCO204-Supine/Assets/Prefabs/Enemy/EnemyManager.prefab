@@ -43,10 +43,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6867829219d34334e924b9df48b910de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 5624515174502555135, guid: 9f9c475e1ecb30c4991fce5cbc27e20c,
+  trap: {fileID: 1714180376414181911, guid: 678593ab74f9c914080e152f99c15cd3, type: 3}
+  rangedEnemyPrefab: {fileID: 5624515174502555135, guid: 9f9c475e1ecb30c4991fce5cbc27e20c,
+    type: 3}
+  meleeEnemyPrefab: {fileID: 5624515174502555135, guid: 9ce0865d750161544aa7e74685d3161e,
     type: 3}
   pathPosPrefab: {fileID: 6280594384002987792, guid: e9b3dbc898a6b8f499dcd964376d5eb7,
     type: 3}
   player: {fileID: 0}
-  maxEnemies: 3
-  maxPaths: 15
+  enemyCounterIcon: {fileID: 0}
+  slimeIcon: {fileID: 21300000, guid: 525ebd513c07e9e458c16d0dbc33202a, type: 3}
+  skullIcon: {fileID: 21300000, guid: 2fd47fd37c368a1498cbf3c7f87eb3a0, type: 3}
+  slimeAndSkullIcon: {fileID: 21300000, guid: a1c31cec076319548ad6a2da7a5f1009, type: 3}

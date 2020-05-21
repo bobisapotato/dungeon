@@ -4,20 +4,32 @@ using UnityEngine;
 
 public class HealOverTime : MonoBehaviour
 {
-    private float timer = 0f;
-    private float coolDown = 2f;
+    // Variables.
+    public static float timer = 0f;
+    private float coolDown;
 
-    private int hpBoost = 2;
+    private int hpBoost = 1;
+
+    private int maxHealth = 100;
+
+    void Start()
+    {
+        maxHealth = GetComponentInChildren<HealthSystem>().GetMaxHealth();
+
+        coolDown = 10f;
+    }
 
     // Update is called once per frame
     void Update()
     {
         timer += Time.deltaTime;
 
-        if (timer >= coolDown)
+        // Heal the player after the cooldown is over.
+        if (timer >= coolDown && GetComponentInChildren<HealthSystem>().GetHealth() <= maxHealth)
         {
-            HealthManager.playerHealth.Heal(hpBoost);
+            GetComponentInChildren<HealthSystem>().Heal(hpBoost);
             timer = 0f;
+            coolDown = 6f;
         }
     }
 }

@@ -9,82 +9,65 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown("escape"))
-        {
-            openDemoMenu2();
-        }
+        //if(Input.GetKeyDown("escape"))
+        //{
+        //    openDemoMenu2();
+        //}
     }
     
 	public void closeGame()
     {
         Application.Quit();
     }
-    // Demo 1 
-    #region
-    public void openDemo()
-    {
-        SceneManager.LoadScene("DemoScene");
-    }
-
-    public void openDemoMenu()
-    {
-        SceneManager.LoadScene("DemoMenu");
-    }
-    #endregion
-
-    // Demo 2
-    #region
-    public void openDemoScene2()
+   
+    public void openGame()
     {
         // Reset static values for next level.
-        LevelGeneration.hasTrapDoorSpawned = false;
         PlayerAttack.isHoldingRangedWeapon = false;
         PlayerAttack.isHoldingWeapon = false;
 
-        SceneManager.LoadScene("Demo_Release2");
+        SceneManager.LoadScene("Game");
     }
 
-    public void openDemoWin2()
+    public void openWin()
     {
         // Reset static values for next level.
-        LevelGeneration.hasTrapDoorSpawned = false;
+        PlayerAttack.isHoldingRangedWeapon = false;
+        PlayerAttack.isHoldingWeapon = false;
+        LevelManager.level = 0;
+
+        SceneManager.LoadScene("WinScreen");
+    }
+    public void openLose()
+    {
+        // Reset static values for next level.
+        PlayerAttack.isHoldingRangedWeapon = false;
+        PlayerAttack.isHoldingWeapon = false;
+        LevelManager.level = 0;
+
+        SceneManager.LoadScene("LoseScreen");
+    }
+
+
+    public void openMenu()
+    {
+        // Reset static values for next level.
         PlayerAttack.isHoldingRangedWeapon = false;
         PlayerAttack.isHoldingWeapon = false;
 
-        SceneManager.LoadScene("DemoWin2");
+        SceneManager.LoadScene("MainMenu");
     }
-    public void openDemoLose2()
+
+    public void openInstructions()
     {
         // Reset static values for next level.
-        LevelGeneration.hasTrapDoorSpawned = false;
         PlayerAttack.isHoldingRangedWeapon = false;
         PlayerAttack.isHoldingWeapon = false;
 
-        SceneManager.LoadScene("DemoLose2");
+        SceneManager.LoadScene("Objectives");
     }
 
 
-    public void openDemoMenu2()
-    {
-        // Reset static values for next level.
-        LevelGeneration.hasTrapDoorSpawned = false;
-        PlayerAttack.isHoldingRangedWeapon = false;
-        PlayerAttack.isHoldingWeapon = false;
-
-        SceneManager.LoadScene("DemoMenu2");
-    }
-
-    public void openDemoInstructions2()
-    {
-        // Reset static values for next level.
-        LevelGeneration.hasTrapDoorSpawned = false;
-        PlayerAttack.isHoldingRangedWeapon = false;
-        PlayerAttack.isHoldingWeapon = false;
-
-        SceneManager.LoadScene("DemoInstructions2");
-    }
-
-
-	#endregion
+    
 
 }

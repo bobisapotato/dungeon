@@ -15,7 +15,7 @@ public class PickUpWeapon : MonoBehaviour
     [SerializeField]
     private float timer = 2f;
     private float dropCoolDown = 0.1f;
-    private float pickUpCoolDown = 0.2f;
+    private float pickUpCoolDown = 0.11f;
 
     private PlayerControls controls;
 
@@ -27,9 +27,17 @@ public class PickUpWeapon : MonoBehaviour
     [SerializeField]
     private Mesh openTrapDoorMesh;
 
+    [HideInInspector]
     public GameManager gameManager;
+    [HideInInspector]
+    public LevelManager levelManager;
 
+    [HideInInspector]
     public Models models;
+
+    [SerializeField]
+    private AudioSource pickUpAudio;
+
 
     void Awake()
     {
@@ -39,6 +47,7 @@ public class PickUpWeapon : MonoBehaviour
         controls.Gameplay.PlayerPickUpWeapon.performed += ctx => PickUp();
         models = GetComponentInChildren<Models>();
         gameManager = FindObjectOfType<GameManager>();
+        levelManager = FindObjectOfType<LevelManager>();
         newPlayerWeapon();
     }
 
@@ -53,7 +62,6 @@ public class PickUpWeapon : MonoBehaviour
         }
     }
 
-    // Display UI here: "Pick Up/Press X".
     void OnTriggerStay(Collider other)
     {
         if (other.tag == "Weapon" && !isStandingOnWeapon && timer >= pickUpCoolDown)
@@ -68,10 +76,14 @@ public class PickUpWeapon : MonoBehaviour
             isHoldingKey = true;
             PlayerAttack.isHoldingWeapon = false;
             PlayerAttack.isHoldingRangedWeapon = false;
+
             DropWeapon();
+
             models.setAll(false);
             models.activateKey();
+
             heldWeapon = null;
+
             Destroy(other.gameObject);
         }
 
@@ -87,8 +99,6 @@ public class PickUpWeapon : MonoBehaviour
         {
             // Display "You need to find the key" message here:
             // ...
-
-            // Debug.Log("You need to find the key");
         }
     }
 
@@ -109,18 +119,15 @@ public class PickUpWeapon : MonoBehaviour
 
         if (heldWeapon.name.Contains("Sword"))
         {
-            Instantiate(swordPrefab, transform.position, transform.rotation);
+            Instantiate(swordPrefab, transform.position, Quaternion.identity);
         }
         else if (heldWeapon.name.Contains("Crossbow"))
         {
-            Instantiate(crossbowPrefab, transform.position, transform.rotation);
+            Instantiate(crossbowPrefab, transform.position, Quaternion.identity);
         }
 
         timer = 0f;
         heldWeapon = null;
-
-        // Make the player model one holding nothing:
-        // ...
     }
 
     void PickUp()
@@ -144,9 +151,6 @@ public class PickUpWeapon : MonoBehaviour
                     PlayerAttack.isHoldingRangedWeapon = false;
 
                     heldWeapon = weaponPlayerIsStandingOn;
-                    
-                    // Make the player model one holding a sword:
-                    // ...
                 }
                 else if (weaponPlayerIsStandingOn.name.Contains("Crossbow"))
                 {
@@ -154,9 +158,6 @@ public class PickUpWeapon : MonoBehaviour
                     PlayerAttack.isHoldingRangedWeapon = true;
 
                     heldWeapon = weaponPlayerIsStandingOn;
-
-                    // Make the player model one holding a crossbow:
-                    // ...
                 }
 
                 weaponPlayerIsStandingOn.SetActive(false);
@@ -185,6 +186,11 @@ public class PickUpWeapon : MonoBehaviour
                 weaponPlayerIsStandingOn = null;
                 isStandingOnWeapon = false;
             }
+
+            if (PlayerAttack.isHoldingWeapon)
+            {
+                pickUpAudio.Play();
+            }
         }
         newPlayerWeapon();
     }
@@ -192,12 +198,11 @@ public class PickUpWeapon : MonoBehaviour
     void NextLevel()
     {
         // Reset static values for next level.
-        LevelGeneration.hasTrapDoorSpawned = false;
         PlayerAttack.isHoldingRangedWeapon = false;
         PlayerAttack.isHoldingWeapon = false;
         isHoldingKey = false;
 
-        gameManager.openDemoWin2();
+        levelManager.LoadLevel();
     }
 
     // Required for the input system.
@@ -213,7 +218,7 @@ public class PickUpWeapon : MonoBehaviour
 
     public void newPlayerWeapon()
     {
-        // finds what current weapon is, and sends message to change model accordingly.
+        // Finds what current weapon is, and sends message to change model accordingly.
         if (heldWeapon)
         {
             if (heldWeapon.name.Contains("Sword"))
@@ -232,7 +237,7 @@ public class PickUpWeapon : MonoBehaviour
     }
     public void setPlayerModel(GameObject currentWeapon)
     {
-        // sets all the weapons to disables apart from current heldweapon.
+        // Sets all the weapons to disables apart from current heldweapon.
         models.setAll(false);
 
         currentWeapon.SetActive(true);

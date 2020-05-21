@@ -14,6 +14,6 @@ public class EndLevelTrigger : MonoBehaviour
 	private void OnTriggerEnter(Collider other)
 	{
 		Debug.Log("colliding");
-		gameMan.openDemoMenu();
+		gameMan.openMenu();
 	}
 }

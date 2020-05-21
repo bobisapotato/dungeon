@@ -4,21 +4,19 @@ using UnityEngine;
 
 public class MeleeHitbox : MonoBehaviour
 {
-
+    // Variables.
     Collider hitbox;
 
-    [SerializeField] int melee;
+    [SerializeField] 
+    private int melee;
+
+    [SerializeField]
+    private AudioSource swordHit;
 
     // Start is called before the first frame update
     void Start()
     {
         hitbox = gameObject.GetComponent<CapsuleCollider>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     // If anything with an enemy tag is inside the trigger hitbox when
@@ -28,6 +26,7 @@ public class MeleeHitbox : MonoBehaviour
     {
         if (other.gameObject.tag == "Enemy")
         {
+            swordHit.Play();
             other.gameObject.SendMessage("TakeDamage", melee);
             hitbox.enabled = false;
         }

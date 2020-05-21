@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Each room spawn point has 4 sensors.
+// These identify any rooms surrounding the spawn point, to dictate what requirements
+// the new room should meet to avoid doors to nowhere.
 public class RoomSpawnSensor : MonoBehaviour
 {
-
-    // Each room spawn point has 4 sensors.
-    // These identify any rooms surrounding the spawn point, to dictate what requirements
-    // the new room should meet to avoid doors to nowhere.
-
-    // VARS
+    // Variables.
     public string direction;
     private BoxCollider sensorCollider;
     private Room foundRoom;
@@ -17,23 +15,16 @@ public class RoomSpawnSensor : MonoBehaviour
     [SerializeField] private bool mustNotHaveDoor = false;
     [SerializeField] private string foundRoomName;
 
-    bool secondRoomFound = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        // collider is off, toggled on to check relevant surroundings
+        // Collider is off, toggled on to check relevant surroundings.
         sensorCollider = gameObject.GetComponent<BoxCollider>();
-        //sensorCollider.enabled = false;
-
-        //checkSensor();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
         
+        gameObject.tag = "RoomSpawnSensor";
     }
+
 
     public bool checkMustHave()
     {
@@ -64,35 +55,12 @@ public class RoomSpawnSensor : MonoBehaviour
         }
     }
 
-    //public void checkSensor()
-    //{
-    //    StartCoroutine("toggleSensorCollider");
-    //}
-
-    //public IEnumerator toggleSensorCollider()
-    //{
-    //    yield return new WaitForSeconds(0.3f);
-    //    sensorCollider.enabled = true;
-    //    yield return new WaitForSeconds(0.5f);
-        
-    //}
+   
 
     private void OnTriggerStay(Collider other)
     {
-        // when something alerts the sensor, it checks the associated room and 
-        // updates the 'need related room' bool
-
-        if (foundRoom && foundRoom != other.gameObject.GetComponentInParent<Room>() && !secondRoomFound && other.CompareTag("Floor"))
-        {
-            Debug.Log("Found 2 rooms at spot for spawn sensor in position " + direction);
-            Debug.Log("Room 1 = " + foundRoom.gameObject.name);
-            Debug.Log("Room 2 = " + other.gameObject.GetComponentInParent<Room>().gameObject.name);
-            Debug.Log("We found a sensor at rm 1? " + other.CompareTag("sensor"));
-            Debug.Log("--------------------------------------------------------------------");
-
-            secondRoomFound = true;
-        }
-
+        // When something alerts the sensor, it checks the associated room and 
+        // updates the 'need related room' bool.
         if (foundRoom == null)
         {
             if (other.CompareTag("Floor"))
@@ -157,7 +125,7 @@ public class RoomSpawnSensor : MonoBehaviour
                             mustHaveDoor = false;
                         }
                     }
-                    //sensorCollider.enabled = false;
+                   
                 }
             }
         }

@@ -1,0 +1,503 @@
+/* SUPINE */
+/* app.css (it's all in here) */
+
+@import url('https://fonts.googleapis.com/css?family=Unica+One&display=swap');
+.wordmark {
+    font-family: 'Unica One', sans-serif;
+}
+
+@font-face {
+    font-family: 'Supine-VCR';
+    src: url("/media/font-vcr.woff2")
+}
+
+body, * {
+    font-family: 'Supine-VCR', sans-serif;
+}
+
+
+.container {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: 50px;
+}
+
+.code-explain {
+    font-size: 3em;
+}
+
+input {text-align: center;font-size: 2em;width: 6em;border-radius: 4px;border: 1px solid #ccc;}
+button.btn {
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 4px;
+    font-size: 1em;
+    padding: 4px 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+input#code {
+    margin-bottom: .25em;
+    margin-top: .1em;
+    text-transform: uppercase;
+}
+
+.btn-success {
+    background-color: #4CAF50;
+    color: white;
+}
+.btn[disabled] {
+    background-color: #e0e0e0;
+    color: #999;
+    cursor: not-allowed;
+}
+.hide {
+    display: none !important;
+}
+#code-name {
+    font-weight: bold;
+    font-size: 4em;
+    margin-bottom: .2em;
+}
+#play .btn {
+    margin: 4px;
+    font-size: 1.5em;
+}
+#map {
+    width: 55vmin;
+    height: 55vmin;
+    background-color: lightblue;
+    position: relative;
+    --offset: -135deg;
+    /*--offset: 0deg;*/
+    transform: rotate(var(--offset));
+    margin-top: 12.5vmin;
+    overflow: hidden;
+    border: 1px solid #444444;
+}
+.blob, #room-bg {
+    pointer-events: none;
+    user-select: none;
+}
+.blob {
+    position: absolute;
+    opacity: 1;
+    transform-origin: 0% 100%;
+    transition: all 40ms linear, opacity 2s linear, transform 0ms;
+}
+.blob--player .blob-content { background: dodgerblue; }
+.blob--enemy .blob-content { background: darkred; }
+.blob-content {
+    --size: 36px;
+    width: var(--size);
+    height: var(--size);
+    background: gray;
+    border-radius: 50%;
+    position: relative;
+    image-rendering: pixelated;
+    /*bottom: calc(var(--size) / 2);
+    left: calc(var(--size) / -2);*/
+}
+
+
+.blob--player .blob-content {
+    background-image: url("/media/sprites/Player 1/P-Arrow.png");
+    border-radius: 0;
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    image-rendering: initial;
+}
+
+
+.blob--enemy-skeleton .blob-content {
+    background-image: url("/media/sprites/enemies/E-Skull mkII.png");
+    border-radius: 0;
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+.blob--enemy-big-slime .blob-content {
+    background-image: url("/media/sprites/enemies/E-Slime.png");
+    border-radius: 0;
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+.blob--enemy-small-slime .blob-content {
+    background-image: url("/media/sprites/enemies/E-Slime.png");
+    border-radius: 0;
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+.blob--spike-trap .blob-content {
+    background-image: url("/media/sprites/items/spikeTrap.png");
+    border-radius: 0;
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+
+
+/* Change size of slimes */
+.blob--enemy-big-slime .blob-content {
+    --size: 48px;
+}
+.blob--enemy-small-slime .blob-content {
+    --size: 24px;
+}
+.blob--spike-trap .blob-content {
+    --size: 48px;
+}
+
+.blob--enemy-small-slime,
+.blob--enemy-big-slime,
+.blob--enemy-skeleton {
+    /* Force no rotation for enemies */
+    transform: rotate(calc(-1 * var(--offset))) !important;
+}
+
+
+
+.blob.kill {
+    filter: grayscale(1);
+    opacity: 0;
+}
+#room-bg {
+    background-size: cover;
+    image-rendering: pixelated;
+    width: 100%;
+    height: 100%;
+}
+
+.wall {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: 0% 50%;
+}
+
+#room-bg {
+    position: relative;
+}
+
+.wall[data-exists="true"][data-open="true"] { background-image: url("/media/sprites/walls/Door Open.png"); }
+.wall[data-exists="true"][data-open="false"][data-locked="false"] { background-image: url("/media/sprites/walls/Door Unlocked.png"); }
+.wall[data-exists="true"][data-locked="true"] { background-image: url("/media/sprites/walls/Door Locked.png"); }
+.wall[data-exists="false"] { background-image: url("/media/sprites/walls/Wall.png"); }
+
+.wall[data-door="N"] { transform: rotate(270deg); }
+.wall[data-door="E"] { transform: rotate(0deg); }
+.wall[data-door="S"] { transform: rotate(90deg); }
+.wall[data-door="W"] { transform: rotate(180deg); }
+
+#map.no-anim .blob {
+    /* disable smoothing when switching rooms */
+    transition: none !important;
+}
+
+#items {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    width: 100vw;
+}
+
+#items {
+    --margin: 2em;
+    max-width: calc(100vw - calc(var(--margin) * 3));
+    margin: var(--margin) calc(var(--margin) * 2);
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.menu-text {
+    background-color: white;
+    font-size: 30px;
+    text-align: center;
+    padding: 2px 4px;
+    min-height: 60px;
+    width: 100%;
+}
+
+.menu-item {
+    width: 10em;
+    height: 12em;
+    background-size: 6em;
+    background-repeat: no-repeat;
+    background-position: center 1em;
+    image-rendering: pixelated;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    border: 2px solid black;
+    margin: 0 1em;
+    position: relative;
+
+    transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+    /*box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.3);*/
+}
+
+.menu-item.selected {
+    transform: scale(1.1);
+    /*box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.3);*/
+}
+
+#play {
+    position: absolute;
+    top: 0;
+}
+
+#code-name {
+    position: absolute;
+    right: .2em;
+    top: .2em;
+}
+
+.item-cooldown-text {
+    font-size: 4em;
+    position: absolute;
+    top: 0px;
+    height: 132px;
+    width: 100%;
+    background-color: rgba(255,255,255,0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.item-cooldown-text.hide {
+    display: none;
+}
+#cursor {
+    position: absolute;
+    pointer-events: none;
+    user-select: none;
+    transform: translate(-50%, -50%)
+}
+
+.item-cursor {
+    width: 20vmin;
+    height: 20vmin;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.item-cursor-image {
+    width: 4vmin;
+    height: 4vmin;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+}
+
+body {
+    overflow: hidden;
+}
+
+#items {
+    opacity: 1;
+    transition: opacity 1s ease;
+}
+#items.hide {
+    opacity: 0;
+}
+
+#map.normal-rotation {
+    transform: rotate(0deg) !important;
+}
+
+.map-clickable {
+    transform: rotate(-90deg);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: grid;
+}
+
+
+#server {
+    position: absolute;
+    top: 2vmin;
+    left: 0;
+    text-align: center;
+    background: white;
+    padding: 40px 0;
+    width: 100%;
+}
+
+#server h1 {
+    font-size: 48px;
+}
+
+#server a {
+    background-color: #8b0000;
+    color: white;
+    padding: .25em .5em;
+    font-size: 32px;
+}
+
+#server a:hover {
+    background-color: #ab0000;
+}
+.blob.blob--player {
+    z-index: 100;
+}
+
+.blob--spike-trap {
+    transform: translate(-150%, 50%);
+}
+.blob--spike-trap .blob-content {
+    --size: 60px;
+}
+
+.item-image {
+    position: absolute;
+    width: 10em;
+    height: 12em;
+    background-size: 6em;
+    background-repeat: no-repeat;
+    background-position: center 1em;
+    image-rendering: pixelated;
+}
+
+.item-image {
+    position: absolute;
+    width: 10em;
+    height: 13em;
+    background-size: 6em;
+    background-repeat: no-repeat;
+    background-position: center 1em;
+    image-rendering: pixelated;
+}
+
+.menu-item {
+    background-image: url(/media/sprites/itemBox.png);
+    background-position: center;
+    background-size: 20em 21em;
+    border: none;
+    width: 10em;
+    height: 13em;
+}
+
+.menu-text {
+    background-color: rgba(255,255,255,0.6);
+    min-height: 60px;
+    margin: 0px 15px 21px 14px;
+}
+
+.item-cooldown-text {
+    margin: 6px 0px 0px -5px;
+    overflow: hidden;
+    width: calc(100% - 20px);
+    height: 117px;
+}
+
+.menu-bg {
+    top: 0;
+    left: 0;
+    height:  calc(100% - 18px);
+    width: calc(100% - 10px);
+    position: absolute;
+    margin: 5px;
+    opacity: 0.8;
+}
+
+.item-image, .item-cooldown-text, .menu-text {
+    z-index: 1;
+}
+.menu-text {
+    user-select: none;
+}
+
+.logo {
+    background-image: url("/media/title.png");
+    image-rendering: pixelated;
+}
+#main-logo {
+    height: 100px;
+    width: 100%;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-bottom: 30px;
+}
+
+input#code {
+    margin: 20px 0;
+    font-size: 40px !important;
+    width: 6ex;
+}
+
+.btn, #code {
+    font-size: 2em !important;
+}
+
+body.disconnected .container {
+    opacity: 0.2;
+    pointer-events: none;
+    user-select: none;
+}
+
+#submit-room {
+    background-image: url(/media/sprites/roomCodeBox.png);
+    background-size: 177px;
+    background-position: -29px -53px;
+    background-repeat: no-repeat;
+    width: 130px;
+    height: 65px;
+    background-color: transparent;
+    border: none !important;
+}
+
+.btn[disabled] {
+    opacity: 0.5;
+}
+
+.floater {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2vmin;
+}
+
+.float-bottom-left {
+    bottom: 0;
+    left: 0;
+}
+.float-bottom-right {
+    bottom: 0;
+    right: 0;
+}
+
+.floater img {
+    max-height: 20vmin;
+    margin-bottom: -1vmin;
+}
+
+#uop {
+    width: 30vmin;
+    margin: 6vmin 3vmin;
+}
+
+.wordmark {
+    font-size: 8vmin;
+}
