@@ -77,7 +77,8 @@ public class ServerManager : MonoBehaviour {
 
         //Debug.Log("Pos: " + x + ", 10, " + z + " Item: " + item);
 
-        Instantiate(prefab, newPos, Quaternion.identity /*, room.transform*/);
+        Debug.Log(room);
+        Instantiate(prefab, newPos + room.transform.position, Quaternion.identity);
     }
 
     void Start() {
