@@ -36,6 +36,7 @@ public class ServerManager : MonoBehaviour {
     public GameObject itemHealthPotion;
     public GameObject itemSpikeTrap;
 
+    public Animator currentTrapAnimator;
 
     private string _roomCode;
     public string RoomCode {
@@ -59,10 +60,27 @@ public class ServerManager : MonoBehaviour {
         }
         else if (itemName == "spikeTrap")
         {
-            SpawnItem(recievedX, recievedZ, itemSpikeTrap, previousRoom.gameObject);
+            // SpawnItem(recievedX, recievedZ, itemSpikeTrap, previousRoom.gameObject);
+            activateTrap(previousRoom);
         }
     }
 
+    public void activateTrap(Room currentRoom)
+    {
+        
+        foreach(GameObject g in GameObject.FindGameObjectsWithTag("Trap"))
+        {
+            if(g.GetComponentInParent<Room>() == currentRoom)
+            {
+                currentTrapAnimator = g.GetComponent<Animator>();
+            }
+        }
+
+        if (currentTrapAnimator != null)
+        {
+            currentTrapAnimator.SetBool("showTrap", true);
+        }
+    }
 
     public void SpawnItem(float recievedX, float recievedZ, GameObject prefab, GameObject room) {
         float x, z;
