@@ -73,7 +73,7 @@ public class HealthSystem : MonoBehaviour
     public void TakeDamage(int damage)
     {
         // Error handling.
-        if(damage != 1)
+        if(damage > 5)
         {
             damage = 1;
         }
