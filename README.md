@@ -8,6 +8,11 @@ Alex Pritchard|`10577259`|alex@supine.dev|**Codebase manager**, technical lead, 
 Zack Hawkins|`10587295`|zack@supine.dev|**Client liason**, product owner, secondary designer
 Josie Wood|`10509521`|josie@supine.dev|**Scrum master**, lead designer, QA tester, project management lead
 
+
+- [YouTube playlist](https://www.youtube.com/playlist?list=PL6ksOWkFD7fa1cVO3ClEAlgyDCnsfLo5C) of our demonstrations
+
+----
+
 # Team meeting schedules
 Due|Action|By
 ---|---|---
