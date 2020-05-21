@@ -106,6 +106,8 @@ public class HealthSystem : MonoBehaviour
             {
                 health -= damage;
             }
+
+            HealOverTime.timer = 0f;
         }
 
         updateHeartAnim();

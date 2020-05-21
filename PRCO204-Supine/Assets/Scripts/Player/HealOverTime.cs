@@ -5,8 +5,8 @@ using UnityEngine;
 public class HealOverTime : MonoBehaviour
 {
     // Variables.
-    private float timer = 0f;
-    private float coolDown = 4f;
+    public static float timer = 0f;
+    private float coolDown;
 
     private int hpBoost = 1;
 
@@ -15,6 +15,8 @@ public class HealOverTime : MonoBehaviour
     void Start()
     {
         maxHealth = GetComponentInChildren<HealthSystem>().GetMaxHealth();
+
+        coolDown = 10f;
     }
 
     // Update is called once per frame
@@ -27,6 +29,7 @@ public class HealOverTime : MonoBehaviour
         {
             GetComponentInChildren<HealthSystem>().Heal(hpBoost);
             timer = 0f;
+            coolDown = 6f;
         }
     }
 }
