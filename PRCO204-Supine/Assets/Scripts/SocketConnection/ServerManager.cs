@@ -34,6 +34,7 @@ public class ServerManager : MonoBehaviour {
     // Old item system broke, no idea when
     public GameObject itemBomb;
     public GameObject itemHealthPotion;
+    public GameObject itemSpikeTrap;
 
 
     private string _roomCode;
@@ -55,6 +56,10 @@ public class ServerManager : MonoBehaviour {
         else if (itemName == "healthPotion")
         {
             SpawnItem(recievedX, recievedZ, itemHealthPotion, previousRoom.gameObject);
+        }
+        else if (itemName == "spikeTrap")
+        {
+            SpawnItem(recievedX, recievedZ, itemSpikeTrap, previousRoom.gameObject);
         }
     }
 
