@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using SocketConnection.NetworkRelays;
@@ -34,7 +34,6 @@ public class ServerManager : MonoBehaviour {
     // Old item system broke, no idea when
     public GameObject itemBomb;
     public GameObject itemHealthPotion;
-    public GameObject itemSpikeTrap;
 
     public Animator currentTrapAnimator;
 
