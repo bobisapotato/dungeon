@@ -4973,6 +4973,7 @@ GameObject:
   - component: {fileID: 9164730992795243741}
   - component: {fileID: 8137336376992123722}
   - component: {fileID: 1756600202484714824}
+  - component: {fileID: 2515640342956841847}
   m_Layer: 12
   m_Name: Enemy Ranged
   m_TagString: Enemy
@@ -5257,6 +5258,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2515640342956841847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5624515174502555135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60d51801a85942d4bd276f48dc24fb2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  identifier: 
+  className: enemy-skeleton
 --- !u!1 &7110634054629597771
 GameObject:
   m_ObjectHideFlags: 0

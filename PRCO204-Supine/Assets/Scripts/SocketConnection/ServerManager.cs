@@ -41,7 +41,7 @@ public class ServerManager : MonoBehaviour {
         get { return _roomCode; }
         set {
             _roomCode = value;
-            UpdateRoomCodeUI(_roomCode);
+            FindObjectOfType<UIManager>().SetText(_roomCode);
         }
     }
 
@@ -68,7 +68,7 @@ public class ServerManager : MonoBehaviour {
 
         Debug.Log("Spawning item");
 
-        Vector3 bounds = new Vector3(15, 0, 15);
+        Vector3 bounds = new Vector3(30, 0, 30);
         Vector3 roomSize = bounds/*room.GetComponent<Collider>().bounds.size*/;
         Vector3 roomScale = bounds/*room.GetComponent<Collider>().bounds.size*/ / 2;
 
@@ -165,11 +165,6 @@ public class ServerManager : MonoBehaviour {
 
     void NetworkTick() {
         TriggerRelays();
-    }
-
-    void UpdateRoomCodeUI(string roomCode) {
-        UIManager ui = FindObjectOfType<UIManager>();
-        ui.SetText(roomCode);
     }
 
     public void DispatchMessage(string action, ArrayList data) {

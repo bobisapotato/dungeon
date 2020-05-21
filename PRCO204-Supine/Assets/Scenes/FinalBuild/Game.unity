@@ -128,6 +128,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 252627323845034061, guid: 5fec608b07488c4448c1d33b918df143,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 252627323845034061, guid: 5fec608b07488c4448c1d33b918df143,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 252627323845034061, guid: 5fec608b07488c4448c1d33b918df143,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 252627323845034061, guid: 5fec608b07488c4448c1d33b918df143,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 252627323845034061, guid: 5fec608b07488c4448c1d33b918df143,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502319391863268038, guid: 5fec608b07488c4448c1d33b918df143,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2753294528270619879, guid: 5fec608b07488c4448c1d33b918df143,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2753294528270619879, guid: 5fec608b07488c4448c1d33b918df143,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4793984602000819228, guid: 5fec608b07488c4448c1d33b918df143,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -314,10 +354,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d04f8830a1e5a894199480eaae1156a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  server: play.supine.dev
+  server: play.supine.dev:3018
   itemBomb: {fileID: 931617099445915360, guid: 2484ce36cabf20b40a9f514376c3746c, type: 3}
   itemHealthPotion: {fileID: 931617099445915360, guid: 94693efde254a5b4e9e6d219621b0e69,
     type: 3}
+--- !u!114 &44796324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44796319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c37ed0e4d31ccde4bac98b55e34e2c5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomCodeUI: {fileID: 110710772}
+--- !u!114 &110710772 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 252627323845034061, guid: 5fec608b07488c4448c1d33b918df143,
+    type: 3}
+  m_PrefabInstance: {fileID: 22068206}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &127889847
 GameObject:
   m_ObjectHideFlags: 0

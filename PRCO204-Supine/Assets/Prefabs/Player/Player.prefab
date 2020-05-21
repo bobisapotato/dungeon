@@ -273,6 +273,7 @@ GameObject:
   - component: {fileID: 7869659254555981647}
   - component: {fileID: 8904604790673770177}
   - component: {fileID: 3677227073850695379}
+  - component: {fileID: 2862116217256659599}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -543,6 +544,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 10
   heartsUIAnim: {fileID: 0}
+--- !u!114 &2862116217256659599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573434437141123362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60d51801a85942d4bd276f48dc24fb2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  identifier: 
+  className: player
 --- !u!1 &3291005433552417353
 GameObject:
   m_ObjectHideFlags: 0
