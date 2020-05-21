@@ -10,19 +10,18 @@ public class ServerManager : MonoBehaviour {
     
     // Singleton it
     private static ServerManager _mInstance;
-
+    
     public static ServerManager Instance  {
         get {
-            Debug.Log(_mInstance);
             if (_mInstance == null) {
                 //_mInstance = 
             }
-            Debug.Log(_mInstance);
             return _mInstance;
         }
     }
     
     public void Awake() {
+        DontDestroyOnLoad(this);
         _mInstance = this;
     }
 
@@ -37,12 +36,20 @@ public class ServerManager : MonoBehaviour {
 
     public Animator currentTrapAnimator;
 
+    public static string GlobalRoomCode;
+    
     private string _roomCode;
     public string RoomCode {
         get { return _roomCode; }
         set {
+            GlobalRoomCode = _roomCode;
             _roomCode = value;
-            FindObjectOfType<UIManager>().SetText(_roomCode);
+            try {
+                FindObjectOfType<UIManager>().SetText(_roomCode);
+            }
+            catch {
+                // ignored
+            }
         }
     }
 
@@ -171,8 +178,14 @@ public class ServerManager : MonoBehaviour {
 
 
     void SocketStart() {
-        Debug.Log("Socket is started + event connection");
-        connection.SendMessage("rooms:create");
+        Debug.Log("Socket is started + event connection - " + GlobalRoomCode);
+
+        if (String.IsNullOrEmpty(GlobalRoomCode)) {
+            connection.SendMessage("rooms:create");
+        } else {
+            string s = GlobalRoomCode.Substring(0, GlobalRoomCode.Length);
+            connection.SendMessage("rooms:force", s);
+        }
     }
 
     /// <summary>
