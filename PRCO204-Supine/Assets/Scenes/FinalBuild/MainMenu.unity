@@ -599,6 +599,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 665481729}
   m_CullTransparentMesh: 0
+--- !u!1 &696722077
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 696722079}
+  - component: {fileID: 696722078}
+  m_Layer: 0
+  m_Name: ServerManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &696722078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696722077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d04f8830a1e5a894199480eaae1156a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  server: play.supine.dev:3018
+  itemBomb: {fileID: 931617099445915360, guid: 2484ce36cabf20b40a9f514376c3746c, type: 3}
+  itemHealthPotion: {fileID: 931617099445915360, guid: 94693efde254a5b4e9e6d219621b0e69,
+    type: 3}
+  currentTrapAnimator: {fileID: 0}
+--- !u!4 &696722079
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696722077}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1, y: 11, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &800886668
 GameObject:
   m_ObjectHideFlags: 0
@@ -773,7 +821,6 @@ GameObject:
   - component: {fileID: 820947840}
   - component: {fileID: 820947842}
   - component: {fileID: 820947843}
-  - component: {fileID: 820947844}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -915,24 +962,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &820947844
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 820947839}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d04f8830a1e5a894199480eaae1156a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  server: play.supine.dev
-  itemBomb: {fileID: 931617099445915360, guid: 2484ce36cabf20b40a9f514376c3746c, type: 3}
-  itemHealthPotion: {fileID: 931617099445915360, guid: 94693efde254a5b4e9e6d219621b0e69,
-    type: 3}
-  itemSpikeTrap: {fileID: 0}
-  currentTrapAnimator: {fileID: 0}
 --- !u!1 &903752052
 GameObject:
   m_ObjectHideFlags: 0

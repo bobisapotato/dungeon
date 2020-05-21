@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using TMPro;
 
 public class UIManager : MonoBehaviour
@@ -9,6 +10,11 @@ public class UIManager : MonoBehaviour
     public void SetText(string text) => roomCodeUI.text = $"Code: {text}";
 
     void Awake() {
-        SetText("----");
+        if (ServerManager.Instance) {
+            SetText(ServerManager.Instance.RoomCode);
+        }
+        else {
+            SetText("----");
+        }
     }
 }
