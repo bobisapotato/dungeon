@@ -39,6 +39,7 @@ socket.on('rooms:joined', function(code) {
     document.querySelector('#code-name').innerHTML = code;
     document.querySelector('#play').classList.remove('hide');
     document.querySelector('#login').classList.add('hide');
+    document.querySelectorAll('.login-only').forEach(el => el.classList.add('hide'));
 
     document.querySelector('#items').classList.remove('hide');
 });

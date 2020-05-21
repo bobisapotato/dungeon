@@ -20,9 +20,10 @@
 <body>
 
 <div class="container" id="login">
+    <div class="logo" id="main-logo"></div>
     <div class="code-explain">Enter your room code</div>
-    <input type="text" id="code" placeholder="Room code" maxlength="4">
-    <button class="btn btn-success" id="submit-room" disabled>Go!</button>
+    <input type="text" id="code" placeholder="Code" maxlength="4">
+    <button class="btn btn-success" id="submit-room" disabled>Play!</button>
 </div>
 <div class="container hide" id="play">
     <div id="code-name"></div>
@@ -35,6 +36,14 @@
     </div>
 </div>
 <div id="items" class="hide"></div>
+
+<div class="floater login-only float-bottom-left">
+    <img src="https://media.supine.dev/logos/supine-cloud.png" id="supine-logo" alt="">
+    <div class="wordmark">Supine</div>
+</div>
+<div class="floater login-only float-bottom-right">
+    <img src="https://media.supine.dev/logos/uop.svg" id="uop" alt="">
+</div>
 
 <div id="server" class="hide">
     <h1>Disconnected</h1>

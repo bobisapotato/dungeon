@@ -1,6 +1,11 @@
 /* SUPINE */
 /* app.css (it's all in here) */
 
+@import url('https://fonts.googleapis.com/css?family=Unica+One&display=swap');
+.wordmark {
+    font-family: 'Unica One', sans-serif;
+}
+
 @font-face {
     font-family: 'Supine-VCR';
     src: url("/media/font-vcr.woff2")
@@ -420,4 +425,79 @@ body {
 }
 .menu-text {
     user-select: none;
+}
+
+.logo {
+    background-image: url("/media/title.png");
+    image-rendering: pixelated;
+}
+#main-logo {
+    height: 100px;
+    width: 100%;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-bottom: 30px;
+}
+
+input#code {
+    margin: 20px 0;
+    font-size: 40px !important;
+    width: 6ex;
+}
+
+.btn, #code {
+    font-size: 2em !important;
+}
+
+body.disconnected .container {
+    opacity: 0.2;
+    pointer-events: none;
+    user-select: none;
+}
+
+#submit-room {
+    background-image: url(/media/sprites/roomCodeBox.png);
+    background-size: 177px;
+    background-position: -29px -53px;
+    background-repeat: no-repeat;
+    width: 130px;
+    height: 65px;
+    background-color: transparent;
+    border: none !important;
+}
+
+.btn[disabled] {
+    opacity: 0.5;
+}
+
+.floater {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2vmin;
+}
+
+.float-bottom-left {
+    bottom: 0;
+    left: 0;
+}
+.float-bottom-right {
+    bottom: 0;
+    right: 0;
+}
+
+.floater img {
+    max-height: 20vmin;
+    margin-bottom: -1vmin;
+}
+
+#uop {
+    width: 30vmin;
+    margin: 6vmin 3vmin;
+}
+
+.wordmark {
+    font-size: 8vmin;
 }
