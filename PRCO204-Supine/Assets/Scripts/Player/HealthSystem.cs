@@ -26,11 +26,15 @@ public class HealthSystem : MonoBehaviour
     [SerializeField]
     private Animator heartsUIAnim;
 
+    private Rigidbody rb;
+
     // Start is called before the first frame update
     void Start()
     {
         health = startPlayerHealth;
         oldHealth = GetHealth();
+
+        rb = GetComponent<Rigidbody>();
 
         gameMan = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         playerAnimator = GetComponent<Animator>();
@@ -49,9 +53,15 @@ public class HealthSystem : MonoBehaviour
 
         if (oldHealth <= 0)
         {
-            playerAnimator.Play("PlayerDie");
+            Invoke("playerDieAnim", 0.5f);
             Invoke("playerDie", 1f);
         }
+    }
+
+    private void playerDieAnim()
+    {
+        playerAnimator.Play("PlayerDie");
+        rb.constraints = RigidbodyConstraints.FreezeAll;
     }
 
     private void playerDie()
