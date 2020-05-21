@@ -21,7 +21,7 @@ public class TrapDamage : MonoBehaviour
     // as they do not have the component HealthSystem.
     void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Trap" && timer >= coolDown)
+        if (other.tag == "TrapDamage" && timer >= coolDown)
         {
             GetComponentInChildren<HealthSystem>().gameObject.SendMessage("TakeDamage", damage);
             timer = 0f;
