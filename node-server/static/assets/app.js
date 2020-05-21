@@ -251,8 +251,23 @@ function getColorStr(color) {
     return `rgb(${color.map(c => `${c * 100}%`).join(',')})`;
 }
 
+let ROOMS_SPIKED = {};
+let CURRENT_ROOM;
+let SPIKE_TRAP_ITEM;
+
 socket.on('room:update', room => {
     if (!room) return console.warn("Empty room data");
+    if (!ROOMS_SPIKED[room.identifier]) ROOMS_SPIKED[room.identifier] = false;
+    CURRENT_ROOM = room.identifier;
+
+    if (!ROOMS_SPIKED[room.identifier]) {
+        SPIKE_TRAP_ITEM.setEnabled(true)
+    } else {
+        SPIKE_TRAP_ITEM.setEnabled(false);
+    }
+
+
+
     let rgb = getColorStr(room.color);
     document.querySelector('#map').style.backgroundColor = rgb;
     document.querySelector('#map').classList.add('no-anim');
@@ -290,7 +305,9 @@ class Item {
         this.slug = data.slug;
         this.cooldown = data.cooldown * 1000;
         this.color = data.color;
-        
+
+        this.oneUsePerRoom = data.oneUsePerRoom || false;
+
         this.enabled = true;
         this.selected = false;
     }
@@ -302,8 +319,7 @@ class Item {
     menuItemElement() {
         let menuItem = document.createElement('div');
         menuItem.className = `menu-item menu-item--${this.slug}`;
-        menuItem.style.backgroundImage = `url("${this.getImageURL()}")`;
-        menuItem.innerHTML = `<div class="item-cooldown-text hide"></div><div class="menu-text">${this.name}</div>`;
+        menuItem.innerHTML = `<div class="menu-bg"></div><div class="item-image" style="background-image: url('${this.getImageURL()}')"></div><div class="item-cooldown-text hide"></div><div class="menu-text">${this.name}</div>`;
 
         let __item = this;
         menuItem.addEventListener('click', function() {
@@ -329,11 +345,16 @@ class Item {
         if (status === true) {
             items.forEach(item => item.setActive(false));
             this.menuItem.classList.add('selected');
-            this.menuItem.style.backgroundColor = this.color;
-            Cursor.set(this);
+            this.menuItem.querySelector('.menu-bg').style.backgroundColor = this.color;
+            if (!this.oneUsePerRoom) {
+                Cursor.set(this);
+            } else {
+                this.use();
+            }
+
         } else {
             this.menuItem.classList.remove('selected');
-            this.menuItem.style.backgroundColor = `initial`;
+            this.menuItem.querySelector('.menu-bg').style.backgroundColor = `initial`;
             Cursor.empty();
         }
         this.selected = status;
@@ -342,8 +363,16 @@ class Item {
     setEnabled(status) {
         this.enabled = status;
         if (status) {
+            if (this.oneUsePerRoom) {
+                this.menuItem.querySelector('.item-cooldown-text').classList.add('hide');
+                this.menuItem.querySelector('.item-cooldown-text').innerText = "";
+            }
             this.menuItem.classList.remove('disabled');
         } else {
+            if (this.oneUsePerRoom) {
+                this.menuItem.querySelector('.item-cooldown-text').classList.remove('hide');
+                this.menuItem.querySelector('.item-cooldown-text').innerText = "";
+            }
             this.menuItem.classList.add('disabled');
         }
     }
@@ -362,11 +391,11 @@ class Item {
     cooldownExpiredAnimation() {
         let __item = this;
 
-        __item.menuItem.style.backgroundColor = this.color;
+        __item.menuItem.querySelector('.menu-bg').style.backgroundColor = this.color;
         __item.menuItem.classList.add('cooldown-finished');
 
         setTimeout(function() {
-            __item.menuItem.style.backgroundColor = `initial`;
+            __item.menuItem.querySelector('.menu-bg').style.backgroundColor = `initial`;
             __item.menuItem.classList.remove('cooldown-finished');
         }, 300);
     }
@@ -396,12 +425,27 @@ class Item {
     }
 
     use() {
+        // ROOMS_SPIKED
+        if (this.oneUsePerRoom) {
+            if (ROOMS_SPIKED[CURRENT_ROOM]) return;
+            // Spike this room;
+            socket.emit('game:action', this.slug, 0.2, 0.2);
+            this.setActive(false);
+            this.setEnabled(false);
+            this.playAudio();
+            ROOMS_SPIKED[CURRENT_ROOM] = true;
+            this.selected = false;
+            return;
+        }
+
         this.setActive(false);
         this.setEnabled(false);
         this.startCooldown(this.cooldown);
         this.playAudio();
 
         let __item = this;
+
+
 
 
         setTimeout(function() {
@@ -425,8 +469,11 @@ const items = [
         name: "Spike Trap",
         slug: "spikeTrap",
         cooldown: 15,
+        oneUsePerRoom: true,
         color: "#674319"})
 ];
+
+SPIKE_TRAP_ITEM = items[2];
 
 const _items = document.querySelector('#items');
 _items.innerHTML = ``;
