@@ -2,8 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using SocketConnection.NetworkRelays;
-using UnityEditor.MemoryProfiler;
-using UnityEditor.SceneManagement;
+
 using UnityEngine;
 
 public class ServerManager : MonoBehaviour {
