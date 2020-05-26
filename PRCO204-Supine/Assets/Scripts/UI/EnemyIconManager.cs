@@ -35,6 +35,7 @@ public class EnemyIconManager : MonoBehaviour
         }
         if (!EnemySpawnManager.isJustSkeletons && !EnemySpawnManager.isJustSlimes)
         {
+            Debug.Log("SHOW BOTH");
             enemyIconAnimator.Play("SkullAndSlimeIcon");
         }
     }

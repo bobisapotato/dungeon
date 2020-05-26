@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using WebSocketSharp;
 using Newtonsoft.Json;
-using UnityEditor.MemoryProfiler;
+
 
 public class WSConnection : MonoBehaviour {
     public string server;
