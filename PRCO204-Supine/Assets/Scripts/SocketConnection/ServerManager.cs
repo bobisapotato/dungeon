@@ -21,8 +21,14 @@ public class ServerManager : MonoBehaviour {
     }
     
     public void Awake() {
-        DontDestroyOnLoad(this);
-        _mInstance = this;
+        var s = FindObjectsOfType<ServerManager>();
+        if (s.Length > 1) {
+            Debug.Log("already DNDd");
+            Destroy(this);
+        } else {
+            DontDestroyOnLoad(this);
+            _mInstance = this;
+        }
     }
 
 
