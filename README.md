@@ -1,3 +1,5 @@
+> **This repository was cloned from an internal university repo area and has been made public for the client.**
+
 # PRCO204 Project - Supine
 This repository is for the PRCO204 live client module for team Supine from Plymouth University. We'll be using Unity for our PC game, web technologies (HTML/CSS/JS) for the tablet page and Node JS for the server between them.
 
